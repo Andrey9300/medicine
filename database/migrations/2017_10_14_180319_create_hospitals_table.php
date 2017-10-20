@@ -17,9 +17,9 @@ class CreateHospitalsTable extends Migration
             $table->increments('id');
             $table->string('name')->unique();
             $table->string('address');
-            $table->string('shedule');
-            $table->string('photo_map');
-            $table->string('phone');
+            $table->string('shedule')->nullable();
+            $table->string('photo_map')->nullable();
+            $table->string('phone')->nullable();
         });
     }
 

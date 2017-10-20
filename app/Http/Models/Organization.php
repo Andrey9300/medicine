@@ -6,11 +6,13 @@ use Illuminate\Database\Eloquent\Model;
 
 class Organization extends Model
 {
+    public $timestamps = false;
+
     /**
      * Получить орагиназцию сотрудника.
      */
-    public function employees()
+    public function users()
     {
-        return $this->hasMany('App\Employee');
+        return $this->hasMany('User');
     }
 }

@@ -8,78 +8,94 @@ use Illuminate\Http\Request;
 class ResearchController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Создать исследование
      *
-     * @return \Illuminate\Http\Response
+     * @param  \Illuminate\Http\Request $request
+     * @return void
      */
-    public function index()
+    public function create(Request $request)
     {
-        //
+        $research = new Research;
+        $research->name = $request->name;
+        $research->period = $request->period;
+        $research->save();
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Вывести исследования
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function create()
+    public function store()
     {
-        //
+        return response()->json([
+            'researches' => Research::all()
+        ]);
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Вывести карточку исследования
      *
+     * @param int $id
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function show($id)
+    {
+        return response()->json([
+            'research' => Research::find($id)
+        ]);
+    }
+
+    /**
+     * Вывести карточку редактирования исследования
+     *
+     * @param int $id
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function edit($id)
+    {
+        return response()->json([
+            'research' => Research::find($id)
+        ]);
+    }
+
+    /**
+     * Обновить исследование
+     *
+     * @param int $id
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @return void
      */
-    public function store(Request $request)
+    public function update(Request $request, $id)
     {
-        //
+        $research_new = $request->all();
+        $research = Research::find($id);
+        $research->name = $research_new['name'];
+        $research->period = $research_new['period'];
+        $research->save();
     }
 
     /**
-     * Display the specified resource.
+     * Удалить исследование
      *
-     * @param  \App\Http\Models\Research  $research
-     * @return \Illuminate\Http\Response
+     * @param int $id
+     * @return void
      */
-    public function show(Research $research)
+    public function destroy($id)
     {
-        //
+        Research::destroy($id);
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * @param $id
      *
-     * @param  \App\Http\Models\Research  $research
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function edit(Research $research)
-    {
-        //
-    }
+    public function showHospitals($id){
+        $research = Research::find($id);
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Http\Models\Research  $research
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Research $research)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Http\Models\Research  $research
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Research $research)
-    {
-        //
+        return response()->json([
+            'research_hospitals' => $research->hospitals
+        ]);
     }
 }

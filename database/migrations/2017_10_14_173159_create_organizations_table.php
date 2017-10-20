@@ -20,10 +20,10 @@ class CreateOrganizationsTable extends Migration
             $table->string('legal_entity');
             $table->string('head_fio');
             $table->string('head_email')->unique();
-            $table->string('regional_email');
-            $table->string('chef_email');
-            $table->string('phone');
-            $table->boolean('is_certification');
+            $table->string('regional_email')->nullable();
+            $table->string('chef_email')->nullable();
+            $table->string('phone')->nullable();
+            $table->boolean('is_certification')->nullable();
         });
     }
 

@@ -12,8 +12,8 @@ class ResearchTableSeeder extends Seeder
     public function run()
     {
         DB::table('researches')->insert([
-            'name' => 'Больница 1',
-            'period' => 'Москва ул Больница'
+            'name' => 'Исследование 1',
+            'period' => 'раз в год'
         ]);
     }
 }

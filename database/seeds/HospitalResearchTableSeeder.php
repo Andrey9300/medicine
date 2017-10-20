@@ -13,7 +13,7 @@ class HospitalResearchTableSeeder extends Seeder
     {
         DB::table('hospital_research')->insert([
             'hospital_id' => '1',
-            'researches_id' => '1',
+            'research_id' => '1',
             'price' => '100'
         ]);
     }

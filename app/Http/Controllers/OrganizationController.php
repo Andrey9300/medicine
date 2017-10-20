@@ -8,78 +8,95 @@ use Illuminate\Http\Request;
 class OrganizationController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Создать организацию
      *
-     * @return \Illuminate\Http\Response
+     * @param  \Illuminate\Http\Request $request
+     * @return void
      */
-    public function index()
+    public function create(Request $request)
     {
-        return view('organization.index', ['organizations' => Organization::all()]);
+        $organization = new Organization;
+        $organization->name = $request->name;
+        $organization->address = $request->address;
+        $organization->legal_entity = $request->legal_entity;
+        $organization->head_fio = $request->head_fio;
+        $organization->head_email = $request->head_email;
+        $organization->regional_email = $request->regional_email;
+        $organization->chef_email = $request->chef_email;
+        $organization->phone = $request->phone;
+        $organization->is_certification = $request->is_certification;
+        $organization->save();
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Вывести организации
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function create()
+    public function store()
     {
-        //
+        return response()->json([
+            'organizations' => Organization::all()
+        ]);
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Вывести карточку организации
      *
+     * @param int $id
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function show($id)
+    {
+        return response()->json([
+            'organization' => Organization::find($id)
+        ]);
+    }
+
+    /**
+     * Вывести карточку редактирования организации
+     *
+     * @param int $id
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function edit($id)
+    {
+        return response()->json([
+            'organization' => Organization::find($id)
+        ]);
+    }
+
+    /**
+     * Обновить организацию
+     *
+     * @param int $id
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @return void
      */
-    public function store(Request $request)
+    public function update(Request $request, $id)
     {
-        //
+        $organization_new = $request->all();
+        $organization = Organization::find($id);
+        $organization->name = $organization_new['name'];
+        $organization->address = $organization_new['address'];
+        $organization->legal_entity = $organization_new['legal_entity'];
+        $organization->head_fio = $organization_new['head_fio'];
+        $organization->head_email = $organization_new['head_email'];
+        $organization->regional_email = $organization_new['regional_email'];
+        $organization->chef_email = $organization_new['chef_email'];
+        $organization->phone = $organization_new['phone'];
+        $organization->is_certification = $organization_new['is_certification'];
+        $organization->save();
     }
 
     /**
-     * Display the specified resource.
+     * Удалить организацию
      *
-     * @param  \App\Http\Models\Organization  $organization
-     * @return \Illuminate\Http\Response
+     * @param int $id
+     * @return void
      */
-    public function show(Organization $organization)
+    public function destroy($id)
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Http\Models\Organization  $organization
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Organization $organization)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Http\Models\Organization  $organization
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Organization $organization)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Http\Models\Organization  $organization
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Organization $organization)
-    {
-        //
+        Organization::destroy($id);
     }
 }

@@ -1,6 +1,5 @@
-import React from 'react';
-import {Link} from 'react-router';
 import Navigation from '../components/includes/Navigation';
+import React from 'react';
 
 export default class Layout extends React.Component {
     render() {
@@ -8,6 +7,7 @@ export default class Layout extends React.Component {
         const containerStyle = {
             marginTop: '60px'
         };
+
         return (
             <div>
                 <Navigation location={location}/>
