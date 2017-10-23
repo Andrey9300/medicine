@@ -34,25 +34,12 @@ class ResearchController extends Controller
     }
 
     /**
-     * Вывести карточку исследования
+     * Отдать данные исследования
      *
      * @param int $id
      * @return \Illuminate\Http\JsonResponse
      */
     public function show($id)
-    {
-        return response()->json([
-            'research' => Research::find($id)
-        ]);
-    }
-
-    /**
-     * Вывести карточку редактирования исследования
-     *
-     * @param int $id
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function edit($id)
     {
         return response()->json([
             'research' => Research::find($id)

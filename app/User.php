@@ -26,4 +26,12 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    /**
+     * The roles that belong to the user.
+     */
+    public function researches()
+    {
+        return $this->belongsToMany('App\Http\Models\Research', 'user_research')->withPivot('id', 'date');
+    }
 }

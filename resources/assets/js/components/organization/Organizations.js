@@ -56,6 +56,10 @@ class Organizations extends React.Component {
                                         <td>{organization.phone}</td>
                                         <td>{organization.is_certification}</td>
                                         <td>
+                                            <Link to={`organizations/${organization.id}`}
+                                                  className="btn btn-warning btn-xs pull-left">
+                                                <i className="glyphicon glyphicon-pencil"></i>
+                                            </Link>
                                             <Link to={`organizations/edit/${organization.id}`}
                                                   className="btn btn-success btn-xs pull-left">
                                                 <i className="glyphicon glyphicon-pencil"></i>

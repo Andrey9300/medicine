@@ -13,6 +13,6 @@ class Hospital extends Model
      */
     public function researches()
     {
-        return $this->belongsToMany('App\Http\Models\Research');
+        return $this->belongsToMany('App\Http\Models\Research')->withPivot('id', 'price');
     }
 }

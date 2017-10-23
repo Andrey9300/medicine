@@ -41,25 +41,12 @@ class OrganizationController extends Controller
     }
 
     /**
-     * Вывести карточку организации
+     * Отдать данные организации
      *
      * @param int $id
      * @return \Illuminate\Http\JsonResponse
      */
     public function show($id)
-    {
-        return response()->json([
-            'organization' => Organization::find($id)
-        ]);
-    }
-
-    /**
-     * Вывести карточку редактирования организации
-     *
-     * @param int $id
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function edit($id)
     {
         return response()->json([
             'organization' => Organization::find($id)

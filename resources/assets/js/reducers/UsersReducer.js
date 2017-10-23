@@ -7,68 +7,68 @@
 export default function reducer(state = {
     error: null,
     fetched: false,
-    hospital: null,
-    hospitalResearch: null,
-    hospitalResearches: [],
-    hospitals: []
+    user: null,
+    userResearch: null,
+    userResearches: [],
+    users: []
 
 }, action
 ) {
     switch (action.type) {
-        case 'FETCH_HOSPITALS_REJECTED': {
+        case 'FETCH_USERS_REJECTED': {
             return {
                 ...state,
                 error: action.payload,
                 fetched: false
             };
         }
-        case 'FETCH_HOSPITALS_FULFILLED': {
+        case 'FETCH_USERS_FULFILLED': {
             return {
                 ...state,
                 fetched: true,
-                hospitals: action.payload.hospitals
+                users: action.payload.users
             };
         }
-        case 'FETCH_HOSPITAL_REJECTED': {
+        case 'FETCH_USER_REJECTED': {
             return {
                 ...state,
                 error: action.payload,
                 fetched: false
             };
         }
-        case 'FETCH_HOSPITAL_FULFILLED': {
+        case 'FETCH_USER_FULFILLED': {
             return {
                 ...state,
                 fetched: true,
-                hospital: action.payload
+                user: action.payload
             };
         }
-        case 'FETCH_HOSPITAL_RESEARCHES_REJECTED': {
+        case 'FETCH_USER_RESEARCHES_REJECTED': {
             return {
                 ...state,
                 fetched: true,
-                hospital: action.payload
+                user: action.payload
             };
         }
-        case 'FETCH_HOSPITAL_RESEARCHES_FULFILLED': {
+        case 'FETCH_USER_RESEARCHES_FULFILLED': {
             return {
                 ...state,
                 fetched: true,
-                hospitalResearches: action.payload.hospital_researches
+                userResearches: action.payload.user_researches
             };
         }
-        case 'FETCH_HOSPITAL_RESEARCH_REJECTED': {
+        case 'FETCH_USER_RESEARCH_REJECTED': {
             return {
                 ...state,
                 fetched: true,
-                hospital: action.payload
+                user: action.payload
             };
         }
-        case 'FETCH_HOSPITAL_RESEARCH_FULFILLED': {
+        case 'FETCH_USER_RESEARCH_FULFILLED': {
             return {
                 ...state,
                 fetched: true,
-                hospitalResearch: action.payload
+                userResearch: action.payload
             };
         }
         default: return {

@@ -1,18 +1,25 @@
+import {fetchResearches} from '../../../actions/researchActions';
 import {NotificationManager} from 'react-notifications';
 import React from 'react';
 import axios from 'axios';
+import {connect} from 'react-redux';
 
-class NewHospital extends React.Component {
+class NewUserResearch extends React.Component {
     static contextTypes = {
         router: React.PropTypes.object.isRequired
     };
 
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
         this.state = {
-            errors: ''
+            errors: '',
+            userId: props.params.idUser,
         };
         this.handleSubmit = this.handleSubmit.bind(this);
+    }
+
+    componentWillMount() {
+        this.props.dispatch(fetchResearches());
     }
 
     handleSubmit(event) {
@@ -20,13 +27,13 @@ class NewHospital extends React.Component {
         const formElement = document.querySelector('form');
         const formData = new FormData(formElement);
 
-        axios.post('/hospitals/create', formData)
+        axios.post(`/users/researches/create/${this.props.params.idUser}`, formData)
             .then(() => {
-                this.context.router.push('/hospitals');
-                NotificationManager.success('Hospital has been created!', 'Success', 5000);
+                this.context.router.push('/users');
+                NotificationManager.success('User has been created!', 'Success', 5000);
             })
             .catch((error) => {
-                    const errors = error.response.data.messages;
+                const errors = error.response.data.message;
 
                 this.setState({
                     errors: errors
@@ -52,24 +59,19 @@ class NewHospital extends React.Component {
 
         return (
             <div>
-                <h1>Добавить медицинскую организацию</h1>
+                <h1>Добавить исследования к медицинской организации</h1>
                 <div className="col-lg-8">
                     {errors}
                     <form method="post" onSubmit={this.handleSubmit}>
+                        <select className="custom-select" name="name">
+                            {this.props.researches.map((research) => {
+                                return (
+                                    <option key={research.id} value={research.id}>{research.name}</option>
+                                );
+                            })}
+                        </select>
                         <div className="form-group col-lg-6">
-                            <input className="form-control" placeholder="Название" name="name" required/>
-                        </div>
-                        <div className="form-group col-lg-6">
-                            <input className="form-control" placeholder="Фактический адрес" name="address" required/>
-                        </div>
-                        <div className="form-group col-lg-6">
-                            <input className="form-control" placeholder="Расписание" name="shedule" required/>
-                        </div>
-                        <div className="form-group col-lg-6">
-                            <input className="form-control" placeholder="Фото карты" name="photo_map" required/>
-                        </div>
-                        <div className="form-group col-lg-6">
-                            <input className="form-control" placeholder="Телефон" name="phone" required/>
+                            <input className="form-control" placeholder="Дата обследования" name="date" required/>
                         </div>
                         <div className="form-group col-lg-6">
                             <button type="submit" className="btn btn-primary btn-block">Сохранить</button>
@@ -80,4 +82,15 @@ class NewHospital extends React.Component {
         );
     }
 }
-export default NewHospital;
+
+/**
+ * Map
+ * @param state
+ * @returns {{researchesUser: (*|Array)}}
+ */
+function mapStateToProps(state) {
+    return {
+        researches: state.researches.researches
+    };
+}
+export default connect(mapStateToProps)(NewUserResearch);

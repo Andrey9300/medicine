@@ -60,7 +60,11 @@ class NewResearch extends React.Component {
                             <input className="form-control" placeholder="Наименование" name="name" required/>
                         </div>
                         <div className="form-group col-lg-6">
-                            <input className="form-control" placeholder="Период" name="period" required/>
+                            <select className="custom-select" name="period">
+                                <option value="раз в год">Раз в год</option>
+                                <option value="Два раза в год">Два раза в год</option>
+                                <option value="Три раза в год">Три раза в год</option>
+                            </select>
                         </div>
                         <div className="form-group col-lg-6">
                             <button type="submit" className="btn btn-primary btn-block">Сохранить</button>

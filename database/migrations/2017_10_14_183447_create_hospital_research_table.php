@@ -20,6 +20,7 @@ class CreateHospitalResearchTable extends Migration
             $table->double('price')->default(0);
             $table->foreign('hospital_id')->references('id')->on('hospitals');
             $table->foreign('research_id')->references('id')->on('researches');
+            $table->unique(array('hospital_id', 'research_id'));
         });
     }
 

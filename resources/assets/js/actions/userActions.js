@@ -5,19 +5,19 @@ import axios from 'axios';
  * Fetch
  * @returns {function(*)}
  */
-export function fetchHospitals() {
+export function fetchUsers() {
     return (dispatch) => {
-        axios.post('/hospitals')
+        axios.post('/users')
             .then((response) => {
                 dispatch({
                     payload: response.data,
-                    type: 'FETCH_HOSPITALS_FULFILLED'
+                    type: 'FETCH_USERS_FULFILLED'
                 });
             })
             .catch((error) => {
                 dispatch({
                     payload: error,
-                    type: 'FETCH_HOSPITALS_REJECTED'
+                    type: 'FETCH_USERS_REJECTED'
                 });
             });
     };
@@ -28,19 +28,19 @@ export function fetchHospitals() {
  * @param id
  * @returns {function(*)}
  */
-export function fetchHospital(id) {
+export function fetchUser(id) {
     return (dispatch) => {
-        axios.post(`/hospitals/${id}`)
+        axios.post(`/users/${id}`)
             .then((response) => {
                 dispatch({
-                    payload: response.data.hospital,
-                    type: 'FETCH_HOSPITAL_FULFILLED'
+                    payload: response.data.user,
+                    type: 'FETCH_USER_FULFILLED'
                 });
             })
             .catch((error) => {
                 dispatch({
                     payload: error,
-                    type: 'FETCH_HOSPITAL_REJECTED'
+                    type: 'FETCH_USER_REJECTED'
                 });
             });
     };
@@ -51,12 +51,12 @@ export function fetchHospital(id) {
  * @param id number
  * @returns {Function}
  */
-export function deleteHospital(id) {
+export function deleteUser(id) {
     return (dispatch) => {
-        axios.post(`/hospitals/destroy/${id}`)
+        axios.post(`/users/destroy/${id}`)
             .then((response) => {
                 NotificationManager.success(response.data.message, 'Success');
-                dispatch(fetchHospitals());
+                dispatch(fetchUsers());
             })
             .catch((error) => {
                 NotificationManager.error('An error occured in the operation', 'Error', error);
@@ -65,7 +65,7 @@ export function deleteHospital(id) {
 }
 
 /**
- * Исследования медицинских учреждений
+ * Исследования сотрудников учреждений
  */
 
 /**
@@ -73,19 +73,20 @@ export function deleteHospital(id) {
  * @param id - id мед учреждения
  * @returns {function(*)}
  */
-export function fetchHospitalResearches(id) {
+export function fetchUserResearches(id) {
     return (dispatch) => {
-        axios.post(`/hospitals/researches/${id}`)
+        axios.post(`/users/researches/${id}`)
             .then((response) => {
+                console.log(response, 'resp');
                 dispatch({
                     payload: response.data,
-                    type: 'FETCH_HOSPITAL_RESEARCHES_FULFILLED'
+                    type: 'FETCH_USER_RESEARCHES_FULFILLED'
                 });
             })
             .catch((error) => {
                 dispatch({
                     payload: error,
-                    type: 'FETCH_HOSPITAL_RESEARCHES_REJECTED'
+                    type: 'FETCH_USER_RESEARCHES_REJECTED'
                 });
             });
     };
@@ -93,22 +94,22 @@ export function fetchHospitalResearches(id) {
 
 /**
  * Fetch
- * @param id_hospital, id_research
+ * @param id_user, id_research
  * @returns {function(*)}
  */
-export function fetchHospitalResearch(idHospital, idResearch) {
+export function fetchUserResearch(idUser, idResearch) {
     return (dispatch) => {
-        axios.post(`/hospitals/researches/edit/${idHospital}/${idResearch}`)
+        axios.post(`/users/researches/edit/${idUser}/${idResearch}`)
             .then((response) => {
                 dispatch({
-                    payload: response.data.hospital_research,
-                    type: 'FETCH_HOSPITAL_RESEARCH_FULFILLED'
+                    payload: response.data.user_research,
+                    type: 'FETCH_USER_RESEARCH_FULFILLED'
                 });
             })
             .catch((error) => {
                 dispatch({
                     payload: error,
-                    type: 'FETCH_HOSPITAL_RESEARCH_REJECTED'
+                    type: 'FETCH_USER_RESEARCH_REJECTED'
                 });
             });
     };
@@ -119,12 +120,12 @@ export function fetchHospitalResearch(idHospital, idResearch) {
  * @param id number
  * @returns {Function}
  */
-export function deleteHospitalResearch(idHospital, idResearch) {
+export function deleteUserResearch(idUser, idResearch) {
     return (dispatch) => {
-        axios.post(`/hospitals/researches/destroy/${idHospital}/${idResearch}`)
+        axios.post(`/users/researches/destroy/${idUser}/${idResearch}`)
             .then((response) => {
                 NotificationManager.success(response.data.message, 'Success');
-                dispatch(fetchHospitalResearches(idHospital));
+                dispatch(fetchUserResearches(idUser));
             })
             .catch((error) => {
                 NotificationManager.error('An error occured in the operation', 'Error', error);
