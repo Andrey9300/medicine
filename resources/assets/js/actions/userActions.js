@@ -1,6 +1,30 @@
 import {NotificationManager} from 'react-notifications';
 import axios from 'axios';
 
+export function loginUser(formData) {
+    return (dispatch) => {
+        axios.post('/login', formData)
+            .then(() => {
+                dispatch({
+                    payload: true,
+                    type: 'FETCH_LOGIN_USER_FULFILLED'
+                });
+            })
+            .catch(() => {
+                dispatch({
+                    payload: false,
+                    type: 'FETCH_LOGIN_USER_REJECTED'
+                });
+            });
+    };
+}
+
+export function logout() {
+    return {
+        type: LOGOUT_SUCCESS
+    };
+}
+
 /**
  * Fetch
  * @returns {function(*)}

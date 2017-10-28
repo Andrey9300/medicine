@@ -1,6 +1,20 @@
 import {NotificationManager} from 'react-notifications';
 import React from 'react';
 import axios from 'axios';
+import {
+    Row,
+    Col,
+    Button,
+    Card,
+    CardHeader,
+    CardFooter,
+    CardBlock,
+    Form,
+    FormGroup,
+    FormText,
+    Label,
+    Input
+} from 'reactstrap';
 
 class NewUser extends React.Component {
     static contextTypes = {
@@ -52,35 +66,83 @@ class NewUser extends React.Component {
 
         return (
             <div>
-                <h1>Добавить сотрудника</h1>
+                <Row>
+                    <Col xs="12" md="6">
+                        <Card>
+                            <CardHeader>
+                                Добавить сотрудника
+                            </CardHeader>
+                            <CardBlock className="card-body">
+                                <Form className="form-horizontal">
+                                    <FormGroup row>
+                                        <Col md="3">
+                                            <Label htmlFor="text-input">ФИО</Label>
+                                        </Col>
+                                        <Col xs="12" md="9">
+                                            <Input type="text" id="name" name="fio" placeholder="ФИО" required/>
+                                            <FormText color="muted">Введите ФИО</FormText>
+                                        </Col>
+                                    </FormGroup>
+                                    <FormGroup row>
+                                        <Col md="3">
+                                            <Label htmlFor="text-input">Дата рождения</Label>
+                                        </Col>
+                                        <Col xs="12" md="9">
+                                            <Input type="text" id="date_birthday" name="date_birthday" placeholder="Дата рождения" required/>
+                                            <FormText color="muted">Введите дату рождения</FormText>
+                                        </Col>
+                                    </FormGroup>
+                                    <FormGroup row>
+                                        <Col md="3">
+                                            <Label htmlFor="text-input">Дата приема на работу</Label>
+                                        </Col>
+                                        <Col xs="12" md="9">
+                                            <Input type="text" id="date_employment" name="date_employment" placeholder="Дата приема на работу" required/>
+                                            <FormText color="muted">Введите дату приема на работу</FormText>
+                                        </Col>
+                                    </FormGroup>
+                                    <FormGroup row>
+                                        <Col md="3">
+                                            <Label htmlFor="text-input">Номер медицинской книжки</Label>
+                                        </Col>
+                                        <Col xs="12" md="9">
+                                            <Input type="text" id="medical_book" name="medical_book" placeholder="Номер медицинской книжки"/>
+                                            <FormText color="muted">Введите номер медицинской книжки</FormText>
+                                        </Col>
+                                    </FormGroup>
+                                    <FormGroup row>
+                                        <Col md="3">
+                                            <Label htmlFor="text-input">Должность</Label>
+                                        </Col>
+                                        <Col xs="12" md="9">
+                                            <Input type="text" id="role" name="role" placeholder="Должность" required/>
+                                            <FormText color="muted">Введите должность</FormText>
+                                        </Col>
+                                    </FormGroup>
+                                    <FormGroup row>
+                                        <Col md="3">
+                                            <Label htmlFor="text-input">Название организации</Label>
+                                        </Col>
+                                        <Col xs="12" md="9">
+                                            <Input type="text" id="organization_name" name="organization_name" placeholder="Название организации" required/>
+                                            <FormText color="muted">Введите название организации</FormText>
+                                        </Col>
+                                    </FormGroup>
+                                </Form>
+                            </CardBlock>
+                            <CardFooter>
+                                <Button type="submit" size="sm" color="success" onClick={this.handleSubmit}>
+                                    <i className="fa fa-dot-circle-o"></i> Сохранить
+                                </Button>
+                            </CardFooter>
+                        </Card>
+                    </Col>
+                </Row>
+
+
                 <div className="col-lg-8">
                     {errors}
-                    <form method="post" onSubmit={this.handleSubmit}>
-                        <div className="form-group col-lg-6">
-                            <input className="form-control" placeholder="ФИО" name="fio"/>
-                        </div>
-                        <div className="form-group col-lg-6">
-                            <input className="form-control" placeholder="Дата рождения" name="date_birthday"/>
-                        </div>
-                        <div className="form-group col-lg-6">
-                            <input className="form-control" placeholder="Дата приема на работу" name="date_employment"/>
-                        </div>
-                        <div className="form-group col-lg-6">
-                            <input className="form-control" placeholder="Номер медицинской книжки" name="medical_book"/>
-                        </div>
-                        <div className="form-group col-lg-6">
-                            <input className="form-control" placeholder="Должность" name="role"/>
-                        </div>
-                        <div className="form-group col-lg-6">
-                            <input className="form-control" placeholder="E-mail" name="email"/>
-                        </div>
-                        <div className="form-group col-lg-6">
-                            <input className="form-control" placeholder="Название организации" name="organization_name"/>
-                        </div>
-                        <div className="form-group col-lg-6">
-                            <button type="submit" className="btn btn-primary btn-block">Сохранить</button>
-                        </div>
-                    </form>
+
                 </div>
             </div>
         );

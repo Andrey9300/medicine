@@ -8,6 +8,7 @@ export default function reducer(state = {
     error: null,
     fetched: false,
     organization: null,
+    organizationUsers: [],
     organizations: []
 }, action
 ) {
@@ -38,6 +39,20 @@ export default function reducer(state = {
                 ...state,
                 fetched: true,
                 organization: action.payload
+            };
+        }
+        case 'FETCH_ORGANIZATION_USERS_REJECTED': {
+            return {
+                ...state,
+                error: action.payload,
+                fetched: false
+            };
+        }
+        case 'FETCH_ORGANIZATION_USERS_FULFILLED': {
+            return {
+                ...state,
+                fetched: true,
+                organizationUsers: action.payload.organization_users
             };
         }
         default: return {

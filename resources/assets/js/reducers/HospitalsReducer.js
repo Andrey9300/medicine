@@ -11,7 +11,6 @@ export default function reducer(state = {
     hospitalResearch: null,
     hospitalResearches: [],
     hospitals: []
-
 }, action
 ) {
     switch (action.type) {

@@ -8,13 +8,28 @@ export default function reducer(state = {
     error: null,
     fetched: false,
     user: null,
+    userAuth: false,
     userResearch: null,
     userResearches: [],
+    userRoles: [],
     users: []
-
 }, action
 ) {
     switch (action.type) {
+        case 'FETCH_LOGIN_USER_REJECTED': {
+            return {
+                ...state,
+                error: action.payload,
+                fetched: false
+            };
+        }
+        case 'FETCH_LOGIN_USER_FULFILLED': {
+            return {
+                ...state,
+                fetched: true,
+                userAuth: action.payload
+            };
+        }
         case 'FETCH_USERS_REJECTED': {
             return {
                 ...state,

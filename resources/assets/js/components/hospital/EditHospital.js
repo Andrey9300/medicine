@@ -3,6 +3,20 @@ import React from 'react';
 import axios from 'axios';
 import {connect} from 'react-redux';
 import {fetchHospital} from './../../actions/hospitalActions';
+import {
+    Row,
+    Col,
+    Button,
+    Card,
+    CardHeader,
+    CardFooter,
+    CardBlock,
+    Form,
+    FormGroup,
+    FormText,
+    Label,
+    Input
+} from 'reactstrap';
 
 class EditHospital extends React.Component {
     static contextTypes = {
@@ -61,42 +75,75 @@ class EditHospital extends React.Component {
 
         if (hospital !== null) {
             formElements =
-                <div>
-                    <div className="form-group col-lg-6">
-                        <input className="form-control" placeholder="Название"
-                               name="name" defaultValue={hospital.name}/>
-                    </div>
-                    <div className="form-group col-lg-6">
-                        <input className="form-control" placeholder="Адрес" name="address"
-                               defaultValue={hospital.address}/>
-                    </div>
-                    <div className="form-group col-lg-6">
-                        <input className="form-control" placeholder="Расписание" name="shedule"
-                               defaultValue={hospital.shedule}/>
-                    </div>
-                    <div className="form-group col-lg-6">
-                        <input className="form-control" placeholder="Фото карты" name="photo_map"
-                               defaultValue={hospital.photo_map}/>
-                    </div>
-                    <div className="form-group col-lg-6">
-                        <input className="form-control" placeholder="Телефон" name="phone"
-                               defaultValue={hospital.phone}/>
-                    </div>
-                </div>;
+                <Row>
+                    <Col xs="12" md="6">
+                        <Card>
+                            <CardHeader>
+                                Редактировать медицинское учреждение
+                            </CardHeader>
+                            <CardBlock className="card-body">
+                                <Form className="form-horizontal">
+                                    <FormGroup row>
+                                        <Col md="3">
+                                            <Label htmlFor="text-input">Наименование</Label>
+                                        </Col>
+                                        <Col xs="12" md="9">
+                                            <Input type="text" id="name" name="name" placeholder="Наименование" defaultValue={hospital.name}/>
+                                            <FormText color="muted">Введите наименование</FormText>
+                                        </Col>
+                                    </FormGroup>
+                                    <FormGroup row>
+                                        <Col md="3">
+                                            <Label htmlFor="text-input">Адрес</Label>
+                                        </Col>
+                                        <Col xs="12" md="9">
+                                            <Input type="text" id="address" name="address" placeholder="Адрес" defaultValue={hospital.address}/>
+                                            <FormText color="muted">Введите aдрес</FormText>
+                                        </Col>
+                                    </FormGroup>
+                                    <FormGroup row>
+                                        <Col md="3">
+                                            <Label htmlFor="text-input">Расписание</Label>
+                                        </Col>
+                                        <Col xs="12" md="9">
+                                            <Input type="text" id="shedule" name="shedule" placeholder="Расписание" defaultValue={hospital.shedule}/>
+                                            <FormText color="muted">Введите расписание</FormText>
+                                        </Col>
+                                    </FormGroup>
+                                    <FormGroup row>
+                                        <Col md="3">
+                                            <Label htmlFor="text-input">Фото карты</Label>
+                                        </Col>
+                                        <Col xs="12" md="9">
+                                            <Input type="text" id="photo_map" name="photo_map" placeholder="Фото карты" defaultValue={hospital.photo_map}/>
+                                            <FormText color="muted">Загрузите фото карты</FormText>
+                                        </Col>
+                                    </FormGroup>
+                                    <FormGroup row>
+                                        <Col md="3">
+                                            <Label htmlFor="text-input">Телефон</Label>
+                                        </Col>
+                                        <Col xs="12" md="9">
+                                            <Input type="text" id="phone" name="phone" placeholder="Телефон" defaultValue={hospital.phone}/>
+                                            <FormText color="muted">Введите телефон</FormText>
+                                        </Col>
+                                    </FormGroup>
+                                </Form>
+                            </CardBlock>
+                            <CardFooter>
+                                <Button type="submit" size="sm" color="success" onClick={this.handleSubmit}>
+                                    <i className="fa fa-dot-circle-o"></i> Сохранить
+                                </Button>
+                            </CardFooter>
+                        </Card>
+                    </Col>
+                </Row>;
         }
 
         return (
             <div>
-                <h1>Редактировать медицинское учреждение</h1>
-                <div className="col-lg-8">
-                    {errors}
-                    <form onSubmit={this.handleSubmit}>
-                        {formElements}
-                        <div className="form-group col-lg-6">
-                            <button type="submit" className="btn btn-primary btn-block">Сохранить</button>
-                        </div>
-                    </form>
-                </div>
+                {errors}
+                {formElements}
             </div>
         );
     }

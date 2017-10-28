@@ -87,6 +87,9 @@
     ],
     "sort-imports": [
       0
+    ],
+    "require-jsdoc": [
+      0
     ]
   },
   "plugins": [

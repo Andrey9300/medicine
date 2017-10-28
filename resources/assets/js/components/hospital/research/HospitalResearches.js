@@ -2,6 +2,14 @@ import {fetchHospitalResearches, deleteHospitalResearch} from '../../../actions/
 import {Link} from 'react-router';
 import React from 'react';
 import {connect} from 'react-redux';
+import {
+    Row,
+    Col,
+    Card,
+    CardHeader,
+    CardBlock,
+    Table
+} from 'reactstrap';
 
 class HospitalResearches extends React.Component {
     static contextTypes = {
@@ -13,7 +21,7 @@ class HospitalResearches extends React.Component {
 
         this.state = {
             errors: '',
-            hospitalId: props.idHospital,
+            hospitalId: props.idHospital, // не будет работать на отдельной странице исследования объекта
         };
     }
 
@@ -28,50 +36,58 @@ class HospitalResearches extends React.Component {
 
     render() {
         return (
-            <div>
-                <h1 className="pull-left">Цены на исследования</h1>
-                <div className="col-lg-12">
-                    <Link to={`hospitals/researches/${this.state.hospitalId}/create`} className="btn btn-primary btn-sm pull-left">
-                        Добавить &nbsp; <i className="glyphicon glyphicon-plus"></i>
-                    </Link>
-                    <table className="table table-responsive">
-                        <thead>
-                            <tr>
-                                <th>Название</th>
-                                <th>Период</th>
-                                <th>Цена</th>
-                                <th></th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            { this.props.hospitalResearches.map((research, index) => {
-                                return (
-                                    <tr key={research.id}>
-                                        <td>{research.name}</td>
-                                        <td>{research.period}</td>
-                                        <td>{research.pivot.price}</td>
-                                        <td>
-                                            <Link to={`hospitals/researches/edit/${this.state.hospitalId}/${research.id}`}
-                                                  className="btn btn-primary btn-xs pull-left">
-                                                <i className="glyphicon glyphicon-pencil"></i>
-                                            </Link>
-                                            <form id={`form_${research.id}`} className="pull-left" method="post">
-                                                <input type="hidden" name="hospital_research_id" value={research.id} />
-                                                <a className="btn btn-danger btn-xs"
-                                                   onClick={(event) => this.handleBtnDelete(research.id, event)}
-                                                   href="#" id={research.id}>
-                                                    <i className="glyphicon glyphicon-trash"></i>
-                                                </a>
-                                            </form>
-                                        </td>
+            <div className="animated fadeIn">
+                <Row>
+                    <Col xs="12" lg="12">
+                        <Card>
+                            <CardHeader>
+                                <i className="fa fa-align-justify"></i>Цены на исследования
+                            </CardHeader>
+                            <CardBlock className="card-body">
+                                <Table responsive>
+                                    <thead>
+                                    <tr>
+                                        <th>Название</th>
+                                        <th>Цена</th>
+                                        <th>Редактировать</th>
+                                        <th>Удалить</th>
                                     </tr>
-
-                                );
-                            })
-                            }
-                        </tbody>
-                    </table>
-                </div>
+                                    </thead>
+                                    <tbody>
+                                    { this.props.hospitalResearches.map((research, index) => {
+                                        return (
+                                            <tr key={research.id}>
+                                                <td>{research.name}</td>
+                                                <td>{research.pivot.price}</td>
+                                                <td>
+                                                    <Link to={`hospitals/researches/edit/${this.state.hospitalId}/${research.id}`}
+                                                          className="btn btn-primary btn-xs pull-left">Редактировать
+                                                        <i className="glyphicon glyphicon-pencil"></i>
+                                                    </Link>
+                                                </td>
+                                                <td>
+                                                    <form id={`form_${research.id}`} className="pull-left" method="post">
+                                                        <input type="hidden" name="hospital_research_id" value={research.id} />
+                                                        <a className="btn btn-danger btn-xs"
+                                                           onClick={(event) => this.handleBtnDelete(research.id, event)}
+                                                           href="#" id={research.id}>Удалить
+                                                            <i className="glyphicon glyphicon-trash"></i>
+                                                        </a>
+                                                    </form>
+                                                </td>
+                                            </tr>
+                                        );
+                                    })
+                                    }
+                                    </tbody>
+                                </Table>
+                                <Link to={`hospitals/researches/${this.state.hospitalId}/create`} className="btn btn-primary btn-sm pull-left">
+                                    Добавить &nbsp; <i className="glyphicon glyphicon-plus"></i>
+                                </Link>
+                            </CardBlock>
+                        </Card>
+                    </Col>
+                </Row>
             </div>
         );
     }

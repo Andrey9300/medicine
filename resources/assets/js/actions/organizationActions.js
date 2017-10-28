@@ -63,3 +63,50 @@ export function deleteOrganization(id) {
             });
     };
 }
+
+
+/**
+ * Сотрудники организации
+ */
+
+/**
+ *
+ * @param idOrganization - id организации
+ * @returns {function(*)}
+ */
+export function fetchOrganizationUsers(idOrganization) {
+    return (dispatch) => {
+        axios.post(`/organizations/users/${idOrganization}`)
+            .then((response) => {
+                dispatch({
+                    payload: response.data,
+                    type: 'FETCH_ORGANIZATION_USERS_FULFILLED'
+                });
+            })
+            .catch((error) => {
+                dispatch({
+                    payload: error,
+                    type: 'FETCH_ORGANIZATION_USERS_REJECTED'
+                });
+            });
+    };
+}
+
+/**
+ * Delete
+ * @param idOrganization number
+ * @param idUser number
+ * @returns {Function}
+ */
+export function deleteOrganizationUser(idOrganization, idUser) {
+    return (dispatch) => {
+        axios.post(`/organizations/users/destroy/${idOrganization}/${idUser}`)
+            .then((response) => {
+                NotificationManager.success(response.data.message, 'Success');
+                dispatch(fetchOrganizationUsers(idOrganization));
+            })
+            .catch((error) => {
+                NotificationManager.error('An error occured in the operation', 'Error', error);
+            });
+    };
+}

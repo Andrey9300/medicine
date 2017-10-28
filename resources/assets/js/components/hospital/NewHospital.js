@@ -1,6 +1,20 @@
 import {NotificationManager} from 'react-notifications';
 import React from 'react';
 import axios from 'axios';
+import {
+    Row,
+    Col,
+    Button,
+    Card,
+    CardHeader,
+    CardFooter,
+    CardBlock,
+    Form,
+    FormGroup,
+    FormText,
+    Label,
+    Input
+} from 'reactstrap';
 
 class NewHospital extends React.Component {
     static contextTypes = {
@@ -51,31 +65,71 @@ class NewHospital extends React.Component {
         }
 
         return (
-            <div>
-                <h1>Добавить медицинскую организацию</h1>
-                <div className="col-lg-8">
-                    {errors}
-                    <form method="post" onSubmit={this.handleSubmit}>
-                        <div className="form-group col-lg-6">
-                            <input className="form-control" placeholder="Название" name="name" required/>
-                        </div>
-                        <div className="form-group col-lg-6">
-                            <input className="form-control" placeholder="Фактический адрес" name="address" required/>
-                        </div>
-                        <div className="form-group col-lg-6">
-                            <input className="form-control" placeholder="Расписание" name="shedule" required/>
-                        </div>
-                        <div className="form-group col-lg-6">
-                            <input className="form-control" placeholder="Фото карты" name="photo_map" required/>
-                        </div>
-                        <div className="form-group col-lg-6">
-                            <input className="form-control" placeholder="Телефон" name="phone" required/>
-                        </div>
-                        <div className="form-group col-lg-6">
-                            <button type="submit" className="btn btn-primary btn-block">Сохранить</button>
-                        </div>
-                    </form>
-                </div>
+            <div className="animated fadeIn">
+                {errors}
+                <Row>
+                    <Col xs="12" md="6">
+                        <Card>
+                            <CardHeader>
+                                Добавить медицинскую организацию
+                            </CardHeader>
+                            <CardBlock className="card-body">
+                                <Form className="form-horizontal">
+                                    <FormGroup row>
+                                        <Col md="3">
+                                            <Label htmlFor="text-input">Наименование</Label>
+                                        </Col>
+                                        <Col xs="12" md="9">
+                                            <Input type="text" id="name" name="name" placeholder="Наименование" required/>
+                                            <FormText color="muted">Введите наименование</FormText>
+                                        </Col>
+                                    </FormGroup>
+                                    <FormGroup row>
+                                        <Col md="3">
+                                            <Label htmlFor="text-input">Фактический адрес</Label>
+                                        </Col>
+                                        <Col xs="12" md="9">
+                                            <Input type="text" id="address" name="address" placeholder="Фактический адрес" required/>
+                                            <FormText color="muted">Введите адрес</FormText>
+                                        </Col>
+                                    </FormGroup>
+                                    <FormGroup row>
+                                        <Col md="3">
+                                            <Label htmlFor="text-input">Расписание</Label>
+                                        </Col>
+                                        <Col xs="12" md="9">
+                                            <Input type="text" id="shedule" name="shedule" placeholder="Расписание" required/>
+                                            <FormText color="muted">Введите расписание</FormText>
+                                        </Col>
+                                    </FormGroup>
+                                    <FormGroup row>
+                                        <Col md="3">
+                                            <Label htmlFor="text-input">Фото карты</Label>
+                                        </Col>
+                                        <Col xs="12" md="9">
+                                            <Input type="text" id="photo_map" name="photo_map" placeholder="Фото карты" required/>
+                                            <FormText color="muted">Добавьте фото карты</FormText>
+                                        </Col>
+                                    </FormGroup>
+                                    <FormGroup row>
+                                        <Col md="3">
+                                            <Label htmlFor="text-input">Телефон</Label>
+                                        </Col>
+                                        <Col xs="12" md="9">
+                                            <Input type="text" id="phone" name="phone" placeholder="Телефон" required/>
+                                            <FormText color="muted">Введите телефон</FormText>
+                                        </Col>
+                                    </FormGroup>
+                                </Form>
+                            </CardBlock>
+                            <CardFooter>
+                                <Button type="submit" size="sm" color="success" onClick={this.handleSubmit}>
+                                    <i className="fa fa-dot-circle-o"></i> Сохранить
+                                </Button>
+                            </CardFooter>
+                        </Card>
+                    </Col>
+                </Row>
             </div>
         );
     }
