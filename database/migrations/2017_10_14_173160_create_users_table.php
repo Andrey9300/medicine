@@ -19,9 +19,9 @@ class CreateUsersTable extends Migration
             $table->string('password');
             $table->date('date_birthday');
             $table->date('date_employment');
-            $table->string('medical_book');
+            $table->string('medical_book')->nullable();
             $table->string('role');
-            $table->string('email')->unique();
+            $table->string('email')->unique()->nullable();
             $table->string('organization_name');
             $table->rememberToken();
             $table->timestamps();

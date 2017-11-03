@@ -1,9 +1,9 @@
-import {NotificationManager} from 'react-notifications';
 import React from 'react';
-import axios from 'axios';
 import {connect} from 'react-redux';
-import {fetchHospital} from './../../actions/hospitalActions';
+import {fetchHospital, deleteHospital} from './../../actions/hospitalActions';
 import HospitalResearches from './research/HospitalResearches';
+import {Link} from 'react-router';
+import {Row, Col, Card, CardHeader, CardBlock, Table} from 'reactstrap';
 
 class Hospital extends React.Component {
     static contextTypes = {
@@ -20,6 +20,11 @@ class Hospital extends React.Component {
 
     componentWillMount() {
         this.props.dispatch(fetchHospital(this.state.hospitalId));
+    }
+
+    handleBtnDelete(hospitalId, event) {
+        event.preventDefault();
+        this.props.dispatch(deleteHospital(hospitalId));
     }
 
     createMarkup() {
@@ -41,32 +46,61 @@ class Hospital extends React.Component {
 
         if (hospital !== null) {
             formElements =
-                <div>
-                    <div className="form-group col-lg-6">
-                        {hospital.name}
-                    </div>
-                    <div className="form-group col-lg-6">
-                        {hospital.address}
-                    </div>
-                    <div className="form-group col-lg-6">
-                        {hospital.shedule}
-                    </div>
-                    <div className="form-group col-lg-6">
-                        {hospital.photo_map}
-                    </div>
-                    <div className="form-group col-lg-6">
-                        {hospital.phone}
-                    </div>
+                <div className="animated fadeIn">
+                    <Row>
+                        <Col xs="12" sm="12" md="12">
+                            <Card>
+                                <CardHeader>
+                                    {hospital.name}
+                                </CardHeader>
+                                <CardBlock className="card-body">
+                                    <Table responsive>
+                                        <tbody>
+                                            <tr>
+                                                <td>Адрес: </td>
+                                                <td>{hospital.address}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Расписание: </td>
+                                                <td>{hospital.shedule}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Телефон: </td>
+                                                <td>{hospital.phone}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <Link to={`hospitals/edit/${hospital.id}`}
+                                                          className="btn btn-success btn-xs pull-left">Редактировать
+                                                        <i className="glyphicon glyphicon-pencil"></i>
+                                                    </Link>
+                                                </td>
+                                                <td>
+                                                    <form id={`form_${hospital.id}`}
+                                                          className="pull-left" method="post">
+                                                        <input type="hidden" name="hospital_id"
+                                                               value={hospital.id} />
+                                                        <a className="btn btn-danger btn-xs"
+                                                           onClick={(event) => this.handleBtnDelete(hospital.id, event)}
+                                                           href="#" id={hospital.id}>Удалить
+                                                            <i className="glyphicon glyphicon-trash"></i>
+                                                        </a>
+                                                    </form>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </Table>
+                                </CardBlock>
+                            </Card>
+                        </Col>
+                    </Row>
                 </div>;
         }
 
         return (
             <div>
-                <h1>Медицинское учреждение</h1>
-                <div className="col-lg-8">
-                    {errors}
-                    {formElements}
-                </div>
+                {errors}
+                {formElements}
                 <HospitalResearches
                     idHospital={this.state.hospitalId}
                 />

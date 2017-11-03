@@ -3,6 +3,20 @@ import {NotificationManager} from 'react-notifications';
 import React from 'react';
 import axios from 'axios';
 import {connect} from 'react-redux';
+import {
+    Row,
+    Col,
+    Button,
+    Card,
+    CardHeader,
+    CardFooter,
+    CardBlock,
+    Form,
+    FormGroup,
+    FormText,
+    Label,
+    Input
+} from 'reactstrap';
 
 class NewHospitalResearch extends React.Component {
     static contextTypes = {
@@ -58,26 +72,49 @@ class NewHospitalResearch extends React.Component {
         }
 
         return (
-            <div>
-                <h1>Добавить исследования к медицинской организации</h1>
-                <div className="col-lg-8">
-                    {errors}
-                    <form method="post" onSubmit={this.handleSubmit}>
-                        <select className="custom-select" name="name">
-                            {this.props.researches.map((research) => {
-                                return (
-                                    <option key={research.id} value={research.id}>{research.name}</option>
-                                );
-                            })}
-                        </select>
-                        <div className="form-group col-lg-6">
-                            <input className="form-control" placeholder="Цена" name="price" required/>
-                        </div>
-                        <div className="form-group col-lg-6">
-                            <button type="submit" className="btn btn-primary btn-block">Сохранить</button>
-                        </div>
-                    </form>
-                </div>
+            <div className="animated fadeIn">
+                {errors}
+                    <Row>
+                        <Col xs="12" md="6">
+                            <Card>
+                                <CardHeader>
+                                    Добавить исследования к медицинской организации
+                                </CardHeader>
+                                <CardBlock className="card-body">
+                                    <Form className="form-horizontal">
+                                        <FormGroup row>
+                                            <Col md="3">
+                                                <Label htmlFor="select">Исследование</Label>
+                                            </Col>
+                                            <Col xs="12" md="9">
+                                                <Input type="select" name="name" id="select">
+                                                    {this.props.researches.map((research) => {
+                                                        return (
+                                                            <option key={research.id} value={research.id}>{research.name}</option>
+                                                        );
+                                                    })}
+                                                </Input>
+                                            </Col>
+                                        </FormGroup>
+                                        <FormGroup row>
+                                            <Col md="3">
+                                                <Label htmlFor="text-input">Цена</Label>
+                                            </Col>
+                                            <Col xs="12" md="9">
+                                                <Input type="text" id="price" name="text-input" placeholder="Цена"/>
+                                                <FormText color="muted">Введите цену</FormText>
+                                            </Col>
+                                        </FormGroup>
+                                    </Form>
+                                </CardBlock>
+                                <CardFooter>
+                                    <Button type="submit" size="sm" color="success" onClick={this.handleSubmit}>
+                                        <i className="fa fa-dot-circle-o"></i> Сохранить
+                                    </Button>
+                                </CardFooter>
+                            </Card>
+                        </Col>
+                    </Row>
             </div>
         );
     }

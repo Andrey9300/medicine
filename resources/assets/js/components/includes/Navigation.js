@@ -21,40 +21,34 @@ export default class Navigation extends React.Component {
     render() {
         const {location} = this.props;
         const {collapsed} = this.state;
-        const homeClass = location.pathname === '/' ? 'active' : '';
-        const hospitalsClass = location.pathname.match(/^\/hospitals/) ? 'active' : '';
-        const organizationsClass = location.pathname.match(/^\/organizations/) ? 'active' : '';
-        const researchesClass = location.pathname.match(/^\/researches/) ? 'active' : '';
+        const homeClass = location.pathname === '/' ? 'active' : 'nav-link';
+        const hospitalsClass = location.pathname.match(/^\/hospitals/) ? 'active' : 'nav-link';
+        const organizationsClass = location.pathname.match(/^\/organizations/) ? 'active' : 'nav-link';
+        const researchesClass = location.pathname.match(/^\/researches/) ? 'active' : 'nav-link';
         const usersClass = location.pathname.match(/^\/users/) ? 'active' : '';
-        const navClass = collapsed ? 'collapse' : '';
 
         return (
-            <div className="navbar navbar-default navbar-fixed-top">
-                <div className="container">
-                    <div className="navbar-header">
-                        <a href="#/" className="navbar-brand">Навигация</a>
-                        <button className="navbar-toggle" type="button" onClick={this.toggleCollapse.bind(this)}></button>
-                    </div>
-                    <div className={`navbar-collapse ${navClass}`} id="navbar-main">
-                        <ul className="nav navbar-nav">
-                            <li className={homeClass}>
-                                <IndexLink to="/" onClick={this.toggleCollapse.bind(this)}>Главная</IndexLink>
-                            </li>
-                            <li className={hospitalsClass}>
-                                <Link to="hospitals" onClick={this.toggleCollapse.bind(this)}>Медицинские учреждения</Link>
-                            </li>
-                            <li className={organizationsClass}>
-                                <Link to="organizations" onClick={this.toggleCollapse.bind(this)}>Организации</Link>
-                            </li>
-                            <li className={researchesClass}>
-                                <Link to="researches" onClick={this.toggleCollapse.bind(this)}>Исследования</Link>
-                            </li>
-                            <li className={usersClass}>
-                                <Link to="users" onClick={this.toggleCollapse.bind(this)}>Сотрудники</Link>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
+            <div className="sidebar">
+                <nav className="sidebar-nav">
+                    <ul className="nav-item">
+                        <li className={homeClass}>
+                            <IndexLink to="/" onClick={this.toggleCollapse.bind(this)}>Главная</IndexLink>
+                        </li>
+                        <li className={hospitalsClass}>
+                            <Link to="hospitals" onClick={this.toggleCollapse.bind(this)}>Медицинские учреждения</Link>
+                        </li>
+                        <li className={organizationsClass}>
+                            <Link to="organizations" onClick={this.toggleCollapse.bind(this)}>Организации</Link>
+                        </li>
+                        <li className={researchesClass}>
+                            <Link to="researches" onClick={this.toggleCollapse.bind(this)}>Исследования</Link>
+                        </li>
+                        <li className={usersClass}>
+                            <Link to="users" onClick={this.toggleCollapse.bind(this)}>Сотрудники</Link>
+                        </li>
+                    </ul>
+                </nav>
+                <button className="sidebar-minimizer brand-minimizer" type="button"></button>
             </div>
         );
     }

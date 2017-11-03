@@ -3,6 +3,21 @@ import React from 'react';
 import axios from 'axios';
 import {connect} from 'react-redux';
 import {fetchResearch} from './../../actions/researchActions';
+import {
+    Row,
+    Col,
+    Button,
+    Card,
+    CardHeader,
+    CardFooter,
+    CardBlock,
+    Form,
+    FormGroup,
+    FormText,
+    Label,
+    Input
+} from "reactstrap";
+
 
 class EditResearch extends React.Component {
     static contextTypes = {
@@ -61,30 +76,51 @@ class EditResearch extends React.Component {
 
         if (research !== null) {
             formElements =
-                <div>
-                    <div className="form-group col-lg-6">
-                        <input className="form-control" placeholder="Наименование"
-                               name="name" defaultValue={research.name}/>
-                    </div>
-                    <div className="form-group col-lg-6">
-                        <input className="form-control" placeholder="Период" name="period"
-                               defaultValue={research.period}/>
-                    </div>
-                </div>;
+                <Row>
+                    <Col xs="12" md="6">
+                        <Card>
+                            <CardHeader>
+                                Редактировать исследование
+                            </CardHeader>
+                            <CardBlock className="card-body">
+                                <Form className="form-horizontal">
+                                    <FormGroup row>
+                                        <Col md="3">
+                                            <Label htmlFor="text-input">Наименование</Label>
+                                        </Col>
+                                        <Col xs="12" md="9">
+                                            <Input type="text" id="name" name="name" placeholder="Наименование" defaultValue={research.name}/>
+                                            <FormText color="muted">Введите наименование</FormText>
+                                        </Col>
+                                    </FormGroup>
+                                    <FormGroup row>
+                                        <Col md="3">
+                                            <Label htmlFor="text-input">Наименование</Label>
+                                        </Col>
+                                        <Col xs="12" md="9">
+                                            <Input type="select" name="period" id="select">
+                                                <option value="раз в год">Раз в год</option>
+                                                <option value="Два раза в год">Два раза в год</option>
+                                                <option value="Три раза в год">Три раза в год</option>
+                                            </Input>
+                                        </Col>
+                                    </FormGroup>
+                                </Form>
+                            </CardBlock>
+                            <CardFooter>
+                                <Button type="submit" size="sm" color="success" onClick={this.handleSubmit}>
+                                    <i className="fa fa-dot-circle-o"></i> Сохранить
+                                </Button>
+                            </CardFooter>
+                        </Card>
+                    </Col>
+                </Row>;
         }
 
         return (
-            <div>
-                <h1>Редактировать исследование</h1>
-                <div className="col-lg-8">
-                    {errors}
-                    <form onSubmit={this.handleSubmit}>
-                        {formElements}
-                        <div className="form-group col-lg-6">
-                            <button type="submit" className="btn btn-primary btn-block">Сохранить</button>
-                        </div>
-                    </form>
-                </div>
+            <div className="animated fadeIn">
+                {errors}
+                {formElements}
             </div>
         );
     }

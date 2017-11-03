@@ -1,45 +1,30 @@
-import {NotificationManager} from 'react-notifications';
 import React from 'react';
-import axios from 'axios';
 import {connect} from 'react-redux';
-import {fetchOrganization} from './../../actions/organizationActions';
+import {deleteOrganization, fetchOrganization} from './../../actions/organizationActions';
+import {Link} from 'react-router';
+import {Row, Col, Card, CardHeader, CardBlock, Table} from 'reactstrap';
+import OrganizationUsersInCard from './OrganizationUsersInCard';
 
 class Organization extends React.Component {
     static contextTypes = {
         router: React.PropTypes.object.isRequired
     };
 
-    constructor(props){
+    constructor(props) {
         super(props);
         this.state = {
             errors: '',
             organizationId: props.params.id,
         };
-        this.handleSubmit = this.handleSubmit.bind(this);
-    }
-
-    handleSubmit(event) {
-        event.preventDefault();
-        const formElement = document.querySelector('form');
-        const formData = new FormData(formElement);
-
-        axios.post(`/organizations/update/${this.state.organizationId}`, formData)
-            .then(() => {
-                this.context.router.push('/organizations');
-                NotificationManager.success('Organization has been updated!', 'Success');
-            })
-            .catch((error) => {
-                const errors = error.response.data.data;
-
-                this.setState({
-                    errors: errors
-                });
-                NotificationManager.error('Error occured during operation!', 'Error', errors);
-            });
     }
 
     componentWillMount() {
         this.props.dispatch(fetchOrganization(this.state.organizationId));
+    }
+
+    handleBtnDelete(id, event) {
+        event.preventDefault();
+        this.props.dispatch(deleteOrganization(id));
     }
 
     createMarkup() {
@@ -51,7 +36,7 @@ class Organization extends React.Component {
     render() {
         const {organization} = this.props;
         let errors = '';
-        let formElements = '';
+        let cardElements = '';
 
         if (this.state.errors !== '') {
             errors = <div className="alert alert-danger" role="alert">
@@ -60,45 +45,84 @@ class Organization extends React.Component {
         }
 
         if (organization !== null) {
-            formElements =
-                <div>
-                    <div className="form-group col-lg-6">
-                        {organization.name}
-                    </div>
-                    <div className="form-group col-lg-6">
-                        {organization.address}
-                    </div>
-                    <div className="form-group col-lg-6">
-                        {organization.legal_entity}
-                    </div>
-                    <div className="form-group col-lg-6">
-                        {organization.head_fio}
-                    </div>
-                    <div className="form-group col-lg-6">
-                        {organization.head_email}
-                    </div>
-                    <div className="form-group col-lg-6">
-                        {organization.regional_email}
-                    </div>
-                    <div className="form-group col-lg-6">
-                        {organization.chef_email}
-                    </div>
-                    <div className="form-group col-lg-6">
-                        {organization.phone}
-                    </div>
-                    <div className="form-group col-lg-6">
-                        {organization.is_certification}
-                    </div>
+            cardElements =
+                <div className="animated fadeIn">
+                    <Row>
+                        <Col xs="12" sm="12" md="12">
+                            <Card>
+                                <CardHeader>
+                                    {organization.name}
+                                </CardHeader>
+                                <CardBlock className="card-body">
+
+                                    <Table responsive>
+                                        <tbody>
+                                        <tr>
+                                            <td>Адрес: </td>
+                                            <td>{organization.address}</td>
+                                            <td>Юридический адрес: </td>
+                                            <td>{organization.legal_entity}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Телефон: </td>
+                                            <td>-{organization.phone}</td>
+                                            <td>Сертифицирован: </td>
+                                            <td>{organization.is_certification}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Региональный менеджер: </td>
+                                            <td>-</td>
+                                            <td>E-mail регионального менеджера: </td>
+                                            <td>{organization.regional_email}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Руководитель: </td>
+                                            <td>{organization.head_fio}</td>
+                                            <td>E-mail руководителя: </td>
+                                            <td>{organization.head_email}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Шеф-повар: </td>
+                                            <td>-</td>
+                                            <td>E-mail шеф-повара: </td>
+                                            <td>{organization.chef_email}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <Link to={`organizations/edit/${organization.id}`}
+                                                      className="btn btn-success btn-xs pull-left">Редактировать
+                                                    <i className="glyphicon glyphicon-pencil"></i>
+                                                </Link>
+                                            </td>
+                                            <td>
+                                                <form id={`form_${organization.id}`} className="pull-left" method="post">
+                                                    <input type="hidden" name="organization_id" value={organization.id} />
+                                                    <a className="btn btn-danger btn-xs"
+                                                       onClick={(event) => this.handleBtnDelete(organization.id, event)}
+                                                       href="#" id={organization.id}>Удалить
+                                                        <i className="glyphicon glyphicon-trash"></i>
+                                                    </a>
+                                                </form>
+                                            </td>
+                                            <td></td>
+                                            <td></td>
+                                        </tr>
+                                        </tbody>
+                                    </Table>
+                                </CardBlock>
+                            </Card>
+                        </Col>
+                    </Row>
                 </div>;
         }
 
         return (
             <div>
-                <h1>Организация</h1>
-                <div className="col-lg-8">
-                    {errors}
-                    {formElements}
-                </div>
+                {errors}
+                {cardElements}
+                <OrganizationUsersInCard
+                    idOrganization={this.state.organizationId}
+                />
             </div>
         );
     }

@@ -19,7 +19,8 @@ class CreateOrganizationsTable extends Migration
             $table->string('address');
             $table->string('legal_entity');
             $table->string('head_fio');
-            $table->string('head_email')->unique();
+            $table->string('head_email');
+            $table->string('regional_fio')->nullable();
             $table->string('regional_email')->nullable();
             $table->string('chef_email')->nullable();
             $table->string('phone')->nullable();

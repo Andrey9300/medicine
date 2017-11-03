@@ -13,6 +13,6 @@ class Organization extends Model
      */
     public function users()
     {
-        return $this->hasMany('User');
+        return $this->hasMany('App\User', 'organization_name', 'name');
     }
 }

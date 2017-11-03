@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\User;
 use App\Http\Models\Organization;
 use Illuminate\Http\Request;
 
@@ -85,5 +86,39 @@ class OrganizationController extends Controller
     public function destroy($id)
     {
         Organization::destroy($id);
+    }
+
+    /**
+     * Сотрудники объекта
+     */
+
+    /**
+     * Показать исследования для организации
+     * @param $id
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function storeUsers($id){
+        $organization = Organization::find($id);
+        $research = $this->checkMedicalResearch($organization->users);
+
+        return response()->json([
+            'organization_users' => $organization->users
+        ]);
+        //return response()->json([
+        //    'organization_users' => $research
+        //]);
+    }
+
+    /**
+     * @param $users
+     */
+    public function checkMedicalResearch($users){
+        $user_current = [];
+        foreach ($users as $user) {
+            //$user_current = User::find($user->id);
+            array_push($user_current, $user->researches->find(1));
+        }
+        return $user_current;
     }
 }
