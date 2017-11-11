@@ -1,4 +1,3 @@
-import {NotificationManager} from 'react-notifications';
 import React from 'react';
 import axios from 'axios';
 import {connect} from 'react-redux';
@@ -17,17 +16,14 @@ import {
     Label,
     Input
 } from 'reactstrap';
+import PropTypes from 'prop-types';
 
 class EditHospital extends React.Component {
-    static contextTypes = {
-        router: React.PropTypes.object.isRequired
-    };
-
     constructor(props) {
         super(props);
         this.state = {
             errors: '',
-            hospitalId: props.params.id,
+            hospitalId: props.params.id
         };
         this.handleSubmit = this.handleSubmit.bind(this);
     }
@@ -39,8 +35,7 @@ class EditHospital extends React.Component {
 
         axios.post(`/hospitals/update/${this.state.hospitalId}`, formData)
             .then(() => {
-                this.context.router.push('/hospitals');
-                NotificationManager.success('Hospital has been updated!', 'Success');
+                this.context.router.push(`/hospitals/${this.state.hospitalId}`);
             })
             .catch((error) => {
                 const errors = error.response.data.message;
@@ -48,7 +43,6 @@ class EditHospital extends React.Component {
                 this.setState({
                     errors: errors
                 });
-                NotificationManager.error('Error occured during operation!', 'Error', errors);
             });
     }
 
@@ -63,7 +57,7 @@ class EditHospital extends React.Component {
     }
 
     render() {
-        const {hospital} = this.props;
+        const {hospital} = this.props.hospital;
         let errors = '';
         let formElements = '';
 
@@ -88,7 +82,8 @@ class EditHospital extends React.Component {
                                             <Label htmlFor="text-input">Наименование</Label>
                                         </Col>
                                         <Col xs="12" md="9">
-                                            <Input type="text" id="name" name="name" placeholder="Наименование" defaultValue={hospital.name}/>
+                                            <Input type="text" id="name" name="name" placeholder="Наименование"
+                                                   defaultValue={hospital.name}/>
                                             <FormText color="muted">Введите наименование</FormText>
                                         </Col>
                                     </FormGroup>
@@ -97,7 +92,8 @@ class EditHospital extends React.Component {
                                             <Label htmlFor="text-input">Адрес</Label>
                                         </Col>
                                         <Col xs="12" md="9">
-                                            <Input type="text" id="address" name="address" placeholder="Адрес" defaultValue={hospital.address}/>
+                                            <Input type="text" id="address" name="address" placeholder="Адрес"
+                                                   defaultValue={hospital.address}/>
                                             <FormText color="muted">Введите aдрес</FormText>
                                         </Col>
                                     </FormGroup>
@@ -106,7 +102,8 @@ class EditHospital extends React.Component {
                                             <Label htmlFor="text-input">Расписание</Label>
                                         </Col>
                                         <Col xs="12" md="9">
-                                            <Input type="text" id="shedule" name="shedule" placeholder="Расписание" defaultValue={hospital.shedule}/>
+                                            <Input type="text" id="shedule" name="shedule" placeholder="Расписание"
+                                                   defaultValue={hospital.shedule}/>
                                             <FormText color="muted">Введите расписание</FormText>
                                         </Col>
                                     </FormGroup>
@@ -115,7 +112,8 @@ class EditHospital extends React.Component {
                                             <Label htmlFor="text-input">Фото карты</Label>
                                         </Col>
                                         <Col xs="12" md="9">
-                                            <Input type="text" id="photo_map" name="photo_map" placeholder="Фото карты" defaultValue={hospital.photo_map}/>
+                                            <Input type="text" id="photo_map" name="photo_map" placeholder="Фото карты"
+                                                   defaultValue={hospital.photo_map}/>
                                             <FormText color="muted">Загрузите фото карты</FormText>
                                         </Col>
                                     </FormGroup>
@@ -124,7 +122,8 @@ class EditHospital extends React.Component {
                                             <Label htmlFor="text-input">Телефон</Label>
                                         </Col>
                                         <Col xs="12" md="9">
-                                            <Input type="text" id="phone" name="phone" placeholder="Телефон" defaultValue={hospital.phone}/>
+                                            <Input type="text" id="phone" name="phone" placeholder="Телефон"
+                                                   defaultValue={hospital.phone}/>
                                             <FormText color="muted">Введите телефон</FormText>
                                         </Col>
                                     </FormGroup>
@@ -132,7 +131,7 @@ class EditHospital extends React.Component {
                             </CardBlock>
                             <CardFooter>
                                 <Button type="submit" size="sm" color="success" onClick={this.handleSubmit}>
-                                    <i className="fa fa-dot-circle-o"></i> Сохранить
+                                    <i className="fa fa-dot-circle-o"/> Сохранить
                                 </Button>
                             </CardFooter>
                         </Card>
@@ -159,5 +158,12 @@ function mapStateToProps(state) {
         hospital: state.hospitals.hospital
     };
 }
+
+EditHospital.propTypes = {
+    dispatch: PropTypes.func.isRequired,
+    hospital: PropTypes.object.isRequired,
+    params: PropTypes.object.isRequired,
+    router: PropTypes.object.isRequired
+};
 
 export default connect(mapStateToProps)(EditHospital);

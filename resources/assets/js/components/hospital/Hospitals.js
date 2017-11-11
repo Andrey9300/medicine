@@ -12,7 +12,6 @@ import {
 } from 'reactstrap';
 
 class Hospitals extends React.Component {
-
     constructor() {
         super();
         this.handleBtnDelete = this.handleBtnDelete.bind(this);
@@ -34,7 +33,10 @@ class Hospitals extends React.Component {
                     <Col xs="12" lg="12">
                         <Card>
                             <CardHeader>
-                                <i className="fa fa-align-justify"></i>Медицинские организации
+                                <i className="fa fa-stethoscope" aria-hidden="true"/>Медицинские организации
+                                <Link to="hospitals/create" className="btn btn-primary btn-sm pull-right">
+                                    Добавить <i className="icon-plus"/>
+                                </Link>
                             </CardHeader>
                             <CardBlock className="card-body">
                                 <Table responsive>
@@ -45,7 +47,6 @@ class Hospitals extends React.Component {
                                         <th>Расписание</th>
                                         <th>Телефон</th>
                                         <th>Редактировать</th>
-                                        <th>Удалить</th>
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -66,27 +67,12 @@ class Hospitals extends React.Component {
                                                         <i className="glyphicon glyphicon-pencil"></i>
                                                     </Link>
                                                 </td>
-                                                <td>
-                                                    <form id={`form_${hospital.id}`}
-                                                          className="pull-left" method="post">
-                                                        <input type="hidden" name="hospital_id"
-                                                               value={hospital.id} />
-                                                        <a className="btn btn-danger btn-xs"
-                                                           onClick={(event) => this.handleBtnDelete(hospital.id, event)}
-                                                           href="#" id={hospital.id}>Удалить
-                                                            <i className="glyphicon glyphicon-trash"></i>
-                                                        </a>
-                                                    </form>
-                                                </td>
                                             </tr>
                                         );
                                     })
                                     }
                                     </tbody>
                                 </Table>
-                                <Link to="hospitals/create" className="btn btn-primary btn-sm pull-left">
-                                    Добавить &nbsp; <i className="glyphicon glyphicon-plus"></i>
-                                </Link>
                             </CardBlock>
                         </Card>
                     </Col>

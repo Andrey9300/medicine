@@ -1,69 +1,70 @@
-/**
- * Reducer
- * @param state {Object}
- * @param action {Object}
- * @returns {*}
- */
-export default function reducer(state = {
+const initialState = {
     error: null,
     fetched: false,
     hospital: null,
     hospitalResearch: null,
     hospitalResearches: [],
     hospitals: []
-}, action
-) {
+};
+
+/**
+ * Reducer
+ * @param state {Object}
+ * @param action {Object}
+ * @returns {*}
+ */
+export default function reducer(state = initialState, action) {
     switch (action.type) {
-        case 'FETCH_HOSPITALS_REJECTED': {
+        case 'HOSPITALS_REJECTED': {
             return {
                 ...state,
                 error: action.payload,
                 fetched: false
             };
         }
-        case 'FETCH_HOSPITALS_FULFILLED': {
+        case 'HOSPITALS_FULFILLED': {
             return {
                 ...state,
                 fetched: true,
                 hospitals: action.payload.hospitals
             };
         }
-        case 'FETCH_HOSPITAL_REJECTED': {
+        case 'HOSPITAL_REJECTED': {
             return {
                 ...state,
                 error: action.payload,
                 fetched: false
             };
         }
-        case 'FETCH_HOSPITAL_FULFILLED': {
+        case 'HOSPITAL_FULFILLED': {
             return {
                 ...state,
                 fetched: true,
                 hospital: action.payload
             };
         }
-        case 'FETCH_HOSPITAL_RESEARCHES_REJECTED': {
+        case 'HOSPITAL_RESEARCHES_REJECTED': {
             return {
                 ...state,
-                fetched: true,
-                hospital: action.payload
+                error: action.payload,
+                fetched: false
             };
         }
-        case 'FETCH_HOSPITAL_RESEARCHES_FULFILLED': {
+        case 'HOSPITAL_RESEARCHES_FULFILLED': {
             return {
                 ...state,
                 fetched: true,
                 hospitalResearches: action.payload.hospital_researches
             };
         }
-        case 'FETCH_HOSPITAL_RESEARCH_REJECTED': {
+        case 'HOSPITAL_RESEARCH_REJECTED': {
             return {
                 ...state,
-                fetched: true,
-                hospital: action.payload
+                error: action.payload,
+                fetched: false
             };
         }
-        case 'FETCH_HOSPITAL_RESEARCH_FULFILLED': {
+        case 'HOSPITAL_RESEARCH_FULFILLED': {
             return {
                 ...state,
                 fetched: true,

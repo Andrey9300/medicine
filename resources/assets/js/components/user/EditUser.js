@@ -1,4 +1,3 @@
-import {NotificationManager} from 'react-notifications';
 import React from 'react';
 import axios from 'axios';
 import {connect} from 'react-redux';
@@ -17,17 +16,14 @@ import {
     Label,
     Input
 } from 'reactstrap';
+import PropTypes from 'prop-types';
 
 class EditUser extends React.Component {
-    static contextTypes = {
-        router: React.PropTypes.object.isRequired
-    };
-
     constructor(props) {
         super(props);
         this.state = {
             errors: '',
-            userId: props.params.id,
+            userId: props.params.id
         };
         this.handleSubmit = this.handleSubmit.bind(this);
     }
@@ -39,8 +35,7 @@ class EditUser extends React.Component {
 
         axios.post(`/users/update/${this.state.userId}`, formData)
             .then(() => {
-                this.context.router.push('/users');
-                NotificationManager.success('User has been updated!', 'Success');
+                this.context.router.push(`/users/${this.state.userId}`);
             })
             .catch((error) => {
                 const errors = error.response.data.message;
@@ -48,7 +43,6 @@ class EditUser extends React.Component {
                 this.setState({
                     errors: errors
                 });
-                NotificationManager.error('Error occured during operation!', 'Error', errors);
             });
     }
 
@@ -63,7 +57,7 @@ class EditUser extends React.Component {
     }
 
     render() {
-        const {user} = this.props;
+        const {user} = this.props.user;
         let errors = '';
         let formElements = '';
 
@@ -88,8 +82,8 @@ class EditUser extends React.Component {
                                             <Label htmlFor="text-input">ФИО</Label>
                                         </Col>
                                         <Col xs="12" md="9">
-                                            <Input type="text" id="fio" name="fio" placeholder="ФИО" defaultValue={user.fio}/>
-                                            <FormText color="muted">Введите фио</FormText>
+                                            <Input type="text" id="fio" name="fio"
+                                                   placeholder="ФИО" defaultValue={user.fio} readOnly/>
                                         </Col>
                                     </FormGroup>
                                     <FormGroup row>
@@ -97,8 +91,9 @@ class EditUser extends React.Component {
                                             <Label htmlFor="text-input">Дата рождения</Label>
                                         </Col>
                                         <Col xs="12" md="9">
-                                            <Input type="text" id="date_birthday" name="date_birthday" placeholder="Дата рождения" defaultValue={user.date_birthday}/>
-                                            <FormText color="muted">Введите дату рождения</FormText>
+                                            <Input type="text" id="date_birthday" name="date_birthday"
+                                                   placeholder="Дата рождения"
+                                                   defaultValue={user.date_birthday} readOnly/>
                                         </Col>
                                     </FormGroup>
                                     <FormGroup row>
@@ -106,7 +101,9 @@ class EditUser extends React.Component {
                                             <Label htmlFor="text-input">Дата приема на работу</Label>
                                         </Col>
                                         <Col xs="12" md="9">
-                                            <Input type="text" id="date_employment" name="date_employment" placeholder="Дата приема на работу" defaultValue={user.date_employment}/>
+                                            <Input type="text" id="date_employment" name="date_employment"
+                                                   placeholder="Дата приема на работу"
+                                                   defaultValue={user.date_employment}/>
                                             <FormText color="muted">Введите дату приема на работу</FormText>
                                         </Col>
                                     </FormGroup>
@@ -115,7 +112,9 @@ class EditUser extends React.Component {
                                             <Label htmlFor="text-input">Номер медицинской книжки</Label>
                                         </Col>
                                         <Col xs="12" md="9">
-                                            <Input type="text" id="medical_book" name="medical_book" placeholder="Номер медицинской книжки" defaultValue={user.medical_book}/>
+                                            <Input type="text" id="medical_book" name="medical_book"
+                                                   placeholder="Номер медицинской книжки"
+                                                   defaultValue={user.medical_book}/>
                                             <FormText color="muted">Введите номер медицинской книжки</FormText>
                                         </Col>
                                     </FormGroup>
@@ -124,7 +123,8 @@ class EditUser extends React.Component {
                                             <Label htmlFor="text-input">Должность</Label>
                                         </Col>
                                         <Col xs="12" md="9">
-                                            <Input type="text" id="role" name="role" placeholder="Должность" defaultValue={user.role}/>
+                                            <Input type="text" id="role" name="role"
+                                                   placeholder="Должность" defaultValue={user.role}/>
                                             <FormText color="muted">Введите должность</FormText>
                                         </Col>
                                     </FormGroup>
@@ -133,7 +133,9 @@ class EditUser extends React.Component {
                                             <Label htmlFor="text-input">Название организации</Label>
                                         </Col>
                                         <Col xs="12" md="9">
-                                            <Input type="text" id="organization_name" name="organization_name" placeholder="Название организации" defaultValue={user.organization_name}/>
+                                            <Input type="text" id="organization_name" name="organization_name"
+                                                   placeholder="Название организации"
+                                                   defaultValue={user.organization_name}/>
                                             <FormText color="muted">Введите название организации</FormText>
                                         </Col>
                                     </FormGroup>
@@ -141,7 +143,7 @@ class EditUser extends React.Component {
                             </CardBlock>
                             <CardFooter>
                                 <Button type="submit" size="sm" color="success" onClick={this.handleSubmit}>
-                                    <i className="fa fa-dot-circle-o"></i> Сохранить
+                                    <i className="fa fa-dot-circle-o"/> Сохранить
                                 </Button>
                             </CardFooter>
                         </Card>
@@ -168,5 +170,12 @@ function mapStateToProps(state) {
         user: state.users.user
     };
 }
+
+EditUser.propTypes = {
+    dispatch: PropTypes.func.isRequired,
+    params: PropTypes.object.isRequired,
+    router: PropTypes.object.isRequired,
+    user: PropTypes.object.isRequired
+};
 
 export default connect(mapStateToProps)(EditUser);

@@ -1,8 +1,8 @@
-import {NotificationManager} from 'react-notifications';
 import axios from 'axios';
+import {hashHistory} from 'react-router';
 
 /**
- * Fetch
+ * Fetch hospitals to bd
  * @returns {function(*)}
  */
 export function fetchHospitals() {
@@ -11,13 +11,13 @@ export function fetchHospitals() {
             .then((response) => {
                 dispatch({
                     payload: response.data,
-                    type: 'FETCH_HOSPITALS_FULFILLED'
+                    type: 'HOSPITALS_FULFILLED'
                 });
             })
             .catch((error) => {
                 dispatch({
                     payload: error,
-                    type: 'FETCH_HOSPITALS_REJECTED'
+                    type: 'HOSPITALS_REJECTED'
                 });
             });
     };
@@ -34,13 +34,13 @@ export function fetchHospital(id) {
             .then((response) => {
                 dispatch({
                     payload: response.data.hospital,
-                    type: 'FETCH_HOSPITAL_FULFILLED'
+                    type: 'HOSPITAL_FULFILLED'
                 });
             })
             .catch((error) => {
                 dispatch({
                     payload: error,
-                    type: 'FETCH_HOSPITAL_REJECTED'
+                    type: 'HOSPITAL_REJECTED'
                 });
             });
     };
@@ -52,14 +52,13 @@ export function fetchHospital(id) {
  * @returns {Function}
  */
 export function deleteHospital(id) {
-    return (dispatch) => {
+    return () => {
         axios.post(`/hospitals/destroy/${id}`)
-            .then((response) => {
-                NotificationManager.success(response.data.message, 'Success');
-                dispatch(fetchHospitals());
+            .then(() => {
+                hashHistory.push('/hospitals');
             })
             .catch((error) => {
-                NotificationManager.error('An error occured in the operation', 'Error', error);
+                return error;
             });
     };
 }
@@ -79,13 +78,13 @@ export function fetchHospitalResearches(id) {
             .then((response) => {
                 dispatch({
                     payload: response.data,
-                    type: 'FETCH_HOSPITAL_RESEARCHES_FULFILLED'
+                    type: 'HOSPITAL_RESEARCHES_FULFILLED'
                 });
             })
             .catch((error) => {
                 dispatch({
                     payload: error,
-                    type: 'FETCH_HOSPITAL_RESEARCHES_REJECTED'
+                    type: 'HOSPITAL_RESEARCHES_REJECTED'
                 });
             });
     };
@@ -102,13 +101,13 @@ export function fetchHospitalResearch(idHospital, idResearch) {
             .then((response) => {
                 dispatch({
                     payload: response.data.hospital_research,
-                    type: 'FETCH_HOSPITAL_RESEARCH_FULFILLED'
+                    type: 'HOSPITAL_RESEARCH_FULFILLED'
                 });
             })
             .catch((error) => {
                 dispatch({
                     payload: error,
-                    type: 'FETCH_HOSPITAL_RESEARCH_REJECTED'
+                    type: 'HOSPITAL_RESEARCH_REJECTED'
                 });
             });
     };
@@ -116,18 +115,18 @@ export function fetchHospitalResearch(idHospital, idResearch) {
 
 /**
  * Delete
- * @param id number
+ * @param idHospital number
+ * @param idResearch number
  * @returns {Function}
  */
 export function deleteHospitalResearch(idHospital, idResearch) {
-    return (dispatch) => {
+    return () => {
         axios.post(`/hospitals/researches/destroy/${idHospital}/${idResearch}`)
-            .then((response) => {
-                NotificationManager.success(response.data.message, 'Success');
-                dispatch(fetchHospitalResearches(idHospital));
+            .then(() => {
+                hashHistory.push(`/hospitals/${idHospital}`);
             })
             .catch((error) => {
-                NotificationManager.error('An error occured in the operation', 'Error', error);
+                return error;
             });
     };
 }

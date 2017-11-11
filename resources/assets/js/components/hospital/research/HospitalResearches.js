@@ -10,18 +10,15 @@ import {
     CardBlock,
     Table
 } from 'reactstrap';
+import PropTypes from 'prop-types';
 
 class HospitalResearches extends React.Component {
-    static contextTypes = {
-        router: React.PropTypes.object.isRequired
-    };
-
     constructor(props) {
         super(props);
 
         this.state = {
             errors: '',
-            hospitalId: props.idHospital, // не будет работать на отдельной странице исследования объекта
+            hospitalId: props.idHospital
         };
     }
 
@@ -41,7 +38,11 @@ class HospitalResearches extends React.Component {
                     <Col xs="12" lg="12">
                         <Card>
                             <CardHeader>
-                                <i className="fa fa-align-justify"></i>Цены на исследования
+                                <i className="fa fa-rub" aria-hidden="true"/>Цены на исследования
+                                <Link to={`hospitals/researches/${this.state.hospitalId}/create`}
+                                      className="btn btn-primary btn-sm pull-right">
+                                    Добавить <i className="icon-plus"/>
+                                </Link>
                             </CardHeader>
                             <CardBlock className="card-body">
                                 <Table responsive>
@@ -54,24 +55,30 @@ class HospitalResearches extends React.Component {
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    { this.props.hospitalResearches.map((research, index) => {
+                                    { this.props.hospitalResearches.map((research) => {
                                         return (
                                             <tr key={research.id}>
                                                 <td>{research.name}</td>
-                                                <td>{research.pivot.price}</td>
+                                                <td>{research.pivot.price}
+                                                    <i className="fa fa-rub" aria-hidden="true"/>
+                                                </td>
                                                 <td>
                                                     <Link to={`hospitals/researches/edit/${this.state.hospitalId}/${research.id}`}
-                                                          className="btn btn-primary btn-xs pull-left">Редактировать
-                                                        <i className="glyphicon glyphicon-pencil"></i>
+                                                          className="btn btn-success btn-xs pull-left">Редактировать
+                                                        <i className="glyphicon glyphicon-pencil"/>
                                                     </Link>
                                                 </td>
                                                 <td>
-                                                    <form id={`form_${research.id}`} className="pull-left" method="post">
-                                                        <input type="hidden" name="hospital_research_id" value={research.id} />
+                                                    <form id={`form_${research.id}`}
+                                                          className="pull-left"
+                                                          method="post">
+                                                        <input type="hidden"
+                                                               name="hospital_research_id"
+                                                               value={research.id} />
                                                         <a className="btn btn-danger btn-xs"
                                                            onClick={(event) => this.handleBtnDelete(research.id, event)}
                                                            href="#" id={research.id}>Удалить
-                                                            <i className="glyphicon glyphicon-trash"></i>
+                                                            <i className="glyphicon glyphicon-trash"/>
                                                         </a>
                                                     </form>
                                                 </td>
@@ -81,9 +88,6 @@ class HospitalResearches extends React.Component {
                                     }
                                     </tbody>
                                 </Table>
-                                <Link to={`hospitals/researches/${this.state.hospitalId}/create`} className="btn btn-primary btn-sm pull-left">
-                                    Добавить &nbsp; <i className="glyphicon glyphicon-plus"></i>
-                                </Link>
                             </CardBlock>
                         </Card>
                     </Col>
@@ -103,4 +107,13 @@ function mapStateToProps(state) {
         hospitalResearches: state.hospitals.hospitalResearches
     };
 }
+
+HospitalResearches.propTypes = {
+    dispatch: PropTypes.func.isRequired,
+    hospitalResearches: PropTypes.array.isRequired,
+    idHospital: PropTypes.number.isRequired,
+    router: PropTypes.object.isRequired
+};
+
+
 export default connect(mapStateToProps)(HospitalResearches);

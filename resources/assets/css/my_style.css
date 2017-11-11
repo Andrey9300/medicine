@@ -1,0 +1,10 @@
+table#printResearches td{
+    border: none;
+    padding: .15rem;
+}
+ul#main_nav{
+    padding-left: 10px;
+}
+ul#main_nav li{
+    list-style-type: none;
+}

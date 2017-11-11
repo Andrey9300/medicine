@@ -2,12 +2,101 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Models\Research;
 use App\User;
 use App\Http\Models\Organization;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class OrganizationController extends Controller
 {
+
+    /**
+     * @param $user
+     */
+    // TODO вынести в common
+    public static function checkMedicalResearch($user){
+        // TODO period from bd
+        $options_ended = $user->researches_ended = [];
+        $options_expired = $user->researches_expired = [];
+
+        $researches = Research::all();
+        foreach ($researches as $key => $research) {
+            foreach ($user->researches as $user_research) {
+                if ($research->id === $user_research->id) {
+                    switch ($user_research->period) {
+                        case -1:
+                            $employment_date = Carbon::parse($user->date_employment);
+                            $research_date = Carbon::parse($user_research->pivot->date);
+                            $research_date->addMonths(1);
+                            $diffDatesResearch = $employment_date->diffInDays($research_date, false);
+
+                            if ($diffDatesResearch < 0){
+                                array_push($options_expired, $user_research);
+                            }
+                            break;
+                        case 1:
+                            if (is_null($user_research->pivot->date)){
+                                array_push($options, $user_research);
+                            }
+                            break;
+                        case 365:
+                            $research_date = Carbon::parse($user_research->pivot->date);
+                            $diffDatesResearch = $research_date->diffInDays(Carbon::now());
+
+                            if ($diffDatesResearch > 365) {
+                                array_push($options_ended, $user_research);
+                            } else if ($diffDatesResearch > 335){
+                                array_push($options_expired, $user_research);
+                            }
+                            break;
+                        case 730:
+                            $research_date = Carbon::parse($user_research->pivot->date);
+                            $diffDatesResearch = $research_date->diffInDays(Carbon::now());
+
+                            if ($diffDatesResearch > 730) {
+                                array_push($options_ended, $user_research);
+                            } else if ($diffDatesResearch > 700){
+                                array_push($options_expired, $user_research);
+                            }
+                            break;
+                        case 1827:
+                            $research_date = Carbon::parse($user_research->pivot->date);
+                            $diffDatesResearch = $research_date->diffInDays(Carbon::now());
+
+                            if ($diffDatesResearch > 1827) {
+                                array_push($options_ended, $user_research);
+                            } else if ($diffDatesResearch > 1797){
+                                array_push($options_expired, $user_research);
+                            }
+                            break;
+                        case 3653:
+                            $research_date = Carbon::parse($user_research->pivot->date);
+                            $diffDatesResearch = $research_date->diffInDays(Carbon::now());
+
+                            if ($diffDatesResearch > 3653) {
+                                array_push($options_ended, $user_research);
+                            } else if ($diffDatesResearch > 3623){
+                                array_push($options_expired, $user_research);
+                            }
+                            break;
+                    }
+                    unset($researches[$key]);
+                }
+            }
+        }
+
+        // добавляем не заполненные исследования как просроченные
+        foreach ($researches as $key => $research) {
+            array_push($options_expired, $research);
+        }
+
+        $user->researches_ended = $options_ended;
+        $user->researches_expired = $options_expired;
+
+        return $user;
+    }
+
     /**
      * Создать организацию
      *
@@ -100,25 +189,13 @@ class OrganizationController extends Controller
      */
     public function storeUsers($id){
         $organization = Organization::find($id);
-        $research = $this->checkMedicalResearch($organization->users);
+        $users = [];
+        foreach ($organization->users as $user) {
+            array_push($users, $this->checkMedicalResearch($user));
+        }
 
         return response()->json([
-            'organization_users' => $organization->users
+            'organization_users' => $users
         ]);
-        //return response()->json([
-        //    'organization_users' => $research
-        //]);
-    }
-
-    /**
-     * @param $users
-     */
-    public function checkMedicalResearch($users){
-        $user_current = [];
-        foreach ($users as $user) {
-            //$user_current = User::find($user->id);
-            array_push($user_current, $user->researches->find(1));
-        }
-        return $user_current;
     }
 }

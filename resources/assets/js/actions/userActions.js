@@ -1,27 +1,45 @@
-import {NotificationManager} from 'react-notifications';
 import axios from 'axios';
+import {hashHistory} from 'react-router';
 
 export function loginUser(formData) {
     return (dispatch) => {
         axios.post('/login', formData)
-            .then(() => {
+            .then((response) => {
                 dispatch({
-                    payload: true,
-                    type: 'FETCH_LOGIN_USER_FULFILLED'
+                    payload: {
+                        isAuthenticated: response.status === 200
+                    },
+                    type: 'LOGIN_USER_FULFILLED'
                 });
+                hashHistory.replace('/hospitals');
             })
             .catch(() => {
                 dispatch({
                     payload: false,
-                    type: 'FETCH_LOGIN_USER_REJECTED'
+                    type: 'LOGIN_USER_REJECTED'
                 });
             });
     };
 }
 
-export function logout() {
-    return {
-        type: LOGOUT_SUCCESS
+export function logoutUser() {
+    return (dispatch) => {
+        axios.post('/logout')
+            .then(() => {
+                dispatch({
+                    payload: {
+                        isAuthenticated: false
+                    },
+                    type: 'LOGOUT_USER_FULFILLED'
+                });
+                hashHistory.replace('/login');
+            })
+            .catch(() => {
+                dispatch({
+                    payload: false,
+                    type: 'LOGOUT_USER_REJECTED'
+                });
+            });
     };
 }
 
@@ -35,13 +53,13 @@ export function fetchUsers() {
             .then((response) => {
                 dispatch({
                     payload: response.data,
-                    type: 'FETCH_USERS_FULFILLED'
+                    type: 'USERS_FULFILLED'
                 });
             })
             .catch((error) => {
                 dispatch({
                     payload: error,
-                    type: 'FETCH_USERS_REJECTED'
+                    type: 'USERS_REJECTED'
                 });
             });
     };
@@ -58,13 +76,13 @@ export function fetchUser(id) {
             .then((response) => {
                 dispatch({
                     payload: response.data.user,
-                    type: 'FETCH_USER_FULFILLED'
+                    type: 'USER_FULFILLED'
                 });
             })
             .catch((error) => {
                 dispatch({
                     payload: error,
-                    type: 'FETCH_USER_REJECTED'
+                    type: 'USER_REJECTED'
                 });
             });
     };
@@ -76,14 +94,13 @@ export function fetchUser(id) {
  * @returns {Function}
  */
 export function deleteUser(id) {
-    return (dispatch) => {
+    return () => {
         axios.post(`/users/destroy/${id}`)
-            .then((response) => {
-                NotificationManager.success(response.data.message, 'Success');
-                dispatch(fetchUsers());
+            .then(() => {
+                hashHistory.push('/users');
             })
             .catch((error) => {
-                NotificationManager.error('An error occured in the operation', 'Error', error);
+                return error;
             });
     };
 }
@@ -101,16 +118,15 @@ export function fetchUserResearches(id) {
     return (dispatch) => {
         axios.post(`/users/researches/${id}`)
             .then((response) => {
-                console.log(response, 'resp');
                 dispatch({
                     payload: response.data,
-                    type: 'FETCH_USER_RESEARCHES_FULFILLED'
+                    type: 'USER_RESEARCHES_FULFILLED'
                 });
             })
             .catch((error) => {
                 dispatch({
                     payload: error,
-                    type: 'FETCH_USER_RESEARCHES_REJECTED'
+                    type: 'USER_RESEARCHES_REJECTED'
                 });
             });
     };
@@ -127,13 +143,13 @@ export function fetchUserResearch(idUser, idResearch) {
             .then((response) => {
                 dispatch({
                     payload: response.data.user_research,
-                    type: 'FETCH_USER_RESEARCH_FULFILLED'
+                    type: 'USER_RESEARCH_FULFILLED'
                 });
             })
             .catch((error) => {
                 dispatch({
                     payload: error,
-                    type: 'FETCH_USER_RESEARCH_REJECTED'
+                    type: 'USER_RESEARCH_REJECTED'
                 });
             });
     };
@@ -147,12 +163,11 @@ export function fetchUserResearch(idUser, idResearch) {
 export function deleteUserResearch(idUser, idResearch) {
     return (dispatch) => {
         axios.post(`/users/researches/destroy/${idUser}/${idResearch}`)
-            .then((response) => {
-                NotificationManager.success(response.data.message, 'Success');
+            .then(() => {
                 dispatch(fetchUserResearches(idUser));
             })
             .catch((error) => {
-                NotificationManager.error('An error occured in the operation', 'Error', error);
+                return error;
             });
     };
 }

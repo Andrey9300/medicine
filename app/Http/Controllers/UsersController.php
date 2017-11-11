@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Models\Organization;
 use App\Http\Models\Research;
 use App\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class UsersController extends Controller
@@ -48,8 +50,21 @@ class UsersController extends Controller
      */
     public function show($id)
     {
+        $user = User::find($id);
+        $user->organization;
+        $user = OrganizationController::checkMedicalResearch($user);
+
+        $employment_date = Carbon::parse($user->date_employment);
+        $diffDatesResearch = $employment_date->diffInMonths(Carbon::now());
+
+        if ($diffDatesResearch < 3) {
+            $user->pay = true; // сотрудник платит наличными
+        } else {
+            $user->pay = false; // платит орагнизация
+        }
+
         return response()->json([
-            'user' => User::find($id)
+            'user' => $user
         ]);
     }
 
@@ -89,9 +104,6 @@ class UsersController extends Controller
      * Исследования сотрудников
      */
 
-    /**
-     *
-     */
     public function createResearch(Request $request, $id_user){
         $user = User::find($id_user);
         $user->researches()->attach($request->name, ['date' => $request->date]);
@@ -111,7 +123,7 @@ class UsersController extends Controller
     }
 
     public function updateResearch(Request $request, $id_user, $id_research){
-        User::find($id_user)->researches()->updateExistingPivot($id_research, ['price' => $request['price']]);
+        User::find($id_user)->researches()->updateExistingPivot($id_research, ['date' => $request['date']]);
     }
 
     public function storeResearches($id){

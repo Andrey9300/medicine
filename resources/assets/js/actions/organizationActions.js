@@ -1,5 +1,5 @@
-import {NotificationManager} from 'react-notifications';
 import axios from 'axios';
+import {hashHistory} from 'react-router';
 
 /**
  * Fetch
@@ -11,13 +11,13 @@ export function fetchOrganizations() {
             .then((response) => {
                 dispatch({
                     payload: response,
-                    type: 'FETCH_ORGANIZATIONS_FULFILLED'
+                    type: 'ORGANIZATIONS_FULFILLED'
                 });
             })
             .catch((error) => {
                 dispatch({
                     payload: error,
-                    type: 'FETCH_ORGANIZATIONS_REJECTED'
+                    type: 'ORGANIZATIONS_REJECTED'
                 });
             });
     };
@@ -34,13 +34,13 @@ export function fetchOrganization(id) {
             .then((response) => {
                 dispatch({
                     payload: response.data.organization,
-                    type: 'FETCH_ORGANIZATION_FULFILLED'
+                    type: 'ORGANIZATION_FULFILLED'
                 });
             })
             .catch((error) => {
                 dispatch({
                     payload: error,
-                    type: 'FETCH_ORGANIZATION_REJECTED'
+                    type: 'ORGANIZATION_REJECTED'
                 });
             });
     };
@@ -52,14 +52,13 @@ export function fetchOrganization(id) {
  * @returns {Function}
  */
 export function deleteOrganization(id) {
-    return (dispatch) => {
+    return () => {
         axios.post(`/organizations/destroy/${id}`)
-            .then((response) => {
-                NotificationManager.success(response.data.message, 'Success');
-                dispatch(fetchOrganizations());
+            .then(() => {
+                hashHistory.push('/organizations');
             })
             .catch((error) => {
-                NotificationManager.error('An error occured in the operation', 'Error', error);
+                return error;
             });
     };
 }
@@ -80,13 +79,13 @@ export function fetchOrganizationUsers(idOrganization) {
             .then((response) => {
                 dispatch({
                     payload: response.data,
-                    type: 'FETCH_ORGANIZATION_USERS_FULFILLED'
+                    type: 'ORGANIZATION_USERS_FULFILLED'
                 });
             })
             .catch((error) => {
                 dispatch({
                     payload: error,
-                    type: 'FETCH_ORGANIZATION_USERS_REJECTED'
+                    type: 'ORGANIZATION_USERS_REJECTED'
                 });
             });
     };
@@ -99,14 +98,13 @@ export function fetchOrganizationUsers(idOrganization) {
  * @returns {Function}
  */
 export function deleteOrganizationUser(idOrganization, idUser) {
-    return (dispatch) => {
+    return () => {
         axios.post(`/organizations/users/destroy/${idOrganization}/${idUser}`)
-            .then((response) => {
-                NotificationManager.success(response.data.message, 'Success');
-                dispatch(fetchOrganizationUsers(idOrganization));
+            .then(() => {
+                hashHistory.push(`/organizations/${idOrganization}`);
             })
             .catch((error) => {
-                NotificationManager.error('An error occured in the operation', 'Error', error);
+                return error;
             });
     };
 }

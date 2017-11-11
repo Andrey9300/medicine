@@ -12,7 +12,9 @@ import {
     Button,
     Input,
     InputGroup,
-    InputGroupAddon} from 'reactstrap';
+    InputGroupAddon
+} from 'reactstrap';
+import PropTypes from 'prop-types';
 
 class Login extends Component {
     constructor() {
@@ -23,9 +25,8 @@ class Login extends Component {
     handleSubmit(event) {
         event.preventDefault();
         const formElement = document.querySelector('form');
-        const formData = new FormData(formElement);
 
-        this.props.dispatch(loginUser(formData));
+        this.props.dispatch(loginUser(new FormData(formElement)));
     }
 
     render() {
@@ -41,11 +42,11 @@ class Login extends Component {
                                             <h1>Login</h1>
                                             <p className="text-muted">Sign In to your account</p>
                                             <InputGroup className="mb-3">
-                                                <InputGroupAddon><i className="icon-envelope"></i></InputGroupAddon>
+                                                <InputGroupAddon><i className="icon-envelope"/></InputGroupAddon>
                                                 <Input type="text" name="email" placeholder="E-mail"/>
                                             </InputGroup>
                                             <InputGroup className="mb-4">
-                                                <InputGroupAddon><i className="icon-lock"></i></InputGroupAddon>
+                                                <InputGroupAddon><i className="icon-lock"/></InputGroupAddon>
                                                 <Input type="password" name="password" placeholder="Пароль"/>
                                             </InputGroup>
                                             <Row>
@@ -59,7 +60,7 @@ class Login extends Component {
                                         </Form>
                                     </CardBlock>
                                 </Card>
-                                <Card className="text-white bg-primary py-5 d-md-down-none" style={{ width: 44 + '%' }}>
+                                <Card className="text-white bg-primary py-5 d-md-down-none" style={{width: '44%'}}>
                                     <CardBlock className="card-body text-center">
                                         <div>
                                             <h2>Регистрация</h2>
@@ -89,4 +90,9 @@ function mapStateToProps(state) {
         users: state.users.users
     };
 }
+
+Login.propTypes = {
+    dispatch: PropTypes.func.isRequired
+};
+
 export default connect(mapStateToProps)(Login);

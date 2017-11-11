@@ -1,25 +1,27 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import {fetchUser} from './../../actions/userActions';
+import {fetchUser, deleteUser} from './../../actions/userActions';
 import UserResearches from './research/UserResearches';
 import {Link} from 'react-router';
 import {Row, Col, Card, CardHeader, CardBlock, Table} from 'reactstrap';
+import PropTypes from 'prop-types';
 
 class User extends React.Component {
-    static contextTypes = {
-        router: React.PropTypes.object.isRequired
-    };
-
     constructor(props) {
         super(props);
         this.state = {
             errors: '',
-            userId: props.params.id,
+            userId: props.params.id
         };
     }
 
     componentWillMount() {
         this.props.dispatch(fetchUser(this.state.userId));
+    }
+
+    handleBtnDelete(id, event) {
+        event.preventDefault();
+        this.props.dispatch(deleteUser(id));
     }
 
     createMarkup() {
@@ -29,7 +31,7 @@ class User extends React.Component {
     }
 
     render() {
-        const {user} = this.props;
+        const {user} = this.props.user;
         let errors = '';
         let formElements = '';
 
@@ -71,7 +73,7 @@ class User extends React.Component {
                                                 <td>
                                                     <Link to={`users/edit/${user.id}`}
                                                           className="btn btn-success btn-xs pull-left">Редактировать
-                                                        <i className="glyphicon glyphicon-pencil"></i>
+                                                        <i className="glyphicon glyphicon-pencil"/>
                                                     </Link>
                                                 </td>
                                                 <td>
@@ -80,7 +82,7 @@ class User extends React.Component {
                                                         <a className="btn btn-danger btn-xs"
                                                            onClick={(event) => this.handleBtnDelete(user.id, event)}
                                                            href="#" id={user.id}>Удалить
-                                                            <i className="glyphicon glyphicon-trash"></i>
+                                                            <i className="glyphicon glyphicon-trash"/>
                                                         </a>
                                                     </form>
                                                 </td>
@@ -116,5 +118,12 @@ function mapStateToProps(state) {
         user: state.users.user
     };
 }
+
+User.propTypes = {
+    dispatch: PropTypes.func.isRequired,
+    params: PropTypes.object.isRequired,
+    router: PropTypes.object.isRequired,
+    user: PropTypes.object.isRequired
+};
 
 export default connect(mapStateToProps)(User);

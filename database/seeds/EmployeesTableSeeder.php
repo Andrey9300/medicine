@@ -1,0 +1,136 @@
+<?php
+
+use Illuminate\Database\Seeder;
+
+class EmployeesTableSeeder extends Seeder
+{
+    /**
+     * Run the database seeds.
+     *
+     * @return void
+     */
+    public function run()
+    {
+        DB::table('employees')->insert([
+            'id' => 1,
+            'fio' => 'Кренко Иван Иванович',
+            'date_birthday' => '1990-10-05',
+            'date_employment' => '2017-10-05',
+            'medical_book' => '10000',
+            'organization_name' => 'ООО Мясокомбинат'
+        ]);
+        DB::table('employees')->insert([
+            'id' => 2,
+            'fio' => 'Паркин Иван Анатольевич',
+            'date_birthday' => '1988-10-05',
+            'date_employment' => '2015-09-05',
+            'medical_book' => '10001',
+            'organization_name' => 'ООО Мясокомбинат'
+        ]);
+        DB::table('employees')->insert([
+            'id' => 3,
+            'fio' => 'Бренкин Дмитрий Иванович',
+            'date_birthday' => '1991-10-05',
+            'date_employment' => '2017-01-05',
+            'medical_book' => '10002',
+            'organization_name' => 'ООО Мясокомбинат'
+        ]);
+        DB::table('employees')->insert([
+            'id' => 4,
+            'fio' => 'Калин Олег Иванович',
+            'date_birthday' => '1990-10-05',
+            'date_employment' => '2016-12-05',
+            'medical_book' => '10003',
+            'organization_name' => 'ООО Мясокомбинат'
+        ]);
+        DB::table('employees')->insert([
+            'id' => 5,
+            'fio' => 'Бранин Василий Петрович',
+            'date_birthday' => '1980-10-05',
+            'date_employment' => '2015-04-10',
+            'medical_book' => '10004',
+            'organization_name' => 'ООО Мясокомбинат'
+        ]);
+        DB::table('employees')->insert([
+            'id' => 6,
+            'fio' => 'Бран Петр Васильевич',
+            'date_birthday' => '1993-10-05',
+            'date_employment' => '2013-10-10',
+            'medical_book' => '10005',
+            'organization_name' => 'ОАО Рыбокомбинат'
+        ]);
+        DB::table('employees')->insert([
+            'id' => 7,
+            'fio' => 'Василкин Иван Дмитриевич',
+            'date_birthday' => '1990-10-05',
+            'date_employment' => '2016-10-10',
+            'medical_book' => '10006',
+            'organization_name' => 'ОАО Рыбокомбинат'
+        ]);
+        DB::table('employees')->insert([
+            'id' => 8,
+            'fio' => 'Прен Анатолий Васильевич',
+            'date_birthday' => '1993-10-05',
+            'date_employment' => '2017-05-01',
+            'medical_book' => '10007',
+            'organization_name' => 'ОАО Рыбокомбинат'
+        ]);
+        DB::table('employees')->insert([
+            'id' => 9,
+            'fio' => 'Пелен Василий Иванович',
+            'date_birthday' => '1993-10-05',
+            'date_employment' => '2015-10-10',
+            'medical_book' => '10008',
+            'organization_name' => 'ОАО Рыбокомбинат'
+        ]);
+        DB::table('employees')->insert([
+            'id' => 10,
+            'fio' => 'Карикин Петр Васильевич',
+            'date_birthday' => '1993-10-05',
+            'date_employment' => '2017-04-04',
+            'medical_book' => '10009',
+            'organization_name' => 'ОАО Рыбокомбинат'
+        ]);
+        DB::table('employees')->insert([
+            'id' => 11,
+            'fio' => 'Калинс Иван Васильевич',
+            'date_birthday' => '1990-11-19',
+            'date_employment' => '2012-07-04',
+            'medical_book' => '10010',
+            'organization_name' => 'ЗАО Хлебокобинат'
+        ]);
+        DB::table('employees')->insert([
+            'id' => 12,
+            'fio' => 'Пуркин Петр Васильевич',
+            'date_birthday' => '1990-10-05',
+            'date_employment' => '2017-04-04',
+            'medical_book' => '10011',
+            'organization_name' => 'ЗАО Хлебокобинат'
+        ]);
+        DB::table('employees')->insert([
+            'id' => 13,
+            'fio' => 'Белин Петр Васильевич',
+            'date_birthday' => '1986-05-05',
+            'date_employment' => '2016-05-14',
+            'medical_book' => '10012',
+            'organization_name' => 'ЗАО Хлебокобинат'
+        ]);
+        DB::table('employees')->insert([
+            'id' => 14,
+            'fio' => 'Келкин Петр Васильевич',
+            'date_birthday' => '1991-05-05',
+            'date_employment' => '2014-10-04',
+            'medical_book' => '10013',
+            'organization_name' => 'ЗАО Хлебокобинат'
+        ]);
+        DB::table('employees')->insert([
+            'id' => 15,
+            'fio' => 'Некин Петр Васильевич',
+            'date_birthday' => '1991-01-05',
+            'date_employment' => '2016-08-25',
+            'medical_book' => '10014',
+            'organization_name' => 'ЗАО Хлебокобинат'
+        ]);
+
+    }
+}

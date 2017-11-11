@@ -1,4 +1,3 @@
-import {NotificationManager} from 'react-notifications';
 import React from 'react';
 import axios from 'axios';
 import {
@@ -15,12 +14,9 @@ import {
     Label,
     Input
 } from 'reactstrap';
+import PropTypes from 'prop-types';
 
 class NewHospital extends React.Component {
-    static contextTypes = {
-        router: React.PropTypes.object.isRequired
-    };
-
     constructor() {
         super();
         this.state = {
@@ -37,15 +33,13 @@ class NewHospital extends React.Component {
         axios.post('/hospitals/create', formData)
             .then(() => {
                 this.context.router.push('/hospitals');
-                NotificationManager.success('Hospital has been created!', 'Success', 5000);
             })
             .catch((error) => {
-                    const errors = error.response.data.messages;
+                const errors = error.response.data.messages;
 
                 this.setState({
                     errors: errors
                 });
-                NotificationManager.error('Error occured during operation!', 'Error', 5000);
             });
     }
 
@@ -80,7 +74,8 @@ class NewHospital extends React.Component {
                                             <Label htmlFor="text-input">Наименование</Label>
                                         </Col>
                                         <Col xs="12" md="9">
-                                            <Input type="text" id="name" name="name" placeholder="Наименование" required/>
+                                            <Input type="text" id="name" name="name"
+                                                   placeholder="Наименование" required/>
                                             <FormText color="muted">Введите наименование</FormText>
                                         </Col>
                                     </FormGroup>
@@ -89,7 +84,8 @@ class NewHospital extends React.Component {
                                             <Label htmlFor="text-input">Фактический адрес</Label>
                                         </Col>
                                         <Col xs="12" md="9">
-                                            <Input type="text" id="address" name="address" placeholder="Фактический адрес" required/>
+                                            <Input type="text" id="address" name="address"
+                                                   placeholder="Фактический адрес" required/>
                                             <FormText color="muted">Введите адрес</FormText>
                                         </Col>
                                     </FormGroup>
@@ -98,7 +94,8 @@ class NewHospital extends React.Component {
                                             <Label htmlFor="text-input">Расписание</Label>
                                         </Col>
                                         <Col xs="12" md="9">
-                                            <Input type="text" id="shedule" name="shedule" placeholder="Расписание" required/>
+                                            <Input type="text" id="shedule" name="shedule"
+                                                   placeholder="Расписание" required/>
                                             <FormText color="muted">Введите расписание</FormText>
                                         </Col>
                                     </FormGroup>
@@ -107,7 +104,8 @@ class NewHospital extends React.Component {
                                             <Label htmlFor="text-input">Фото карты</Label>
                                         </Col>
                                         <Col xs="12" md="9">
-                                            <Input type="text" id="photo_map" name="photo_map" placeholder="Фото карты" required/>
+                                            <Input type="text" id="photo_map" name="photo_map"
+                                                   placeholder="Фото карты" required/>
                                             <FormText color="muted">Добавьте фото карты</FormText>
                                         </Col>
                                     </FormGroup>
@@ -116,7 +114,8 @@ class NewHospital extends React.Component {
                                             <Label htmlFor="text-input">Телефон</Label>
                                         </Col>
                                         <Col xs="12" md="9">
-                                            <Input type="text" id="phone" name="phone" placeholder="Телефон" required/>
+                                            <Input type="text" id="phone" name="phone"
+                                                   placeholder="Телефон" required/>
                                             <FormText color="muted">Введите телефон</FormText>
                                         </Col>
                                     </FormGroup>
@@ -124,7 +123,7 @@ class NewHospital extends React.Component {
                             </CardBlock>
                             <CardFooter>
                                 <Button type="submit" size="sm" color="success" onClick={this.handleSubmit}>
-                                    <i className="fa fa-dot-circle-o"></i> Сохранить
+                                    <i className="fa fa-dot-circle-o"/> Сохранить
                                 </Button>
                             </CardFooter>
                         </Card>
@@ -134,4 +133,9 @@ class NewHospital extends React.Component {
         );
     }
 }
+
+NewHospital.propTypes = {
+    router: PropTypes.object.isRequired
+};
+
 export default NewHospital;

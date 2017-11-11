@@ -6,6 +6,8 @@
 /public/fonts
 /public/img
 /public/fonts
+/public/favicon.png
+/public/mix-manifest.json
 /storage/*.key
 /vendor
 /.idea

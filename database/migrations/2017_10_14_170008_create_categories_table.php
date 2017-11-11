@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateResearchPeriodsTable extends Migration
+class CreateCategoriesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,8 @@ class CreateResearchPeriodsTable extends Migration
      */
     public function up()
     {
-        Schema::create('research_periods', function (Blueprint $table) {
+        Schema::create('categories', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('period')->unique();
             $table->string('name')->unique();
         });
     }
@@ -27,6 +26,6 @@ class CreateResearchPeriodsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('research_periods');
+        Schema::dropIfExists('categories');
     }
 }

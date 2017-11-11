@@ -12,39 +12,33 @@ class OrganizationsTableSeeder extends Seeder
     public function run()
     {
         DB::table('organizations')->insert([
-            'name' => 'Объект 1',
-            'address' => 'Москва ул Центральная',
-            'legal_entity' => 'Compass',
-            'head_fio' => 'Петров Петр Петрович',
-            'head_email' => 'head_1@gmail.com',
-            'regional_email' => 'regional_1@gmail.com',
-            'chef_email' => 'chef_1@gmail.com',
+            'name' => 'ООО Мясокомбинат',
+            'address' => 'г. Москва, улица Смирнова, д. 7, к1',
+            'legal_entity' => 'МясоКом',
+            'head_email' => 'krenko@meet.ru',
             'phone' => '+79991234567',
-            'is_certification' => false,
+            'region_id' => '1',
+            'category_id' => '1',
         ]);
 
         DB::table('organizations')->insert([
-            'name' => 'Объект 2',
-            'address' => 'Москва ул Центральная',
-            'legal_entity' => 'Compass',
-            'head_fio' => 'Петров Петр Петрович',
-            'head_email' => 'head_2@gmail.com',
-            'regional_email' => 'regional_2@gmail.com',
-            'chef_email' => 'chef_2@gmail.com',
+            'name' => 'ОАО Рыбокомбинат',
+            'address' => 'г. Москва, улица Иванова, д. 11, к5',
+            'legal_entity' => 'РыбоКом',
+            'head_email' => 'parkin@meet.ru',
             'phone' => '+79991234568',
-            'is_certification' => false,
+            'region_id' => '1',
+            'category_id' => '1',
         ]);
 
         DB::table('organizations')->insert([
-            'name' => 'Объект 3',
-            'address' => 'Москва ул Центральная',
-            'legal_entity' => 'Compass',
-            'head_fio' => 'Петров Петр Петрович',
-            'head_email' => 'head_3@gmail.com',
-            'regional_email' => 'regional_3@gmail.com',
-            'chef_email' => 'chef_3@gmail.com',
+            'name' => 'ЗАО Хлебокобинат',
+            'address' => 'г. Москва, улица Сидорова, д. 19, к9',
+            'legal_entity' => 'ХлебоКом',
+            'head_email' => 'brenkin@meet.ru',
             'phone' => '+79991234569',
-            'is_certification' => false,
+            'region_id' => '1',
+            'category_id' => '1',
         ]);
     }
 }

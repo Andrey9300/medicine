@@ -1,4 +1,3 @@
-import {NotificationManager} from 'react-notifications';
 import React from 'react';
 import axios from 'axios';
 import {connect} from 'react-redux';
@@ -17,17 +16,14 @@ import {
     Label,
     Input
 } from 'reactstrap';
+import PropTypes from 'prop-types';
 
 class EditHospitalResearch extends React.Component {
-    static contextTypes = {
-        router: React.PropTypes.object.isRequired
-    };
-
     constructor(props) {
         super(props);
         this.state = {
             errors: '',
-            hospitalId: props.params.idHospital,
+            hospitalId: props.params.idHospital
         };
         this.handleSubmit = this.handleSubmit.bind(this);
     }
@@ -39,8 +35,7 @@ class EditHospitalResearch extends React.Component {
 
         axios.post(`/hospitals/researches/update/${this.state.hospitalId}/${this.props.params.idResearch}`, formData)
             .then(() => {
-                this.context.router.push('/hospitals');
-                NotificationManager.success('Hospital has been updated!', 'Success');
+                this.context.router.push(`/hospitals/${this.state.hospitalId}`);
             })
             .catch((error) => {
                 const errors = error.response.data.message;
@@ -48,7 +43,6 @@ class EditHospitalResearch extends React.Component {
                 this.setState({
                     errors: errors
                 });
-                NotificationManager.error('Error occured during operation!', 'Error', errors);
             });
     }
 
@@ -63,7 +57,7 @@ class EditHospitalResearch extends React.Component {
     }
 
     render() {
-        const {hospitalResearch} = this.props;
+        const {hospitalResearch} = this.props.hospitalResearch;
 
         let errors = '';
         let formElements = '';
@@ -98,8 +92,36 @@ class EditHospitalResearch extends React.Component {
                                             <Label htmlFor="text-input">Период</Label>
                                         </Col>
                                         <Col xs="12" md="9">
-                                            <Input type="text" id="period" name="period"
-                                                   defaultValue={hospitalResearch.period} readOnly/>
+                                            {(() => {
+                                                let period = '';
+
+                                                switch (hospitalResearch.period) {
+                                                    case '-1':
+                                                        period = 'При поступлении на работу.' +
+                                                                 'При смене юридического лица';
+                                                        break;
+                                                    case '1':
+                                                        period = 'Раз в жизни';
+                                                        break;
+                                                    case '365':
+                                                        period = 'Раз в год';
+                                                        break;
+                                                    case '730':
+                                                        period = 'Раз в два года';
+                                                        break;
+                                                    case '1827':
+                                                        period = 'Раз в 5 лет';
+                                                        break;
+                                                    case '3653':
+                                                        period = 'Раз в 10 лет';
+                                                        break;
+                                                    default:
+                                                        break;
+                                                }
+
+                                                return <Input type="text" id="period" name="period"
+                                                       defaultValue={period} readOnly/>;
+                                            })()}
                                         </Col>
                                     </FormGroup>
                                     <FormGroup row>
@@ -116,7 +138,7 @@ class EditHospitalResearch extends React.Component {
                             </CardBlock>
                             <CardFooter>
                                 <Button type="submit" size="sm" color="success" onClick={this.handleSubmit}>
-                                    <i className="fa fa-dot-circle-o"></i> Сохранить
+                                    <i className="fa fa-dot-circle-o"/> Сохранить
                                 </Button>
                             </CardFooter>
                         </Card>
@@ -143,5 +165,12 @@ function mapStateToProps(state) {
         hospitalResearch: state.hospitals.hospitalResearch
     };
 }
+
+EditHospitalResearch.propTypes = {
+    dispatch: PropTypes.func.isRequired,
+    hospitalResearch: PropTypes.object.isRequired,
+    params: PropTypes.object.isRequired,
+    router: PropTypes.object.isRequired
+};
 
 export default connect(mapStateToProps)(EditHospitalResearch);

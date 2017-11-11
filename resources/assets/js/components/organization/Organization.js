@@ -1,30 +1,22 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import {deleteOrganization, fetchOrganization} from './../../actions/organizationActions';
+import {fetchOrganization} from './../../actions/organizationActions';
 import {Link} from 'react-router';
 import {Row, Col, Card, CardHeader, CardBlock, Table} from 'reactstrap';
 import OrganizationUsersInCard from './OrganizationUsersInCard';
+import PropTypes from 'prop-types';
 
 class Organization extends React.Component {
-    static contextTypes = {
-        router: React.PropTypes.object.isRequired
-    };
-
     constructor(props) {
         super(props);
         this.state = {
             errors: '',
-            organizationId: props.params.id,
+            organizationId: props.params.id
         };
     }
 
     componentWillMount() {
         this.props.dispatch(fetchOrganization(this.state.organizationId));
-    }
-
-    handleBtnDelete(id, event) {
-        event.preventDefault();
-        this.props.dispatch(deleteOrganization(id));
     }
 
     createMarkup() {
@@ -34,7 +26,7 @@ class Organization extends React.Component {
     }
 
     render() {
-        const {organization} = this.props;
+        const {organization} = this.props.organization;
         let errors = '';
         let cardElements = '';
 
@@ -51,7 +43,7 @@ class Organization extends React.Component {
                         <Col xs="12" sm="12" md="12">
                             <Card>
                                 <CardHeader>
-                                    {organization.name}
+                                    <i className="fa fa-building-o" aria-hidden="true"/>{organization.name}
                                 </CardHeader>
                                 <CardBlock className="card-body">
 
@@ -64,14 +56,25 @@ class Organization extends React.Component {
                                             <td>{organization.legal_entity}</td>
                                         </tr>
                                         <tr>
-                                            <td>Телефон: </td>
-                                            <td>-{organization.phone}</td>
+                                            <td>Телефон руководителя: </td>
+                                            <td>{organization.phone}</td>
                                             <td>Сертифицирован: </td>
-                                            <td>{organization.is_certification}</td>
+                                            <td>
+                                                {(() => {
+                                                    switch (organization.is_certification) {
+                                                        case 1:
+                                                            return 'ISO 22000:2005';
+                                                        case 0:
+                                                            return 'Нет';
+                                                        default:
+                                                            return 'Нет';
+                                                    }
+                                                })()}
+                                            </td>
                                         </tr>
                                         <tr>
                                             <td>Региональный менеджер: </td>
-                                            <td>-</td>
+                                            <td>{organization.regional_fio}</td>
                                             <td>E-mail регионального менеджера: </td>
                                             <td>{organization.regional_email}</td>
                                         </tr>
@@ -83,7 +86,7 @@ class Organization extends React.Component {
                                         </tr>
                                         <tr>
                                             <td>Шеф-повар: </td>
-                                            <td>-</td>
+                                            <td/>
                                             <td>E-mail шеф-повара: </td>
                                             <td>{organization.chef_email}</td>
                                         </tr>
@@ -91,21 +94,12 @@ class Organization extends React.Component {
                                             <td>
                                                 <Link to={`organizations/edit/${organization.id}`}
                                                       className="btn btn-success btn-xs pull-left">Редактировать
-                                                    <i className="glyphicon glyphicon-pencil"></i>
+                                                    <i className="glyphicon glyphicon-pencil"/>
                                                 </Link>
                                             </td>
-                                            <td>
-                                                <form id={`form_${organization.id}`} className="pull-left" method="post">
-                                                    <input type="hidden" name="organization_id" value={organization.id} />
-                                                    <a className="btn btn-danger btn-xs"
-                                                       onClick={(event) => this.handleBtnDelete(organization.id, event)}
-                                                       href="#" id={organization.id}>Удалить
-                                                        <i className="glyphicon glyphicon-trash"></i>
-                                                    </a>
-                                                </form>
-                                            </td>
-                                            <td></td>
-                                            <td></td>
+                                            <td/>
+                                            <td/>
+                                            <td/>
                                         </tr>
                                         </tbody>
                                     </Table>
@@ -138,5 +132,12 @@ function mapStateToProps(state) {
         organization: state.organizations.organization
     };
 }
+
+Organization.propTypes = {
+    dispatch: PropTypes.func.isRequired,
+    organization: PropTypes.object.isRequired,
+    params: PropTypes.object.isRequired,
+    router: PropTypes.object.isRequired
+};
 
 export default connect(mapStateToProps)(Organization);

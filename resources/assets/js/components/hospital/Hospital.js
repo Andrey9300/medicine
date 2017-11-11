@@ -4,17 +4,14 @@ import {fetchHospital, deleteHospital} from './../../actions/hospitalActions';
 import HospitalResearches from './research/HospitalResearches';
 import {Link} from 'react-router';
 import {Row, Col, Card, CardHeader, CardBlock, Table} from 'reactstrap';
+import PropTypes from 'prop-types';
 
 class Hospital extends React.Component {
-    static contextTypes = {
-        router: React.PropTypes.object.isRequired
-    };
-
     constructor(props) {
         super(props);
         this.state = {
             errors: '',
-            hospitalId: props.params.id,
+            hospitalId: props.params.id
         };
     }
 
@@ -34,7 +31,7 @@ class Hospital extends React.Component {
     }
 
     render() {
-        const {hospital} = this.props;
+        const {hospital} = this.props.hospital;
         let errors = '';
         let formElements = '';
 
@@ -72,7 +69,7 @@ class Hospital extends React.Component {
                                                 <td>
                                                     <Link to={`hospitals/edit/${hospital.id}`}
                                                           className="btn btn-success btn-xs pull-left">Редактировать
-                                                        <i className="glyphicon glyphicon-pencil"></i>
+                                                        <i className="glyphicon glyphicon-pencil"/>
                                                     </Link>
                                                 </td>
                                                 <td>
@@ -83,7 +80,7 @@ class Hospital extends React.Component {
                                                         <a className="btn btn-danger btn-xs"
                                                            onClick={(event) => this.handleBtnDelete(hospital.id, event)}
                                                            href="#" id={hospital.id}>Удалить
-                                                            <i className="glyphicon glyphicon-trash"></i>
+                                                            <i className="glyphicon glyphicon-trash"/>
                                                         </a>
                                                     </form>
                                                 </td>
@@ -119,5 +116,12 @@ function mapStateToProps(state) {
         hospital: state.hospitals.hospital
     };
 }
+
+Hospital.propTypes = {
+    dispatch: PropTypes.func.isRequired,
+    hospital: PropTypes.object.isRequired,
+    params: PropTypes.object.isRequired,
+    router: PropTypes.object.isRequired
+};
 
 export default connect(mapStateToProps)(Hospital);

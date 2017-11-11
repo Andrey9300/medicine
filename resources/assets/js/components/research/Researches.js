@@ -1,4 +1,4 @@
-import {deleteResearch, fetchResearches} from '../../actions/researchActions';
+import {fetchResearches} from '../../actions/researchActions';
 import {Link} from 'react-router';
 import React from 'react';
 import {connect} from 'react-redux';
@@ -10,21 +10,11 @@ import {
     CardBlock,
     Table
 } from 'reactstrap';
+import PropTypes from 'prop-types';
 
 class Researches extends React.Component {
-
-    constructor() {
-        super();
-        this.handleBtnDelete = this.handleBtnDelete.bind(this);
-    }
-
     componentWillMount() {
         this.props.dispatch(fetchResearches());
-    }
-
-    handleBtnDelete(id, event) {
-        event.preventDefault();
-        this.props.dispatch(deleteResearch(id));
     }
 
     render() {
@@ -34,7 +24,10 @@ class Researches extends React.Component {
                     <Col xs="12" lg="12">
                         <Card>
                             <CardHeader>
-                                <i className="fa fa-align-justify"></i>Исследования
+                                <i className="fa fa-heartbeat" aria-hidden="true"/>Исследования
+                                <Link to="researches/create" className="btn btn-primary btn-sm pull-right">
+                                    Добавить <i className="icon-plus"/>
+                                </Link>
                             </CardHeader>
                             <CardBlock className="card-body">
                                 <Table responsive>
@@ -42,11 +35,11 @@ class Researches extends React.Component {
                                     <tr>
                                         <th>Наименование</th>
                                         <th>Период</th>
-                                        <th></th>
+                                        <th>Редактировать</th>
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    { this.props.researches.map((research, index) => {
+                                    { this.props.researches.map((research) => {
                                         return (
                                             <tr key={research.id}>
                                                 <td>{research.name}</td>
@@ -54,7 +47,8 @@ class Researches extends React.Component {
                                                     {(() => {
                                                         switch (research.period) {
                                                             case '-1':
-                                                                return 'При поступлении на работу. При смене юридического лица';
+                                                                return 'При поступлении на работу.' +
+                                                                    'При смене юридического лица';
                                                             case '1':
                                                                 return 'Раз в жизни';
                                                             case '365':
@@ -73,16 +67,8 @@ class Researches extends React.Component {
                                                 <td>
                                                     <Link to={`researches/edit/${research.id}`}
                                                           className="btn btn-success btn-xs pull-left">Редатировать
-                                                        <i className="glyphicon glyphicon-pencil"></i>
+                                                        <i className="glyphicon glyphicon-pencil"/>
                                                     </Link>
-                                                    <form id={`form_${research.id}`} className="pull-left" method="post">
-                                                        <input type="hidden" name="research_id" value={research.id} />
-                                                        <a className="btn btn-danger btn-xs"
-                                                           onClick={(event) => this.handleBtnDelete(research.id, event)}
-                                                           href="#" id={research.id}>Удалить
-                                                            <i className="glyphicon glyphicon-trash"></i>
-                                                        </a>
-                                                    </form>
                                                 </td>
                                             </tr>
                                         );
@@ -90,9 +76,6 @@ class Researches extends React.Component {
                                     }
                                     </tbody>
                                 </Table>
-                                <Link to="researches/create" className="btn btn-primary btn-sm pull-left">
-                                    Добавить &nbsp; <i className="glyphicon glyphicon-plus"></i>
-                                </Link>
                             </CardBlock>
                         </Card>
                     </Col>
@@ -112,4 +95,10 @@ function mapStateToProps(state) {
         researches: state.researches.researches
     };
 }
+
+Researches.propTypes = {
+    dispatch: PropTypes.func.isRequired,
+    researches: PropTypes.array.isRequired
+};
+
 export default connect(mapStateToProps)(Researches);

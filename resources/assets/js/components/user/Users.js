@@ -10,9 +10,9 @@ import {
     CardBlock,
     Table
 } from 'reactstrap';
+import PropTypes from 'prop-types';
 
 class Users extends React.Component {
-
     constructor() {
         super();
         this.handleBtnDelete = this.handleBtnDelete.bind(this);
@@ -34,7 +34,10 @@ class Users extends React.Component {
                     <Col xs="12" lg="12">
                         <Card>
                             <CardHeader>
-                                <i className="fa fa-align-justify"></i>Сотрудники
+                                <i className="fa fa-users" aria-hidden="true"/>Сотрудники
+                                <Link to="users/create" className="btn btn-primary btn-sm pull-right">
+                                    Добавить <i className="icon-plus"/>
+                                </Link>
                             </CardHeader>
                             <CardBlock className="card-body">
                                 <Table responsive>
@@ -61,7 +64,7 @@ class Users extends React.Component {
                                                 <td>
                                                     <Link to={`users/edit/${user.id}`}
                                                           className="btn btn-success btn-xs pull-left">Редактировать
-                                                        <i className="glyphicon glyphicon-pencil"></i>
+                                                        <i className="glyphicon glyphicon-pencil"/>
                                                     </Link>
                                                 </td>
                                                 <td>
@@ -70,7 +73,7 @@ class Users extends React.Component {
                                                         <a className="btn btn-danger btn-xs"
                                                            onClick={(event) => this.handleBtnDelete(user.id, event)}
                                                            href="#" id={user.id}>Удалить
-                                                            <i className="glyphicon glyphicon-trash"></i>
+                                                            <i className="glyphicon glyphicon-trash"/>
                                                         </a>
                                                     </form>
                                                 </td>
@@ -80,9 +83,6 @@ class Users extends React.Component {
                                     }
                                     </tbody>
                                 </Table>
-                                <Link to="users/create" className="btn btn-primary btn-sm pull-left">
-                                    Добавить &nbsp; <i className="glyphicon glyphicon-plus"></i>
-                                </Link>
                             </CardBlock>
                         </Card>
                     </Col>
@@ -102,4 +102,10 @@ function mapStateToProps(state) {
         users: state.users.users
     };
 }
+
+Users.propTypes = {
+    dispatch: PropTypes.func.isRequired,
+    users: PropTypes.array.isRequired
+};
+
 export default connect(mapStateToProps)(Users);

@@ -1,4 +1,3 @@
-import {NotificationManager} from 'react-notifications';
 import React from 'react';
 import axios from 'axios';
 import {
@@ -15,12 +14,9 @@ import {
     Label,
     Input
 } from 'reactstrap';
+import PropTypes from 'prop-types';
 
 class NewResearch extends React.Component {
-    static contextTypes = {
-        router: React.PropTypes.object.isRequired
-    };
-
     constructor() {
         super();
         this.state = {
@@ -37,7 +33,6 @@ class NewResearch extends React.Component {
         axios.post('/researches/create', formData)
             .then(() => {
                 this.context.router.push('/researches');
-                NotificationManager.success('Research has been created!', 'Success');
             })
             .catch((error) => {
                 const errors = error.response.data.message;
@@ -45,7 +40,6 @@ class NewResearch extends React.Component {
                 this.setState({
                     errors: errors
                 });
-                NotificationManager.error('Error occured during operation!', 'Error');
             });
     }
 
@@ -81,7 +75,7 @@ class NewResearch extends React.Component {
                                         </Col>
                                         <Col xs="12" md="9">
                                             <Input type="text" id="name" name="name" placeholder="Наименование"/>
-                                            <FormText color="muted">Введите Наименование</FormText>
+                                            <FormText color="muted">Введите наименование</FormText>
                                         </Col>
                                     </FormGroup>
                                     <FormGroup row>
@@ -90,17 +84,24 @@ class NewResearch extends React.Component {
                                         </Col>
                                         <Col xs="12" md="9">
                                             <Input type="select" name="period" id="select">
-                                                <option value="раз в год">Раз в год</option>
-                                                <option value="Два раза в год">Два раза в год</option>
-                                                <option value="Три раза в год">Три раза в год</option>
+                                                <option value="-1">
+                                                    При поступлении на работу.
+                                                    При смене юридического лица
+                                                </option>
+                                                <option value="1">Раз в жизни</option>
+                                                <option value="365">Раз в год</option>
+                                                <option value="730">Раз в два года</option>
+                                                <option value="1827">Раз в 5 лет</option>
+                                                <option value="3653">Раз в 10 лет</option>
                                             </Input>
+                                            <FormText color="muted">Выберите периодичность</FormText>
                                         </Col>
                                     </FormGroup>
                                 </Form>
                             </CardBlock>
                             <CardFooter>
                                 <Button type="submit" size="sm" color="success" onClick={this.handleSubmit}>
-                                    <i className="fa fa-dot-circle-o"></i> Сохранить
+                                    <i className="fa fa-dot-circle-o"/> Сохранить
                                 </Button>
                             </CardFooter>
                         </Card>
@@ -110,4 +111,9 @@ class NewResearch extends React.Component {
         );
     }
 }
+
+NewResearch.propTypes = {
+    router: PropTypes.object.isRequired
+};
+
 export default NewResearch;

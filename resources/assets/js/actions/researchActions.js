@@ -1,5 +1,5 @@
-import {NotificationManager} from 'react-notifications';
 import axios from 'axios';
+import {hashHistory} from 'react-router';
 
 /**
  * Fetch
@@ -11,13 +11,13 @@ export function fetchResearches() {
             .then((response) => {
                 dispatch({
                     payload: response,
-                    type: 'FETCH_RESEARCHES_FULFILLED'
+                    type: 'RESEARCHES_FULFILLED'
                 });
             })
             .catch((error) => {
                 dispatch({
                     payload: error,
-                    type: 'FETCH_RESEARCHES_REJECTED'
+                    type: 'RESEARCHES_REJECTED'
                 });
             });
     };
@@ -34,13 +34,13 @@ export function fetchResearch(id) {
             .then((response) => {
                 dispatch({
                     payload: response.data.research,
-                    type: 'FETCH_RESEARCH_FULFILLED'
+                    type: 'RESEARCH_FULFILLED'
                 });
             })
             .catch((error) => {
                 dispatch({
                     payload: error,
-                    type: 'FETCH_RESEARCH_REJECTED'
+                    type: 'RESEARCH_REJECTED'
                 });
             });
     };
@@ -52,14 +52,13 @@ export function fetchResearch(id) {
  * @returns {Function}
  */
 export function deleteResearch(id) {
-    return (dispatch) => {
+    return () => {
         axios.post(`/researches/destroy/${id}`)
-            .then((response) => {
-                NotificationManager.success(response.data.message, 'Success');
-                dispatch(fetchResearches());
+            .then(() => {
+                hashHistory.push('/researches');
             })
             .catch((error) => {
-                NotificationManager.error('An error occured in the operation', 'Error', error);
+                alert('Ошибка удаления: эти данные используются', error);
             });
     };
 }

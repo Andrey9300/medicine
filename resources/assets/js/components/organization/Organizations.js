@@ -1,4 +1,4 @@
-import {deleteOrganization, fetchOrganizations} from '../../actions/organizationActions';
+import {fetchOrganizations} from '../../actions/organizationActions';
 import {Link} from 'react-router';
 import React from 'react';
 import {connect} from 'react-redux';
@@ -10,21 +10,11 @@ import {
     CardBlock,
     Table
 } from 'reactstrap';
+import PropTypes from 'prop-types';
 
 class Organizations extends React.Component {
-
-    constructor() {
-        super();
-        this.handleBtnDelete = this.handleBtnDelete.bind(this);
-    }
-
     componentWillMount() {
         this.props.dispatch(fetchOrganizations());
-    }
-
-    handleBtnDelete(id, event) {
-        event.preventDefault();
-        this.props.dispatch(deleteOrganization(id));
     }
 
     render() {
@@ -34,7 +24,10 @@ class Organizations extends React.Component {
                     <Col xs="12" lg="12">
                         <Card>
                             <CardHeader>
-                                <i className="fa fa-align-justify"></i>Организации
+                                <i className="fa fa-building-o" aria-hidden="true"/>Организации
+                                <Link to="organizations/create" className="btn btn-primary btn-sm pull-right">
+                                    Добавить <i className="icon-plus"/>
+                                </Link>
                             </CardHeader>
                             <CardBlock className="card-body">
                                 <Table responsive>
@@ -42,15 +35,14 @@ class Organizations extends React.Component {
                                         <tr>
                                             <th>Название</th>
                                             <th>Юридическое лицо</th>
-                                            <th>ФИО руководителя</th>
+                                            <th>Руководитель</th>
                                             <th>E-mail руководителя</th>
                                             <th>Сотрудники</th>
                                             <th>Редактировать</th>
-                                            <th>Удалить</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                    { this.props.organizations.map((organization, index) => {
+                                    { this.props.organizations.map((organization) => {
                                         return (
                                             <tr key={organization.id}>
                                                 <td>
@@ -64,24 +56,14 @@ class Organizations extends React.Component {
                                                 <td>
                                                     <Link to={`organizations/users/${organization.id}`}
                                                           className="btn btn-info btn-xs pull-left">Сотрудники
-                                                        <i className="glyphicon glyphicon-pencil"></i>
+                                                        <i className="glyphicon glyphicon-pencil"/>
                                                     </Link>
                                                 </td>
                                                 <td>
                                                     <Link to={`organizations/edit/${organization.id}`}
                                                           className="btn btn-success btn-xs pull-left">Редактировать
-                                                        <i className="glyphicon glyphicon-pencil"></i>
+                                                        <i className="glyphicon glyphicon-pencil"/>
                                                     </Link>
-                                                </td>
-                                                <td>
-                                                    <form id={`form_${organization.id}`} className="pull-left" method="post">
-                                                        <input type="hidden" name="organization_id" value={organization.id} />
-                                                        <a className="btn btn-danger btn-xs"
-                                                           onClick={(event) => this.handleBtnDelete(organization.id, event)}
-                                                           href="#" id={organization.id}>Удалить
-                                                            <i className="glyphicon glyphicon-trash"></i>
-                                                        </a>
-                                                    </form>
                                                 </td>
                                             </tr>
                                         );
@@ -89,9 +71,6 @@ class Organizations extends React.Component {
                                     }
                                     </tbody>
                                 </Table>
-                                <Link to="organizations/create" className="btn btn-primary btn-sm pull-left">
-                                    Добавить &nbsp; <i className="glyphicon glyphicon-plus"></i>
-                                </Link>
                             </CardBlock>
                         </Card>
                     </Col>
@@ -111,4 +90,10 @@ function mapStateToProps(state) {
         organizations: state.organizations.organizations
     };
 }
+
+Organizations.propTypes = {
+    dispatch: PropTypes.func.isRequired,
+    organizations: PropTypes.array.isRequired
+};
+
 export default connect(mapStateToProps)(Organizations);

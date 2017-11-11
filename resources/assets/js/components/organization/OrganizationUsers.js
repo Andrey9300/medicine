@@ -10,18 +10,15 @@ import {
     CardBlock,
     Table
 } from 'reactstrap';
+import PropTypes from 'prop-types';
 
 class OrganizationUser extends React.Component {
-    static contextTypes = {
-        router: React.PropTypes.object.isRequired
-    };
-
     constructor(props) {
         super(props);
 
         this.state = {
             errors: '',
-            organizationId: props.params.idOrganization, // не будет работать на картчоке объекта
+            organizationId: props.params.idOrganization
         };
     }
 
@@ -41,7 +38,10 @@ class OrganizationUser extends React.Component {
                     <Col xs="12" lg="12">
                         <Card>
                             <CardHeader>
-                                <i className="fa fa-align-justify"></i>Цены на исследования
+                                <i className="fa fa-align-justify"/>Цены на исследования
+                                <Link to="users/create" className="btn btn-primary btn-sm pull-right">
+                                    Добавить <i className="icon-plus"/>
+                                </Link>
                             </CardHeader>
                             <CardBlock className="card-body">
                                 <Table responsive>
@@ -55,7 +55,7 @@ class OrganizationUser extends React.Component {
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    { this.props.organizationUsers.map((user, index) => {
+                                    { this.props.organizationUsers.map((user) => {
                                         return (
                                             <tr key={user.id}>
                                                 <td>
@@ -67,13 +67,13 @@ class OrganizationUser extends React.Component {
                                                 <td>
                                                     <Link to={`users/researches/${user.id}`}
                                                           className="btn btn-primary btn-xs pull-left">Исследования
-                                                        <i className="glyphicon glyphicon-pencil"></i>
+                                                        <i className="glyphicon glyphicon-pencil"/>
                                                     </Link>
                                                 </td>
                                                 <td>
                                                     <Link to={`users/edit/${user.id}`}
                                                           className="btn btn-success btn-xs pull-left">Редактировать
-                                                        <i className="glyphicon glyphicon-pencil"></i>
+                                                        <i className="glyphicon glyphicon-pencil"/>
                                                     </Link>
                                                 </td>
                                                 <td>
@@ -82,7 +82,7 @@ class OrganizationUser extends React.Component {
                                                         <a className="btn btn-danger btn-xs"
                                                            onClick={(event) => this.handleBtnDelete(user.id, event)}
                                                            href="#" id={user.id}>Удалить
-                                                            <i className="glyphicon glyphicon-trash"></i>
+                                                            <i className="glyphicon glyphicon-trash"/>
                                                         </a>
                                                     </form>
                                                 </td>
@@ -92,9 +92,6 @@ class OrganizationUser extends React.Component {
                                     }
                                     </tbody>
                                 </Table>
-                                <Link to="users/create" className="btn btn-primary btn-sm pull-left">
-                                    Добавить &nbsp; <i className="glyphicon glyphicon-plus"></i>
-                                </Link>
                             </CardBlock>
                         </Card>
                     </Col>
@@ -114,4 +111,12 @@ function mapStateToProps(state) {
         organizationUsers: state.organizations.organizationUsers
     };
 }
+
+OrganizationUser.propTypes = {
+    dispatch: PropTypes.func.isRequired,
+    organizationUsers: PropTypes.array.isRequired,
+    params: PropTypes.object.isRequired,
+    router: PropTypes.object.isRequired
+};
+
 export default connect(mapStateToProps)(OrganizationUser);

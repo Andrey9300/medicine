@@ -16,15 +16,14 @@ class CreateOrganizationsTable extends Migration
         Schema::create('organizations', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name')->unique();
-            $table->string('address');
+            $table->string('address')->nullable();
             $table->string('legal_entity');
-            $table->string('head_fio');
             $table->string('head_email');
-            $table->string('regional_fio')->nullable();
-            $table->string('regional_email')->nullable();
-            $table->string('chef_email')->nullable();
             $table->string('phone')->nullable();
-            $table->boolean('is_certification')->nullable();
+            $table->integer('region_id')->unsigned();
+            $table->foreign('region_id')->references('id')->on('regions');
+            $table->integer('category_id')->unsigned();
+            $table->foreign('category_id')->references('id')->on('categories');
         });
     }
 

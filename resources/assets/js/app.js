@@ -25,6 +25,7 @@ import Researches from './components/research/Researches';
 import NewResearch from './components/research/NewResearch';
 
 import EditUser from './components/user/EditUser';
+import PrintUser from './components/user/PrintUser';
 import User from './components/user/User';
 import Users from './components/user/Users';
 import NewUser from './components/user/NewUser';
@@ -32,6 +33,8 @@ import NewUser from './components/user/NewUser';
 import UserResearches from './components/user/research/UserResearches';
 import EditUserResearch from './components/user/research/EditUserResearch';
 import NewUserResearch from './components/user/research/NewUserResearch';
+
+import requireAuthentication from './components/includes/Authenticated';
 
 import Layout from './components/Layout';
 import {Provider} from 'react-redux';
@@ -43,36 +46,37 @@ ReactDOM.render(
     <Provider store={store}>
         <Router history = { hashHistory }>
             <Route path = "/" component = { Layout }>
-                <IndexRoute component = { Hospitals }></IndexRoute>
-                <Route path = "login" component = { Login }></Route>
+                <IndexRoute component = { Organizations }/>
+                <Route path = "login" component = { Login }/>
 
-                <Route path = "hospitals" component = { Hospitals }></Route>
-                <Route path = "hospitals/create" component = { NewHospital }></Route>
-                <Route path = "hospitals/:id" component = { Hospital }></Route>
-                <Route path = "hospitals/edit/:id" component = { EditHospital }></Route>
+                <Route path = "hospitals" component={requireAuthentication(Hospitals)}/>
+                <Route path = "hospitals/create" component = { NewHospital }/>
+                <Route path = "hospitals/:id" component = { Hospital }/>
+                <Route path = "hospitals/edit/:id" component = { EditHospital }/>
 
-                <Route path = "hospitals/researches/:idHospital" component = { HospitalResearches }></Route>
-                <Route path = "hospitals/researches/:idHospital/create" component = { NewHospitalResearch }></Route>
-                <Route path = "hospitals/researches/edit/:idHospital/:idResearch" component = { EditHospitalResearch }></Route>
+                <Route path = "hospitals/researches/:idHospital" component = { HospitalResearches }/>
+                <Route path = "hospitals/researches/:idHospital/create" component = { NewHospitalResearch }/>
+                <Route path = "hospitals/researches/edit/:idHospital/:idResearch" component = { EditHospitalResearch }/>
 
-                <Route path = "organizations" component = { Organizations }></Route>
-                <Route path = "organizations/create" component = { NewOrganization }></Route>
-                <Route path = "organizations/:id" component = { Organization }></Route>
-                <Route path = "organizations/users/:idOrganization" component = { OrganizationUsers }></Route>
-                <Route path = "organizations/edit/:id" component = { EditOrganization }></Route>
+                <Route path = "organizations" component = { Organizations }/>
+                <Route path = "organizations/create" component = { NewOrganization }/>
+                <Route path = "organizations/:id" component = { Organization }/>
+                <Route path = "organizations/users/:idOrganization" component = { OrganizationUsers }/>
+                <Route path = "organizations/edit/:id" component = { EditOrganization }/>
 
-                <Route path = "researches" component = { Researches }></Route>
-                <Route path = "researches/create" component = { NewResearch }></Route>
-                <Route path = "researches/edit/:id" component = { EditResearch }></Route>
+                <Route path = "researches" component = { Researches }/>
+                <Route path = "researches/create" component = { NewResearch }/>
+                <Route path = "researches/edit/:id" component = { EditResearch }/>
 
-                <Route path = "users" component = { Users }></Route>
-                <Route path = "users/create" component = { NewUser }></Route>
-                <Route path = "users/:id" component = { User }></Route>
-                <Route path = "users/edit/:id" component = { EditUser }></Route>
+                <Route path = "users" component = { Users }/>
+                <Route path = "users/create" component = { NewUser }/>
+                <Route path = "users/:id" component = { User }/>
+                <Route path = "users/edit/:id" component = { EditUser }/>
+                <Route path = "users/print/:id" component = { PrintUser }/>
 
-                <Route path = "users/researches/:idUser" component = { UserResearches }></Route>
-                <Route path = "users/researches/:idUser/create" component = { NewUserResearch }></Route>
-                <Route path = "users/researches/edit/:idUser/:idResearch" component = { EditUserResearch }></Route>
+                <Route path = "users/researches/:idUser" component = { UserResearches }/>
+                <Route path = "users/researches/:idUser/create" component = { NewUserResearch }/>
+                <Route path = "users/researches/edit/:idUser/:idResearch" component = { EditUserResearch }/>
             </Route>
         </Router>
     </Provider>,

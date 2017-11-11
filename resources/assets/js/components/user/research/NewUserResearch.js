@@ -1,5 +1,4 @@
 import {fetchResearches} from '../../../actions/researchActions';
-import {NotificationManager} from 'react-notifications';
 import React from 'react';
 import axios from 'axios';
 import {connect} from 'react-redux';
@@ -17,17 +16,14 @@ import {
     Label,
     Input
 } from 'reactstrap';
+import PropTypes from 'prop-types';
 
 class NewUserResearch extends React.Component {
-    static contextTypes = {
-        router: React.PropTypes.object.isRequired
-    };
-
     constructor(props) {
         super(props);
         this.state = {
             errors: '',
-            userId: props.params.idUser,
+            userId: props.params.idUser
         };
         this.handleSubmit = this.handleSubmit.bind(this);
     }
@@ -43,8 +39,7 @@ class NewUserResearch extends React.Component {
 
         axios.post(`/users/researches/create/${this.props.params.idUser}`, formData)
             .then(() => {
-                this.context.router.push('/users');
-                NotificationManager.success('User has been created!', 'Success', 5000);
+                this.context.router.push(`/users/${this.props.params.idUser}`);
             })
             .catch((error) => {
                 const errors = error.response.data.message;
@@ -52,7 +47,6 @@ class NewUserResearch extends React.Component {
                 this.setState({
                     errors: errors
                 });
-                NotificationManager.error('Error occured during operation!', 'Error', 5000);
             });
     }
 
@@ -90,7 +84,10 @@ class NewUserResearch extends React.Component {
                                             <Input type="select" name="name" id="select">
                                                 {this.props.researches.map((research) => {
                                                     return (
-                                                        <option key={research.id} value={research.id}>{research.name}</option>
+                                                        <option key={research.id}
+                                                                value={research.id}>
+                                                            {research.name}
+                                                        </option>
                                                     );
                                                 })}
                                             </Input>
@@ -101,7 +98,7 @@ class NewUserResearch extends React.Component {
                                             <Label htmlFor="text-input">Дата</Label>
                                         </Col>
                                         <Col xs="12" md="9">
-                                            <Input type="text" id="date" name="text-input" placeholder="Дата"/>
+                                            <Input type="text" id="date" name="date" placeholder="Дата"/>
                                             <FormText color="muted">Введите дату обследования</FormText>
                                         </Col>
                                     </FormGroup>
@@ -109,7 +106,7 @@ class NewUserResearch extends React.Component {
                             </CardBlock>
                             <CardFooter>
                                 <Button type="submit" size="sm" color="success" onClick={this.handleSubmit}>
-                                    <i className="fa fa-dot-circle-o"></i> Сохранить
+                                    <i className="fa fa-dot-circle-o"/> Сохранить
                                 </Button>
                             </CardFooter>
                         </Card>
@@ -130,4 +127,12 @@ function mapStateToProps(state) {
         researches: state.researches.researches
     };
 }
+
+NewUserResearch.propTypes = {
+    dispatch: PropTypes.func.isRequired,
+    params: PropTypes.object.isRequired,
+    researches: PropTypes.array.isRequired,
+    router: PropTypes.object.isRequired
+};
+
 export default connect(mapStateToProps)(NewUserResearch);

@@ -1,19 +1,23 @@
-import {fetchUserResearches, deleteUserResearch} from '../../../actions/userActions';
+import {fetchUserResearches} from '../../../actions/userActions';
 import {Link} from 'react-router';
 import React from 'react';
 import {connect} from 'react-redux';
-import {Table, Row, Col, Card, CardHeader, CardBlock} from 'reactstrap';
+import {
+    Table,
+    Row,
+    Col,
+    Card,
+    CardHeader,
+    CardBlock
+} from 'reactstrap';
+import PropTypes from 'prop-types';
 
-class UserResearches extends React.Component {
-    static contextTypes = {
-        router: React.PropTypes.object.isRequired
-    };
-
+class EditUserResearches extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             errors: '',
-            userId: props.idUser,
+            userId: props.idUser
         };
     }
 
@@ -28,9 +32,10 @@ class UserResearches extends React.Component {
                     <Col xs="12" lg="12">
                         <Card>
                             <CardHeader>
-                                <i className="fa fa-heartbeat" aria-hidden="true"></i>Исследования сотрудника
-                                <Link to={`users/researches/${this.state.userId}/create`} className="btn btn-primary btn-sm pull-right">
-                                    Добавить <i className="icon-plus"></i>
+                                <i className="fa fa-heartbeat" aria-hidden="true"/>Исследования сотрудника
+                                <Link to={`users/researches/${this.state.userId}/create`}
+                                      className="btn btn-primary btn-sm pull-right">
+                                    Добавить <i className="icon-plus"/>
                                 </Link>
                             </CardHeader>
                             <CardBlock className="card-body">
@@ -52,7 +57,8 @@ class UserResearches extends React.Component {
                                                     {(() => {
                                                         switch (research.period) {
                                                             case '-1':
-                                                                return 'При поступлении на работу. При смене юридического лица';
+                                                                return 'При поступлении на работу. ' +
+                                                                    'При смене юридического лица';
                                                             case '1':
                                                                 return 'Раз в жизни';
                                                             case '365':
@@ -72,7 +78,7 @@ class UserResearches extends React.Component {
                                                 <td>
                                                     <Link to={`users/researches/edit/${this.state.userId}/${research.id}`}
                                                           className="btn btn-success btn-xs pull-left">Редактировать
-                                                        <i className="glyphicon glyphicon-pencil"></i>
+                                                        <i className="glyphicon glyphicon-pencil"/>
                                                     </Link>
                                                 </td>
                                             </tr>
@@ -101,4 +107,12 @@ function mapStateToProps(state) {
         userResearches: state.users.userResearches
     };
 }
-export default connect(mapStateToProps)(UserResearches);
+
+EditUserResearches.propTypes = {
+    dispatch: PropTypes.func.isRequired,
+    idUser: PropTypes.number.isRequired,
+    router: PropTypes.object.isRequired,
+    userResearches: PropTypes.array.isRequired
+};
+
+export default connect(mapStateToProps)(EditUserResearches);

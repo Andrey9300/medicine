@@ -12,18 +12,46 @@ class UsersTableSeeder extends Seeder
     public function run()
     {
         DB::table('users')->insert([
-            'fio' => 'Шменко Иван Иванович',
+            'id' => 1,
+            'fio' => 'Кренко Иван Иванович',
             'password' => bcrypt('secret'),
-            'date_birthday' => '1990-10-05',
-            'date_employment' => '2017-10-05',
-            'medical_book' => '123456789',
-            'role' => 'admin',
-            'email' => 'test@test.ru',
-            'organization_name' => 'Объект 1',
-            'remember_token' => '',
-            'created_at' => '2009-06-04 18:14:56',
-            'updated_at' => '2009-06-04 18:14:56'
-
+            'email' => 'krenko@meet.ru',
+            'role' => 'admin'
+        ]);
+        DB::table('users')->insert([
+            'id' => 2,
+            'fio' => 'Паркин Иван АНатольевич',
+            'password' => bcrypt('secret'),
+            'email' => 'parkin@meet.ru',
+            'role' => 'admin'
+        ]);
+        DB::table('users')->insert([
+            'id' => 3,
+            'fio' => 'Бренкин Дмитрий Иванович',
+            'password' => bcrypt('secret'),
+            'email' => 'brenkin@meet.ru',
+            'role' => 'admin'
+        ]);
+        DB::table('users')->insert([
+            'id' => 4,
+            'fio' => 'Калин Олег Иванович',
+            'password' => bcrypt('secret'),
+            'email' => 'kalin@meet.ru',
+            'role' => 'head'
+        ]);
+        DB::table('users')->insert([
+            'id' => 5,
+            'fio' => 'Бранин Василий Петрович',
+            'password' => bcrypt('secret'),
+            'email' => 'branin@meet.ru',
+            'role' => 'head'
+        ]);
+        DB::table('users')->insert([
+            'id' => 6,
+            'fio' => 'Бран Петр Васильевич',
+            'password' => bcrypt('secret'),
+            'email' => 'bran@fish.ru',
+            'role' => 'head'
         ]);
     }
 }

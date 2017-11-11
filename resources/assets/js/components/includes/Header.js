@@ -1,15 +1,8 @@
 import React, {Component} from 'react';
 import {
-    Badge,
-    Dropdown,
-    DropdownMenu,
-    DropdownItem,
     Nav,
-    NavItem,
-    NavLink,
     NavbarToggler,
-    NavbarBrand,
-    DropdownToggle
+    NavbarBrand
 } from 'reactstrap';
 
 class Header extends Component {
@@ -50,12 +43,12 @@ class Header extends Component {
 
     render() {
         return (
-            <header className="app-header navbar">
+            <header className="app-header navbar d-print-none">
                 <NavbarToggler className="d-lg-none" onClick={this.mobileSidebarToggle}>&#9776;</NavbarToggler>
-                <NavbarBrand href="#"></NavbarBrand>
+                <NavbarBrand href="#">3Q</NavbarBrand>
                 <NavbarToggler className="d-md-down-none" onClick={this.sidebarToggle}>&#9776;</NavbarToggler>
-                <Nav className="d-md-down-none" navbar></Nav>
-                <Nav className="ml-auto" navbar></Nav>
+                <Nav className="d-md-down-none" navbar/>
+                <Nav className="ml-auto" navbar/>
             </header>
         );
     }

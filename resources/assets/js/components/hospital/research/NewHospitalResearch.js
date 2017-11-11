@@ -1,5 +1,4 @@
 import {fetchResearches} from '../../../actions/researchActions';
-import {NotificationManager} from 'react-notifications';
 import React from 'react';
 import axios from 'axios';
 import {connect} from 'react-redux';
@@ -17,17 +16,14 @@ import {
     Label,
     Input
 } from 'reactstrap';
+import PropTypes from 'prop-types';
 
 class NewHospitalResearch extends React.Component {
-    static contextTypes = {
-        router: React.PropTypes.object.isRequired
-    };
-
     constructor(props) {
         super(props);
         this.state = {
             errors: '',
-            hospitalId: props.params.idHospital,
+            hospitalId: props.params.idHospital
         };
         this.handleSubmit = this.handleSubmit.bind(this);
     }
@@ -44,7 +40,6 @@ class NewHospitalResearch extends React.Component {
         axios.post(`/hospitals/researches/create/${this.props.params.idHospital}`, formData)
             .then(() => {
                 this.context.router.push('/hospitals');
-                NotificationManager.success('Hospital has been created!', 'Success', 5000);
             })
             .catch((error) => {
                 const errors = error.response.data.message;
@@ -52,7 +47,6 @@ class NewHospitalResearch extends React.Component {
                 this.setState({
                     errors: errors
                 });
-                NotificationManager.error('Error occured during operation!', 'Error', 5000);
             });
     }
 
@@ -90,7 +84,10 @@ class NewHospitalResearch extends React.Component {
                                                 <Input type="select" name="name" id="select">
                                                     {this.props.researches.map((research) => {
                                                         return (
-                                                            <option key={research.id} value={research.id}>{research.name}</option>
+                                                            <option key={research.id}
+                                                                    value={research.id}>
+                                                                {research.name}
+                                                            </option>
                                                         );
                                                     })}
                                                 </Input>
@@ -101,7 +98,7 @@ class NewHospitalResearch extends React.Component {
                                                 <Label htmlFor="text-input">Цена</Label>
                                             </Col>
                                             <Col xs="12" md="9">
-                                                <Input type="text" id="price" name="text-input" placeholder="Цена"/>
+                                                <Input type="text" id="price" name="price" placeholder="Цена"/>
                                                 <FormText color="muted">Введите цену</FormText>
                                             </Col>
                                         </FormGroup>
@@ -109,7 +106,7 @@ class NewHospitalResearch extends React.Component {
                                 </CardBlock>
                                 <CardFooter>
                                     <Button type="submit" size="sm" color="success" onClick={this.handleSubmit}>
-                                        <i className="fa fa-dot-circle-o"></i> Сохранить
+                                        <i className="fa fa-dot-circle-o"/> Сохранить
                                     </Button>
                                 </CardFooter>
                             </Card>
@@ -130,4 +127,13 @@ function mapStateToProps(state) {
         researches: state.researches.researches
     };
 }
+
+NewHospitalResearch.propTypes = {
+    dispatch: PropTypes.func.isRequired,
+    params: PropTypes.object.isRequired,
+    researches: PropTypes.array.isRequired,
+    router: PropTypes.object.isRequired
+};
+
+
 export default connect(mapStateToProps)(NewHospitalResearch);

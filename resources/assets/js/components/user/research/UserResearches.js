@@ -1,29 +1,28 @@
-import {fetchUserResearches, deleteUserResearch} from '../../../actions/userActions';
+import {fetchUserResearches} from '../../../actions/userActions';
 import {Link} from 'react-router';
 import React from 'react';
 import {connect} from 'react-redux';
-import {Table, Row, Col, Card, CardHeader, CardBlock} from 'reactstrap';
+import {
+    Table,
+    Row,
+    Col,
+    Card,
+    CardHeader,
+    CardBlock
+} from 'reactstrap';
+import PropTypes from 'prop-types';
 
 class UserResearches extends React.Component {
-    static contextTypes = {
-        router: React.PropTypes.object.isRequired
-    };
-
     constructor(props) {
         super(props);
         this.state = {
             errors: '',
-            userId: props.idUser,
+            userId: props.idUser
         };
     }
 
     componentWillMount() {
         this.props.dispatch(fetchUserResearches(this.state.userId));
-    }
-
-    handleBtnDelete(idResearch, event) {
-        event.preventDefault();
-        this.props.dispatch(deleteUserResearch(this.state.userId, idResearch));
     }
 
     render() {
@@ -33,7 +32,11 @@ class UserResearches extends React.Component {
                     <Col xs="12" lg="12">
                         <Card>
                             <CardHeader>
-                                <i className="fa fa-align-justify"></i>Исследования сотрудника
+                                <i className="fa fa-heartbeat" aria-hidden="true"/>Исследования сотрудника
+                                <Link to={`users/researches/${this.state.userId}/create`}
+                                      className="btn btn-primary btn-sm pull-right">
+                                    Добавить <i className="icon-plus"/>
+                                </Link>
                             </CardHeader>
                             <CardBlock className="card-body">
                                 <Table responsive>
@@ -42,7 +45,7 @@ class UserResearches extends React.Component {
                                         <th>Название</th>
                                         <th>Период</th>
                                         <th>Дата</th>
-                                        <th></th>
+                                        <th>Редактировать</th>
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -54,7 +57,8 @@ class UserResearches extends React.Component {
                                                     {(() => {
                                                         switch (research.period) {
                                                             case '-1':
-                                                                return 'При поступлении на работу. При смене юридического лица';
+                                                                return 'При поступлении на работу.' +
+                                                                    'При смене юридического лица';
                                                             case '1':
                                                                 return 'Раз в жизни';
                                                             case '365':
@@ -73,17 +77,9 @@ class UserResearches extends React.Component {
                                                 <td>{research.pivot.date}</td>
                                                 <td>
                                                     <Link to={`users/researches/edit/${this.state.userId}/${research.id}`}
-                                                          className="btn btn-primary btn-xs pull-left">Редактировать
-                                                        <i className="glyphicon glyphicon-pencil"></i>
+                                                          className="btn btn-success btn-xs pull-left">Редактировать
+                                                        <i className="glyphicon glyphicon-pencil"/>
                                                     </Link>
-                                                    <form id={`form_${research.id}`} className="pull-left" method="post">
-                                                        <input type="hidden" name="user_research_id" value={research.id} />
-                                                        <a className="btn btn-danger btn-xs"
-                                                           onClick={(event) => this.handleBtnDelete(research.id, event)}
-                                                           href="#" id={research.id}>Удалить
-                                                            <i className="glyphicon glyphicon-trash"></i>
-                                                        </a>
-                                                    </form>
                                                 </td>
                                             </tr>
 
@@ -92,9 +88,6 @@ class UserResearches extends React.Component {
                                     }
                                     </tbody>
                                 </Table>
-                                <Link to={`users/researches/${this.state.userId}/create`} className="btn btn-primary btn-sm pull-left">
-                                    Добавить &nbsp; <i className="glyphicon glyphicon-plus"></i>
-                                </Link>
                             </CardBlock>
                         </Card>
                     </Col>
@@ -114,4 +107,12 @@ function mapStateToProps(state) {
         userResearches: state.users.userResearches
     };
 }
+
+UserResearches.propTypes = {
+    dispatch: PropTypes.func.isRequired,
+    idUser: PropTypes.number.isRequired,
+    router: PropTypes.object.isRequired,
+    userResearches: PropTypes.array.isRequired
+};
+
 export default connect(mapStateToProps)(UserResearches);

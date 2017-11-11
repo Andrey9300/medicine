@@ -1,12 +1,8 @@
 <?php
 Auth::routes();
+Route::get('/', 'IndexController@index');
 
-Route::get('/login', 'HomeController@index');
-Route::get('/', 'HomeController@index')->name('home');
-
-//Route::middleware(['auth'])->group(function () {
-    Route::get('/logout', 'HomeController@logout');
-
+Route::middleware(['auth'])->group(function () {
     Route::prefix('hospitals')->group(function () {
         Route::post('/create', 'HospitalController@create');
         Route::post('/destroy/{id}', 'HospitalController@destroy');
@@ -49,6 +45,7 @@ Route::get('/', 'HomeController@index')->name('home');
         Route::post('/destroy/{id}', 'UsersController@destroy');
         Route::post('/update/{id}', 'UsersController@update');
         Route::post('/{id}', 'UsersController@show');
+        Route::get('/{id}', 'UsersController@show');
         Route::post('/', 'UsersController@store');
 
         Route::prefix('researches')->group(function () {
@@ -59,6 +56,4 @@ Route::get('/', 'HomeController@index')->name('home');
             Route::post('/{id_user}', 'UsersController@storeResearches');
         });
     });
-//});
-
-
+});

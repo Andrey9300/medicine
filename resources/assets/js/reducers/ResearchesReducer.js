@@ -1,39 +1,40 @@
+const initialState = {
+    error: null,
+    fetched: false,
+    research: null,
+    researches: []
+};
+
 /**
  * Reducer
  * @param state {Object}
  * @param action {Object}
  * @returns {*}
  */
-export default function reducer(state = {
-    error: null,
-    fetched: false,
-    research: null,
-    researches: []
-}, action
-) {
+export default function reducer(state = initialState, action) {
     switch (action.type) {
-        case 'FETCH_RESEARCHES_REJECTED': {
+        case 'RESEARCHES_REJECTED': {
             return {
                 ...state,
                 error: action.payload,
                 fetched: false
             };
         }
-        case 'FETCH_RESEARCHES_FULFILLED': {
+        case 'RESEARCHES_FULFILLED': {
             return {
                 ...state,
                 fetched: true,
                 researches: action.payload.data.researches
             };
         }
-        case 'FETCH_RESEARCH_REJECTED': {
+        case 'RESEARCH_REJECTED': {
             return {
                 ...state,
                 error: action.payload,
                 fetched: false
             };
         }
-        case 'FETCH_RESEARCH_FULFILLED': {
+        case 'RESEARCH_FULFILLED': {
             return {
                 ...state,
                 fetched: true,

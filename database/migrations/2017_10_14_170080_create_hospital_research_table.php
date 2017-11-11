@@ -15,12 +15,12 @@ class CreateHospitalResearchTable extends Migration
     {
         Schema::create('hospital_research', function (Blueprint $table) {
             $table->increments('id');
+            $table->double('price')->nullable();
             $table->integer('hospital_id')->unsigned();
-            $table->integer('research_id')->unsigned();
-            $table->double('price')->default(0);
             $table->foreign('hospital_id')->references('id')->on('hospitals');
-            $table->foreign('research_id')->references('id')->on('researches');
-            $table->unique(array('hospital_id', 'research_id'));
+            $table->integer('research_category_id')->unsigned();
+            $table->foreign('research_category_id')->references('id')->on('research_category');
+            $table->unique(array('hospital_id', 'research_category_id'));
         });
     }
 
