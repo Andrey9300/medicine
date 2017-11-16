@@ -15,7 +15,7 @@ class CreateUsersTable extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('fio');
+            $table->string('fio')->nullable();
             $table->string('password');
             $table->string('email')->unique();
             $table->enum('role', ['admin', 'head']);

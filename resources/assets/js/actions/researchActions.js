@@ -15,6 +15,7 @@ export function fetchResearches() {
                 });
             })
             .catch((error) => {
+                hashHistory.replace('login');
                 dispatch({
                     payload: error,
                     type: 'RESEARCHES_REJECTED'
@@ -33,7 +34,7 @@ export function fetchResearch(id) {
         axios.post(`/researches/${id}`)
             .then((response) => {
                 dispatch({
-                    payload: response.data.research,
+                    payload: response,
                     type: 'RESEARCH_FULFILLED'
                 });
             })

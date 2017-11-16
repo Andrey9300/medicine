@@ -40,5 +40,25 @@ class OrganizationsTableSeeder extends Seeder
             'region_id' => '1',
             'category_id' => '1',
         ]);
+
+        DB::table('organizations')->insert([
+            'name' => 'ОАО Сырокомбинат',
+            'address' => 'г. Москва, улица Сидорова, д. 19, к9',
+            'legal_entity' => 'ХлебоКом',
+            'head_email' => 'kalin@meet.ru',
+            'phone' => '+79991234569',
+            'region_id' => '1',
+            'category_id' => '1',
+        ]);
+
+        DB::table('organizations')->insert([
+            'name' => 'АО Колбасный цех',
+            'address' => 'г. Москва, улица Сидорова, д. 19, к9',
+            'legal_entity' => 'ХлебоКом',
+            'head_email' => 'kalin@meet.ru',
+            'phone' => '+79991234569',
+            'region_id' => '1',
+            'category_id' => '1',
+        ]);
     }
 }

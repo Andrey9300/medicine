@@ -2,8 +2,8 @@ const initialState = {
     error: null,
     fetched: false,
     organization: null,
-    organizationUsers: [],
-    organizations: []
+    organizations: [],
+    organizationEmployees: []
 };
 
 /**
@@ -39,21 +39,21 @@ export default function reducer(state = initialState, action) {
             return {
                 ...state,
                 fetched: true,
-                organization: action.payload
+                organization: action.payload.data.organization
             };
         }
-        case 'ORGANIZATION_USERS_REJECTED': {
+        case 'ORGANIZATION_EMPLOYEES_REJECTED': {
             return {
                 ...state,
                 error: action.payload,
                 fetched: false
             };
         }
-        case 'ORGANIZATION_USERS_FULFILLED': {
+        case 'ORGANIZATION_EMPLOYEES_FULFILLED': {
             return {
                 ...state,
                 fetched: true,
-                organizationUsers: action.payload.organization_users
+                organizationEmployees: action.payload.data.organization_employees
             };
         }
         default: return {

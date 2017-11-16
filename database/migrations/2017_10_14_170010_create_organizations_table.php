@@ -24,6 +24,7 @@ class CreateOrganizationsTable extends Migration
             $table->foreign('region_id')->references('id')->on('regions');
             $table->integer('category_id')->unsigned();
             $table->foreign('category_id')->references('id')->on('categories');
+            $table->onDelete('cascade');
         });
     }
 

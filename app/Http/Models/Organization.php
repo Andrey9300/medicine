@@ -9,10 +9,34 @@ class Organization extends Model
     public $timestamps = false;
 
     /**
-     * Получить орагиназцию сотрудника.
+     * категория
+     */
+    public function category()
+    {
+        return $this->belongsTo('App\Http\Models\Category');
+    }
+
+    /**
+     * регион
+     */
+    public function region()
+    {
+        return $this->belongsTo('App\Http\Models\Region');
+    }
+
+    /**
+     * получить users организации
      */
     public function users()
     {
-        return $this->hasMany('App\User', 'organization_name', 'name');
+        return $this->belongsToMany('App\User', 'user_organization');
+    }
+
+    /**
+     * получить employees организации
+     */
+    public function employees()
+    {
+        return $this->hasMany('App\Http\Models\Employee', 'organization_name', 'name');
     }
 }

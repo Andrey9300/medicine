@@ -15,7 +15,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password'
+        'fio', 'email', 'password', 'role'
     ];
 
     /**
@@ -24,24 +24,26 @@ class User extends Authenticatable
      * @var array
      */
     protected $hidden = [
-        'password', 'remember_token',
+        'password', 'remember_token'
     ];
 
     public $timestamps = false;
 
     /**
-     * The roles that belong to the user.
+     * все организации user
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
-    public function researches()
+    public function organizations()
     {
-        return $this->belongsToMany('App\Http\Models\Research', 'user_research')->withPivot('id', 'date');
+        return $this->belongsToMany('App\Http\Models\Organization', 'user_organization');
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * все медицинские организации user
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
-    public function organization()
+    public function hospitals()
     {
-        return $this->belongsTo('App\Http\Models\Organization', 'organization_name', 'name');
+        return $this->hasMany('App\Http\Models\Hospital');
     }
 }

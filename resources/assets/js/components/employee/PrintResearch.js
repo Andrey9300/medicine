@@ -1,21 +1,21 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import {fetchUser} from './../../actions/userActions';
+import {fetchEmployee} from './../../actions/employeeActions';
 import {Link} from 'react-router';
 import {Row, Col, Card, CardHeader, CardBlock, Table} from 'reactstrap';
 import PropTypes from 'prop-types';
 
-class PrintUser extends React.Component {
+class PrintEmployee extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             errors: '',
-            userId: props.params.id
+            employeeId: props.params.id
         };
     }
 
     componentWillMount() {
-        this.props.dispatch(fetchUser(this.state.userId));
+        this.props.dispatch(fetchEmployee(this.state.employeeId));
     }
 
     createMarkup() {
@@ -27,7 +27,7 @@ class PrintUser extends React.Component {
     researches() {
         const bufferTr = [];
         let bufferTd = [];
-        const researches = this.props.user.researches_expired.concat(this.props.user.researches_ended);
+        const researches = this.props.employee.researches_expired.concat(this.props.employee.researches_ended);
 
         researches.map((research, index) => {
             if (index % 2) {
@@ -44,7 +44,7 @@ class PrintUser extends React.Component {
     }
 
     render() {
-        const {user} = this.props;
+        const {employee} = this.props;
         let errors = '';
         let formElements = '';
 
@@ -54,7 +54,7 @@ class PrintUser extends React.Component {
             </div>;
         }
 
-        if (user !== null) {
+        if (employee !== null) {
             formElements =
                 <div className="animated fadeIn">
                     <Row>
@@ -76,7 +76,7 @@ class PrintUser extends React.Component {
                                             <tr style={{fontWeight: 'bold'}}>
                                                 <td colSpan="2">
                                                     {(() => {
-                                                        if (user.pay) {
+                                                        if (employee.pay) {
                                                             return 'ОПЛАТА: НАЛИЧНЫМИ';
                                                         }
 
@@ -87,28 +87,28 @@ class PrintUser extends React.Component {
                                             </tr>
                                             <tr>
                                                 <td colSpan="2">
-                                                    От: «{user.organization.legal_entity}»
+                                                    От: «{employee.organization.legal_entity}»
                                                 </td>
                                             </tr>
                                             <tr>
                                                 <td colSpan="2">
                                                     Структурное подразделение / наименование объекта:
-                                                    {user.organization_name}
+                                                    {employee.organization_name}
                                                 </td>
                                             </tr>
                                             <tr>
                                                 <td colSpan="2">
-                                                    Фамилия Имя Отчество сотрудника: {user.fio}
+                                                    Фамилия Имя Отчество сотрудника: {employee.fio}
                                                 </td>
                                             </tr>
                                             <tr>
                                                 <td colSpan="2">
-                                                    Профессия / должность: {user.role}
+                                                    Профессия / должность: {employee.role}
                                                 </td>
                                             </tr>
                                             <tr>
                                                 <td colSpan="2">
-                                                    Кто направил (ФИО. Должность): {user.organization.head_fio}
+                                                    Кто направил (ФИО. Должность): {employee.organization.head_fio}
                                                 </td>
                                             </tr>
                                             <tr>
@@ -165,19 +165,19 @@ class PrintUser extends React.Component {
 /**
  * Map
  * @param state
- * @returns {{user: (*|null)}}
+ * @returns {{employee: (*|null)}}
  */
 function mapStateToProps(state) {
     return {
-        user: state.users.user
+        employee: state.employees.employee
     };
 }
 
-PrintUser.propTypes = {
+PrintEmployee.propTypes = {
     dispatch: PropTypes.func.isRequired,
     params: PropTypes.object.isRequired,
     router: PropTypes.object.isRequired,
-    user: PropTypes.object.isRequired
+    employee: PropTypes.object.isRequired
 };
 
-export default connect(mapStateToProps)(PrintUser);
+export default connect(mapStateToProps)(PrintEmployee);

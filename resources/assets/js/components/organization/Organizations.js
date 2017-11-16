@@ -54,7 +54,7 @@ class Organizations extends React.Component {
                                                 <td>{organization.head_fio}</td>
                                                 <td>{organization.head_email}</td>
                                                 <td>
-                                                    <Link to={`organizations/users/${organization.id}`}
+                                                    <Link to={`organizations/employees/${organization.id}`}
                                                           className="btn btn-info btn-xs pull-left">Сотрудники
                                                         <i className="glyphicon glyphicon-pencil"/>
                                                     </Link>

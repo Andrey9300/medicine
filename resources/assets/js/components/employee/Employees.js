@@ -1,4 +1,4 @@
-import {deleteUser, fetchUsers} from '../../actions/userActions';
+import {deleteEmployee, fetchEmployees} from '../../actions/employeeActions';
 import {Link} from 'react-router';
 import React from 'react';
 import {connect} from 'react-redux';
@@ -12,19 +12,19 @@ import {
 } from 'reactstrap';
 import PropTypes from 'prop-types';
 
-class Users extends React.Component {
+class Employees extends React.Component {
     constructor() {
         super();
         this.handleBtnDelete = this.handleBtnDelete.bind(this);
     }
 
     componentWillMount() {
-        this.props.dispatch(fetchUsers());
+        this.props.dispatch(fetchEmployees());
     }
 
     handleBtnDelete(id, event) {
         event.preventDefault();
-        this.props.dispatch(deleteUser(id));
+        this.props.dispatch(deleteEmployee(id));
     }
 
     render() {
@@ -34,8 +34,8 @@ class Users extends React.Component {
                     <Col xs="12" lg="12">
                         <Card>
                             <CardHeader>
-                                <i className="fa fa-users" aria-hidden="true"/>Сотрудники
-                                <Link to="users/create" className="btn btn-primary btn-sm pull-right">
+                                <i className="fa fa-employees" aria-hidden="true"/>Сотрудники
+                                <Link to="employees/create" className="btn btn-primary btn-sm pull-right">
                                     Добавить <i className="icon-plus"/>
                                 </Link>
                             </CardHeader>
@@ -44,35 +44,33 @@ class Users extends React.Component {
                                     <thead>
                                     <tr>
                                         <th>ФИО</th>
-                                        <th>Должность</th>
                                         <th>Организация</th>
                                         <th>Редактировать</th>
                                         <th>Удалить</th>
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    { this.props.users.map((user) => {
+                                    { this.props.employees.map((employee) => {
                                         return (
-                                            <tr key={user.id}>
+                                            <tr key={employee.id}>
                                                 <td>
-                                                    <Link to={`users/${user.id}`}>
-                                                        {user.fio}
+                                                    <Link to={`employees/${employee.id}`}>
+                                                        {employee.fio}
                                                     </Link>
                                                 </td>
-                                                <td>{user.role}</td>
-                                                <td>{user.organization_name}</td>
+                                                <td>{employee.organization_name}</td>
                                                 <td>
-                                                    <Link to={`users/edit/${user.id}`}
+                                                    <Link to={`employees/edit/${employee.id}`}
                                                           className="btn btn-success btn-xs pull-left">Редактировать
                                                         <i className="glyphicon glyphicon-pencil"/>
                                                     </Link>
                                                 </td>
                                                 <td>
-                                                    <form id={`form_${user.id}`} className="pull-left" method="post">
-                                                        <input type="hidden" name="user_id" value={user.id} />
+                                                    <form id={`form_${employee.id}`} className="pull-left" method="post">
+                                                        <input type="hidden" name="employee_id" value={employee.id} />
                                                         <a className="btn btn-danger btn-xs"
-                                                           onClick={(event) => this.handleBtnDelete(user.id, event)}
-                                                           href="#" id={user.id}>Удалить
+                                                           onClick={(event) => this.handleBtnDelete(employee.id, event)}
+                                                           href="#" id={employee.id}>Удалить
                                                             <i className="glyphicon glyphicon-trash"/>
                                                         </a>
                                                     </form>
@@ -95,17 +93,17 @@ class Users extends React.Component {
 /**
  * Map
  * @param state
- * @returns {{users: (*|Array)}}
+ * @returns {{employees: (*|Array)}}
  */
 function mapStateToProps(state) {
     return {
-        users: state.users.users
+        employees: state.employees.employees
     };
 }
 
-Users.propTypes = {
+Employees.propTypes = {
     dispatch: PropTypes.func.isRequired,
-    users: PropTypes.array.isRequired
+    employees: PropTypes.array.isRequired
 };
 
-export default connect(mapStateToProps)(Users);
+export default connect(mapStateToProps)(Employees);

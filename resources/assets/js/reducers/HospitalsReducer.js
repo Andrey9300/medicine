@@ -40,7 +40,8 @@ export default function reducer(state = initialState, action) {
             return {
                 ...state,
                 fetched: true,
-                hospital: action.payload
+                hospital: action.payload.data.hospital,
+                regions: action.payload.data.regions
             };
         }
         case 'HOSPITAL_RESEARCHES_REJECTED': {
@@ -54,7 +55,7 @@ export default function reducer(state = initialState, action) {
             return {
                 ...state,
                 fetched: true,
-                hospitalResearches: action.payload.hospital_researches
+                hospitalResearches: action.payload.data.hospital_researches
             };
         }
         case 'HOSPITAL_RESEARCH_REJECTED': {

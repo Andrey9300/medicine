@@ -4,14 +4,16 @@ namespace App\Http\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Hospital extends Model
+class ResearchCategory extends Model
 {
     public $timestamps = false;
+    // TODO research_categories для laravel
+    protected $table = 'research_category';
 
     /**
      * регион
      */
-    public function region()
+    public function category()
     {
         return $this->belongsTo('App\Http\Models\Region');
     }
@@ -19,8 +21,8 @@ class Hospital extends Model
     /**
      * The roles that belong to the user.
      */
-    public function researches()
+    public function research()
     {
-        return $this->belongsToMany('App\Http\Models\Research')->withPivot('id', 'price');
+        return $this->belongsTo('App\Http\Models\Research');
     }
 }

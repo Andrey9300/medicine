@@ -1,27 +1,27 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import {fetchUser, deleteUser} from './../../actions/userActions';
-import UserResearches from './research/UserResearches';
+import {fetchEmployee, deleteEmployee} from './../../actions/employeeActions';
+import EmployeeResearches from './research/EmployeeResearches';
 import {Link} from 'react-router';
 import {Row, Col, Card, CardHeader, CardBlock, Table} from 'reactstrap';
 import PropTypes from 'prop-types';
 
-class User extends React.Component {
+class Employee extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            errors: '',
-            userId: props.params.id
+            employeeId: props.params.id,
+            errors: ''
         };
     }
 
     componentWillMount() {
-        this.props.dispatch(fetchUser(this.state.userId));
+        this.props.dispatch(fetchEmployee(this.state.employeeId));
     }
 
     handleBtnDelete(id, event) {
         event.preventDefault();
-        this.props.dispatch(deleteUser(id));
+        this.props.dispatch(deleteEmployee(id, this.props.employee.employee.organization.id));
     }
 
     createMarkup() {
@@ -31,7 +31,7 @@ class User extends React.Component {
     }
 
     render() {
-        const {user} = this.props.user;
+        const {employee} = this.props.employee;
         let errors = '';
         let formElements = '';
 
@@ -41,47 +41,62 @@ class User extends React.Component {
             </div>;
         }
 
-        if (user !== null) {
+        if (employee !== null) {
             formElements =
                 <div className="animated fadeIn">
                     <Row>
                         <Col xs="12" sm="12" md="12">
                             <Card>
                                 <CardHeader>
-                                    {user.fio}
+                                    {employee.fio}
                                 </CardHeader>
                                 <CardBlock className="card-body">
                                     <Table responsive>
                                         <tbody>
                                             <tr>
+                                                <td>Организация: </td>
+                                                <td>{employee.organization_name}</td>
+                                            </tr>
+                                            <tr>
                                                 <td>Дата рождения: </td>
-                                                <td>{user.date_birthday}</td>
+                                                <td>{employee.date_birthday}</td>
                                             </tr>
                                             <tr>
                                                 <td>Дата устройства на работу: </td>
-                                                <td>{user.date_employment}</td>
+                                                <td>{employee.date_employment}</td>
                                             </tr>
                                             <tr>
                                                 <td>Номер мед книжки: </td>
-                                                <td>{user.medical_book}</td>
+                                                <td>{employee.medical_book}</td>
                                             </tr>
                                             <tr>
-                                                <td>Должность: </td>
-                                                <td>{user.role}</td>
+                                                <td>Уволен: </td>
+                                                <td>
+                                                    {(() => {
+                                                        switch (employee.active) {
+                                                            case 1:
+                                                                return 'Нет';
+                                                            case 0:
+                                                                return 'Да';
+                                                            default:
+                                                                return 'Нет';
+                                                        }
+                                                    })()}
+                                                </td>
                                             </tr>
                                             <tr>
                                                 <td>
-                                                    <Link to={`users/edit/${user.id}`}
+                                                    <Link to={`employees/edit/${employee.id}`}
                                                           className="btn btn-success btn-xs pull-left">Редактировать
                                                         <i className="glyphicon glyphicon-pencil"/>
                                                     </Link>
                                                 </td>
                                                 <td>
-                                                    <form id={`form_${user.id}`} className="pull-left" method="post">
-                                                        <input type="hidden" name="user_id" value={user.id} />
+                                                    <form id={`form_${employee.id}`} className="pull-left" method="post">
+                                                        <input type="hidden" name="employee_id" value={employee.id} />
                                                         <a className="btn btn-danger btn-xs"
-                                                           onClick={(event) => this.handleBtnDelete(user.id, event)}
-                                                           href="#" id={user.id}>Удалить
+                                                           onClick={(event) => this.handleBtnDelete(employee.id, event)}
+                                                           href="#" id={employee.id}>Удалить
                                                             <i className="glyphicon glyphicon-trash"/>
                                                         </a>
                                                     </form>
@@ -100,9 +115,9 @@ class User extends React.Component {
             <div>
                 {errors}
                 {formElements}
-                <UserResearches
-                    idUser={this.state.userId}
-                />
+                {/*<EmployeeResearches
+                    idEmployee={this.state.employeeId}
+                />*/}
             </div>
         );
     }
@@ -111,19 +126,18 @@ class User extends React.Component {
 /**
  * Map
  * @param state
- * @returns {{user: (*|null)}}
+ * @returns {{employee: (*|null)}}
  */
 function mapStateToProps(state) {
     return {
-        user: state.users.user
+        employee: state.employees
     };
 }
 
-User.propTypes = {
+Employee.propTypes = {
     dispatch: PropTypes.func.isRequired,
     params: PropTypes.object.isRequired,
-    router: PropTypes.object.isRequired,
-    user: PropTypes.object.isRequired
+    employee: PropTypes.object.isRequired
 };
 
-export default connect(mapStateToProps)(User);
+export default connect(mapStateToProps)(Employee);

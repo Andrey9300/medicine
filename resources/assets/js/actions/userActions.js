@@ -11,7 +11,7 @@ export function loginUser(formData) {
                     },
                     type: 'LOGIN_USER_FULFILLED'
                 });
-                hashHistory.replace('/hospitals');
+                hashHistory.replace('/organizations');
             })
             .catch(() => {
                 dispatch({
@@ -38,6 +38,25 @@ export function logoutUser() {
                 dispatch({
                     payload: false,
                     type: 'LOGOUT_USER_REJECTED'
+                });
+            });
+    };
+}
+
+export function registrationUser(formData) {
+    return (dispatch) => {
+        axios.post('/register', formData)
+            .then(() => {
+                dispatch({
+                    payload: true,
+                    type: 'REGISTRATION_USER_FULFILLED'
+                });
+                hashHistory.replace('/organizations');
+            })
+            .catch(() => {
+                dispatch({
+                    payload: false,
+                    type: 'REGISTRATION_USER_REJECTED'
                 });
             });
     };
@@ -98,73 +117,6 @@ export function deleteUser(id) {
         axios.post(`/users/destroy/${id}`)
             .then(() => {
                 hashHistory.push('/users');
-            })
-            .catch((error) => {
-                return error;
-            });
-    };
-}
-
-/**
- * Исследования сотрудников учреждений
- */
-
-/**
- * Fetch
- * @param id - id мед учреждения
- * @returns {function(*)}
- */
-export function fetchUserResearches(id) {
-    return (dispatch) => {
-        axios.post(`/users/researches/${id}`)
-            .then((response) => {
-                dispatch({
-                    payload: response.data,
-                    type: 'USER_RESEARCHES_FULFILLED'
-                });
-            })
-            .catch((error) => {
-                dispatch({
-                    payload: error,
-                    type: 'USER_RESEARCHES_REJECTED'
-                });
-            });
-    };
-}
-
-/**
- * Fetch
- * @param id_user, id_research
- * @returns {function(*)}
- */
-export function fetchUserResearch(idUser, idResearch) {
-    return (dispatch) => {
-        axios.post(`/users/researches/edit/${idUser}/${idResearch}`)
-            .then((response) => {
-                dispatch({
-                    payload: response.data.user_research,
-                    type: 'USER_RESEARCH_FULFILLED'
-                });
-            })
-            .catch((error) => {
-                dispatch({
-                    payload: error,
-                    type: 'USER_RESEARCH_REJECTED'
-                });
-            });
-    };
-}
-
-/**
- * Delete
- * @param id number
- * @returns {Function}
- */
-export function deleteUserResearch(idUser, idResearch) {
-    return (dispatch) => {
-        axios.post(`/users/researches/destroy/${idUser}/${idResearch}`)
-            .then(() => {
-                dispatch(fetchUserResearches(idUser));
             })
             .catch((error) => {
                 return error;

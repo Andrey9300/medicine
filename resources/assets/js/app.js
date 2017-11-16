@@ -4,43 +4,41 @@ import ReactDOM from 'react-dom';
 import {IndexRoute, Route, Router, hashHistory} from 'react-router';
 
 import Login from './components/includes/Login';
+import Registration from './components/includes/Registration';
 
-import EditHospital from './components/hospital/EditHospital';
+import EditHospital from './components/hospital/Edit';
 import Hospital from './components/hospital/Hospital';
 import Hospitals from './components/hospital/Hospitals';
-import NewHospital from './components/hospital/NewHospital';
+import NewHospital from './components/hospital/New';
 
 import HospitalResearches from './components/hospital/research/HospitalResearches';
 import EditHospitalResearch from './components/hospital/research/EditHospitalResearch';
 import NewHospitalResearch from './components/hospital/research/NewHospitalResearch';
 
-import EditOrganization from './components/organization/EditOrganization';
+import EditOrganization from './components/organization/Edit';
 import Organization from './components/organization/Organization';
 import Organizations from './components/organization/Organizations';
-import NewOrganization from './components/organization/NewOrganization';
-import OrganizationUsers from './components/organization/OrganizationUsers';
+import NewOrganization from './components/organization/New';
+import OrganizationEmployees from './components/organization/OrganizationEmployees';
+import NewOrganizationEmployee from './components/organization/employee/New';
 
 import EditResearch from './components/research/EditResearch';
 import Researches from './components/research/Researches';
 import NewResearch from './components/research/NewResearch';
 
-import EditUser from './components/user/EditUser';
-import PrintUser from './components/user/PrintUser';
-import User from './components/user/User';
-import Users from './components/user/Users';
-import NewUser from './components/user/NewUser';
+import EditEmployee from './components/employee/Edit';
+import PrintEmployee from './components/employee/PrintResearch';
+import Employee from './components/employee/Employee';
+import Employees from './components/employee/Employees';
+import NewEmployee from './components/employee/New';
 
-import UserResearches from './components/user/research/UserResearches';
-import EditUserResearch from './components/user/research/EditUserResearch';
-import NewUserResearch from './components/user/research/NewUserResearch';
-
-import requireAuthentication from './components/includes/Authenticated';
+import EmployeeResearches from './components/employee/research/EmployeeResearches';
+import EditEmployeeResearch from './components/employee/research/EditResearch';
+import NewEmployeeResearch from './components/employee/research/NewResearch';
 
 import Layout from './components/Layout';
 import {Provider} from 'react-redux';
 import store from './store';
-
-const app = document.getElementById('app');
 
 ReactDOM.render(
     <Provider store={store}>
@@ -48,8 +46,9 @@ ReactDOM.render(
             <Route path = "/" component = { Layout }>
                 <IndexRoute component = { Organizations }/>
                 <Route path = "login" component = { Login }/>
+                <Route path = "registration" component = { Registration }/>
 
-                <Route path = "hospitals" component={requireAuthentication(Hospitals)}/>
+                <Route path = "hospitals" component={Hospitals}/>
                 <Route path = "hospitals/create" component = { NewHospital }/>
                 <Route path = "hospitals/:id" component = { Hospital }/>
                 <Route path = "hospitals/edit/:id" component = { EditHospital }/>
@@ -61,24 +60,25 @@ ReactDOM.render(
                 <Route path = "organizations" component = { Organizations }/>
                 <Route path = "organizations/create" component = { NewOrganization }/>
                 <Route path = "organizations/:id" component = { Organization }/>
-                <Route path = "organizations/users/:idOrganization" component = { OrganizationUsers }/>
+                <Route path = "organizations/employees/create/:idOrganization" component = { NewOrganizationEmployee }/>
+                <Route path = "organizations/employees/:idOrganization" component = { OrganizationEmployees }/>
                 <Route path = "organizations/edit/:id" component = { EditOrganization }/>
 
                 <Route path = "researches" component = { Researches }/>
                 <Route path = "researches/create" component = { NewResearch }/>
                 <Route path = "researches/edit/:id" component = { EditResearch }/>
 
-                <Route path = "users" component = { Users }/>
-                <Route path = "users/create" component = { NewUser }/>
-                <Route path = "users/:id" component = { User }/>
-                <Route path = "users/edit/:id" component = { EditUser }/>
-                <Route path = "users/print/:id" component = { PrintUser }/>
+                <Route path = "employees" component = { Employees }/>
+                <Route path = "employees/create" component = { NewEmployee }/>
+                <Route path = "employees/:id" component = { Employee }/>
+                <Route path = "employees/edit/:id" component = { EditEmployee }/>
+                <Route path = "employees/print/:id" component = { PrintEmployee }/>
 
-                <Route path = "users/researches/:idUser" component = { UserResearches }/>
-                <Route path = "users/researches/:idUser/create" component = { NewUserResearch }/>
-                <Route path = "users/researches/edit/:idUser/:idResearch" component = { EditUserResearch }/>
+                <Route path = "employees/researches/:idEmployee" component = { EmployeeResearches }/>
+                <Route path = "employees/researches/:idEmployee/create" component = { NewEmployeeResearch }/>
+                <Route path = "employees/researches/edit/:idEmployee/:idResearch" component = { EditEmployeeResearch }/>
             </Route>
         </Router>
     </Provider>,
-    app
+    document.getElementById('app')
 );

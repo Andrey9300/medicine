@@ -31,7 +31,7 @@ class Hospital extends React.Component {
     }
 
     render() {
-        const {hospital} = this.props.hospital;
+        const {hospital} = this.props;
         let errors = '';
         let formElements = '';
 
@@ -48,11 +48,15 @@ class Hospital extends React.Component {
                         <Col xs="12" sm="12" md="12">
                             <Card>
                                 <CardHeader>
-                                    {hospital.name}
+                                    «{hospital.name}»
                                 </CardHeader>
                                 <CardBlock className="card-body">
                                     <Table responsive>
                                         <tbody>
+                                            <tr>
+                                                <td>Регион: </td>
+                                                <td>{hospital.region.name}</td>
+                                            </tr>
                                             <tr>
                                                 <td>Адрес: </td>
                                                 <td>{hospital.address}</td>
@@ -64,6 +68,10 @@ class Hospital extends React.Component {
                                             <tr>
                                                 <td>Телефон: </td>
                                                 <td>{hospital.phone}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Контактное лицо: </td>
+                                                <td>{hospital.head_fio}</td>
                                             </tr>
                                             <tr>
                                                 <td>
@@ -98,9 +106,9 @@ class Hospital extends React.Component {
             <div>
                 {errors}
                 {formElements}
-                <HospitalResearches
+                {/*<HospitalResearches
                     idHospital={this.state.hospitalId}
-                />
+                />*/}
             </div>
         );
     }
@@ -119,9 +127,7 @@ function mapStateToProps(state) {
 
 Hospital.propTypes = {
     dispatch: PropTypes.func.isRequired,
-    hospital: PropTypes.object.isRequired,
-    params: PropTypes.object.isRequired,
-    router: PropTypes.object.isRequired
+    params: PropTypes.object.isRequired
 };
 
 export default connect(mapStateToProps)(Hospital);

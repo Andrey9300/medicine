@@ -36,12 +36,12 @@ class Sidebar extends Component {
                             </Link>
                         </li>
                         <li>
-                            <Link to="users" className="nav-link">
+                            <Link to="employees" className="nav-link">
                                 <i className="fa fa-users" aria-hidden="true"/>Сотрудники
                             </Link>
                         </li>
                         <li>
-                            <Link onClick={this.logout.bind(this)} className="nav-link">
+                            <Link to="#" onClick={this.logout.bind(this)} className="nav-link">
                                 <i className="fa fa-lock" aria-hidden="true"/>Выход
                             </Link>
                         </li>

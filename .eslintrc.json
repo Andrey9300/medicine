@@ -36,6 +36,7 @@
     "arrow-body-style": [0],
     "object-shorthand": [0],
     "no-magic-numbers": [0],
+    "sort-keys": [0],
     "indent": ["error",4,{"SwitchCase":1}]
   },
   "plugins": [

@@ -1,4 +1,4 @@
-import {fetchUserResearches} from '../../../actions/userActions';
+import {fetchEmployeeResearches} from '../../../actions/employeeActions';
 import {Link} from 'react-router';
 import React from 'react';
 import {connect} from 'react-redux';
@@ -12,17 +12,17 @@ import {
 } from 'reactstrap';
 import PropTypes from 'prop-types';
 
-class UserResearches extends React.Component {
+class EmployeeResearches extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             errors: '',
-            userId: props.idUser
+            employeeId: props.idEmployee
         };
     }
 
     componentWillMount() {
-        this.props.dispatch(fetchUserResearches(this.state.userId));
+        this.props.dispatch(fetchEmployeeResearches(this.state.employeeId));
     }
 
     render() {
@@ -33,7 +33,7 @@ class UserResearches extends React.Component {
                         <Card>
                             <CardHeader>
                                 <i className="fa fa-heartbeat" aria-hidden="true"/>Исследования сотрудника
-                                <Link to={`users/researches/${this.state.userId}/create`}
+                                <Link to={`employees/researches/${this.state.employeeId}/create`}
                                       className="btn btn-primary btn-sm pull-right">
                                     Добавить <i className="icon-plus"/>
                                 </Link>
@@ -49,7 +49,7 @@ class UserResearches extends React.Component {
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    { this.props.userResearches.map((research) => {
+                                    { this.props.employeeResearches.map((research) => {
                                         return (
                                             <tr key={research.id}>
                                                 <td>{research.name}</td>
@@ -76,7 +76,7 @@ class UserResearches extends React.Component {
                                                 </td>
                                                 <td>{research.pivot.date}</td>
                                                 <td>
-                                                    <Link to={`users/researches/edit/${this.state.userId}/${research.id}`}
+                                                    <Link to={`employees/researches/edit/${this.state.employeeId}/${research.id}`}
                                                           className="btn btn-success btn-xs pull-left">Редактировать
                                                         <i className="glyphicon glyphicon-pencil"/>
                                                     </Link>
@@ -100,19 +100,19 @@ class UserResearches extends React.Component {
 /**
  * Map
  * @param state
- * @returns {{researchesUser: (*|Array)}}
+ * @returns {{researchesEmployee: (*|Array)}}
  */
 function mapStateToProps(state) {
     return {
-        userResearches: state.users.userResearches
+        employeeResearches: state.employees.employeeResearches
     };
 }
 
-UserResearches.propTypes = {
+EmployeeResearches.propTypes = {
     dispatch: PropTypes.func.isRequired,
-    idUser: PropTypes.number.isRequired,
+    idEmployee: PropTypes.number.isRequired,
     router: PropTypes.object.isRequired,
-    userResearches: PropTypes.array.isRequired
+    employeeResearches: PropTypes.array.isRequired
 };
 
-export default connect(mapStateToProps)(UserResearches);
+export default connect(mapStateToProps)(EmployeeResearches);

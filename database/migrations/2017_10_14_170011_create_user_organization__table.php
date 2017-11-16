@@ -17,8 +17,9 @@ class CreateUserOrganizationTable extends Migration
             $table->increments('id');
             $table->integer('user_id')->unsigned();
             $table->foreign('user_id')->references('id')->on('users');
-            $table->string('organization_name');
-            $table->foreign('organization_name')->references('name')->on('organizations');
+            $table->integer('organization_id')->unsigned();
+            $table->foreign('organization_id')->references('id')->on('organizations');
+            $table->unique(array('user_id', 'organization_id'));
         });
     }
 

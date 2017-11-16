@@ -1,20 +1,23 @@
 import React from 'react';
 import axios from 'axios';
+import {fetchRegions} from './../../actions/regionActions';
+import {fetchCategories} from './../../actions/categoryActions';
+import {connect} from 'react-redux';
 import {
     Row,
     Col,
     Button,
     Card,
     CardHeader,
-    CardFooter,
     CardBlock,
+    CardFooter,
     Form,
     FormGroup,
     FormText,
     Label,
     Input
 } from 'reactstrap';
-import PropTypes from 'prop-types';
+import {hashHistory} from 'react-router';
 
 class NewOrganization extends React.Component {
     constructor() {
@@ -25,17 +28,24 @@ class NewOrganization extends React.Component {
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
+    componentWillMount() {
+        this.props.dispatch(fetchRegions());
+        this.props.dispatch(fetchCategories());
+    }
+
     handleSubmit(event) {
         event.preventDefault();
         const formElement = document.querySelector('form');
         const formData = new FormData(formElement);
 
         axios.post('/organizations/create', formData)
-            .then(() => {
-                this.context.router.push('/organizations');
+            .then((response) => {
+                if (response.status === 200) {
+                    hashHistory.push('organizations');
+                }
             })
-            .catch((error) => {
-                const errors = error.response.data.message;
+            .catch((response) => {
+                const errors = 'Проверьте ';
 
                 this.setState({
                     errors: errors
@@ -64,11 +74,11 @@ class NewOrganization extends React.Component {
                 <Row>
                     <Col xs="12" md="6">
                         <Card>
-                            <CardHeader>
-                                Добавить организацию
-                            </CardHeader>
-                            <CardBlock className="card-body">
-                                <Form className="form-horizontal">
+                            <Form className="form-horizontal" onSubmit={this.handleSubmit}>
+                                <CardHeader>
+                                    Добавить организацию
+                                </CardHeader>
+                                <CardBlock className="card-body">
                                     <FormGroup row>
                                         <Col md="3">
                                             <Label htmlFor="text-input">Наименование</Label>
@@ -77,6 +87,23 @@ class NewOrganization extends React.Component {
                                             <Input type="text" id="name" name="name"
                                                    placeholder="Наименование" required/>
                                             <FormText color="muted">Введите наименование</FormText>
+                                        </Col>
+                                    </FormGroup>
+                                    <FormGroup row>
+                                        <Col md="3">
+                                            <Label htmlFor="text-input">Регион</Label>
+                                        </Col>
+                                        <Col xs="12" md="9">
+                                            <Input type="select" name="region_id" id="region">
+                                                { this.props.regions.map((region) => {
+                                                    return (
+                                                        <option key={region.id} value={region.id}>
+                                                            {region.name}
+                                                        </option>
+                                                    );
+                                                })
+                                                }
+                                            </Input>
                                         </Col>
                                     </FormGroup>
                                     <FormGroup row>
@@ -101,42 +128,14 @@ class NewOrganization extends React.Component {
                                     </FormGroup>
                                     <FormGroup row>
                                         <Col md="3">
-                                            <Label htmlFor="text-input">ФИО руководителя</Label>
-                                        </Col>
-                                        <Col xs="12" md="9">
-                                            <Input type="text" id="head_fio" name="head_fio"
-                                                   placeholder="ФИО руководителя" required/>
-                                            <FormText color="muted">Введите abj руководителя</FormText>
-                                        </Col>
-                                    </FormGroup>
-                                    <FormGroup row>
-                                        <Col md="3">
                                             <Label htmlFor="text-input">E-mail руководителя</Label>
                                         </Col>
                                         <Col xs="12" md="9">
                                             <Input type="text" id="head_email" name="head_email"
                                                    placeholder="E-mail руководителя" required/>
-                                            <FormText color="muted">Введите e-mail руководителя</FormText>
-                                        </Col>
-                                    </FormGroup>
-                                    <FormGroup row>
-                                        <Col md="3">
-                                            <Label htmlFor="text-input">E-mail менеджера</Label>
-                                        </Col>
-                                        <Col xs="12" md="9">
-                                            <Input type="text" id="regional_email" name="regional_email"
-                                                   placeholder="E-mail менеджера" required/>
-                                            <FormText color="muted">Введите e-mail менеджера</FormText>
-                                        </Col>
-                                    </FormGroup>
-                                    <FormGroup row>
-                                        <Col md="3">
-                                            <Label htmlFor="text-input">E-mail шеф-повара</Label>
-                                        </Col>
-                                        <Col xs="12" md="9">
-                                            <Input type="text" id="chef_email" name="chef_email"
-                                                   placeholder="E-mail шеф-повара" required/>
-                                            <FormText color="muted">Введите e-mail шеф-повара</FormText>
+                                            <FormText color="muted">Если у вас нет отдельного руководителя объекта, то
+                                                укажите свой e-mail, который используете для входа в систему.
+                                            </FormText>
                                         </Col>
                                     </FormGroup>
                                     <FormGroup row>
@@ -151,22 +150,28 @@ class NewOrganization extends React.Component {
                                     </FormGroup>
                                     <FormGroup row>
                                         <Col md="3">
-                                            <Label htmlFor="text-input">Сертификация</Label>
+                                            <Label htmlFor="text-input">Категория</Label>
                                         </Col>
                                         <Col xs="12" md="9">
-                                            <Input type="select" name="is_certification" id="select" required>
-                                                <option value="0">Нет</option>
-                                                <option value="1">ISO 22000:2005</option>
+                                            <Input type="select" name="category_id" id="category">
+                                                { this.props.categories.map((category) => {
+                                                    return (
+                                                        <option key={category.id} value={category.id}>
+                                                            {category.name}
+                                                        </option>
+                                                    );
+                                                })
+                                                }
                                             </Input>
                                         </Col>
                                     </FormGroup>
-                                </Form>
-                            </CardBlock>
-                            <CardFooter>
-                                <Button type="submit" size="sm" color="success" onClick={this.handleSubmit}>
-                                    <i className="fa fa-dot-circle-o"/> Сохранить
-                                </Button>
-                            </CardFooter>
+                                </CardBlock>
+                                <CardFooter>
+                                    <Button type="submit" size="sm" color="success">
+                                        <i className="fa fa-dot-circle-o"/> Сохранить
+                                    </Button>
+                                </CardFooter>
+                            </Form>
                         </Card>
                     </Col>
                 </Row>
@@ -175,8 +180,12 @@ class NewOrganization extends React.Component {
     }
 }
 
-NewOrganization.propTypes = {
-    router: PropTypes.object.isRequired
-};
+function mapStateToProps(state) {
+    return {
+        regions: state.regions.regions,
+        categories: state.categories.categories,
+        users: state.users.user
+    };
+}
 
-export default NewOrganization;
+export default connect(mapStateToProps)(NewOrganization);

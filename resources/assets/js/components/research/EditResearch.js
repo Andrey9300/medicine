@@ -2,6 +2,7 @@ import React from 'react';
 import axios from 'axios';
 import {connect} from 'react-redux';
 import {fetchResearch} from './../../actions/researchActions';
+import {hashHistory} from 'react-router';
 import {
     Row,
     Col,
@@ -35,10 +36,10 @@ class EditResearch extends React.Component {
 
         axios.post(`/researches/update/${this.state.researchId}`, formData)
             .then(() => {
-                this.context.router.push('/researches');
+                hashHistory.push('/researches');
             })
             .catch((error) => {
-                const errors = error.response.data.message;
+                const errors = error;
 
                 this.setState({
                     errors: errors
@@ -57,7 +58,7 @@ class EditResearch extends React.Component {
     }
 
     render() {
-        const {research} = this.props.research;
+        const {research} = this.props;
         let errors = '';
         let formElements = '';
 
@@ -89,110 +90,20 @@ class EditResearch extends React.Component {
                                     </FormGroup>
                                     <FormGroup row>
                                         <Col md="3">
-                                            <Label htmlFor="text-input">Наименование</Label>
+                                            <Label htmlFor="text-input">Период</Label>
                                         </Col>
                                         <Col xs="12" md="9">
-                                                {(() => {
-                                                    switch (research.period) {
-                                                        case '-1':
-                                                            return (
-                                                                <Input type="select" name="period" id="select">
-                                                                    <option value="-1">
-                                                                        При поступлении на работу.
-                                                                        При смене юридического лица
-                                                                    </option>
-                                                                    <option value="1">Раз в жизни</option>
-                                                                    <option value="365">Раз в год</option>
-                                                                    <option value="730">Раз в два года</option>
-                                                                    <option value="1827">Раз в 5 лет</option>
-                                                                    <option value="3653">Раз в 10 лет</option>
-                                                                </Input>
-                                                            );
-                                                        case '1':
-                                                            return (
-                                                                <Input type="select" name="period" id="select">
-                                                                    <option value="1">Раз в жизни</option>
-                                                                    <option value="-1">
-                                                                        При поступлении на работу.
-                                                                        При смене юридического лица
-                                                                    </option>
-                                                                    <option value="365">Раз в год</option>
-                                                                    <option value="730">Раз в два года</option>
-                                                                    <option value="1827">Раз в 5 лет</option>
-                                                                    <option value="3653">Раз в 10 лет</option>
-                                                                </Input>
-                                                            );
-                                                        case '365':
-                                                            return (
-                                                                <Input type="select" name="period" id="select">
-                                                                    <option value="365">Раз в год</option>
-                                                                    <option value="1">Раз в жизни</option>
-                                                                    <option value="-1">
-                                                                        При поступлении на работу.
-                                                                        При смене юридического лица
-                                                                    </option>
-                                                                    <option value="730">Раз в два года</option>
-                                                                    <option value="1827">Раз в 5 лет</option>
-                                                                    <option value="3653">Раз в 10 лет</option>
-                                                                </Input>
-                                                            );
-                                                        case '730':
-                                                            return (
-                                                                <Input type="select" name="period" id="select">
-                                                                    <option value="730">Раз в два года</option>
-                                                                    <option value="-1">
-                                                                        При поступлении на работу.
-                                                                        При смене юридического лица
-                                                                    </option>
-                                                                    <option value="1">Раз в жизни</option>
-                                                                    <option value="365">Раз в год</option>
-                                                                    <option value="1827">Раз в 5 лет</option>
-                                                                    <option value="3653">Раз в 10 лет</option>
-                                                                </Input>
-                                                            );
-                                                        case '1827':
-                                                            return (
-                                                                <Input type="select" name="period" id="select">
-                                                                    <option value="1827">Раз в 5 лет</option>
-                                                                    <option value="-1">
-                                                                        При поступлении на работу.
-                                                                        При смене юридического лица
-                                                                    </option>
-                                                                    <option value="1">Раз в жизни</option>
-                                                                    <option value="365">Раз в год</option>
-                                                                    <option value="730">Раз в два года</option>
-                                                                    <option value="3653">Раз в 10 лет</option>
-                                                                </Input>
-                                                            );
-                                                        case '3653':
-                                                            return (
-                                                                <Input type="select" name="period" id="select">
-                                                                    <option value="3653">Раз в 10 лет</option>
-                                                                    <option value="-1">
-                                                                        При поступлении на работу.
-                                                                        При смене юридического лица
-                                                                    </option>
-                                                                    <option value="1">Раз в жизни</option>
-                                                                    <option value="365">Раз в год</option>
-                                                                    <option value="730">Раз в два года</option>
-                                                                    <option value="1827">Раз в 5 лет</option>
-                                                                </Input>
-                                                            );
-                                                        default: return (
-                                                            <Input type="select" name="period" id="select">
-                                                                <option value="3653">Раз в 10 лет</option>
-                                                                <option value="-1">
-                                                                    При поступлении на работу.
-                                                                    При смене юридического лица
-                                                                </option>
-                                                                <option value="1">Раз в жизни</option>
-                                                                <option value="365">Раз в год</option>
-                                                                <option value="730">Раз в два года</option>
-                                                                <option value="1827">Раз в 5 лет</option>
-                                                            </Input>
-                                                        );
-                                                    }
-                                                })()}
+                                            <Input type="select" name="period_id" id="select"
+                                                   defaultValue={research.research_period.id}>
+                                                { this.props.periods.map((period) => {
+                                                    return (
+                                                        <option key={period.id} value={period.id}>
+                                                            {period.name}
+                                                        </option>
+                                                    );
+                                                })
+                                                }
+                                            </Input>
                                         </Col>
                                     </FormGroup>
                                 </Form>
@@ -223,15 +134,15 @@ class EditResearch extends React.Component {
  */
 function mapStateToProps(state) {
     return {
-        research: state.researches.research
+        research: state.researches.research,
+        periods: state.researches.periods
     };
 }
 
 EditResearch.propTypes = {
     dispatch: PropTypes.func.isRequired,
     params: PropTypes.object.isRequired,
-    research: PropTypes.object.isRequired,
-    router: PropTypes.object.isRequired
+    periods: PropTypes.array.isRequired
 };
 
 export default connect(mapStateToProps)(EditResearch);

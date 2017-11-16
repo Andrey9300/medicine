@@ -15,6 +15,8 @@ export function fetchOrganizations() {
                 });
             })
             .catch((error) => {
+                hashHistory.replace('login');
+
                 dispatch({
                     payload: error,
                     type: 'ORGANIZATIONS_REJECTED'
@@ -33,7 +35,7 @@ export function fetchOrganization(id) {
         axios.post(`/organizations/${id}`)
             .then((response) => {
                 dispatch({
-                    payload: response.data.organization,
+                    payload: response,
                     type: 'ORGANIZATION_FULFILLED'
                 });
             })
@@ -73,19 +75,19 @@ export function deleteOrganization(id) {
  * @param idOrganization - id организации
  * @returns {function(*)}
  */
-export function fetchOrganizationUsers(idOrganization) {
+export function fetchOrganizationEmployees(idOrganization) {
     return (dispatch) => {
-        axios.post(`/organizations/users/${idOrganization}`)
+        axios.post(`/organizations/employees/${idOrganization}`)
             .then((response) => {
                 dispatch({
-                    payload: response.data,
-                    type: 'ORGANIZATION_USERS_FULFILLED'
+                    payload: response,
+                    type: 'ORGANIZATION_EMPLOYEES_FULFILLED'
                 });
             })
             .catch((error) => {
                 dispatch({
                     payload: error,
-                    type: 'ORGANIZATION_USERS_REJECTED'
+                    type: 'ORGANIZATION_EMPLOYEE_REJECTED'
                 });
             });
     };
@@ -94,12 +96,12 @@ export function fetchOrganizationUsers(idOrganization) {
 /**
  * Delete
  * @param idOrganization number
- * @param idUser number
+ * @param idEmployee number
  * @returns {Function}
  */
-export function deleteOrganizationUser(idOrganization, idUser) {
+export function deleteOrganizationEmployee(idOrganization, idEmployee) {
     return () => {
-        axios.post(`/organizations/users/destroy/${idOrganization}/${idUser}`)
+        axios.post(`/organizations/employees/destroy/${idOrganization}/${idEmployee}`)
             .then(() => {
                 hashHistory.push(`/organizations/${idOrganization}`);
             })

@@ -133,5 +133,4 @@ class UsersController extends Controller
             'user_researches' => $user->researches
         ]);
     }
-
 }

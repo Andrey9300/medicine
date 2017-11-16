@@ -14,13 +14,15 @@ import {
     Label,
     Input
 } from 'reactstrap';
-import PropTypes from 'prop-types';
+import {hashHistory} from 'react-router';
+import {connect} from 'react-redux';
 
-class NewUser extends React.Component {
-    constructor() {
-        super();
+class NewOrganizationEmployee extends React.Component {
+    constructor(props) {
+        super(props);
         this.state = {
-            errors: ''
+            errors: '',
+            organizationId: props.params.idOrganization
         };
         this.handleSubmit = this.handleSubmit.bind(this);
     }
@@ -30,9 +32,9 @@ class NewUser extends React.Component {
         const formElement = document.querySelector('form');
         const formData = new FormData(formElement);
 
-        axios.post('/users/create', formData)
+        axios.post(`/organizations/employees/create/${this.state.organizationId}`, formData)
             .then(() => {
-                this.context.router.push('/users');
+                hashHistory.push(`organizations/employees/${this.state.organizationId}`);
             })
             .catch((error) => {
                 const errors = error.response.data.messages;
@@ -63,11 +65,11 @@ class NewUser extends React.Component {
                 <Row>
                     <Col xs="12" md="6">
                         <Card>
-                            <CardHeader>
-                                Добавить сотрудника
-                            </CardHeader>
-                            <CardBlock className="card-body">
-                                <Form className="form-horizontal">
+                            <Form className="form-horizontal" onSubmit={this.handleSubmit}>
+                                <CardHeader>
+                                    Добавить сотрудника
+                                </CardHeader>
+                                <CardBlock className="card-body">
                                     <FormGroup row>
                                         <Col md="3">
                                             <Label htmlFor="text-input">ФИО</Label>
@@ -83,7 +85,7 @@ class NewUser extends React.Component {
                                             <Label htmlFor="text-input">Дата рождения</Label>
                                         </Col>
                                         <Col xs="12" md="9">
-                                            <Input type="text" id="date_birthday" name="date_birthday"
+                                            <Input type="date" id="date_birthday" name="date_birthday"
                                                    placeholder="Дата рождения" required/>
                                             <FormText color="muted">Введите дату рождения</FormText>
                                         </Col>
@@ -93,7 +95,7 @@ class NewUser extends React.Component {
                                             <Label htmlFor="text-input">Дата приема на работу</Label>
                                         </Col>
                                         <Col xs="12" md="9">
-                                            <Input type="text" id="date_employment" name="date_employment"
+                                            <Input type="date" id="date_employment" name="date_employment"
                                                    placeholder="Дата приема на работу" required/>
                                             <FormText color="muted">Введите дату приема на работу</FormText>
                                         </Col>
@@ -108,42 +110,13 @@ class NewUser extends React.Component {
                                             <FormText color="muted">Введите номер медицинской книжки</FormText>
                                         </Col>
                                     </FormGroup>
-                                    <FormGroup row>
-                                        <Col md="3">
-                                            <Label htmlFor="text-input">Должность</Label>
-                                        </Col>
-                                        <Col xs="12" md="9">
-                                            <Input type="select" name="role" id="select" required>
-                                                <option value="Шеф-повар">Шеф-повар</option>
-                                                <option value="Су-шеф">Су-шеф</option>
-                                                <option value="Повар">Повар</option>
-                                                <option value="Повар-универсал">Повар-универсал</option>
-                                                <option value="Кассир">Кассир</option>
-                                                <option value="Администратор">Администратор</option>
-                                            </Input>
-                                        </Col>
-                                    </FormGroup>
-                                    <FormGroup row>
-                                        <Col md="3">
-                                            <Label htmlFor="text-input">Название организации</Label>
-                                        </Col>
-                                        <Col xs="12" md="9">
-                                            <Input type="text"
-                                                   id="organization_name"
-                                                   name="organization_name"
-                                                   placeholder="Название организации"
-                                                   required
-                                            />
-                                            <FormText color="muted">Введите название организации</FormText>
-                                        </Col>
-                                    </FormGroup>
-                                </Form>
-                            </CardBlock>
-                            <CardFooter>
-                                <Button type="submit" size="sm" color="success" onClick={this.handleSubmit}>
-                                    <i className="fa fa-dot-circle-o"/> Сохранить
-                                </Button>
-                            </CardFooter>
+                                </CardBlock>
+                                <CardFooter>
+                                    <Button type="submit" size="sm" color="success">
+                                        <i className="fa fa-dot-circle-o"/> Сохранить
+                                    </Button>
+                                </CardFooter>
+                            </Form>
                         </Card>
                     </Col>
                 </Row>
@@ -158,8 +131,16 @@ class NewUser extends React.Component {
     }
 }
 
-NewUser.propTypes = {
-    router: PropTypes.object.isRequired
-};
 
-export default NewUser;
+/**
+ * Map
+ * @param state
+ * @returns {{researchesEmployee: (*|Array)}}
+ */
+function mapStateToProps(state) {
+    return {
+        // organizationEmployees: state.organizations.organizationEmployees
+    };
+}
+
+export default connect(mapStateToProps)(NewOrganizationEmployee);

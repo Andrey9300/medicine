@@ -18,12 +18,12 @@ import {
 } from 'reactstrap';
 import PropTypes from 'prop-types';
 
-class NewUserResearch extends React.Component {
+class NewEmployeeResearch extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             errors: '',
-            userId: props.params.idUser
+            employeeId: props.params.idEmployee
         };
         this.handleSubmit = this.handleSubmit.bind(this);
     }
@@ -37,9 +37,9 @@ class NewUserResearch extends React.Component {
         const formElement = document.querySelector('form');
         const formData = new FormData(formElement);
 
-        axios.post(`/users/researches/create/${this.props.params.idUser}`, formData)
+        axios.post(`/employees/researches/create/${this.props.params.idEmployee}`, formData)
             .then(() => {
-                this.context.router.push(`/users/${this.props.params.idUser}`);
+                this.context.router.push(`/employees/${this.props.params.idEmployee}`);
             })
             .catch((error) => {
                 const errors = error.response.data.message;
@@ -120,7 +120,7 @@ class NewUserResearch extends React.Component {
 /**
  * Map
  * @param state
- * @returns {{researchesUser: (*|Array)}}
+ * @returns {{researchesEmployee: (*|Array)}}
  */
 function mapStateToProps(state) {
     return {
@@ -128,11 +128,11 @@ function mapStateToProps(state) {
     };
 }
 
-NewUserResearch.propTypes = {
+NewEmployeeResearch.propTypes = {
     dispatch: PropTypes.func.isRequired,
     params: PropTypes.object.isRequired,
     researches: PropTypes.array.isRequired,
     router: PropTypes.object.isRequired
 };
 
-export default connect(mapStateToProps)(NewUserResearch);
+export default connect(mapStateToProps)(NewEmployeeResearch);

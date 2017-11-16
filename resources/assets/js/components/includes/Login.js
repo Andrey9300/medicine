@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
+import {Link} from 'react-router';
 import {loginUser} from '../../actions/userActions';
 import {
     Container,
@@ -39,8 +40,8 @@ class Login extends Component {
                                 <Card className="p-4">
                                     <CardBlock className="card-body">
                                         <Form onSubmit={this.handleSubmit}>
-                                            <h1>Login</h1>
-                                            <p className="text-muted">Sign In to your account</p>
+                                            <h1>Вход</h1>
+                                            <p className="text-muted">Войдите в свой аккаунт</p>
                                             <InputGroup className="mb-3">
                                                 <InputGroupAddon><i className="icon-envelope"/></InputGroupAddon>
                                                 <Input type="text" name="email" placeholder="E-mail"/>
@@ -51,10 +52,10 @@ class Login extends Component {
                                             </InputGroup>
                                             <Row>
                                                 <Col xs="6">
-                                                    <Button color="primary" className="px-4">Login</Button>
+                                                    <Button color="primary" className="px-4">Войти</Button>
                                                 </Col>
                                                 <Col xs="6" className="text-right">
-                                                    <Button color="link" className="px-0">Forgot password?</Button>
+                                                    <Button color="link" className="px-0">Забыли пароль?</Button>
                                                 </Col>
                                             </Row>
                                         </Form>
@@ -64,10 +65,10 @@ class Login extends Component {
                                     <CardBlock className="card-body text-center">
                                         <div>
                                             <h2>Регистрация</h2>
-                                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit,
-                                                sed do eiusmod tempor incididunt ut
-                                                labore et dolore magna aliqua.</p>
-                                            <Button color="primary" className="mt-3" active>Register Now!</Button>
+                                            <Link to="registration" className="btn btn-primary btn-sm">
+                                                Зарегистрироваться
+                                                <i className="glyphicon glyphicon-pencil"/>
+                                            </Link>
                                         </div>
                                     </CardBlock>
                                 </Card>

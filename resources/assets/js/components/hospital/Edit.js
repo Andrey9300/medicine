@@ -17,6 +17,7 @@ import {
     Input
 } from 'reactstrap';
 import PropTypes from 'prop-types';
+import {hashHistory} from 'react-router';
 
 class EditHospital extends React.Component {
     constructor(props) {
@@ -35,7 +36,7 @@ class EditHospital extends React.Component {
 
         axios.post(`/hospitals/update/${this.state.hospitalId}`, formData)
             .then(() => {
-                this.context.router.push(`/hospitals/${this.state.hospitalId}`);
+                hashHistory.push(`/hospitals/${this.state.hospitalId}`);
             })
             .catch((error) => {
                 const errors = error.response.data.message;
@@ -57,7 +58,7 @@ class EditHospital extends React.Component {
     }
 
     render() {
-        const {hospital} = this.props.hospital;
+        const {hospital} = this.props;
         let errors = '';
         let formElements = '';
 
@@ -72,11 +73,11 @@ class EditHospital extends React.Component {
                 <Row>
                     <Col xs="12" md="6">
                         <Card>
-                            <CardHeader>
-                                Редактировать медицинское учреждение
-                            </CardHeader>
-                            <CardBlock className="card-body">
-                                <Form className="form-horizontal">
+                            <Form className="form-horizontal" onSubmit={this.handleSubmit}>
+                                <CardHeader>
+                                    Редактировать медицинское учреждение
+                                </CardHeader>
+                                <CardBlock className="card-body">
                                     <FormGroup row>
                                         <Col md="3">
                                             <Label htmlFor="text-input">Наименование</Label>
@@ -85,6 +86,24 @@ class EditHospital extends React.Component {
                                             <Input type="text" id="name" name="name" placeholder="Наименование"
                                                    defaultValue={hospital.name}/>
                                             <FormText color="muted">Введите наименование</FormText>
+                                        </Col>
+                                    </FormGroup>
+                                    <FormGroup row>
+                                        <Col md="3">
+                                            <Label htmlFor="text-input">Период</Label>
+                                        </Col>
+                                        <Col xs="12" md="9">
+                                            <Input type="select" name="region_id" id="select"
+                                                   defaultValue={hospital.region.id}>
+                                                { this.props.regions.map((region) => {
+                                                    return (
+                                                        <option key={region.id} value={region.id}>
+                                                            {region.name}
+                                                        </option>
+                                                    );
+                                                })
+                                                }
+                                            </Input>
                                         </Col>
                                     </FormGroup>
                                     <FormGroup row>
@@ -127,13 +146,13 @@ class EditHospital extends React.Component {
                                             <FormText color="muted">Введите телефон</FormText>
                                         </Col>
                                     </FormGroup>
-                                </Form>
-                            </CardBlock>
-                            <CardFooter>
-                                <Button type="submit" size="sm" color="success" onClick={this.handleSubmit}>
-                                    <i className="fa fa-dot-circle-o"/> Сохранить
-                                </Button>
-                            </CardFooter>
+                                </CardBlock>
+                                <CardFooter>
+                                    <Button type="submit" size="sm" color="success">
+                                        <i className="fa fa-dot-circle-o"/> Сохранить
+                                    </Button>
+                                </CardFooter>
+                            </Form>
                         </Card>
                     </Col>
                 </Row>;
@@ -155,13 +174,13 @@ class EditHospital extends React.Component {
  */
 function mapStateToProps(state) {
     return {
-        hospital: state.hospitals.hospital
+        hospital: state.hospitals.hospital,
+        regions: state.hospitals.regions
     };
 }
 
 EditHospital.propTypes = {
     dispatch: PropTypes.func.isRequired,
-    hospital: PropTypes.object.isRequired,
     params: PropTypes.object.isRequired,
     router: PropTypes.object.isRequired
 };

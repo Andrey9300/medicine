@@ -2,7 +2,7 @@ import axios from 'axios';
 import {hashHistory} from 'react-router';
 
 /**
- * Fetch hospitals to bd
+ * Получить все медицинские организации
  * @returns {function(*)}
  */
 export function fetchHospitals() {
@@ -15,6 +15,7 @@ export function fetchHospitals() {
                 });
             })
             .catch((error) => {
+                hashHistory.replace('login');
                 dispatch({
                     payload: error,
                     type: 'HOSPITALS_REJECTED'
@@ -24,7 +25,7 @@ export function fetchHospitals() {
 }
 
 /**
- * Fetch
+ * Получить медицинскую организацию
  * @param id
  * @returns {function(*)}
  */
@@ -33,7 +34,7 @@ export function fetchHospital(id) {
         axios.post(`/hospitals/${id}`)
             .then((response) => {
                 dispatch({
-                    payload: response.data.hospital,
+                    payload: response,
                     type: 'HOSPITAL_FULFILLED'
                 });
             })
@@ -47,7 +48,7 @@ export function fetchHospital(id) {
 }
 
 /**
- * Delete
+ * Удалить медицинскую организаци.
  * @param id number
  * @returns {Function}
  */
@@ -68,16 +69,16 @@ export function deleteHospital(id) {
  */
 
 /**
- * Fetch
+ * Вывести все исследования для категорий организаций
  * @param id - id мед учреждения
  * @returns {function(*)}
  */
-export function fetchHospitalResearches(id) {
+export function fetchHospitalResearches() {
     return (dispatch) => {
-        axios.post(`/hospitals/researches/${id}`)
+        axios.post('/researches/onCategories')
             .then((response) => {
                 dispatch({
-                    payload: response.data,
+                    payload: response,
                     type: 'HOSPITAL_RESEARCHES_FULFILLED'
                 });
             })
@@ -90,43 +91,3 @@ export function fetchHospitalResearches(id) {
     };
 }
 
-/**
- * Fetch
- * @param id_hospital, id_research
- * @returns {function(*)}
- */
-export function fetchHospitalResearch(idHospital, idResearch) {
-    return (dispatch) => {
-        axios.post(`/hospitals/researches/edit/${idHospital}/${idResearch}`)
-            .then((response) => {
-                dispatch({
-                    payload: response.data.hospital_research,
-                    type: 'HOSPITAL_RESEARCH_FULFILLED'
-                });
-            })
-            .catch((error) => {
-                dispatch({
-                    payload: error,
-                    type: 'HOSPITAL_RESEARCH_REJECTED'
-                });
-            });
-    };
-}
-
-/**
- * Delete
- * @param idHospital number
- * @param idResearch number
- * @returns {Function}
- */
-export function deleteHospitalResearch(idHospital, idResearch) {
-    return () => {
-        axios.post(`/hospitals/researches/destroy/${idHospital}/${idResearch}`)
-            .then(() => {
-                hashHistory.push(`/hospitals/${idHospital}`);
-            })
-            .catch((error) => {
-                return error;
-            });
-    };
-}

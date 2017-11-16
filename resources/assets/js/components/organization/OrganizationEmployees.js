@@ -1,4 +1,4 @@
-import {fetchOrganizationUsers, deleteOrganizationUser} from '../../actions/organizationActions';
+import {fetchOrganizationEmployees, deleteOrganizationEmployee} from '../../actions/organizationActions';
 import {Link} from 'react-router';
 import React from 'react';
 import {connect} from 'react-redux';
@@ -12,7 +12,7 @@ import {
 } from 'reactstrap';
 import PropTypes from 'prop-types';
 
-class OrganizationUser extends React.Component {
+class OrganizationEmployee extends React.Component {
     constructor(props) {
         super(props);
 
@@ -23,12 +23,12 @@ class OrganizationUser extends React.Component {
     }
 
     componentWillMount() {
-        this.props.dispatch(fetchOrganizationUsers(this.state.organizationId));
+        this.props.dispatch(fetchOrganizationEmployees(this.state.organizationId));
     }
 
-    handleBtnDelete(idUser, event) {
+    handleBtnDelete(idEmployee, event) {
         event.preventDefault();
-        this.props.dispatch(deleteOrganizationUser(this.state.organizationId, idUser));
+        this.props.dispatch(deleteOrganizationEmployee(this.state.organizationId, idEmployee));
     }
 
     render() {
@@ -38,8 +38,8 @@ class OrganizationUser extends React.Component {
                     <Col xs="12" lg="12">
                         <Card>
                             <CardHeader>
-                                <i className="fa fa-align-justify"/>Цены на исследования
-                                <Link to="users/create" className="btn btn-primary btn-sm pull-right">
+                                <i className="fa fa-align-justify"/>Сотрудники
+                                <Link to={`organizations/employees/create/${this.state.organizationId}`} className="btn btn-primary btn-sm pull-right">
                                     Добавить <i className="icon-plus"/>
                                 </Link>
                             </CardHeader>
@@ -48,40 +48,38 @@ class OrganizationUser extends React.Component {
                                     <thead>
                                     <tr>
                                         <th>ФИО</th>
-                                        <th>Должность</th>
-                                        <th>Исследования</th>
+                                        {/*<th>Исследования</th>*/}
                                         <th>Редактировать</th>
                                         <th>Удалить</th>
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    { this.props.organizationUsers.map((user) => {
+                                    { this.props.organizationEmployees.map((employee) => {
                                         return (
-                                            <tr key={user.id}>
+                                            <tr key={employee.id}>
                                                 <td>
-                                                    <Link to={`users/${user.id}`}>
-                                                        {user.fio}
+                                                    <Link to={`employees/${employee.id}`}>
+                                                        {employee.fio}
                                                     </Link>
                                                 </td>
-                                                <td>{user.role}</td>
-                                                <td>
-                                                    <Link to={`users/researches/${user.id}`}
+                                                {/*<td>
+                                                    <Link to={`employees/researches/${employee.id}`}
                                                           className="btn btn-primary btn-xs pull-left">Исследования
                                                         <i className="glyphicon glyphicon-pencil"/>
                                                     </Link>
-                                                </td>
+                                                </td>*/}
                                                 <td>
-                                                    <Link to={`users/edit/${user.id}`}
+                                                    <Link to={`employees/edit/${employee.id}`}
                                                           className="btn btn-success btn-xs pull-left">Редактировать
                                                         <i className="glyphicon glyphicon-pencil"/>
                                                     </Link>
                                                 </td>
                                                 <td>
-                                                    <form id={`form_${user.id}`} className="pull-left" method="post">
-                                                        <input type="hidden" name="user_id" value={user.id} />
+                                                    <form id={`form_${employee.id}`} className="pull-left" method="post">
+                                                        <input type="hidden" name="employee_id" value={employee.id} />
                                                         <a className="btn btn-danger btn-xs"
-                                                           onClick={(event) => this.handleBtnDelete(user.id, event)}
-                                                           href="#" id={user.id}>Удалить
+                                                           onClick={(event) => this.handleBtnDelete(employee.id, event)}
+                                                           href="#" id={employee.id}>Удалить
                                                             <i className="glyphicon glyphicon-trash"/>
                                                         </a>
                                                     </form>
@@ -104,19 +102,18 @@ class OrganizationUser extends React.Component {
 /**
  * Map
  * @param state
- * @returns {{researchesUser: (*|Array)}}
+ * @returns {{researchesEmployee: (*|Array)}}
  */
 function mapStateToProps(state) {
     return {
-        organizationUsers: state.organizations.organizationUsers
+        organizationEmployees: state.organizations.organizationEmployees
     };
 }
 
-OrganizationUser.propTypes = {
+OrganizationEmployee.propTypes = {
     dispatch: PropTypes.func.isRequired,
-    organizationUsers: PropTypes.array.isRequired,
     params: PropTypes.object.isRequired,
     router: PropTypes.object.isRequired
 };
 
-export default connect(mapStateToProps)(OrganizationUser);
+export default connect(mapStateToProps)(OrganizationEmployee);

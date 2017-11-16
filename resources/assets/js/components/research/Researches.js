@@ -43,27 +43,7 @@ class Researches extends React.Component {
                                         return (
                                             <tr key={research.id}>
                                                 <td>{research.name}</td>
-                                                <td>
-                                                    {(() => {
-                                                        switch (research.period) {
-                                                            case '-1':
-                                                                return 'При поступлении на работу.' +
-                                                                    'При смене юридического лица';
-                                                            case '1':
-                                                                return 'Раз в жизни';
-                                                            case '365':
-                                                                return 'Раз в год';
-                                                            case '730':
-                                                                return 'Раз в два года';
-                                                            case '1827':
-                                                                return 'Раз в 5 лет';
-                                                            case '3653':
-                                                                return 'Раз в 10 лет';
-                                                            default :
-                                                                return research.period;
-                                                        }
-                                                    })()}
-                                                </td>
+                                                <td>{research.research_period.name}</td>
                                                 <td>
                                                     <Link to={`researches/edit/${research.id}`}
                                                           className="btn btn-success btn-xs pull-left">Редатировать

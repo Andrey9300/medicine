@@ -25,9 +25,10 @@ Route::middleware(['auth'])->group(function () {
         Route::post('/update/{id}', 'OrganizationController@update');
         Route::post('/{id}', 'OrganizationController@show');
         Route::post('/', 'OrganizationController@store');
-        Route::prefix('users')->group(function () {
-            Route::post('/{id_organization}', 'OrganizationController@storeUsers');
-            Route::get('/{id_organization}', 'OrganizationController@storeUsers');
+        Route::prefix('employees')->group(function () {
+            Route::post('/create/{id_organization}', 'OrganizationController@createEmployee');
+            Route::post('/{id_organization}', 'OrganizationController@storeEmployees');
+            Route::get('/{id_organization}', 'OrganizationController@storeEmployees');
         });
     });
 
@@ -36,24 +37,33 @@ Route::middleware(['auth'])->group(function () {
         Route::post('/destroy/{id}', 'ResearchController@destroy');
         Route::post('/update/{id}', 'ResearchController@update');
         Route::get('/showHospitals/{id}', 'ResearchController@showHospitals');
+        Route::post('/onCategories', 'ResearchController@onCategories');
         Route::post('/{id}', 'ResearchController@show');
         Route::post('/', 'ResearchController@store');
     });
 
-    Route::prefix('users')->group(function () {
-        Route::post('/create', 'UsersController@create');
-        Route::post('/destroy/{id}', 'UsersController@destroy');
-        Route::post('/update/{id}', 'UsersController@update');
-        Route::post('/{id}', 'UsersController@show');
-        Route::get('/{id}', 'UsersController@show');
-        Route::post('/', 'UsersController@store');
+    Route::prefix('employees')->group(function () {
+        Route::post('/create', 'EmployeesController@create');
+        Route::post('/destroy/{id}', 'EmployeesController@destroy');
+        Route::post('/update/{id}', 'EmployeesController@update');
+        Route::post('/{id}', 'EmployeesController@show');
+        Route::get('/{id}', 'EmployeesController@show');
+        Route::post('/', 'EmployeesController@store');
 
         Route::prefix('researches')->group(function () {
-            Route::post('/create/{id_user}', 'UsersController@createResearch');
-            Route::post('/destroy/{id_user}/{id_research}', 'UsersController@destroyResearch');
-            Route::post('/update/{id_user}/{id_research}', 'UsersController@updateResearch');
-            Route::post('/edit/{id_user}/{id_research}', 'UsersController@editResearch');
-            Route::post('/{id_user}', 'UsersController@storeResearches');
+            Route::post('/create/{id_employee}', 'EmployeesController@createResearch');
+            Route::post('/destroy/{id_employee}/{id_research}', 'EmployeesController@destroyResearch');
+            Route::post('/update/{id_employee}/{id_research}', 'EmployeesController@updateResearch');
+            Route::post('/edit/{id_employee}/{id_research}', 'EmployeesController@editResearch');
+            Route::post('/{id_employee}', 'EmployeesController@storeResearches');
         });
+    });
+
+    Route::prefix('regions')->group(function () {
+        Route::post('/', 'RegionController@store');
+    });
+
+    Route::prefix('categories')->group(function () {
+        Route::post('/', 'CategoryController@store');
     });
 });

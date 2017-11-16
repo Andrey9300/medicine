@@ -1,7 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 import {connect} from 'react-redux';
-import {fetchUserResearch} from './../../../actions/userActions';
+import {fetchEmployeeResearch} from './../../../actions/employeeActions';
 import {
     Row,
     Col,
@@ -18,12 +18,12 @@ import {
 } from 'reactstrap';
 import PropTypes from 'prop-types';
 
-class EditUserResearch extends React.Component {
+class EditEmployeeResearch extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             errors: '',
-            userId: props.params.idUser
+            employeeId: props.params.idEmployee
         };
         this.handleSubmit = this.handleSubmit.bind(this);
     }
@@ -33,9 +33,9 @@ class EditUserResearch extends React.Component {
         const formElement = document.querySelector('form');
         const formData = new FormData(formElement);
 
-        axios.post(`/users/researches/update/${this.state.userId}/${this.props.params.idResearch}`, formData)
+        axios.post(`/employees/researches/update/${this.state.employeeId}/${this.props.params.idResearch}`, formData)
             .then(() => {
-                this.context.router.push(`/users/${this.state.userId}`);
+                this.context.router.push(`/employees/${this.state.employeeId}`);
             })
             .catch((error) => {
                 const errors = error.response.data.message;
@@ -47,7 +47,7 @@ class EditUserResearch extends React.Component {
     }
 
     componentWillMount() {
-        this.props.dispatch(fetchUserResearch(this.state.userId, this.props.params.idResearch));
+        this.props.dispatch(fetchEmployeeResearch(this.state.employeeId, this.props.params.idResearch));
     }
 
     createMarkup() {
@@ -57,7 +57,7 @@ class EditUserResearch extends React.Component {
     }
 
     render() {
-        const {userResearch} = this.props.userResearch;
+        const {employeeResearch} = this.props.employeeResearch;
 
         let errors = '';
         let formElements = '';
@@ -68,7 +68,7 @@ class EditUserResearch extends React.Component {
             </div>;
         }
 
-        if (userResearch !== null) {
+        if (employeeResearch !== null) {
             formElements =
                 <Row>
                     <Col xs="12" md="6">
@@ -84,7 +84,7 @@ class EditUserResearch extends React.Component {
                                         </Col>
                                         <Col xs="12" md="9">
                                             <Input type="text" id="name" name="name"
-                                                   defaultValue={userResearch.name} readOnly/>
+                                                   defaultValue={employeeResearch.name} readOnly/>
                                         </Col>
                                     </FormGroup>
                                     <FormGroup row>
@@ -95,7 +95,7 @@ class EditUserResearch extends React.Component {
                                             {(() => {
                                                 let period = '';
 
-                                                switch (userResearch.period) {
+                                                switch (employeeResearch.period) {
                                                     case '-1':
                                                         period = 'При поступлении на работу.' +
                                                             'При смене юридического лица';
@@ -131,7 +131,7 @@ class EditUserResearch extends React.Component {
                                         </Col>
                                         <Col xs="12" md="9">
                                             <Input type="text" id="date" name="date"
-                                                   defaultValue={userResearch.pivot.date}/>
+                                                   defaultValue={employeeResearch.pivot.date}/>
                                             <FormText color="muted">Введите дату</FormText>
                                         </Col>
                                     </FormGroup>
@@ -159,19 +159,19 @@ class EditUserResearch extends React.Component {
 /**
  * Map
  * @param state
- * @returns {{user: (*|null)}}
+ * @returns {{employee: (*|null)}}
  */
 function mapStateToProps(state) {
     return {
-        userResearch: state.users.userResearch
+        employeeResearch: state.employees.employeeResearch
     };
 }
 
-EditUserResearch.propTypes = {
+EditEmployeeResearch.propTypes = {
     dispatch: PropTypes.func.isRequired,
     params: PropTypes.object.isRequired,
     router: PropTypes.object.isRequired,
-    userResearch: PropTypes.object.isRequired
+    employeeResearch: PropTypes.object.isRequired
 };
 
-export default connect(mapStateToProps)(EditUserResearch);
+export default connect(mapStateToProps)(EditEmployeeResearch);

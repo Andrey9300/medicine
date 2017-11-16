@@ -21,6 +21,7 @@ class CreateHospitalResearchTable extends Migration
             $table->integer('research_category_id')->unsigned();
             $table->foreign('research_category_id')->references('id')->on('research_category');
             $table->unique(array('hospital_id', 'research_category_id'));
+            $table->onDelete('cascade');
         });
     }
 

@@ -2,6 +2,7 @@ const initialState = {
     error: null,
     fetched: false,
     research: null,
+    periods: [],
     researches: []
 };
 
@@ -38,7 +39,8 @@ export default function reducer(state = initialState, action) {
             return {
                 ...state,
                 fetched: true,
-                research: action.payload
+                research: action.payload.data.research,
+                periods: action.payload.data.periods
             };
         }
         default: return {

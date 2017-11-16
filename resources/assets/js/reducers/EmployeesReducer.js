@@ -1,10 +1,10 @@
 const initialState = {
     error: null,
     fetched: false,
-    user: null,
-    userResearch: null,
-    userResearches: [],
-    users: []
+    employee: null,
+    employeeResearch: null,
+    employeeResearches: [],
+    employees: []
 };
 
 /**
@@ -15,78 +15,60 @@ const initialState = {
  */
 export default function reducer(state = initialState, action) {
     switch (action.type) {
-        case 'LOGIN_USER_REJECTED': {
+        case 'EMPLOYEES_REJECTED': {
             return {
                 ...state,
                 error: action.payload,
                 fetched: false
             };
         }
-        case 'LOGIN_USER_FULFILLED': {
+        case 'EMPLOYEES_FULFILLED': {
             return {
                 ...state,
                 fetched: true,
-                user: {
-                    isAuthenticated: action.payload.isAuthenticated
-                }
+                employees: action.payload.employees
             };
         }
-        case 'LOGOUT_USER_REJECTED': {
+        case 'EMPLOYEE_REJECTED': {
             return {
                 ...state,
                 error: action.payload,
                 fetched: false
             };
         }
-        case 'REGISTRATION_USER_REJECTED': {
+        case 'EMPLOYEE_FULFILLED': {
             return {
                 ...state,
                 fetched: true,
-                user: true
+                employee: action.payload.data.employee
             };
         }
-        case 'LOGOUT_USER_REJECTED': {
+        case 'EMPLOYEE_RESEARCHES_REJECTED': {
             return {
                 ...state,
                 error: action.payload,
                 fetched: false
             };
         }
-        case 'REGISTRATION_USER_FULFILLED': {
+        case 'EMPLOYEE_RESEARCHES_FULFILLED': {
             return {
                 ...state,
                 fetched: true,
-                user: {
-                    isAuthenticated: action.payload.isAuthenticated
-                }
+                employeeResearches: action.payload.employee_researches
             };
         }
-        case 'USERS_REJECTED': {
+        case 'EMPLOYEE_RESEARCH_REJECTED': {
             return {
                 ...state,
                 error: action.payload,
                 fetched: false
             };
         }
-        case 'USERS_FULFILLED': {
+        case 'EMPLOYEE_RESEARCH_FULFILLED': {
             return {
                 ...state,
                 fetched: true,
-                users: action.payload.users
-            };
-        }
-        case 'USER_REJECTED': {
-            return {
-                ...state,
-                error: action.payload,
-                fetched: false
-            };
-        }
-        case 'USER_FULFILLED': {
-            return {
-                ...state,
-                fetched: true,
-                user: action.payload
+                employeeResearch: action.payload
             };
         }
         default:

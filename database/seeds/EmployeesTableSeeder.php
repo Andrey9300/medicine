@@ -132,5 +132,59 @@ class EmployeesTableSeeder extends Seeder
             'organization_name' => 'ЗАО Хлебокобинат'
         ]);
 
+        DB::table('employees')->insert([
+            'id' => 16,
+            'fio' => 'Берин Василий Петрович',
+            'date_birthday' => '1983-11-10',
+            'date_employment' => '2016-04-10',
+            'medical_book' => '10015',
+            'organization_name' => 'ОАО Сырокомбинат'
+        ]);
+
+        DB::table('employees')->insert([
+            'id' => 17,
+            'fio' => 'Перин Петрв Дмитриевич',
+            'date_birthday' => '1990-09-01',
+            'date_employment' => '2016-01-01',
+            'medical_book' => '10016',
+            'organization_name' => 'ОАО Сырокомбинат'
+        ]);
+
+        DB::table('employees')->insert([
+            'id' => 18,
+            'fio' => 'Шен Василий Евгеньевич',
+            'date_birthday' => '1989-10-10',
+            'date_employment' => '2016-01-25',
+            'medical_book' => '10017',
+            'organization_name' => 'ОАО Сырокомбинат'
+        ]);
+
+        DB::table('employees')->insert([
+            'id' => 19,
+            'fio' => 'Кар Вадим Сергеевич',
+            'date_birthday' => '1985-09-09',
+            'date_employment' => '2017-08-20',
+            'medical_book' => '10018',
+            'organization_name' => 'АО Колбасный цех'
+        ]);
+
+        DB::table('employees')->insert([
+            'id' => 20,
+            'fio' => 'Петровкин Василий Иванович',
+            'date_birthday' => '1980-10-01',
+            'date_employment' => '2015-03-20',
+            'medical_book' => '10019',
+            'organization_name' => 'АО Колбасный цех'
+        ]);
+
+        DB::table('employees')->insert([
+            'id' => 21,
+            'fio' => 'Калин Дмитрий Васильевич',
+            'date_birthday' => '1990-04-08',
+            'date_employment' => '2014-01-10',
+            'medical_book' => '10020',
+            'organization_name' => 'АО Колбасный цех'
+        ]);
+
     }
 }
