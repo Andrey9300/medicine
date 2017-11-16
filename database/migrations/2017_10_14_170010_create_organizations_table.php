@@ -21,10 +21,9 @@ class CreateOrganizationsTable extends Migration
             $table->string('head_email');
             $table->string('phone')->nullable();
             $table->integer('region_id')->unsigned();
-            $table->foreign('region_id')->references('id')->on('regions');
+            $table->foreign('region_id')->references('id')->on('regions')->onDelete('cascade');
             $table->integer('category_id')->unsigned();
-            $table->foreign('category_id')->references('id')->on('categories');
-            $table->onDelete('cascade');
+            $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade');
         });
     }
 

@@ -17,11 +17,10 @@ class CreateHospitalResearchTable extends Migration
             $table->increments('id');
             $table->double('price')->nullable();
             $table->integer('hospital_id')->unsigned();
-            $table->foreign('hospital_id')->references('id')->on('hospitals');
+            $table->foreign('hospital_id')->references('id')->on('hospitals')->onDelete('cascade');
             $table->integer('research_category_id')->unsigned();
-            $table->foreign('research_category_id')->references('id')->on('research_category');
+            $table->foreign('research_category_id')->references('id')->on('research_category')->onDelete('cascade');
             $table->unique(array('hospital_id', 'research_category_id'));
-            $table->onDelete('cascade');
         });
     }
 
