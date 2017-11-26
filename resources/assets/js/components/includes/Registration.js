@@ -14,10 +14,15 @@ import {
     InputGroupAddon
 } from 'reactstrap';
 import PropTypes from 'prop-types';
+import {hashHistory} from 'react-router';
+import axios from 'axios';
 
 class Registration extends Component {
     constructor() {
         super();
+        this.state = {
+            errors: ''
+        };
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
@@ -25,15 +30,70 @@ class Registration extends Component {
         event.preventDefault();
         const formElement = document.querySelector('form');
 
-        this.props.dispatch(registrationUser(new FormData(formElement)));
+        axios.post('/register', new FormData(formElement))
+            .then(() => {
+                alert('Вы зарегистрированы');
+                axios.post('/logout', new FormData(formElement))
+                    .then(() => {
+                        hashHistory.push('/login');
+                        window.location.reload();
+                    })
+                    .catch((error) => {
+                        if (!error.response.data.errors) {
+                            window.location.reload();
+                        }
+
+                        this.setState({
+                            errors: error.response.data.errors
+                        });
+                    });
+            })
+            .catch((error) => {
+                if (!error.response.data.errors) {
+                    window.location.reload();
+                }
+
+                this.setState({
+                    errors: error.response.data.errors
+                });
+            });
+
+        // this.props.dispatch(registrationUser(new FormData(formElement))); //TODO сделать через reducer
+    }
+
+    handleLogin() {
+        hashHistory.push('login');
+    }
+
+    createMarkup() {
+        let html = '';
+
+        Object.keys(this.state.errors).forEach((item) => {
+            this.state.errors[item].forEach((value) => {
+                html += `<p>${value}</p>`;
+            });
+        });
+
+        return {
+            __html: html
+        };
     }
 
     render() {
+        let errors = '';
+
+        if (this.state.errors !== '') {
+            errors = <div className="alert alert-danger" role="alert">
+                <div dangerouslySetInnerHTML={this.createMarkup()} />
+            </div>;
+        }
+
         return (
             <div className="app flex-row align-items-center">
                 <Container>
                     <Row className="justify-content-center">
                         <Col md="6">
+                            {errors}
                             <Card className="mx-4">
                                 <CardBlock className="card-body">
                                     <Form onSubmit={this.handleSubmit}>
@@ -53,9 +113,13 @@ class Registration extends Component {
                                         </InputGroup>
                                         <InputGroup className="mb-3">
                                             <InputGroupAddon><i className="icon-lock"/></InputGroupAddon>
-                                            <Input type="password" name="password_confirmation" placeholder="Повторите пароль"/>
+                                            <Input type="password" name="password_confirmation"
+                                                   placeholder="Повторите пароль"/>
                                         </InputGroup>
                                         <Button color="success" block>Создать аккаунт</Button>
+                                        <Button color="primary" block onClick={this.handleLogin}>
+                                            Уже есть аккаунт
+                                        </Button>
                                     </Form>
                                 </CardBlock>
                             </Card>

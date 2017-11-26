@@ -25,6 +25,7 @@ class Researches extends React.Component {
                         <Card>
                             <CardHeader>
                                 <i className="fa fa-heartbeat" aria-hidden="true"/>Исследования
+                                ({this.props.researches.length})
                                 <Link to="researches/create" className="btn btn-primary btn-sm pull-right">
                                     Добавить <i className="icon-plus"/>
                                 </Link>

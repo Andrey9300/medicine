@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Models\Hospital;
 use App\Http\Models\Region;
 use App\Http\Models\Research;
+use App\Http\Requests\StoreHospital;
+use App\Http\Requests\UpdateHospital;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -16,13 +18,13 @@ class HospitalController extends Controller
      * @param  \Illuminate\Http\Request $request
      * @return void
      */
-    public function create(Request $request)
+    public function store(StoreHospital $request)
     {
-        $this->authorize('create', Hospital::class);
         $user = Auth::user();
         $hospital = new Hospital;
         $hospital->name = $request->name;
         $hospital->address = $request->address;
+        $hospital->head_fio = $request->head_fio;
         $hospital->shedule = $request->shedule;
         $hospital->photo_map = $request->photo_map;
         $hospital->phone = $request->phone;
@@ -36,7 +38,7 @@ class HospitalController extends Controller
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function store()
+    public function showAll()
     {
         $user = Auth::user();
 
@@ -54,14 +56,11 @@ class HospitalController extends Controller
     public function show($id)
     {
         $hospital = Hospital::find($id);
-        $this->authorize('owner', $hospital);
+        $this->authorize('isAdminAndOwner', $hospital);
         $hospital->region;
 
-        $this->authorize('show', $hospital);
-
         return response()->json([
-            'hospital' => $hospital,
-            'regions' => Region::all()
+            'hospital' => $hospital
         ]);
     }
 
@@ -72,13 +71,13 @@ class HospitalController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return void
      */
-    public function update(Request $request, $id)
+    public function update(UpdateHospital $request, $id)
     {
         $hospital_new = $request->all();
         $hospital = Hospital::find($id);
-        $this->authorize('owner', $hospital);
         $hospital->name = $hospital_new['name'];
         $hospital->address = $hospital_new['address'];
+        $hospital->head_fio = $hospital_new['head_fio'];
         $hospital->shedule = $hospital_new['shedule'];
         $hospital->photo_map = $hospital_new['photo_map'];
         $hospital->phone = $hospital_new['phone'];
@@ -95,13 +94,11 @@ class HospitalController extends Controller
     public function destroy($id)
     {
         $hospital = Hospital::find($id);
-        $this->authorize('owner', $hospital);
+        $this->authorize('isAdminAndOwner', $hospital);
         $hospital->destroy($id);
     }
 
     /**
      * Исследования медицинских учреждений
      */
-
-
 }

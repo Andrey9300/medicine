@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 
 class RegionController extends Controller
 {
-    public function store()
+    public function showAll()
     {
         return response()->json([
             'regions' => Region::all()

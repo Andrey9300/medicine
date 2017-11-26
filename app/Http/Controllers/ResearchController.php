@@ -17,11 +17,11 @@ class ResearchController extends Controller
      * @param  \Illuminate\Http\Request $request
      * @return void
      */
-    public function create(Request $request)
+    public function store(Request $request)
     {
         $research = new Research;
         $research->name = $request->name;
-        $research->period = $request->period;
+        $research->period_id = $request->period_id;
         $research->save();
     }
 
@@ -30,7 +30,7 @@ class ResearchController extends Controller
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function store()
+    public function showAll()
     {
         $researches = Research::all();
 

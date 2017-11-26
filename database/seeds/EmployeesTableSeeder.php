@@ -17,6 +17,7 @@ class EmployeesTableSeeder extends Seeder
             'date_birthday' => '1990-10-05',
             'date_employment' => '2017-10-05',
             'medical_book' => '10000',
+            'user_id' => 1,
             'organization_name' => 'ООО Мясокомбинат'
         ]);
         DB::table('employees')->insert([
@@ -25,6 +26,7 @@ class EmployeesTableSeeder extends Seeder
             'date_birthday' => '1988-10-05',
             'date_employment' => '2015-09-05',
             'medical_book' => '10001',
+            'user_id' => 1,
             'organization_name' => 'ООО Мясокомбинат'
         ]);
         DB::table('employees')->insert([
@@ -33,6 +35,7 @@ class EmployeesTableSeeder extends Seeder
             'date_birthday' => '1991-10-05',
             'date_employment' => '2017-01-05',
             'medical_book' => '10002',
+            'user_id' => 1,
             'organization_name' => 'ООО Мясокомбинат'
         ]);
         DB::table('employees')->insert([
@@ -41,6 +44,7 @@ class EmployeesTableSeeder extends Seeder
             'date_birthday' => '1990-10-05',
             'date_employment' => '2016-12-05',
             'medical_book' => '10003',
+            'user_id' => 1,
             'organization_name' => 'ООО Мясокомбинат'
         ]);
         DB::table('employees')->insert([
@@ -49,6 +53,7 @@ class EmployeesTableSeeder extends Seeder
             'date_birthday' => '1980-10-05',
             'date_employment' => '2015-04-10',
             'medical_book' => '10004',
+            'user_id' => 1,
             'organization_name' => 'ООО Мясокомбинат'
         ]);
         DB::table('employees')->insert([
@@ -57,6 +62,7 @@ class EmployeesTableSeeder extends Seeder
             'date_birthday' => '1993-10-05',
             'date_employment' => '2013-10-10',
             'medical_book' => '10005',
+            'user_id' => 2,
             'organization_name' => 'ОАО Рыбокомбинат'
         ]);
         DB::table('employees')->insert([
@@ -65,6 +71,7 @@ class EmployeesTableSeeder extends Seeder
             'date_birthday' => '1990-10-05',
             'date_employment' => '2016-10-10',
             'medical_book' => '10006',
+            'user_id' => 2,
             'organization_name' => 'ОАО Рыбокомбинат'
         ]);
         DB::table('employees')->insert([
@@ -73,6 +80,7 @@ class EmployeesTableSeeder extends Seeder
             'date_birthday' => '1993-10-05',
             'date_employment' => '2017-05-01',
             'medical_book' => '10007',
+            'user_id' => 2,
             'organization_name' => 'ОАО Рыбокомбинат'
         ]);
         DB::table('employees')->insert([
@@ -81,6 +89,7 @@ class EmployeesTableSeeder extends Seeder
             'date_birthday' => '1993-10-05',
             'date_employment' => '2015-10-10',
             'medical_book' => '10008',
+            'user_id' => 2,
             'organization_name' => 'ОАО Рыбокомбинат'
         ]);
         DB::table('employees')->insert([
@@ -89,6 +98,7 @@ class EmployeesTableSeeder extends Seeder
             'date_birthday' => '1993-10-05',
             'date_employment' => '2017-04-04',
             'medical_book' => '10009',
+            'user_id' => 2,
             'organization_name' => 'ОАО Рыбокомбинат'
         ]);
         DB::table('employees')->insert([
@@ -97,6 +107,7 @@ class EmployeesTableSeeder extends Seeder
             'date_birthday' => '1990-11-19',
             'date_employment' => '2012-07-04',
             'medical_book' => '10010',
+            'user_id' => 3,
             'organization_name' => 'ЗАО Хлебокобинат'
         ]);
         DB::table('employees')->insert([
@@ -105,6 +116,7 @@ class EmployeesTableSeeder extends Seeder
             'date_birthday' => '1990-10-05',
             'date_employment' => '2017-04-04',
             'medical_book' => '10011',
+            'user_id' => 3,
             'organization_name' => 'ЗАО Хлебокобинат'
         ]);
         DB::table('employees')->insert([
@@ -113,6 +125,7 @@ class EmployeesTableSeeder extends Seeder
             'date_birthday' => '1986-05-05',
             'date_employment' => '2016-05-14',
             'medical_book' => '10012',
+            'user_id' => 3,
             'organization_name' => 'ЗАО Хлебокобинат'
         ]);
         DB::table('employees')->insert([
@@ -121,6 +134,7 @@ class EmployeesTableSeeder extends Seeder
             'date_birthday' => '1991-05-05',
             'date_employment' => '2014-10-04',
             'medical_book' => '10013',
+            'user_id' => 3,
             'organization_name' => 'ЗАО Хлебокобинат'
         ]);
         DB::table('employees')->insert([
@@ -129,6 +143,7 @@ class EmployeesTableSeeder extends Seeder
             'date_birthday' => '1991-01-05',
             'date_employment' => '2016-08-25',
             'medical_book' => '10014',
+            'user_id' => 3,
             'organization_name' => 'ЗАО Хлебокобинат'
         ]);
 
@@ -138,6 +153,7 @@ class EmployeesTableSeeder extends Seeder
             'date_birthday' => '1983-11-10',
             'date_employment' => '2016-04-10',
             'medical_book' => '10015',
+            'user_id' => 1,
             'organization_name' => 'ОАО Сырокомбинат'
         ]);
 
@@ -147,6 +163,7 @@ class EmployeesTableSeeder extends Seeder
             'date_birthday' => '1990-09-01',
             'date_employment' => '2016-01-01',
             'medical_book' => '10016',
+            'user_id' => 1,
             'organization_name' => 'ОАО Сырокомбинат'
         ]);
 
@@ -156,6 +173,7 @@ class EmployeesTableSeeder extends Seeder
             'date_birthday' => '1989-10-10',
             'date_employment' => '2016-01-25',
             'medical_book' => '10017',
+            'user_id' => 1,
             'organization_name' => 'ОАО Сырокомбинат'
         ]);
 
@@ -165,6 +183,7 @@ class EmployeesTableSeeder extends Seeder
             'date_birthday' => '1985-09-09',
             'date_employment' => '2017-08-20',
             'medical_book' => '10018',
+            'user_id' => 1,
             'organization_name' => 'АО Колбасный цех'
         ]);
 
@@ -174,6 +193,7 @@ class EmployeesTableSeeder extends Seeder
             'date_birthday' => '1980-10-01',
             'date_employment' => '2015-03-20',
             'medical_book' => '10019',
+            'user_id' => 1,
             'organization_name' => 'АО Колбасный цех'
         ]);
 
@@ -183,6 +203,7 @@ class EmployeesTableSeeder extends Seeder
             'date_birthday' => '1990-04-08',
             'date_employment' => '2014-01-10',
             'medical_book' => '10020',
+            'user_id' => 1,
             'organization_name' => 'АО Колбасный цех'
         ]);
 

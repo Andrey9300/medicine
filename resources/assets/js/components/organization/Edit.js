@@ -18,6 +18,9 @@ import {
 } from 'reactstrap';
 import PropTypes from 'prop-types';
 import {hashHistory} from 'react-router';
+import {fetchLegalEntities} from '../../actions/legalEntityActions';
+import {fetchRegions} from '../../actions/regionActions';
+import {fetchCategories} from '../../actions/categoryActions';
 
 class EditOrganization extends React.Component {
     constructor(props) {
@@ -32,29 +35,43 @@ class EditOrganization extends React.Component {
     handleSubmit(event) {
         event.preventDefault();
         const formElement = document.querySelector('form');
-        const formData = new FormData(formElement);
 
-        axios.post(`/organizations/update/${this.state.organizationId}`, formData)
+        axios.post(`/organizations/update/${this.state.organizationId}`, new FormData(formElement))
             .then(() => {
                 hashHistory.push(`/organizations/${this.state.organizationId}`);
             })
-            .catch((error) => {
-                const errors = error.response.data.data;
-
+            .catch((errors) => {
                 this.setState({
-                    errors: errors
+                    errors: errors.response.data.errors
                 });
             });
     }
 
     componentWillMount() {
+        this.props.dispatch(fetchRegions());
+        this.props.dispatch(fetchCategories());
+        this.props.dispatch(fetchLegalEntities());
         this.props.dispatch(fetchOrganization(this.state.organizationId));
     }
 
     createMarkup() {
+        let html = '';
+
+        Object.keys(this.state.errors).forEach((item) => {
+            this.state.errors[item].forEach((value) => {
+                html += `<p>${value}</p>`;
+            });
+        });
+
         return {
-            __html: this.state.errors
+            __html: html
         };
+    }
+
+    componentWillReceiveProps(nextProps) {
+        if (this.props.organization && nextProps.organization && nextProps.organization.legal_entity !== this.props.organization.legal_entity) {
+            window.location.reload();
+        }
     }
 
     render() {
@@ -84,7 +101,7 @@ class EditOrganization extends React.Component {
                                         </Col>
                                         <Col xs="12" md="9">
                                             <Input type="text" id="name" name="name"
-                                                   defaultValue={organization.name} readOnly/>
+                                                   defaultValue={organization.name}/>
                                         </Col>
                                     </FormGroup>
                                     <FormGroup row>
@@ -92,8 +109,17 @@ class EditOrganization extends React.Component {
                                             <Label htmlFor="text-input">Регион</Label>
                                         </Col>
                                         <Col xs="12" md="9">
-                                            <Input type="text" id="region_id" name="region_id"
-                                                   defaultValue={organization.region.name} readOnly/>
+                                            <Input type="select" name="region_id" id="select"
+                                                   defaultValue={organization.region.id}>
+                                                { this.props.regions.map((region) => {
+                                                    return (
+                                                        <option key={region.id} value={region.id}>
+                                                            {region.name}
+                                                        </option>
+                                                    );
+                                                })
+                                                }
+                                            </Input>
                                         </Col>
                                     </FormGroup>
                                     <FormGroup row>
@@ -102,7 +128,7 @@ class EditOrganization extends React.Component {
                                         </Col>
                                         <Col xs="12" md="9">
                                             <Input type="text" id="address" name="address"
-                                                   defaultValue={organization.address} readOnly/>
+                                                   defaultValue={organization.address}/>
                                         </Col>
                                     </FormGroup>
                                     <FormGroup row>
@@ -110,8 +136,17 @@ class EditOrganization extends React.Component {
                                             <Label htmlFor="text-input">Юридическое лицо</Label>
                                         </Col>
                                         <Col xs="12" md="9">
-                                            <Input type="text" id="legal_entity" name="legal_entity"
-                                                   defaultValue={organization.legal_entity} readOnly/>
+                                            <Input type="select" name="region_id" id="select"
+                                                   defaultValue={organization.legal_entity.id}>
+                                                { this.props.legalEntities.map((legalEntity) => {
+                                                    return (
+                                                        <option key={legalEntity.id} value={legalEntity.id}>
+                                                            {legalEntity.name}
+                                                        </option>
+                                                    );
+                                                })
+                                                }
+                                            </Input>
                                         </Col>
                                     </FormGroup>
                                     <FormGroup row>
@@ -121,7 +156,8 @@ class EditOrganization extends React.Component {
                                         <Col xs="12" md="9">
                                             <Input type="email" id="head_email" name="head_email"
                                                    placeholder="E-mail руководителя"
-                                                   defaultValue={organization.head_email}/>
+                                                   defaultValue={organization.head_email}
+                                                   required/>
                                             <FormText color="muted">Введите e-mail руководителя</FormText>
                                         </Col>
                                     </FormGroup>
@@ -141,9 +177,17 @@ class EditOrganization extends React.Component {
                                             <Label htmlFor="text-input">Категория</Label>
                                         </Col>
                                         <Col xs="12" md="9">
-                                            <Input type="text" id="category_id" name="category_id"
-                                                   defaultValue={organization.category.name} readOnly/>
-                                            <FormText color="muted">Введите телефон руководителя</FormText>
+                                            <Input type="select" name="region_id" id="select"
+                                                   defaultValue={organization.category.id}>
+                                                { this.props.categories.map((category) => {
+                                                    return (
+                                                        <option key={category.id} value={category.id}>
+                                                            {category.name}
+                                                        </option>
+                                                    );
+                                                })
+                                                }
+                                            </Input>
                                         </Col>
                                     </FormGroup>
                                 </CardBlock>
@@ -174,6 +218,9 @@ class EditOrganization extends React.Component {
  */
 function mapStateToProps(state) {
     return {
+        regions: state.regions.regions,
+        categories: state.categories.categories,
+        legalEntities: state.legalEntities.legalEntities,
         organization: state.organizations.organization
     };
 }

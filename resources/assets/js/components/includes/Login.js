@@ -16,10 +16,15 @@ import {
     InputGroupAddon
 } from 'reactstrap';
 import PropTypes from 'prop-types';
+import axios from 'axios';
+import {hashHistory} from 'react-router';
 
 class Login extends Component {
     constructor() {
         super();
+        this.state = {
+            errors: ''
+        };
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
@@ -27,15 +32,52 @@ class Login extends Component {
         event.preventDefault();
         const formElement = document.querySelector('form');
 
-        this.props.dispatch(loginUser(new FormData(formElement)));
+        axios.post('/login', new FormData(formElement))
+            .then(() => {
+                hashHistory.push('/organizations');
+            })
+            .catch((error) => {
+                if (!error.response.data.errors) {
+                    window.location.reload();
+                }
+
+                this.setState({
+                    errors: error.response.data.errors
+                });
+            });
+
+        // this.props.dispatch(loginUser(new FormData(formElement))); //TODO сделать через reducer
+    }
+
+    createMarkup() {
+        let html = '';
+
+        Object.keys(this.state.errors).forEach((item) => {
+            this.state.errors[item].forEach((value) => {
+                html += `<p>${value}</p>`;
+            });
+        });
+
+        return {
+            __html: html
+        };
     }
 
     render() {
+        let errors = '';
+
+        if (this.state.errors !== '') {
+            errors = <div className="alert alert-danger" role="alert">
+                <div dangerouslySetInnerHTML={this.createMarkup()} />
+            </div>;
+        }
+
         return (
             <div className="app flex-row align-items-center">
                 <Container>
                     <Row className="justify-content-center">
-                        <Col md="8">
+                        <Col md="6">
+                            {errors}
                             <CardGroup className="mb-0">
                                 <Card className="p-4">
                                     <CardBlock className="card-body">
@@ -44,33 +86,30 @@ class Login extends Component {
                                             <p className="text-muted">Войдите в свой аккаунт</p>
                                             <InputGroup className="mb-3">
                                                 <InputGroupAddon><i className="icon-envelope"/></InputGroupAddon>
-                                                <Input type="text" name="email" placeholder="E-mail"/>
+                                                <Input type="email" name="email" placeholder="E-mail" required/>
                                             </InputGroup>
                                             <InputGroup className="mb-4">
                                                 <InputGroupAddon><i className="icon-lock"/></InputGroupAddon>
-                                                <Input type="password" name="password" placeholder="Пароль"/>
+                                                <Input type="password" name="password" placeholder="Пароль" required/>
                                             </InputGroup>
                                             <Row>
-                                                <Col xs="6">
-                                                    <Button color="primary" className="px-4">Войти</Button>
+                                                <Col xs="4">
+                                                    <Button color="primary" className="px-4 btn-sm">Войти</Button>
                                                 </Col>
-                                                <Col xs="6" className="text-right">
-                                                    <Button color="link" className="px-0">Забыли пароль?</Button>
+                                                <Col xs="4" className="text-right">
+                                                    <Link to="registration" className="btn btn-success btn-sm">
+                                                        Регистрация
+                                                    </Link>
+                                                </Col>
+                                                <Col xs="4" className="text-right">
+                                                    <Link to="restorePassword" className="btn btn-warning btn-sm">
+                                                        Забыли пароль?
+                                                    </Link>
                                                 </Col>
                                             </Row>
                                         </Form>
                                     </CardBlock>
-                                </Card>
-                                <Card className="text-white bg-primary py-5 d-md-down-none" style={{width: '44%'}}>
-                                    <CardBlock className="card-body text-center">
-                                        <div>
-                                            <h2>Регистрация</h2>
-                                            <Link to="registration" className="btn btn-primary btn-sm">
-                                                Зарегистрироваться
-                                                <i className="glyphicon glyphicon-pencil"/>
-                                            </Link>
-                                        </div>
-                                    </CardBlock>
+
                                 </Card>
                             </CardGroup>
                         </Col>

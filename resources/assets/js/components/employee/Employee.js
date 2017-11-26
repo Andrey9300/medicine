@@ -55,7 +55,15 @@ class Employee extends React.Component {
                                         <tbody>
                                             <tr>
                                                 <td>Организация: </td>
-                                                <td>{employee.organization_name}</td>
+                                                <td>
+                                                    {(() => {
+                                                        if (employee.organization_name) {
+                                                            return employee.organization_name;
+                                                        } else {
+                                                            return 'Не привязан';
+                                                        }
+                                                    })()}
+                                                </td>
                                             </tr>
                                             <tr>
                                                 <td>Дата рождения: </td>
@@ -73,14 +81,11 @@ class Employee extends React.Component {
                                                 <td>Уволен: </td>
                                                 <td>
                                                     {(() => {
-                                                        switch (employee.active) {
-                                                            case 1:
-                                                                return 'Нет';
-                                                            case 0:
-                                                                return 'Да';
-                                                            default:
-                                                                return 'Нет';
+                                                        if (employee.deleted_at) {
+                                                            return employee.deleted_at;
                                                         }
+
+                                                        return 'Нет';
                                                     })()}
                                                 </td>
                                             </tr>

@@ -2,6 +2,7 @@ import React from 'react';
 import axios from 'axios';
 import {connect} from 'react-redux';
 import {fetchHospital} from './../../actions/hospitalActions';
+import {fetchRegions} from './../../actions/regionActions';
 import {
     Row,
     Col,
@@ -24,7 +25,7 @@ class EditHospital extends React.Component {
         super(props);
         this.state = {
             errors: '',
-            hospitalId: props.params.id
+            hospitalId: props.params.id,
         };
         this.handleSubmit = this.handleSubmit.bind(this);
     }
@@ -32,29 +33,41 @@ class EditHospital extends React.Component {
     handleSubmit(event) {
         event.preventDefault();
         const formElement = document.querySelector('form');
-        const formData = new FormData(formElement);
 
-        axios.post(`/hospitals/update/${this.state.hospitalId}`, formData)
+        axios.post(`/hospitals/update/${this.state.hospitalId}`, new FormData(formElement))
             .then(() => {
                 hashHistory.push(`/hospitals/${this.state.hospitalId}`);
             })
-            .catch((error) => {
-                const errors = error.response.data.message;
-
+            .catch((errors) => {
                 this.setState({
-                    errors: errors
+                    errors: errors.response.data.errors
                 });
             });
     }
 
     componentWillMount() {
+        this.props.dispatch(fetchRegions());
         this.props.dispatch(fetchHospital(this.state.hospitalId));
     }
 
     createMarkup() {
+        let html = '';
+
+        Object.keys(this.state.errors).forEach((item) => {
+            this.state.errors[item].forEach((value) => {
+                html += `<p>${value}</p>`;
+            });
+        });
+
         return {
-            __html: this.state.errors
+            __html: html
         };
+    }
+
+    componentWillReceiveProps(nextProps) {
+        if (this.props.hospital && nextProps.hospital && nextProps.hospital.name !== this.props.hospital.name) {
+            window.location.reload();
+        }
     }
 
     render() {
@@ -84,13 +97,13 @@ class EditHospital extends React.Component {
                                         </Col>
                                         <Col xs="12" md="9">
                                             <Input type="text" id="name" name="name" placeholder="Наименование"
-                                                   defaultValue={hospital.name}/>
+                                                   defaultValue={hospital.name} required/>
                                             <FormText color="muted">Введите наименование</FormText>
                                         </Col>
                                     </FormGroup>
                                     <FormGroup row>
                                         <Col md="3">
-                                            <Label htmlFor="text-input">Период</Label>
+                                            <Label htmlFor="text-input">Регион</Label>
                                         </Col>
                                         <Col xs="12" md="9">
                                             <Input type="select" name="region_id" id="select"
@@ -112,8 +125,19 @@ class EditHospital extends React.Component {
                                         </Col>
                                         <Col xs="12" md="9">
                                             <Input type="text" id="address" name="address" placeholder="Адрес"
-                                                   defaultValue={hospital.address}/>
+                                                   defaultValue={hospital.address} required/>
                                             <FormText color="muted">Введите aдрес</FormText>
+                                        </Col>
+                                    </FormGroup>
+                                    <FormGroup row>
+                                        <Col md="3">
+                                            <Label htmlFor="text-input">Контактное лицо</Label>
+                                        </Col>
+                                        <Col xs="12" md="9">
+                                            <Input type="text" id="head_fio" name="head_fio"
+                                                   placeholder="Контактное лицо"
+                                                   defaultValue={hospital.head_fio} required/>
+                                            <FormText color="muted">Введите контактное лицо</FormText>
                                         </Col>
                                     </FormGroup>
                                     <FormGroup row>
@@ -175,7 +199,7 @@ class EditHospital extends React.Component {
 function mapStateToProps(state) {
     return {
         hospital: state.hospitals.hospital,
-        regions: state.hospitals.regions
+        regions: state.regions.regions
     };
 }
 

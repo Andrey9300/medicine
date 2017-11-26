@@ -34,14 +34,22 @@ class NewHospital extends React.Component {
     handleSubmit(event) {
         event.preventDefault();
         const formElement = document.querySelector('form');
-        const formData = new FormData(formElement);
 
-        axios.post('/hospitals/create', formData)
+        axios.post('/hospitals/store', new FormData(formElement))
             .then(() => {
                 hashHistory.push('hospitals');
             })
             .catch((error) => {
-                const errors = error.response.data.messages;
+                let {errors} = error.response.data;
+
+                if (error.response.status === 403) {
+                    const forbidden = [];
+                    const access = [];
+
+                    access.push('У вас нет прав');
+                    forbidden.access = access;
+                    errors = forbidden;
+                }
 
                 this.setState({
                     errors: errors
@@ -50,8 +58,16 @@ class NewHospital extends React.Component {
     }
 
     createMarkup() {
+        let html = '';
+
+        Object.keys(this.state.errors).forEach((item) => {
+            this.state.errors[item].forEach((value) => {
+                html += `<p>${value}</p>`;
+            });
+        });
+
         return {
-            __html: this.state.errors
+            __html: html
         };
     }
 
@@ -114,11 +130,21 @@ class NewHospital extends React.Component {
                                     </FormGroup>
                                     <FormGroup row>
                                         <Col md="3">
+                                            <Label htmlFor="text-input">Контактное лицо</Label>
+                                        </Col>
+                                        <Col xs="12" md="9">
+                                            <Input type="text" id="head_fio" name="head_fio"
+                                                   placeholder="Контактное лицо" required/>
+                                            <FormText color="muted">Введите контактное лицо</FormText>
+                                        </Col>
+                                    </FormGroup>
+                                    <FormGroup row>
+                                        <Col md="3">
                                             <Label htmlFor="text-input">Расписание</Label>
                                         </Col>
                                         <Col xs="12" md="9">
                                             <Input type="text" id="shedule" name="shedule"
-                                                   placeholder="Расписание" required/>
+                                                   placeholder="Расписание"/>
                                             <FormText color="muted">Введите расписание</FormText>
                                         </Col>
                                     </FormGroup>
@@ -128,7 +154,7 @@ class NewHospital extends React.Component {
                                         </Col>
                                         <Col xs="12" md="9">
                                             <Input type="text" id="photo_map" name="photo_map"
-                                                   placeholder="Фото карты" required/>
+                                                   placeholder="Фото карты"/>
                                             <FormText color="muted">Добавьте фото карты</FormText>
                                         </Col>
                                     </FormGroup>
@@ -138,7 +164,7 @@ class NewHospital extends React.Component {
                                         </Col>
                                         <Col xs="12" md="9">
                                             <Input type="text" id="phone" name="phone"
-                                                   placeholder="Телефон" required/>
+                                                   placeholder="Телефон"/>
                                             <FormText color="muted">Введите телефон</FormText>
                                         </Col>
                                     </FormGroup>

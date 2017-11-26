@@ -2,6 +2,7 @@ import React from 'react';
 import axios from 'axios';
 import {connect} from 'react-redux';
 import {fetchEmployee} from './../../actions/employeeActions';
+import {fetchOrganizations} from './../../actions/organizationActions';
 import {
     Row,
     Col,
@@ -32,9 +33,8 @@ class EditEmployee extends React.Component {
     handleSubmit(event) {
         event.preventDefault();
         const formElement = document.querySelector('form');
-        const formData = new FormData(formElement);
 
-        axios.post(`/employees/update/${this.state.employeeId}`, formData)
+        axios.post(`/employees/update/${this.state.employeeId}`, new FormData(formElement))
             .then(() => {
                 hashHistory.push(`/employees/${this.state.employeeId}`);
             })
@@ -49,12 +49,19 @@ class EditEmployee extends React.Component {
 
     componentWillMount() {
         this.props.dispatch(fetchEmployee(this.state.employeeId));
+        this.props.dispatch(fetchOrganizations());
     }
 
     createMarkup() {
         return {
             __html: this.state.errors
         };
+    }
+
+    componentWillReceiveProps(nextProps) {
+        if (this.props.employee && nextProps.employee && nextProps.employee.fio !== this.props.employee.fio) {
+            window.location.reload();
+        }
     }
 
     render() {
@@ -84,7 +91,7 @@ class EditEmployee extends React.Component {
                                         </Col>
                                         <Col xs="12" md="9">
                                             <Input type="text" id="fio" name="fio"
-                                                   placeholder="ФИО" defaultValue={employee.fio} readOnly/>
+                                                   placeholder="ФИО" defaultValue={employee.fio}/>
                                         </Col>
                                     </FormGroup>
                                     <FormGroup row>
@@ -94,7 +101,7 @@ class EditEmployee extends React.Component {
                                         <Col xs="12" md="9">
                                             <Input type="text" id="date_birthday" name="date_birthday"
                                                    placeholder="Дата рождения"
-                                                   defaultValue={employee.date_birthday} readOnly/>
+                                                   defaultValue={employee.date_birthday}/>
                                         </Col>
                                     </FormGroup>
                                     <FormGroup row>
@@ -121,23 +128,20 @@ class EditEmployee extends React.Component {
                                     </FormGroup>
                                     <FormGroup row>
                                         <Col md="3">
-                                            <Label htmlFor="text-input">Должность</Label>
-                                        </Col>
-                                        <Col xs="12" md="9">
-                                            <Input type="text" id="role" name="role"
-                                                   placeholder="Должность" defaultValue={employee.role}/>
-                                            <FormText color="muted">Введите должность</FormText>
-                                        </Col>
-                                    </FormGroup>
-                                    <FormGroup row>
-                                        <Col md="3">
                                             <Label htmlFor="text-input">Название организации</Label>
                                         </Col>
                                         <Col xs="12" md="9">
-                                            <Input type="text" id="organization_name" name="organization_name"
-                                                   placeholder="Название организации"
-                                                   defaultValue={employee.organization_name}/>
-                                            <FormText color="muted">Введите название организации</FormText>
+                                            <Input type="select" name="organization_name" id="organization_name"
+                                                   defaultValue={employee.organization.name}>
+                                                { this.props.organizations.map((organization) => {
+                                                    return (
+                                                        <option key={organization.id} value={organization.name}>
+                                                            {organization.name}
+                                                        </option>
+                                                    );
+                                                })
+                                                }
+                                            </Input>
                                         </Col>
                                     </FormGroup>
                                 </CardBlock>
@@ -168,7 +172,8 @@ class EditEmployee extends React.Component {
  */
 function mapStateToProps(state) {
     return {
-        employee: state.employees.employee
+        employee: state.employees.employee,
+        organizations: state.organizations.organizations
     };
 }
 

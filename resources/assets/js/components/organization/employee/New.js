@@ -30,24 +30,29 @@ class NewOrganizationEmployee extends React.Component {
     handleSubmit(event) {
         event.preventDefault();
         const formElement = document.querySelector('form');
-        const formData = new FormData(formElement);
 
-        axios.post(`/organizations/employees/create/${this.state.organizationId}`, formData)
+        axios.post(`/organizations/employees/store/${this.state.organizationId}`, new FormData(formElement))
             .then(() => {
                 hashHistory.push(`organizations/employees/${this.state.organizationId}`);
             })
-            .catch((error) => {
-                const errors = error.response.data.messages;
-
+            .catch((errors) => {
                 this.setState({
-                    errors: errors
+                    errors: errors.response.data.errors
                 });
             });
     }
 
     createMarkup() {
+        let html = '';
+
+        Object.keys(this.state.errors).forEach((item) => {
+            this.state.errors[item].forEach((value) => {
+                html += `<p>${value}</p>`;
+            });
+        });
+
         return {
-            __html: this.state.errors
+            __html: html
         };
     }
 
@@ -62,6 +67,7 @@ class NewOrganizationEmployee extends React.Component {
 
         return (
             <div>
+                {errors}
                 <Row>
                     <Col xs="12" md="6">
                         <Card>
@@ -120,12 +126,6 @@ class NewOrganizationEmployee extends React.Component {
                         </Card>
                     </Col>
                 </Row>
-
-
-                <div className="col-lg-8">
-                    {errors}
-
-                </div>
             </div>
         );
     }
@@ -139,7 +139,7 @@ class NewOrganizationEmployee extends React.Component {
  */
 function mapStateToProps(state) {
     return {
-        // organizationEmployees: state.organizations.organizationEmployees
+        organizationEmployees: state.organizations.organizationEmployees
     };
 }
 

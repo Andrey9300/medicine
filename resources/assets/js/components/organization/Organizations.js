@@ -24,7 +24,8 @@ class Organizations extends React.Component {
                     <Col xs="12" lg="12">
                         <Card>
                             <CardHeader>
-                                <i className="fa fa-building-o" aria-hidden="true"/>Организации
+                                <i className="fa fa-building-o" aria-hidden="true"/>Объекты
+                                ({this.props.organizations.length})
                                 <Link to="organizations/create" className="btn btn-primary btn-sm pull-right">
                                     Добавить <i className="icon-plus"/>
                                 </Link>
@@ -50,7 +51,7 @@ class Organizations extends React.Component {
                                                         {organization.name}
                                                     </Link>
                                                 </td>
-                                                <td>{organization.legal_entity}</td>
+                                                <td>{organization.legal_entity.name}</td>
                                                 <td>{organization.head_fio}</td>
                                                 <td>{organization.head_email}</td>
                                                 <td>

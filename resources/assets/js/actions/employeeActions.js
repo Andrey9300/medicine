@@ -2,7 +2,8 @@ import axios from 'axios';
 import {hashHistory} from 'react-router';
 
 /**
- * Fetch
+ * Список сотрудников
+ *
  * @returns {function(*)}
  */
 export function fetchEmployees() {
@@ -25,7 +26,8 @@ export function fetchEmployees() {
 }
 
 /**
- * Fetch
+ * Получить сотрудника
+ *
  * @param id
  * @returns {function(*)}
  */
@@ -48,16 +50,21 @@ export function fetchEmployee(id) {
 }
 
 /**
- * Delete
+ * Уволить сотрудника
+ *
  * @param id number
  * @param organizationId number
  * @returns {Function}
  */
 export function deleteEmployee(id, organizationId) {
     return () => {
-        axios.post(`/employees/destroy/${id}`)
+        axios.post(`/employees/softDelete/${id}`)
             .then(() => {
-                hashHistory.push(`/organizations/${organizationId}`);
+                if (organizationId) {
+                    hashHistory.push(`/organizations/${organizationId}`);
+                } else {
+                    window.location.reload();
+                }
             })
             .catch((error) => {
                 return error;
@@ -66,7 +73,26 @@ export function deleteEmployee(id, organizationId) {
 }
 
 /**
- * Исследования сотрудников учреждений
+ * Удалить сотрудника
+ *
+ * @param id number
+ * @param organizationId number
+ * @returns {Function}
+ */
+export function forceDeleteEmployee(id) {
+    return () => {
+        axios.post(`/employees/forceDelete/${id}`)
+            .then(() => {
+                window.location.reload();
+            })
+            .catch((error) => {
+                return error;
+            });
+    };
+}
+
+/**
+ * TODO Исследования сотрудников учреждений
  */
 
 /**

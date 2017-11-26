@@ -37,7 +37,7 @@ class NewEmployeeResearch extends React.Component {
         const formElement = document.querySelector('form');
         const formData = new FormData(formElement);
 
-        axios.post(`/employees/researches/create/${this.props.params.idEmployee}`, formData)
+        axios.post(`/employees/researches/store/${this.props.params.idEmployee}`, formData)
             .then(() => {
                 this.context.router.push(`/employees/${this.props.params.idEmployee}`);
             })

@@ -37,7 +37,7 @@ class NewHospitalResearch extends React.Component {
         const formElement = document.querySelector('form');
         const formData = new FormData(formElement);
 
-        axios.post(`/hospitals/researches/create/${this.props.params.idHospital}`, formData)
+        axios.post(`/hospitals/researches/store/${this.props.params.idHospital}`, formData)
             .then(() => {
                 this.context.router.push('/hospitals');
             })

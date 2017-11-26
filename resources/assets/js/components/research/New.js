@@ -15,6 +15,9 @@ import {
     Input
 } from 'reactstrap';
 import PropTypes from 'prop-types';
+import {fetchPeriods} from '../../actions/researchPeriodActions';
+import {connect} from 'react-redux';
+import {hashHistory} from 'react-router';
 
 class NewResearch extends React.Component {
     constructor() {
@@ -25,27 +28,37 @@ class NewResearch extends React.Component {
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
+    componentWillMount() {
+        this.props.dispatch(fetchPeriods());
+    }
+
     handleSubmit(event) {
         event.preventDefault();
         const formElement = document.querySelector('form');
         const formData = new FormData(formElement);
 
-        axios.post('/researches/create', formData)
+        axios.post('/researches/store', formData)
             .then(() => {
-                this.context.router.push('/researches');
+                hashHistory.push('researches');
             })
-            .catch((error) => {
-                const errors = error.response.data.message;
-
+            .catch((errors) => {
                 this.setState({
-                    errors: errors
+                    errors: errors.response.data.errors
                 });
             });
     }
 
     createMarkup() {
+        let html = '';
+
+        Object.keys(this.state.errors).forEach((item) => {
+            this.state.errors[item].forEach((value) => {
+                html += `<p>${value}</p>`;
+            });
+        });
+
         return {
-            __html: this.state.errors
+            __html: html
         };
     }
 
@@ -83,16 +96,15 @@ class NewResearch extends React.Component {
                                             <Label htmlFor="select">Периодичность</Label>
                                         </Col>
                                         <Col xs="12" md="9">
-                                            <Input type="select" name="period" id="select">
-                                                <option value="-1">
-                                                    При поступлении на работу.
-                                                    При смене юридического лица
-                                                </option>
-                                                <option value="1">Раз в жизни</option>
-                                                <option value="365">Раз в год</option>
-                                                <option value="730">Раз в два года</option>
-                                                <option value="1827">Раз в 5 лет</option>
-                                                <option value="3653">Раз в 10 лет</option>
+                                            <Input type="select" name="period_id" id="period_id">
+                                                { this.props.researchPeriods.map((period) => {
+                                                    return (
+                                                        <option key={period.id} value={period.id}>
+                                                            {period.name}
+                                                        </option>
+                                                    );
+                                                })
+                                                }
                                             </Input>
                                             <FormText color="muted">Выберите периодичность</FormText>
                                         </Col>
@@ -116,4 +128,10 @@ NewResearch.propTypes = {
     router: PropTypes.object.isRequired
 };
 
-export default NewResearch;
+function mapStateToProps(state) {
+    return {
+        researchPeriods: state.researchPeriods.researchPeriods
+    };
+}
+
+export default connect(mapStateToProps)(NewResearch);

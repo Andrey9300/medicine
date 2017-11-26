@@ -18,6 +18,7 @@ import {
     Input
 } from 'reactstrap';
 import {hashHistory} from 'react-router';
+import {fetchLegalEntities} from '../../actions/legalEntityActions';
 
 class NewOrganization extends React.Component {
     constructor() {
@@ -29,6 +30,7 @@ class NewOrganization extends React.Component {
     }
 
     componentWillMount() {
+        this.props.dispatch(fetchLegalEntities());
         this.props.dispatch(fetchRegions());
         this.props.dispatch(fetchCategories());
     }
@@ -36,16 +38,22 @@ class NewOrganization extends React.Component {
     handleSubmit(event) {
         event.preventDefault();
         const formElement = document.querySelector('form');
-        const formData = new FormData(formElement);
 
-        axios.post('/organizations/create', formData)
-            .then((response) => {
-                if (response.status === 200) {
-                    hashHistory.push('organizations');
-                }
+        axios.post('/organizations/store', new FormData(formElement))
+            .then(() => {
+                hashHistory.push('organizations');
             })
-            .catch((response) => {
-                const errors = 'Проверьте ';
+            .catch((error) => {
+                let {errors} = error.response.data;
+
+                if (error.response.status === 403) {
+                    const forbidden = [];
+                    const access = [];
+
+                    access.push('У вас нет прав');
+                    forbidden.access = access;
+                    errors = forbidden;
+                }
 
                 this.setState({
                     errors: errors
@@ -54,8 +62,16 @@ class NewOrganization extends React.Component {
     }
 
     createMarkup() {
+        let html = '';
+
+        Object.keys(this.state.errors).forEach((item) => {
+            this.state.errors[item].forEach((value) => {
+                html += `<p>${value}</p>`;
+            });
+        });
+
         return {
-            __html: this.state.errors
+            __html: html
         };
     }
 
@@ -112,7 +128,7 @@ class NewOrganization extends React.Component {
                                         </Col>
                                         <Col xs="12" md="9">
                                             <Input type="text" id="address" name="address"
-                                                   placeholder="Адрес" required/>
+                                                   placeholder="Адрес"/>
                                             <FormText color="muted">Введите aдрес</FormText>
                                         </Col>
                                     </FormGroup>
@@ -121,9 +137,16 @@ class NewOrganization extends React.Component {
                                             <Label htmlFor="text-input">Юридическое лицо</Label>
                                         </Col>
                                         <Col xs="12" md="9">
-                                            <Input type="text" id="legal_entity" name="legal_entity"
-                                                   placeholder="Юридическое лицо" required/>
-                                            <FormText color="muted">Введите юридическое лицо</FormText>
+                                            <Input type="select" name="legal_entity_id" id="legal_entity_id">
+                                                { this.props.legalEntities.map((legalEntity) => {
+                                                    return (
+                                                        <option key={legalEntity.id} value={legalEntity.id}>
+                                                            {legalEntity.name}
+                                                        </option>
+                                                    );
+                                                })
+                                                }
+                                            </Input>
                                         </Col>
                                     </FormGroup>
                                     <FormGroup row>
@@ -144,7 +167,7 @@ class NewOrganization extends React.Component {
                                         </Col>
                                         <Col xs="12" md="9">
                                             <Input type="text" id="phone" name="phone"
-                                                   placeholder="Телефон" required/>
+                                                   placeholder="Телефон"/>
                                             <FormText color="muted">Введите телефон</FormText>
                                         </Col>
                                     </FormGroup>
@@ -184,6 +207,7 @@ function mapStateToProps(state) {
     return {
         regions: state.regions.regions,
         categories: state.categories.categories,
+        legalEntities: state.legalEntities.legalEntities,
         users: state.users.user
     };
 }

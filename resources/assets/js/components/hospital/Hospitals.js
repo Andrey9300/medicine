@@ -34,6 +34,7 @@ class Hospitals extends React.Component {
                         <Card>
                             <CardHeader>
                                 <i className="fa fa-stethoscope" aria-hidden="true"/>Медицинские организации
+                                ({this.props.hospitals.length})
                                 <Link to="hospitals/create" className="btn btn-primary btn-sm pull-right">
                                     Добавить <i className="icon-plus"/>
                                 </Link>

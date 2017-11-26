@@ -15,6 +15,9 @@ import {
     Input
 } from 'reactstrap';
 import PropTypes from 'prop-types';
+import {fetchOrganizations} from './../../actions/organizationActions';
+import {connect} from 'react-redux';
+import {hashHistory} from 'react-router';
 
 class NewEmployee extends React.Component {
     constructor() {
@@ -25,27 +28,36 @@ class NewEmployee extends React.Component {
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
+    componentWillMount() {
+        this.props.dispatch(fetchOrganizations());
+    }
+
     handleSubmit(event) {
         event.preventDefault();
         const formElement = document.querySelector('form');
-        const formData = new FormData(formElement);
 
-        axios.post('/employees/create', formData)
+        axios.post('/employees/store', new FormData(formElement))
             .then(() => {
-                this.context.router.push('/employees');
+                hashHistory.push('/employees');
             })
             .catch((error) => {
-                const errors = error.response.data.messages;
-
                 this.setState({
-                    errors: errors
+                    errors: error.response.data.errors
                 });
             });
     }
 
     createMarkup() {
+        let html = '';
+
+        Object.keys(this.state.errors).forEach((item) => {
+            this.state.errors[item].forEach((value) => {
+                html += `<p>${value}</p>`;
+            });
+        });
+
         return {
-            __html: this.state.errors
+            __html: html
         };
     }
 
@@ -60,6 +72,7 @@ class NewEmployee extends React.Component {
 
         return (
             <div>
+                {errors}
                 <Row>
                     <Col xs="12" md="6">
                         <Card>
@@ -83,9 +96,12 @@ class NewEmployee extends React.Component {
                                             <Label htmlFor="text-input">Дата рождения</Label>
                                         </Col>
                                         <Col xs="12" md="9">
-                                            <Input type="text" id="date_birthday" name="date_birthday"
-                                                   placeholder="Дата рождения" required/>
-                                            <FormText color="muted">Введите дату рождения</FormText>
+                                            <Input type="date" id="date_birthday" name="date_birthday"
+                                                   placeholder="Дата рождения"
+                                                   required/>
+                                            <FormText color="muted">
+                                                Введите дату рождения в формате дд.мм.гггг
+                                            </FormText>
                                         </Col>
                                     </FormGroup>
                                     <FormGroup row>
@@ -93,7 +109,7 @@ class NewEmployee extends React.Component {
                                             <Label htmlFor="text-input">Дата приема на работу</Label>
                                         </Col>
                                         <Col xs="12" md="9">
-                                            <Input type="text" id="date_employment" name="date_employment"
+                                            <Input type="date" id="date_employment" name="date_employment"
                                                    placeholder="Дата приема на работу" required/>
                                             <FormText color="muted">Введите дату приема на работу</FormText>
                                         </Col>
@@ -113,13 +129,16 @@ class NewEmployee extends React.Component {
                                             <Label htmlFor="text-input">Название организации</Label>
                                         </Col>
                                         <Col xs="12" md="9">
-                                            <Input type="text"
-                                                   id="organization_name"
-                                                   name="organization_name"
-                                                   placeholder="Название организации"
-                                                   required
-                                            />
-                                            <FormText color="muted">Введите название организации</FormText>
+                                            <Input type="select" name="organization_name" id="organization_name">
+                                                { this.props.organizations.map((organization) => {
+                                                    return (
+                                                        <option key={organization.id} value={organization.name}>
+                                                            {organization.name}
+                                                        </option>
+                                                    );
+                                                })
+                                                }
+                                            </Input>
                                         </Col>
                                     </FormGroup>
                                 </CardBlock>
@@ -132,12 +151,6 @@ class NewEmployee extends React.Component {
                         </Card>
                     </Col>
                 </Row>
-
-
-                <div className="col-lg-8">
-                    {errors}
-
-                </div>
             </div>
         );
     }
@@ -147,4 +160,10 @@ NewEmployee.propTypes = {
     router: PropTypes.object.isRequired
 };
 
-export default NewEmployee;
+function mapStateToProps(state) {
+    return {
+        organizations: state.organizations.organizations
+    };
+}
+
+export default connect(mapStateToProps)(NewEmployee);

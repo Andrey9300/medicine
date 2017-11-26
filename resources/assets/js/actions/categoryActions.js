@@ -1,6 +1,7 @@
 import axios from 'axios';
 
 /**
+ * Список категорий
  *
  * @returns {function(*)}
  */

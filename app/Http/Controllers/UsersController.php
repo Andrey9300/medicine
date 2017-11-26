@@ -11,12 +11,12 @@ use Illuminate\Http\Request;
 class UsersController extends Controller
 {
     /**
-     * Создать сотрудника
+     * Создать пользователя
      *
      * @param  \Illuminate\Http\Request $request
      * @return void
      */
-    public function create(Request $request)
+    public function store(Request $request)
     {
         $user = new User;
         $user->fio = $request->fio;
@@ -31,11 +31,11 @@ class UsersController extends Controller
     }
 
     /**
-     * Вывести организации
+     * Вывести пользователей
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function store()
+    public function showAll()
     {
         return response()->json([
             'users' => User::all()
@@ -43,7 +43,7 @@ class UsersController extends Controller
     }
 
     /**
-     * Отдать данные сотрудника
+     * Получить данные пользователя
      *
      * @param int $id
      * @return \Illuminate\Http\JsonResponse
@@ -69,7 +69,7 @@ class UsersController extends Controller
     }
 
     /**
-     * Обновить сотрудника
+     * Обновить пользователя
      *
      * @param int $id
      * @param  \Illuminate\Http\Request  $request
@@ -90,7 +90,7 @@ class UsersController extends Controller
     }
 
     /**
-     * Удалить сотрудника
+     * Удалить пользователя
      *
      * @param int $id
      * @return void
@@ -98,39 +98,5 @@ class UsersController extends Controller
     public function destroy($id)
     {
         User::destroy($id);
-    }
-
-    /**
-     * Исследования сотрудников
-     */
-
-    public function createResearch(Request $request, $id_user){
-        $user = User::find($id_user);
-        $user->researches()->attach($request->name, ['date' => $request->date]);
-    }
-
-    public function editResearch($id_user, $id_research){
-        $user = User::find($id_user);
-
-        return response()->json([
-            'user_research' => $user->researches->find($id_research)
-        ]);
-    }
-
-    public function destroyResearch($id_user, $id_research){
-        $user = User::find($id_user);
-        $user->researches()->detach($id_research);
-    }
-
-    public function updateResearch(Request $request, $id_user, $id_research){
-        User::find($id_user)->researches()->updateExistingPivot($id_research, ['date' => $request['date']]);
-    }
-
-    public function storeResearches($id){
-        $user = User::find($id);
-
-        return response()->json([
-            'user_researches' => $user->researches
-        ]);
     }
 }

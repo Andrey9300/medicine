@@ -21,13 +21,23 @@ class Sidebar extends Component {
                             </IndexLink>
                         </li>
                         <li>
-                            <Link to="hospitals" className="nav-link">
-                                <i className="fa fa-stethoscope" aria-hidden="true"/>Медицинские учреждения
+                            <Link to="legalEntities" className="nav-link">
+                                <i className="fa fa-briefcase" aria-hidden="true"/>Организации (юридические лица)
                             </Link>
                         </li>
                         <li>
                             <Link to="organizations" className="nav-link">
-                                <i className="fa fa-building-o" aria-hidden="true"/>Организации
+                                <i className="fa fa-building-o" aria-hidden="true"/>Объекты организаций
+                            </Link>
+                        </li>
+                        <li>
+                            <Link to="employees" className="nav-link">
+                                <i className="fa fa-users" aria-hidden="true"/>Сотрудники организаций
+                            </Link>
+                        </li>
+                        <li>
+                            <Link to="hospitals" className="nav-link">
+                                <i className="fa fa-stethoscope" aria-hidden="true"/>Медицинские центры
                             </Link>
                         </li>
                         <li>
@@ -36,12 +46,17 @@ class Sidebar extends Component {
                             </Link>
                         </li>
                         <li>
-                            <Link to="employees" className="nav-link">
-                                <i className="fa fa-users" aria-hidden="true"/>Сотрудники
+                            <Link to="#" className="nav-link">
+                                <i className="fa fa-bar-chart" aria-hidden="true"/>Отчеты
                             </Link>
                         </li>
                         <li>
-                            <Link to="#" onClick={this.logout.bind(this)} className="nav-link">
+                            <Link to="#" className="nav-link">
+                                <i className="fa fa-handshake-o" aria-hidden="true"/>Партнеры
+                            </Link>
+                        </li>
+                        <li>
+                            <Link to="/" onClick={this.logout.bind(this)} className="nav-link">
                                 <i className="fa fa-lock" aria-hidden="true"/>Выход
                             </Link>
                         </li>

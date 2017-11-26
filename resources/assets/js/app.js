@@ -5,6 +5,13 @@ import {IndexRoute, Route, Router, hashHistory} from 'react-router';
 
 import Login from './components/includes/Login';
 import Registration from './components/includes/Registration';
+import RestorePassword from './components/includes/RestorePassword';
+import ResetPassword from './components/includes/ResetPassword';
+
+import EditLegalEntity from './components/legalEntity/Edit';
+import LegalEntity from './components/legalEntity/LegalEntity';
+import LegalEntities from './components/legalEntity/LegalEntities';
+import NewLegalEntity from './components/legalEntity/New';
 
 import EditHospital from './components/hospital/Edit';
 import Hospital from './components/hospital/Hospital';
@@ -22,9 +29,9 @@ import NewOrganization from './components/organization/New';
 import OrganizationEmployees from './components/organization/OrganizationEmployees';
 import NewOrganizationEmployee from './components/organization/employee/New';
 
-import EditResearch from './components/research/EditResearch';
+import EditResearch from './components/research/Edit';
 import Researches from './components/research/Researches';
-import NewResearch from './components/research/NewResearch';
+import NewResearch from './components/research/New';
 
 import EditEmployee from './components/employee/Edit';
 import PrintEmployee from './components/employee/PrintResearch';
@@ -47,6 +54,13 @@ ReactDOM.render(
                 <IndexRoute component = { Organizations }/>
                 <Route path = "login" component = { Login }/>
                 <Route path = "registration" component = { Registration }/>
+                <Route path = "restorePassword" component = { RestorePassword }/>
+                <Route path = "resetPassword" component = { ResetPassword }/>
+
+                <Route path = "legalEntities" component={LegalEntities}/>
+                <Route path = "legalEntities/create" component = { NewLegalEntity }/>
+                <Route path = "legalEntities/:id" component = { LegalEntity }/>
+                <Route path = "legalEntities/edit/:id" component = { EditLegalEntity }/>
 
                 <Route path = "hospitals" component={Hospitals}/>
                 <Route path = "hospitals/create" component = { NewHospital }/>

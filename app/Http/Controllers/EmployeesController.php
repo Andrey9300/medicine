@@ -5,9 +5,11 @@ namespace App\Http\Controllers;
 use App\Http\Models\Organization;
 use App\Http\Models\Research;
 use App\Http\Models\Employee;
+use App\Http\Requests\StoreEmployee;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class EmployeesController extends Controller
 {
@@ -17,15 +19,15 @@ class EmployeesController extends Controller
      * @param  \Illuminate\Http\Request $request
      * @return void
      */
-    public function create(Request $request)
+    public function store(StoreEmployee $request)
     {
+        $userAdmin = Auth::user(); // только админ
         $employee = new Employee;
         $employee->fio = $request->fio;
         $employee->date_birthday = $request->date_birthday;
         $employee->date_employment = $request->date_employment;
-        $employee->date_inactive = $request->date_inactive;
         $employee->medical_book = $request->medical_book;
-        $employee->active = $request->active;
+        $employee->user_id = $userAdmin->id;
         $employee->organization_name = $request->organization_name;
         $employee->save();
     }
@@ -35,7 +37,7 @@ class EmployeesController extends Controller
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function store()
+    public function showAll()
     {
         $user = Auth::user();
         $organizations_name = [];
@@ -43,24 +45,35 @@ class EmployeesController extends Controller
             array_push($organizations_name, $organization->name);
         }
 
-        $employees = Employee::whereIn('organization_name', $organizations_name)->get();
+        $employees = Employee::whereIn('organization_name', $organizations_name)
+            ->get();
+        $deleted = Employee::whereIn('organization_name', $organizations_name)
+            ->onlyTrashed()
+            ->get();
+        $withoutOrganization = DB::table('employees')
+            ->where('user_id', '=', $user->id)
+            ->whereNull('organization_name')
+            ->get();
 
         return response()->json([
-            'employees' => $employees
+            'employees' => $employees,
+            'deleted' => $deleted,
+            'withoutOrganization' => $withoutOrganization
         ]);
     }
 
     /**
-     * данные сотрудника
+     * Получить данные сотрудника
      *
      * @param int $id
      * @return \Illuminate\Http\JsonResponse
      */
     public function show($id)
     {
-        $employee = Employee::find($id);
+        $employee = Employee::withTrashed()->where('id', $id)->first();
         $employee->organization;
-        $this->authorize('owner', $employee->organization);
+
+        //$this->authorize('owner', $employee->organization);
         /*$employee->organization;
         $employee = OrganizationController::checkMedicalResearch($employee);
 
@@ -91,22 +104,42 @@ class EmployeesController extends Controller
         //$employee->fio = $request->fio;
         //$employee->date_birthday = $request->date_birthday;
         $employee->date_employment = $request->date_employment;
-        $employee->date_inactive = $request->date_inactive;
         $employee->medical_book = $request->medical_book;
         $employee->organization_name = $request->organization_name;
         $employee->save();
     }
 
     /**
-     * Удалить сотрудника
+     * Мягкое удаление сотрудника
      *
      * @param int $id
      * @return void
      */
-    public function destroy($id)
+    public function softDelete($id)
     {
-        Employee::destroy($id);
+        // TODO проверку прав
+        $employee = Employee::find($id);
+        $employee->delete();
     }
+
+    /**
+     * Полное удаление сотрудника
+     *
+     * @param int $id
+     * @return void
+     */
+    public function forceDelete($id)
+    {
+        $employee = Employee::onlyTrashed()
+            ->where('id', $id)
+            ->first();
+        $this->authorize('isAdminAndOwner', $employee);
+        $employee->forceDelete();
+    }
+
+
+
+
 
     /**
      * Исследования сотрудников

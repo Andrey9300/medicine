@@ -2,7 +2,8 @@ import axios from 'axios';
 import {hashHistory} from 'react-router';
 
 /**
- * Fetch
+ * Получить все организации начальника качества
+ *
  * @returns {function(*)}
  */
 export function fetchOrganizations() {
@@ -26,7 +27,8 @@ export function fetchOrganizations() {
 }
 
 /**
- * Fetch
+ * Получить организацию
+ *
  * @param id
  * @returns {function(*)}
  */
@@ -49,7 +51,8 @@ export function fetchOrganization(id) {
 }
 
 /**
- * Delete
+ * Удалить организацию
+ *
  * @param id number
  * @returns {Function}
  */
@@ -71,6 +74,7 @@ export function deleteOrganization(id) {
  */
 
 /**
+ * Сотрудники организации
  *
  * @param idOrganization - id организации
  * @returns {function(*)}
@@ -94,7 +98,8 @@ export function fetchOrganizationEmployees(idOrganization) {
 }
 
 /**
- * Delete
+ * TODO Удалить сотрудника из организации
+ *
  * @param idOrganization number
  * @param idEmployee number
  * @returns {Function}

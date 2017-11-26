@@ -39,7 +39,9 @@ class OrganizationEmployee extends React.Component {
                         <Card>
                             <CardHeader>
                                 <i className="fa fa-align-justify"/>Сотрудники
-                                <Link to={`organizations/employees/create/${this.state.organizationId}`} className="btn btn-primary btn-sm pull-right">
+                                ({this.props.organizationEmployees.length})
+                                <Link to={`organizations/employees/create/${this.state.organizationId}`}
+                                      className="btn btn-primary btn-sm pull-right">
                                     Добавить <i className="icon-plus"/>
                                 </Link>
                             </CardHeader>
@@ -50,7 +52,7 @@ class OrganizationEmployee extends React.Component {
                                         <th>ФИО</th>
                                         {/*<th>Исследования</th>*/}
                                         <th>Редактировать</th>
-                                        <th>Удалить</th>
+                                        {/*<th>Удалить</th>*/}
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -74,7 +76,7 @@ class OrganizationEmployee extends React.Component {
                                                         <i className="glyphicon glyphicon-pencil"/>
                                                     </Link>
                                                 </td>
-                                                <td>
+                                                {/*<td>
                                                     <form id={`form_${employee.id}`} className="pull-left" method="post">
                                                         <input type="hidden" name="employee_id" value={employee.id} />
                                                         <a className="btn btn-danger btn-xs"
@@ -83,7 +85,7 @@ class OrganizationEmployee extends React.Component {
                                                             <i className="glyphicon glyphicon-trash"/>
                                                         </a>
                                                     </form>
-                                                </td>
+                                                </td>*/}
                                             </tr>
                                         );
                                     })

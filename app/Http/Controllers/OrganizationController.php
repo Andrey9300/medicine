@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Http\Models\Employee;
 use App\Http\Models\Research;
+use App\Http\Requests\StoreEmployee;
+use App\Http\Requests\StoreOrganization;
+use App\Http\Requests\UpdateOrganization;
 use App\Notifications\SendPassword;
 use App\Notifications\YouHead;
 use App\User;
@@ -108,64 +111,82 @@ class OrganizationController extends Controller
      *
      * @return \Illuminate\Contracts\Routing\ResponseFactory|\Symfony\Component\HttpFoundation\Response
      */
-    public function create(Request $request)
+    public function store(StoreOrganization $request)
     {
-        $this->authorize('create', Organization::class);
-
         $organization = new Organization;
         $organization->name = $request->name;
         $organization->address = $request->address;
-        $organization->legal_entity = $request->legal_entity;
+        $organization->legal_entity_id = $request->legal_entity_id;
         $organization->region_id = $request->region_id;
         $organization->category_id = $request->category_id;
         $organization->phone = $request->phone;
 
         // привязка руководителя к организации: по умолчанию текущий user,
         // иначе создаем user с role = head или ищем в системе
-        if ($request->head_email) {
-            if (User::where('email', $request->head_email)->exists()) {
-                $user = User::where('email', $request->head_email)->first();
-                $organization->head_email = $user->email;
-                $organization->save();
-                $user->organizations()->attach($organization);
-                $user->notify(new YouHead($organization->name));
-            } else {
-                $passwordNewUser = str_random(8);
-                $newUser = User::create([
-                    'email' => $request->head_email,
-                    'password' => bcrypt($passwordNewUser),
-                    'role' => 'head'
-                ]);
-                $organization->head_email = $newUser->email;
-                $organization->save();
-                $newUser->organizations()->attach($organization);
-                $newUser->notify(new SendPassword($newUser->email, $passwordNewUser, $organization->name));
-            }
-
-            $user = Auth::user();
+        if (User::where('email', $request->head_email)->exists()) {
+            $user = User::where('email', $request->head_email)->first();
+            $organization->head_email = $user->email;
+            $organization->save();
             $user->organizations()->attach($organization);
-            return response('Ок', 200);
+            $user->notify(new YouHead($organization->name));
+
+            $userAdmin = Auth::user();
+            if ($userAdmin->email != $user->email) {
+                $userAdmin->organizations()->attach($organization);
+            }
         } else {
-            return response('Ошибка создания организации, попробуйте еще раз', 400);
+            $passwordNewUser = str_random(8);
+            $newUser = User::create([
+                'email' => $request->head_email,
+                'password' => bcrypt($passwordNewUser),
+                'role' => 'head'
+            ]);
+            $organization->head_email = $newUser->email;
+            $organization->save();
+            $newUser->organizations()->attach($organization);
+            $newUser->notify(new SendPassword($newUser->email, $passwordNewUser, $organization->name));
+            $userAdmin = Auth::user();
+            $userAdmin->organizations()->attach($organization);
         }
+
+        return response('Ок', 200);
     }
 
     /**
-     * Вывести организации
+     * Вывести организации начальника качества
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function store(Organization $organization)
+    public function showAll()
     {
         $user = Auth::user();
+        $organizations = $user->organizations;
+        foreach ($organizations as $organization) {
+            // устанавливаем фио руководителя
+            // если есть head берём его, если нет, то админа
+            foreach ($organization->users as $user) {
+                if ($user->role === 'head'){
+                    $organization->head_fio = $user->fio;
+                    $organization->head_email = $user->email;
+                    $head_exist = true;
+                }
+            }
+
+            if (!$head_exist) {
+                $organization->head_fio = $organization->users[0]->fio;
+                $organization->head_email = $organization->users[0]->email;
+            }
+
+            $organization->legal_entity;
+        }
 
         return response()->json([
-            'organizations' => $user->organizations
+            'organizations' => $organizations
         ]);
     }
 
     /**
-     * Отдать данные организации
+     * Получить данные организации
      *
      * @param int $id
      * @return \Illuminate\Http\JsonResponse
@@ -177,7 +198,23 @@ class OrganizationController extends Controller
         $organization->region;
         $organization->category;
         $organization->employees;
-        $organization->head_fio = Auth::user()->fio;
+        $organization->legal_entity;
+        $head_exist = false;
+
+        // устанавливаем фио руководителя
+        // если есть head берём его, если нет, то админа
+        foreach ($organization->users as $user) {
+            if ($user->role === 'head'){
+                $organization->head_fio = $user->fio;
+                $organization->head_email = $user->email;
+                $head_exist = true;
+            }
+        }
+
+        if (!$head_exist) {
+            $organization->head_fio = $organization->users[0]->fio;
+            $organization->head_email = $organization->users[0]->email;
+        }
 
         return response()->json([
             'organization' => $organization
@@ -192,34 +229,43 @@ class OrganizationController extends Controller
      *
      * @return \Illuminate\Contracts\Routing\ResponseFactory|\Symfony\Component\HttpFoundation\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdateOrganization $request, $id)
     {
         $organization_new = $request->all();
         $organization = Organization::find($id);
-        $this->authorize('owner', $organization);
         $organization->name = $organization_new['name'];
         $organization->address = $organization_new['address'];
-        $organization->legal_entity = $organization_new['legal_entity'];
+        $organization->legal_entity_id = $organization_new['legal_entity_id'];
         $organization->phone = $organization_new['phone'];
 
+        // админов может быть несколько
+        // руководитель 1|0
         if ($organization->head_email !== $organization_new['head_email']) {
+            $oldUser = User::where('email', $organization->head_email)->first();
+            if ($oldUser->role !== 'admin' && $organization->users->contains($oldUser)) {
+                $oldUser->organizations()->detach($organization);
+            }
+
             if (User::where('email', $organization_new['head_email'])->exists()) {
-                $user = User::where('email', $request->head_email)->first();
-                $user->organizations()->attach($organization);
-                $user->notify(new YouHead($organization->name));
+                $user = User::where('email', $organization_new['head_email'])->first();
+                if (!$organization->users->contains($user)) { // если руководителем снова стал admin
+                    $user->organizations()->attach($organization);
+                    $user->notify(new YouHead($organization->name));
+                }
             } else {
                 $passwordNewUser = str_random(8);
                 $newUser = User::create([
-                    'email' => $request->head_email,
+                    'email' => $organization_new['head_email'],
                     'password' => bcrypt($passwordNewUser),
                     'role' => 'head'
                 ]);
                 $newUser->organizations()->attach($organization);
                 $newUser->notify(new SendPassword($newUser->email, $passwordNewUser, $organization->name));
             }
+
+            $organization->head_email = $organization_new['head_email'];
         }
 
-        $organization->head_email = $organization_new['head_email'];
         $organization->save();
 
         return response('Ок', 200);
@@ -234,32 +280,38 @@ class OrganizationController extends Controller
     public function destroy($id)
     {
         $organization = Organization::find($id);
-        $this->authorize('owner', $organization);
+        $this->authorize('isAdminAndOwner', $organization);
+        foreach ($organization->employees()->withTrashed()->get() as $employee) {
+            $employee->organization_name = null;
+            $employee->save();
+            $employee->delete();
+        }
+
         $organization->destroy($id);
     }
 
     /**
      * Сотрудники объекта
      */
+
     /**
      * Создать сотрудника организации
      *
      * @param  \Illuminate\Http\Request $request
      * @return void
      */
-    public function createEmployee(Request $request, $organization_id)
+    public function storeEmployee(StoreEmployee $request, $organization_id)
     {
         $organization = Organization::find($organization_id);
-        $this->authorize('create', $organization);
+        //$this->authorize('owner', $organization);
+        $userAdmin = $organization->users->where('role', '=', 'admin')->first();
         $employee = new Employee;
         $employee->fio = $request->fio;
         $employee->date_birthday = $request->date_birthday;
         $employee->date_employment = $request->date_employment;
-        $employee->date_inactive = $request->date_inactive;
         $employee->medical_book = $request->medical_book;
-        $employee->active = $request->active;
+        $employee->user_id = $userAdmin->id;
         $employee->organization_name = $organization->name;
-        $employee->active = true;
         $employee->save();
     }
 
@@ -269,7 +321,7 @@ class OrganizationController extends Controller
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function storeEmployees($id){
+    public function showAllEmployees($id){
         $organization = Organization::find($id);
         $this->authorize('owner', $organization);
         $employees = [];

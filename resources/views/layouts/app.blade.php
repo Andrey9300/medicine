@@ -10,6 +10,11 @@
 
     <link rel="shortcut icon" href="/favicon.png">
     <link href="{{ asset('css/style.css') }}" rel="stylesheet">
+    <script>
+        window.Laravel = {!! json_encode([
+        'csrfToken' => csrf_token(),
+    ]) !!};
+    </script>
 </head>
     <body class="app header-fixed sidebar-fixed aside-menu-fixed aside-menu-hidden">
         <div id="app"></div>

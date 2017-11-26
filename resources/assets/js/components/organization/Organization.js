@@ -60,7 +60,7 @@ class Organization extends React.Component {
                                         </tr>
                                         <tr>
                                             <td>Юридическое лицо:</td>
-                                            <td>«{organization.legal_entity}»</td>
+                                            <td>«{organization.legal_entity.name}»</td>
                                             <td>Телефон:</td>
                                             <td>{organization.phone}</td>
                                         </tr>

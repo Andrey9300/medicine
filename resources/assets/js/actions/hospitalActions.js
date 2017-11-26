@@ -2,7 +2,8 @@ import axios from 'axios';
 import {hashHistory} from 'react-router';
 
 /**
- * Получить все медицинские организации
+ * Все медицинские организации
+ *
  * @returns {function(*)}
  */
 export function fetchHospitals() {
@@ -26,6 +27,7 @@ export function fetchHospitals() {
 
 /**
  * Получить медицинскую организацию
+ *
  * @param id
  * @returns {function(*)}
  */
@@ -34,7 +36,7 @@ export function fetchHospital(id) {
         axios.post(`/hospitals/${id}`)
             .then((response) => {
                 dispatch({
-                    payload: response,
+                    payload: response.data.hospital,
                     type: 'HOSPITAL_FULFILLED'
                 });
             })
@@ -48,7 +50,8 @@ export function fetchHospital(id) {
 }
 
 /**
- * Удалить медицинскую организаци.
+ * Удалить медицинскую организацию
+ *
  * @param id number
  * @returns {Function}
  */
@@ -65,7 +68,7 @@ export function deleteHospital(id) {
 }
 
 /**
- * Исследования медицинских учреждений
+ * TODO Исследования медицинских учреждений
  */
 
 /**

@@ -4,7 +4,9 @@ const initialState = {
     employee: null,
     employeeResearch: null,
     employeeResearches: [],
-    employees: []
+    employees: [],
+    deleted: [],
+    withoutOrganization: []
 };
 
 /**
@@ -26,7 +28,9 @@ export default function reducer(state = initialState, action) {
             return {
                 ...state,
                 fetched: true,
-                employees: action.payload.employees
+                employees: action.payload.employees,
+                deleted: action.payload.deleted,
+                withoutOrganization: action.payload.withoutOrganization
             };
         }
         case 'EMPLOYEE_REJECTED': {

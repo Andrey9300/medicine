@@ -1,27 +1,36 @@
 import axios from 'axios';
 import {hashHistory} from 'react-router';
 
+/**
+ * Вход
+ *
+ * @param formData
+ * @returns {function(*)}
+ */
 export function loginUser(formData) {
     return (dispatch) => {
         axios.post('/login', formData)
-            .then((response) => {
+            .then(() => {
                 dispatch({
-                    payload: {
-                        isAuthenticated: response.status === 200
-                    },
+                    payload: true,
                     type: 'LOGIN_USER_FULFILLED'
                 });
                 hashHistory.replace('/organizations');
             })
-            .catch(() => {
+            .catch((error) => {
                 dispatch({
-                    payload: false,
+                    payload: error,
                     type: 'LOGIN_USER_REJECTED'
                 });
             });
     };
 }
 
+/**
+ * Выход
+ *
+ * @returns {function(*)}
+ */
 export function logoutUser() {
     return (dispatch) => {
         axios.post('/logout')
@@ -33,16 +42,23 @@ export function logoutUser() {
                     type: 'LOGOUT_USER_FULFILLED'
                 });
                 hashHistory.replace('/login');
+                window.location.reload();
             })
-            .catch(() => {
+            .catch((error) => {
                 dispatch({
-                    payload: false,
+                    payload: error,
                     type: 'LOGOUT_USER_REJECTED'
                 });
             });
     };
 }
 
+/**
+ * Регистрация
+ *
+ * @param formData
+ * @returns {function(*)}
+ */
 export function registrationUser(formData) {
     return (dispatch) => {
         axios.post('/register', formData)
@@ -51,11 +67,11 @@ export function registrationUser(formData) {
                     payload: true,
                     type: 'REGISTRATION_USER_FULFILLED'
                 });
-                hashHistory.replace('/organizations');
+                hashHistory.replace('/login');
             })
-            .catch(() => {
+            .catch((error) => {
                 dispatch({
-                    payload: false,
+                    payload: error,
                     type: 'REGISTRATION_USER_REJECTED'
                 });
             });
@@ -63,7 +79,9 @@ export function registrationUser(formData) {
 }
 
 /**
- * Fetch
+ * TODO пользователей
+ * Получить всех пользователей системы
+ *
  * @returns {function(*)}
  */
 export function fetchUsers() {
@@ -85,7 +103,8 @@ export function fetchUsers() {
 }
 
 /**
- * Fetch
+ * Получить пользователя системы
+ *
  * @param id
  * @returns {function(*)}
  */
@@ -108,7 +127,8 @@ export function fetchUser(id) {
 }
 
 /**
- * Delete
+ * Удалить пользователя системы
+ *
  * @param id number
  * @returns {Function}
  */

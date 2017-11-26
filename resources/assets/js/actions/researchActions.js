@@ -2,7 +2,8 @@ import axios from 'axios';
 import {hashHistory} from 'react-router';
 
 /**
- * Fetch
+ * Все исследования
+ *
  * @returns {function(*)}
  */
 export function fetchResearches() {
@@ -25,7 +26,8 @@ export function fetchResearches() {
 }
 
 /**
- * Fetch
+ * Получить исследование
+ *
  * @param id
  * @returns {function(*)}
  */
@@ -48,7 +50,8 @@ export function fetchResearch(id) {
 }
 
 /**
- * Delete
+ * Удалить исследование
+ *
  * @param id number
  * @returns {Function}
  */

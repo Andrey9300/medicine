@@ -3,11 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Http\Models\Category;
-use Illuminate\Http\Request;
 
 class CategoryController extends Controller
 {
-    public function store()
+    public function showAll()
     {
         return response()->json([
             'categories' => Category::all()

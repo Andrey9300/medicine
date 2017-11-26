@@ -25,6 +25,14 @@ class Organization extends Model
     }
 
     /**
+     * юридическое лицо
+     */
+    public function legal_entity()
+    {
+        return $this->belongsTo('App\Http\Models\LegalEntity');
+    }
+
+    /**
      * получить users организации
      */
     public function users()

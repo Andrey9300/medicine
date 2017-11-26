@@ -18,9 +18,9 @@ class CreateEmployeeResearchTable extends Migration
             $table->date('date');
             $table->integer('employee_id')->unsigned();
             $table->foreign('employee_id')->references('id')->on('employees');
-            $table->integer('research_category_id')->unsigned();
-            $table->foreign('research_category_id')->references('id')->on('research_category');
-            $table->unique(array('employee_id', 'research_category_id'));
+            $table->integer('user_research_id')->unsigned();
+            $table->foreign('user_research_id')->references('id')->on('user_research');
+            $table->unique(array('user_research_id', 'employee_id'));
         });
     }
 

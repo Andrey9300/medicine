@@ -18,7 +18,7 @@ export default function reducer(state = initialState, action) {
         case 'LOGIN_USER_REJECTED': {
             return {
                 ...state,
-                error: action.payload,
+                error: action.payload.response.data.errors,
                 fetched: false
             };
         }
@@ -41,14 +41,7 @@ export default function reducer(state = initialState, action) {
         case 'REGISTRATION_USER_REJECTED': {
             return {
                 ...state,
-                fetched: true,
-                user: true
-            };
-        }
-        case 'LOGOUT_USER_REJECTED': {
-            return {
-                ...state,
-                error: action.payload,
+                error: action.payload.response.data.errors,
                 fetched: false
             };
         }

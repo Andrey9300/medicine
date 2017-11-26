@@ -1,6 +1,7 @@
 import axios from 'axios';
 
 /**
+ * Все регионы
  *
  * @returns {function(*)}
  */
