@@ -9,7 +9,7 @@ class Organization extends Model
     public $timestamps = false;
 
     /**
-     * категория
+     * Категория организации
      */
     public function category()
     {
@@ -17,7 +17,7 @@ class Organization extends Model
     }
 
     /**
-     * регион
+     * Регион организации
      */
     public function region()
     {
@@ -25,7 +25,7 @@ class Organization extends Model
     }
 
     /**
-     * юридическое лицо
+     * Юридическое лицо организации
      */
     public function legal_entity()
     {
@@ -33,7 +33,7 @@ class Organization extends Model
     }
 
     /**
-     * получить users организации
+     * Users организации
      */
     public function users()
     {
@@ -41,7 +41,7 @@ class Organization extends Model
     }
 
     /**
-     * получить employees организации
+     * Employees организации
      */
     public function employees()
     {

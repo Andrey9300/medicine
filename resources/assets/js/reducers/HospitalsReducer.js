@@ -2,7 +2,6 @@ const initialState = {
     error: null,
     fetched: false,
     hospital: null,
-    hospitalResearch: null,
     hospitalResearches: [],
     hospitals: []
 };
@@ -54,21 +53,7 @@ export default function reducer(state = initialState, action) {
             return {
                 ...state,
                 fetched: true,
-                hospitalResearches: action.payload.data.hospital_researches
-            };
-        }
-        case 'HOSPITAL_RESEARCH_REJECTED': {
-            return {
-                ...state,
-                error: action.payload,
-                fetched: false
-            };
-        }
-        case 'HOSPITAL_RESEARCH_FULFILLED': {
-            return {
-                ...state,
-                fetched: true,
-                hospitalResearch: action.payload
+                hospitalResearches: action.payload.data.hospitalResearches
             };
         }
         default: return {

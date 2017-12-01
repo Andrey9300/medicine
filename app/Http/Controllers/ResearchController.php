@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Models\Organization;
 use App\Http\Models\Research;
 use App\Http\Models\ResearchCategory;
 use App\Http\Models\ResearchPeriod;
@@ -26,16 +25,17 @@ class ResearchController extends Controller
     }
 
     /**
-     * Вывести исследования
+     * Вывести исследования по категориям
      *
      * @return \Illuminate\Http\JsonResponse
      */
     public function showAll()
     {
-        $researches = Research::all();
+        $researches = ResearchCategory::all();
 
-        foreach ($researches as $research){
-            $research->researchPeriod;
+        foreach ($researches as $research) {
+            $research->category;
+            $research->research;
         }
 
         return response()->json([
@@ -85,47 +85,5 @@ class ResearchController extends Controller
     public function destroy($id)
     {
         Research::destroy($id);
-    }
-
-    /**
-     * @param $id
-     *
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function showHospitals($id){
-        $research = Research::find($id);
-
-        return response()->json([
-            'research_hospitals' => $research->hospitals
-        ]);
-    }
-
-    /**
-     * @param $id
-     *
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function onCategories(){
-        $user = Auth::user();
-        $categories = $user->organizations()->get()->unique('category_id');
-        $researches = [];
-        foreach ($categories as $category) {
-            array_push($researches, ResearchCategory::where('category_id', $category->category_id)->get());
-        }
-        foreach ($researches as $research) {
-            // var_dump($research->);
-        }
-
-        //foreach ($researches as $research) {
-        //    var_dump( $research->research->name);
-        //}
-
-        //var_dump($user->organizations()->distinct('category_id')->get());
-
-        //ResearchCategory::all();
-
-        return response()->json([
-            'research_hospitals' => 1
-        ]);
     }
 }

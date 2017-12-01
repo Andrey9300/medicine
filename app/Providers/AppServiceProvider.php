@@ -31,7 +31,7 @@ class AppServiceProvider extends ServiceProvider
             return $count === 0;
         });
 
-        // уникальность сотрудника в пределах начальника качества
+        // уникальность сотрудника в пределах админа
         Validator::extend('uniqueNameDateBAndDateE', function ($attribute, $value, $parameters, $validator) {
             $count = DB::table('employees')
                 ->where('fio', $parameters[0])

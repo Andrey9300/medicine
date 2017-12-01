@@ -1,7 +1,8 @@
-import {fetchResearches} from '../../../actions/researchActions';
 import React from 'react';
 import axios from 'axios';
 import {connect} from 'react-redux';
+import {fetchResearch} from './../../actions/researchActions';
+import {hashHistory} from 'react-router';
 import {
     Row,
     Col,
@@ -18,36 +19,35 @@ import {
 } from 'reactstrap';
 import PropTypes from 'prop-types';
 
-class NewEmployeeResearch extends React.Component {
+class EditResearch extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             errors: '',
-            employeeId: props.params.idEmployee
+            researchId: props.params.id
         };
         this.handleSubmit = this.handleSubmit.bind(this);
-    }
-
-    componentWillMount() {
-        this.props.dispatch(fetchResearches());
     }
 
     handleSubmit(event) {
         event.preventDefault();
         const formElement = document.querySelector('form');
-        const formData = new FormData(formElement);
 
-        axios.post(`/employees/researches/store/${this.props.params.idEmployee}`, formData)
+        axios.post(`/researches/update/${this.state.researchId}`, new FormData(formElement))
             .then(() => {
-                this.context.router.push(`/employees/${this.props.params.idEmployee}`);
+                hashHistory.push('/researches');
             })
             .catch((error) => {
-                const errors = error.response.data.message;
+                const errors = error;
 
                 this.setState({
                     errors: errors
                 });
             });
+    }
+
+    componentWillMount() {
+        this.props.dispatch(fetchResearch(this.state.researchId));
     }
 
     createMarkup() {
@@ -56,50 +56,59 @@ class NewEmployeeResearch extends React.Component {
         };
     }
 
-    render() {
-        let errors = '';
+    componentWillReceiveProps(nextProps) {
+        if (this.props.research && nextProps.research && nextProps.research.name !== this.props.research.name) {
+            window.location.reload();
+        }
+    }
 
-        if (this.state.errors) {
+    render() {
+        const {research} = this.props;
+        let errors = '';
+        let formElements = '';
+
+        if (this.state.errors !== '') {
             errors = <div className="alert alert-danger" role="alert">
                 <div dangerouslySetInnerHTML={this.createMarkup()} />
             </div>;
         }
 
-        return (
-            <div className="animated fadeIn">
-            {errors}
+        if (research !== null) {
+            formElements =
                 <Row>
                     <Col xs="12" md="6">
                         <Card>
                             <CardHeader>
-                                Добавить исследования к медицинской организации
+                                Редактировать исследование
                             </CardHeader>
                             <CardBlock className="card-body">
                                 <Form className="form-horizontal">
                                     <FormGroup row>
                                         <Col md="3">
-                                            <Label htmlFor="select">Исследование</Label>
+                                            <Label htmlFor="text-input">Наименование</Label>
                                         </Col>
                                         <Col xs="12" md="9">
-                                            <Input type="select" name="name" id="select">
-                                                {this.props.researches.map((research) => {
-                                                    return (
-                                                        <option key={research.id}
-                                                                value={research.id}>
-                                                            {research.name}
-                                                        </option>
-                                                    );
-                                                })}
-                                            </Input>
+                                            <Input type="text" id="name" name="name"
+                                                   placeholder="Наименование" defaultValue={research.name}/>
+                                            <FormText color="muted">Введите наименование</FormText>
                                         </Col>
                                     </FormGroup>
                                     <FormGroup row>
                                         <Col md="3">
-                                            <Label htmlFor="text-input">Дата</Label>
+                                            <Label htmlFor="text-input">Период</Label>
                                         </Col>
                                         <Col xs="12" md="9">
-                                            <Input type="text" id="date" name="date" placeholder="Дата"/>
-                                            <FormText color="muted">Введите дату обследования</FormText>
+                                            <Input type="select" name="period_id" id="select"
+                                                   defaultValue={research.research_period.id}>
+                                                { this.props.periods.map((period) => {
+                                                    return (
+                                                        <option key={period.id} value={period.id}>
+                                                            {period.name}
+                                                        </option>
+                                                    );
+                                                })
+                                                }
+                                            </Input>
                                         </Col>
                                     </FormGroup>
                                 </Form>
@@ -111,7 +120,13 @@ class NewEmployeeResearch extends React.Component {
                             </CardFooter>
                         </Card>
                     </Col>
-                </Row>
+                </Row>;
+        }
+
+        return (
+            <div className="animated fadeIn">
+                {errors}
+                {formElements}
             </div>
         );
     }
@@ -120,19 +135,19 @@ class NewEmployeeResearch extends React.Component {
 /**
  * Map
  * @param state
- * @returns {{researchesEmployee: (*|Array)}}
+ * @returns {{research: (*|null)}}
  */
 function mapStateToProps(state) {
     return {
-        researches: state.researches.researches
+        research: state.researches.research,
+        periods: state.researches.periods
     };
 }
 
-NewEmployeeResearch.propTypes = {
+EditResearch.propTypes = {
     dispatch: PropTypes.func.isRequired,
     params: PropTypes.object.isRequired,
-    researches: PropTypes.array.isRequired,
-    router: PropTypes.object.isRequired
+    periods: PropTypes.array.isRequired
 };
 
-export default connect(mapStateToProps)(NewEmployeeResearch);
+export default connect(mapStateToProps)(EditResearch);

@@ -7,6 +7,7 @@ import Login from './components/includes/Login';
 import Registration from './components/includes/Registration';
 import RestorePassword from './components/includes/RestorePassword';
 import ResetPassword from './components/includes/ResetPassword';
+import ActivateAccount from './components/includes/ActivateAccount';
 
 import EditLegalEntity from './components/legalEntity/Edit';
 import LegalEntity from './components/legalEntity/LegalEntity';
@@ -19,8 +20,6 @@ import Hospitals from './components/hospital/Hospitals';
 import NewHospital from './components/hospital/New';
 
 import HospitalResearches from './components/hospital/research/HospitalResearches';
-import EditHospitalResearch from './components/hospital/research/EditHospitalResearch';
-import NewHospitalResearch from './components/hospital/research/NewHospitalResearch';
 
 import EditOrganization from './components/organization/Edit';
 import Organization from './components/organization/Organization';
@@ -40,8 +39,6 @@ import Employees from './components/employee/Employees';
 import NewEmployee from './components/employee/New';
 
 import EmployeeResearches from './components/employee/research/EmployeeResearches';
-import EditEmployeeResearch from './components/employee/research/EditResearch';
-import NewEmployeeResearch from './components/employee/research/NewResearch';
 
 import Layout from './components/Layout';
 import {Provider} from 'react-redux';
@@ -56,6 +53,7 @@ ReactDOM.render(
                 <Route path = "registration" component = { Registration }/>
                 <Route path = "restorePassword" component = { RestorePassword }/>
                 <Route path = "resetPassword" component = { ResetPassword }/>
+                <Route path = "activateAccount" component = { ActivateAccount }/>
 
                 <Route path = "legalEntities" component={LegalEntities}/>
                 <Route path = "legalEntities/create" component = { NewLegalEntity }/>
@@ -66,10 +64,7 @@ ReactDOM.render(
                 <Route path = "hospitals/create" component = { NewHospital }/>
                 <Route path = "hospitals/:id" component = { Hospital }/>
                 <Route path = "hospitals/edit/:id" component = { EditHospital }/>
-
                 <Route path = "hospitals/researches/:idHospital" component = { HospitalResearches }/>
-                <Route path = "hospitals/researches/:idHospital/create" component = { NewHospitalResearch }/>
-                <Route path = "hospitals/researches/edit/:idHospital/:idResearch" component = { EditHospitalResearch }/>
 
                 <Route path = "organizations" component = { Organizations }/>
                 <Route path = "organizations/create" component = { NewOrganization }/>
@@ -87,10 +82,7 @@ ReactDOM.render(
                 <Route path = "employees/:id" component = { Employee }/>
                 <Route path = "employees/edit/:id" component = { EditEmployee }/>
                 <Route path = "employees/print/:id" component = { PrintEmployee }/>
-
                 <Route path = "employees/researches/:idEmployee" component = { EmployeeResearches }/>
-                <Route path = "employees/researches/:idEmployee/create" component = { NewEmployeeResearch }/>
-                <Route path = "employees/researches/edit/:idEmployee/:idResearch" component = { EditEmployeeResearch }/>
             </Route>
         </Router>
     </Provider>,

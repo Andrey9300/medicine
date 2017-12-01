@@ -1,10 +1,10 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import {fetchHospital, deleteHospital} from './../../actions/hospitalActions';
-import HospitalResearches from './research/HospitalResearches';
+import {fetchHospitalResearches, fetchHospital, deleteHospital} from './../../actions/hospitalActions';
 import {Link} from 'react-router';
-import {Row, Col, Card, CardHeader, CardBlock, Table} from 'reactstrap';
+import {Row, Col, Card, CardHeader, CardBlock, Table, Form, Button, Input} from 'reactstrap';
 import PropTypes from 'prop-types';
+import axios from 'axios';
 
 class Hospital extends React.Component {
     constructor(props) {
@@ -13,10 +13,12 @@ class Hospital extends React.Component {
             errors: '',
             hospitalId: props.params.id
         };
+        this.handleClick = this.handleClick.bind(this);
     }
 
     componentWillMount() {
         this.props.dispatch(fetchHospital(this.state.hospitalId));
+        this.props.dispatch(fetchHospitalResearches(this.state.hospitalId));
     }
 
     handleBtnDelete(hospitalId, event) {
@@ -28,6 +30,22 @@ class Hospital extends React.Component {
         return {
             __html: this.state.errors
         };
+    }
+
+    handleClick() {
+        const formElement = document.querySelector('form');
+
+        axios.post(`/hospitals/researches/store/${this.state.hospitalId}`, new FormData(formElement))
+            .then(() => {
+                alert('Изменения сохранены');
+            })
+            .catch((error) => {
+                const errors = error;
+
+                this.setState({
+                    errors: errors
+                });
+            });
     }
 
     render() {
@@ -81,7 +99,7 @@ class Hospital extends React.Component {
                                                     </Link>
                                                 </td>
                                                 <td>
-                                                    <form id={`form_${hospital.id}`}
+                                                    {/*<form id={`form_${hospital.id}`}
                                                           className="pull-left" method="post">
                                                         <input type="hidden" name="hospital_id"
                                                                value={hospital.id} />
@@ -90,11 +108,59 @@ class Hospital extends React.Component {
                                                            href="#" id={hospital.id}>Удалить
                                                             <i className="glyphicon glyphicon-trash"/>
                                                         </a>
-                                                    </form>
+                                                    </form>*/}
                                                 </td>
                                             </tr>
                                         </tbody>
                                     </Table>
+                                </CardBlock>
+                            </Card>
+                        </Col>
+                    </Row>
+
+                    <Row>
+                        <Col xs="12" lg="12">
+                            <Card>
+                                <CardHeader>
+                                    <i className="fa fa-heartbeat" aria-hidden="true"/>Цены на исследования
+                                    ({this.props.hospitalResearches.length})
+                                    <Button type="submit" size="sm"
+                                            color="success pull-right"
+                                            onClick={this.handleClick}
+                                    >
+                                        <i className="fa fa-dot-circle-o"/> Сохранить
+                                    </Button>
+                                </CardHeader>
+                                <CardBlock className="card-body">
+                                    <Form>
+                                        <Table responsive>
+                                            <thead>
+                                            <tr>
+                                                <th>Категория</th>
+                                                <th>Исследование</th>
+                                                <th>Цена</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            { this.props.hospitalResearches.map((research) => {
+                                                return (
+                                                    <tr key={research.id}>
+                                                        <td>{research.category.name}</td>
+                                                        <td>{research.research.name}</td>
+                                                        <td>
+                                                            <Input type="text"
+                                                                name={`hospitalResearch[${research.pivot.id}]`}
+                                                                defaultValue={research.price}
+                                                            />
+                                                            <i className="fa fa-rub" aria-hidden="true"/>
+                                                        </td>
+                                                    </tr>
+                                                );
+                                            })
+                                            }
+                                            </tbody>
+                                        </Table>
+                                    </Form>
                                 </CardBlock>
                             </Card>
                         </Col>
@@ -121,7 +187,8 @@ class Hospital extends React.Component {
  */
 function mapStateToProps(state) {
     return {
-        hospital: state.hospitals.hospital
+        hospital: state.hospitals.hospital,
+        hospitalResearches: state.hospitals.hospitalResearches
     };
 }
 

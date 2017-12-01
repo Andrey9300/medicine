@@ -18,6 +18,7 @@ class CreateUsersTable extends Migration
             $table->string('fio')->nullable();
             $table->string('password');
             $table->string('email')->unique();
+            $table->boolean('active')->default(false);
             $table->enum('role', ['admin', 'head']);
             $table->rememberToken();
         });

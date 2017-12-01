@@ -7,6 +7,11 @@ use Illuminate\Http\Request;
 
 class RegionController extends Controller
 {
+    /**
+     * Вывести все регионы
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function showAll()
     {
         return response()->json([

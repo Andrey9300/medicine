@@ -13,9 +13,8 @@ class OrganizationPolicy
     /**
      * Determine whether the user can view the organization.
      *
-     * @param  \App\User  $user
-     * @param  \App\Organization  $organization
-     * @return mixed
+     * @param User $user
+     * @return bool
      */
     public function store(User $user)
     {
@@ -23,10 +22,8 @@ class OrganizationPolicy
     }
 
     /**
-     *
-     *
-     * @param  \App\User  $user
-     * @param  \App\Organization  $organization
+     * @param User         $user
+     * @param Organization $organization
      * @return mixed
      */
     public function owner(User $user, Organization $organization)
@@ -37,7 +34,6 @@ class OrganizationPolicy
     /**
      * @param User     $user
      * @param Organization $organization
-     *
      * @return mixed
      */
     public function isAdminAndOwner(User $user, Organization $organization)

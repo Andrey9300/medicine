@@ -23,7 +23,7 @@ class HospitalResearches extends React.Component {
     }
 
     componentWillMount() {
-        this.props.dispatch(fetchHospitalResearches(this.state.hospitalId));
+
     }
 
     handleBtnDelete(idResearch, event) {
@@ -62,12 +62,7 @@ class HospitalResearches extends React.Component {
                                                 <td>{research.pivot.price}
                                                     <i className="fa fa-rub" aria-hidden="true"/>
                                                 </td>
-                                                <td>
-                                                    <Link to={`hospitals/researches/edit/${this.state.hospitalId}/${research.id}`}
-                                                          className="btn btn-success btn-xs pull-left">Редактировать
-                                                        <i className="glyphicon glyphicon-pencil"/>
-                                                    </Link>
-                                                </td>
+                                                <td/>
                                                 <td>
                                                     <form id={`form_${research.id}`}
                                                           className="pull-left"
@@ -109,10 +104,7 @@ function mapStateToProps(state) {
 }
 
 HospitalResearches.propTypes = {
-    dispatch: PropTypes.func.isRequired,
-    hospitalResearches: PropTypes.array.isRequired,
-    idHospital: PropTypes.number.isRequired,
-    router: PropTypes.object.isRequired
+    dispatch: PropTypes.func.isRequired
 };
 
 

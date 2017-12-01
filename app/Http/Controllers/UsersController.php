@@ -31,18 +31,6 @@ class UsersController extends Controller
     }
 
     /**
-     * Вывести пользователей
-     *
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function showAll()
-    {
-        return response()->json([
-            'users' => User::all()
-        ]);
-    }
-
-    /**
      * Получить данные пользователя
      *
      * @param int $id

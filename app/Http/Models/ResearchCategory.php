@@ -7,19 +7,17 @@ use Illuminate\Database\Eloquent\Model;
 class ResearchCategory extends Model
 {
     public $timestamps = false;
-    // TODO research_categories для laravel
-    protected $table = 'research_category';
 
     /**
-     * регион
+     * Категория исследования
      */
     public function category()
     {
-        return $this->belongsTo('App\Http\Models\Region');
+        return $this->belongsTo('App\Http\Models\Category');
     }
 
     /**
-     * The roles that belong to the user.
+     * Исследование
      */
     public function research()
     {

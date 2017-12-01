@@ -13,15 +13,15 @@ class CreateUserResearchTable extends Migration
      */
     public function up()
     {
-        Schema::create('user_research', function (Blueprint $table) {
+        Schema::create('user_researches', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('research_category_id')->unsigned();
-            $table->foreign('research_category_id')->references('id')->on('research_category')->onDelete('cascade');
-            $table->integer('region_id')->unsigned();
-            $table->foreign('region_id')->references('id')->on('regions')->onDelete('cascade');
+            $table->integer('research_categories_id')->unsigned();
+            $table->foreign('research_categories_id')->references('id')->on('research_categories')->onDelete('cascade');
+            //$table->integer('region_id')->unsigned();
+            //$table->foreign('region_id')->references('id')->on('regions')->onDelete('cascade');
             $table->integer('user_id')->unsigned();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->unique(array('research_category_id', 'region_id', 'user_id'));
+            $table->unique(array('research_categories_id', /*'region_id',*/ 'user_id'));
         });
     }
 
@@ -32,6 +32,6 @@ class CreateUserResearchTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('user_research');
+        Schema::dropIfExists('user_researches');
     }
 }

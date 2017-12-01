@@ -10,28 +10,15 @@ class Employee extends Model
 {
     use SoftDeletes;
 
-    /**
-     * Атрибуты, которые должны быть преобразованы в даты.
-     *
-     * @var array
-     */
     protected $dates = ['deleted_at'];
 
     public $timestamps = false;
 
     /**
-     * получить организацию сотрудника
+     * Получить организацию сотрудника
      */
     public function organization()
     {
         return $this->belongsTo('App\Http\Models\Organization', 'organization_name', 'name');
-    }
-
-    /**
-     * The roles that belong to the user.
-     */
-    public function researches()
-    {
-        return $this->belongsToMany('App\Http\Models\Research')->withPivot('id', 'date');
     }
 }

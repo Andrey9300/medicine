@@ -10,20 +10,10 @@ class User extends Authenticatable
 {
     use Notifiable;
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
-     */
     protected $fillable = [
         'fio', 'email', 'password', 'role'
     ];
 
-    /**
-     * The attributes that should be hidden for arrays.
-     *
-     * @var array
-     */
     protected $hidden = [
         'password', 'remember_token'
     ];
@@ -42,8 +32,7 @@ class User extends Authenticatable
     }
 
     /**
-     * все организации user
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     * Все организации user
      */
     public function organizations()
     {
@@ -51,8 +40,7 @@ class User extends Authenticatable
     }
 
     /**
-     * все медицинские организации user
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     * Все медицинские организации user
      */
     public function hospitals()
     {
@@ -60,11 +48,19 @@ class User extends Authenticatable
     }
 
     /**
-     * все юридические лица user
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     * Все юридические лица user
      */
     public function legal_entities()
     {
         return $this->hasMany('App\Http\Models\LegalEntity');
     }
+
+    /**
+     * Все исследования user
+     */
+    public function researches()
+    {
+        return $this->belongsToMany('App\Http\Models\ResearchCategory', 'user_researches', 'user_id', 'research_categories_id')->withPivot('id', 'research_categories_id');
+    }
+
 }

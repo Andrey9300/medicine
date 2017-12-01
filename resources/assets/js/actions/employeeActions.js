@@ -76,7 +76,6 @@ export function deleteEmployee(id, organizationId) {
  * Удалить сотрудника
  *
  * @param id number
- * @param organizationId number
  * @returns {Function}
  */
 export function forceDeleteEmployee(id) {
@@ -92,12 +91,8 @@ export function forceDeleteEmployee(id) {
 }
 
 /**
- * TODO Исследования сотрудников учреждений
- */
-
-/**
  * Fetch
- * @param id - id мед учреждения
+ * @param id - id сотрудника
  * @returns {function(*)}
  */
 export function fetchEmployeeResearches(id) {
@@ -114,47 +109,6 @@ export function fetchEmployeeResearches(id) {
                     payload: error,
                     type: 'EMPLOYEE_RESEARCHES_REJECTED'
                 });
-            });
-    };
-}
-
-/**
- * Fetch
- * @param idEmployee, idResearch
- * @returns {function(*)}
- */
-export function fetchEmployeeResearch(idEmployee, idResearch) {
-    return (dispatch) => {
-        axios.post(`/employees/researches/edit/${idEmployee}/${idResearch}`)
-            .then((response) => {
-                dispatch({
-                    payload: response.data.employee_research,
-                    type: 'EMPLOYEE_RESEARCH_FULFILLED'
-                });
-            })
-            .catch((error) => {
-                dispatch({
-                    payload: error,
-                    type: 'EMPLOYEE_RESEARCH_REJECTED'
-                });
-            });
-    };
-}
-
-/**
- * Delete
- * @param idEmployee number
- * @param idResearch number
- * @returns {Function}
- */
-export function deleteEmployeeResearch(idEmployee, idResearch) {
-    return (dispatch) => {
-        axios.post(`/employees/researches/destroy/${idEmployee}/${idResearch}`)
-            .then(() => {
-                dispatch(fetchEmployeeResearches(idEmployee));
-            })
-            .catch((error) => {
-                return error;
             });
     };
 }

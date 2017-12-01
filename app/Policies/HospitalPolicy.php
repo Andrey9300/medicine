@@ -14,7 +14,7 @@ class HospitalPolicy
      * Determine whether the user can create hospitals.
      *
      * @param  \App\User  $user
-     * @return mixed
+     * @return bool
      */
     public function store(User $user)
     {

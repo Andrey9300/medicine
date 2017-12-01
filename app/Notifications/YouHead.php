@@ -14,9 +14,9 @@ class YouHead extends Notification
     protected $organization_name;
 
     /**
-     * Create a new notification instance.
+     * YouHead constructor.
      *
-     * @return void
+     * @param $organization_name
      */
     public function __construct($organization_name)
     {

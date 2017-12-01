@@ -16,11 +16,11 @@ class CreateHospitalResearchTable extends Migration
         Schema::create('hospital_research', function (Blueprint $table) {
             $table->increments('id');
             $table->double('price')->nullable();
-            $table->integer('user_research_id')->unsigned();
-            $table->foreign('user_research_id')->references('id')->on('user_research')->onDelete('cascade');
+            $table->integer('user_researches_id')->unsigned();
+            $table->foreign('user_researches_id')->references('id')->on('user_researches')->onDelete('cascade');
             $table->integer('hospital_id')->unsigned();
             $table->foreign('hospital_id')->references('id')->on('hospitals')->onDelete('cascade');
-            $table->unique(array('user_research_id', 'hospital_id'));
+            $table->unique(array('user_researches_id', 'hospital_id'));
         });
     }
 

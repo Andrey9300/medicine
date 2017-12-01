@@ -15,12 +15,12 @@ class CreateEmployeeResearchTable extends Migration
     {
         Schema::create('employee_research', function (Blueprint $table) {
             $table->increments('id');
-            $table->date('date');
+            $table->date('date')->nullable();
             $table->integer('employee_id')->unsigned();
             $table->foreign('employee_id')->references('id')->on('employees');
-            $table->integer('user_research_id')->unsigned();
-            $table->foreign('user_research_id')->references('id')->on('user_research');
-            $table->unique(array('user_research_id', 'employee_id'));
+            $table->integer('user_researches_id')->unsigned();
+            $table->foreign('user_researches_id')->references('id')->on('user_researches')->onDelete('cascade');
+            $table->unique(array('user_researches_id', 'employee_id'));
         });
     }
 
@@ -31,6 +31,6 @@ class CreateEmployeeResearchTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('user_research');
+        Schema::dropIfExists('employee_research');
     }
 }

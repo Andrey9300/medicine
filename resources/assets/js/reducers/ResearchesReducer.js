@@ -3,7 +3,8 @@ const initialState = {
     fetched: false,
     research: null,
     periods: [],
-    researches: []
+    researches: [],
+    userResearches: []
 };
 
 /**
@@ -41,6 +42,20 @@ export default function reducer(state = initialState, action) {
                 fetched: true,
                 research: action.payload.data.research,
                 periods: action.payload.data.periods
+            };
+        }
+        case 'USER_RESEARCHES_REJECTED': {
+            return {
+                ...state,
+                error: action.payload,
+                fetched: false
+            };
+        }
+        case 'USER_RESEARCHES_FULFILLED': {
+            return {
+                ...state,
+                fetched: true,
+                userResearches: action.payload.data.userResearches
             };
         }
         default: return {

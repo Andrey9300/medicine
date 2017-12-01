@@ -1,6 +1,7 @@
 <?php
 Auth::routes();
 Route::get('/', 'IndexController@index');
+Route::get('activateAccount/{id}/{token}', 'Auth\RegisterController@activation')->name('activation');
 
 Route::middleware(['auth'])->group(function () {
     Route::prefix('legalEntities')->group(function () {
@@ -12,19 +13,17 @@ Route::middleware(['auth'])->group(function () {
     });
 
     Route::prefix('hospitals')->group(function () {
+        Route::post('/researches/store/{id}', 'HospitalController@researchesStore');
+        Route::post('/researches/{id}', 'HospitalController@researches');
         Route::post('/store', 'HospitalController@store');
         Route::post('/destroy/{id}', 'HospitalController@destroy');
         Route::post('/update/{id}', 'HospitalController@update');
         Route::post('/{id}', 'HospitalController@show');
         Route::post('/', 'HospitalController@showAll');
 
-        Route::prefix('researches')->group(function () {
-            Route::post('/store/{id_hospital}', 'HospitalController@storeResearch');
-            Route::post('/destroy/{id_hospital}/{id_research}', 'HospitalController@destroyResearch');
-            Route::post('/update/{id_hospital}/{id_research}', 'HospitalController@updateResearch');
-            Route::post('/edit/{id_hospital}/{id_research}', 'HospitalController@editResearch');
-            Route::post('/{id_hospital}', 'HospitalController@showAllResearches');
-        });
+        //Route::prefix('researches')->group(function () {
+
+        //});
     });
 
     Route::prefix('organizations')->group(function () {
@@ -43,10 +42,16 @@ Route::middleware(['auth'])->group(function () {
         Route::post('/store', 'ResearchController@store');
         Route::post('/destroy/{id}', 'ResearchController@destroy');
         Route::post('/update/{id}', 'ResearchController@update');
-        Route::get('/showHospitals/{id}', 'ResearchController@showHospitals');
-        Route::post('/onCategories', 'ResearchController@onCategories');
         Route::post('/{id}', 'ResearchController@show');
         Route::post('/', 'ResearchController@showAll');
+    });
+
+    Route::prefix('userResearches')->group(function () {
+        Route::post('/store', 'UserResearchesController@store');
+        Route::post('/destroy/{id}', 'UserResearchesController@destroy');
+        Route::post('/update/{id}', 'UserResearchesController@update');
+        Route::post('/{id}', 'UserResearchesController@show');
+        Route::post('/', 'UserResearchesController@showAll');
     });
 
     Route::prefix('employees')->group(function () {
@@ -58,11 +63,8 @@ Route::middleware(['auth'])->group(function () {
         Route::post('/', 'EmployeesController@showAll');
 
         Route::prefix('researches')->group(function () {
-            Route::post('/store/{id_employee}', 'EmployeesController@storeResearch');
-            Route::post('/destroy/{id_employee}/{id_research}', 'EmployeesController@destroyResearch');
-            Route::post('/update/{id_employee}/{id_research}', 'EmployeesController@updateResearch');
-            Route::post('/edit/{id_employee}/{id_research}', 'EmployeesController@editResearch');
-            Route::post('/{id_employee}', 'EmployeesController@showAllResearches');
+            Route::post('/store/{id_employee}', 'EmployeesController@researchesStore');
+            Route::post('/{id_employee}', 'EmployeesController@researches');
         });
     });
 

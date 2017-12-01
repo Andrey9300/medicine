@@ -107,9 +107,8 @@ class OrganizationController extends Controller
     /**
      * Создать организацию
      *
-     * @param Request $request
-     *
-     * @return \Illuminate\Contracts\Routing\ResponseFactory|\Symfony\Component\HttpFoundation\Response
+     * @param StoreOrganization $request
+     * @return \Response
      */
     public function store(StoreOrganization $request)
     {
@@ -139,7 +138,8 @@ class OrganizationController extends Controller
             $newUser = User::create([
                 'email' => $request->head_email,
                 'password' => bcrypt($passwordNewUser),
-                'role' => 'head'
+                'role' => 'head',
+                'active' => true
             ]);
             $organization->head_email = $newUser->email;
             $organization->save();
@@ -224,10 +224,9 @@ class OrganizationController extends Controller
     /**
      * Обновить организацию
      *
-     * @param Request $request
-     * @param         $id
-     *
-     * @return \Illuminate\Contracts\Routing\ResponseFactory|\Symfony\Component\HttpFoundation\Response
+     * @param UpdateOrganization $request
+     * @param                    $id
+     * @return \Response
      */
     public function update(UpdateOrganization $request, $id)
     {
@@ -239,7 +238,7 @@ class OrganizationController extends Controller
         $organization->phone = $organization_new['phone'];
 
         // админов может быть несколько
-        // руководитель 1|0
+        // руководитель 1 или 0
         if ($organization->head_email !== $organization_new['head_email']) {
             $oldUser = User::where('email', $organization->head_email)->first();
             if ($oldUser->role !== 'admin' && $organization->users->contains($oldUser)) {
@@ -257,7 +256,8 @@ class OrganizationController extends Controller
                 $newUser = User::create([
                     'email' => $organization_new['head_email'],
                     'password' => bcrypt($passwordNewUser),
-                    'role' => 'head'
+                    'role' => 'head',
+                    'active' => true
                 ]);
                 $newUser->organizations()->attach($organization);
                 $newUser->notify(new SendPassword($newUser->email, $passwordNewUser, $organization->name));
@@ -291,19 +291,14 @@ class OrganizationController extends Controller
     }
 
     /**
-     * Сотрудники объекта
-     */
-
-    /**
      * Создать сотрудника организации
      *
-     * @param  \Illuminate\Http\Request $request
-     * @return void
+     * @param StoreEmployee $request
+     * @param               $organization_id
      */
     public function storeEmployee(StoreEmployee $request, $organization_id)
     {
         $organization = Organization::find($organization_id);
-        //$this->authorize('owner', $organization);
         $userAdmin = $organization->users->where('role', '=', 'admin')->first();
         $employee = new Employee;
         $employee->fio = $request->fio;
@@ -317,8 +312,8 @@ class OrganizationController extends Controller
 
     /**
      * Показать сотрудников организации
-     * @param $id
      *
+     * @param $id
      * @return \Illuminate\Http\JsonResponse
      */
     public function showAllEmployees($id){

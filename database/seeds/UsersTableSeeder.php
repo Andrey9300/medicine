@@ -16,6 +16,7 @@ class UsersTableSeeder extends Seeder
             'fio' => 'Кренко Иван Иванович',
             'password' => bcrypt('secret'),
             'email' => 'krenko@meet.ru',
+            'active' => true,
             'role' => 'admin'
         ]);
         DB::table('users')->insert([
@@ -23,6 +24,7 @@ class UsersTableSeeder extends Seeder
             'fio' => 'Паркин Иван АНатольевич',
             'password' => bcrypt('secret'),
             'email' => 'parkin@meet.ru',
+            'active' => true,
             'role' => 'admin'
         ]);
         DB::table('users')->insert([
@@ -30,6 +32,7 @@ class UsersTableSeeder extends Seeder
             'fio' => 'Бренкин Дмитрий Иванович',
             'password' => bcrypt('secret'),
             'email' => 'brenkin@meet.ru',
+            'active' => true,
             'role' => 'admin'
         ]);
         DB::table('users')->insert([
@@ -37,6 +40,7 @@ class UsersTableSeeder extends Seeder
             'fio' => 'Калин Олег Иванович',
             'password' => bcrypt('secret'),
             'email' => 'kalin@meet.ru',
+            'active' => true,
             'role' => 'head'
         ]);
         DB::table('users')->insert([
@@ -44,6 +48,7 @@ class UsersTableSeeder extends Seeder
             'fio' => 'Бранин Василий Петрович',
             'password' => bcrypt('secret'),
             'email' => 'branin@meet.ru',
+            'active' => true,
             'role' => 'head'
         ]);
         DB::table('users')->insert([
@@ -51,6 +56,7 @@ class UsersTableSeeder extends Seeder
             'fio' => 'Бран Петр Васильевич',
             'password' => bcrypt('secret'),
             'email' => 'bran@fish.ru',
+            'active' => true,
             'role' => 'head'
         ]);
     }

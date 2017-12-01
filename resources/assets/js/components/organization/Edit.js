@@ -136,7 +136,7 @@ class EditOrganization extends React.Component {
                                             <Label htmlFor="text-input">Юридическое лицо</Label>
                                         </Col>
                                         <Col xs="12" md="9">
-                                            <Input type="select" name="region_id" id="select"
+                                            <Input type="select" name="legal_entity_id" id="select"
                                                    defaultValue={organization.legal_entity.id}>
                                                 { this.props.legalEntities.map((legalEntity) => {
                                                     return (

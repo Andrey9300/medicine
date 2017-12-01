@@ -2,30 +2,6 @@ import axios from 'axios';
 import {hashHistory} from 'react-router';
 
 /**
- * Все исследования
- *
- * @returns {function(*)}
- */
-export function fetchResearches() {
-    return (dispatch) => {
-        axios.post('/researches')
-            .then((response) => {
-                dispatch({
-                    payload: response,
-                    type: 'RESEARCHES_FULFILLED'
-                });
-            })
-            .catch((error) => {
-                hashHistory.replace('login');
-                dispatch({
-                    payload: error,
-                    type: 'RESEARCHES_REJECTED'
-                });
-            });
-    };
-}
-
-/**
  * Получить исследование
  *
  * @param id
@@ -50,19 +26,26 @@ export function fetchResearch(id) {
 }
 
 /**
- * Удалить исследование
+ * Все исследования admin
  *
- * @param id number
- * @returns {Function}
+ * @returns {function(*)}
  */
-export function deleteResearch(id) {
-    return () => {
-        axios.post(`/researches/destroy/${id}`)
-            .then(() => {
-                hashHistory.push('/researches');
+export function fetchUserResearches() {
+    return (dispatch) => {
+        axios.post('/userResearches')
+            .then((response) => {
+                dispatch({
+                    payload: response,
+                    type: 'USER_RESEARCHES_FULFILLED'
+                });
             })
             .catch((error) => {
-                alert('Ошибка удаления: эти данные используются', error);
+                hashHistory.replace('login');
+                dispatch({
+                    payload: error,
+                    type: 'USER_RESEARCHES_REJECTED'
+                });
             });
     };
 }
+

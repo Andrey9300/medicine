@@ -7,26 +7,20 @@ use Illuminate\Notifications\Notification;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 
-class SendPassword extends Notification
+class ActivateAccount extends Notification
 {
     use Queueable;
 
-    protected $email;
-    protected $password;
-    protected $organization_name;
+    private $newUser;
 
     /**
-     * SendPassword constructor.
+     * ActivateAccount constructor.
      *
-     * @param $email
-     * @param $password
-     * @param $organization_name
+     * @param $newUser
      */
-    public function __construct($email, $password, $organization_name)
+    public function __construct($newUser)
     {
-        $this->email = $email;
-        $this->password = $password;
-        $this->organization_name = $organization_name;
+        $this->newUser = $newUser;
     }
 
     /**
@@ -48,13 +42,15 @@ class SendPassword extends Notification
      */
     public function toMail($notifiable)
     {
+        $token = md5($this->newUser->email);
+        $activationLink = route('activation', ['id' => $this->newUser->id, 'token' => md5($this->newUser->email)]);
+
         return (new MailMessage)
-            ->subject('Доступ к сервису медицинских книжек')
+            ->subject('Активация аккаунта сервиса медицинских книжек')
             ->greeting('Здравствуйте!')
-            ->line('Вас назначили руководителем объекта ' . $this->organization_name . ' в сервисе медицинских книжек')
-            ->line('Логин для входа: ' . $this->email)
-            ->line('Пароль для входа: ' . $this->password)
-            ->action('Войти', url(env('APP_URL') . '/#/login'));
+            ->line('Вы получили это письмо, чтобы активировать Вашу учетную запись.')
+            ->action('Активировать', $activationLink)
+            ->line('Если вы не регистрировали аккаунт, то проигнорируйте это сообщение');
     }
 
     /**

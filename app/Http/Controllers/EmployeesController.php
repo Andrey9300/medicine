@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Models\EmployeeResearch;
 use App\Http\Models\Organization;
 use App\Http\Models\Research;
 use App\Http\Models\Employee;
+use App\Http\Models\ResearchCategory;
 use App\Http\Requests\StoreEmployee;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -16,7 +18,7 @@ class EmployeesController extends Controller
     /**
      * Создать сотрудника
      *
-     * @param  \Illuminate\Http\Request $request
+     * @param StoreEmployee $request
      * @return void
      */
     public function store(StoreEmployee $request)
@@ -101,8 +103,8 @@ class EmployeesController extends Controller
     public function update(Request $request, $id)
     {
         $employee = Employee::find($id);
-        //$employee->fio = $request->fio;
-        //$employee->date_birthday = $request->date_birthday;
+        $employee->fio = $request->fio;
+        $employee->date_birthday = $request->date_birthday;
         $employee->date_employment = $request->date_employment;
         $employee->medical_book = $request->medical_book;
         $employee->organization_name = $request->organization_name;
@@ -137,41 +139,54 @@ class EmployeesController extends Controller
         $employee->forceDelete();
     }
 
+    /**
+     * Исследования сотрудника
+     *
+     * @param $id
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function researches($id) {
+        $employee = Employee::find($id);
+        $employeeCategoryId = $employee->organization->category_id;
+        $user = Auth::user();
+        $userResearches = $user->researches;
+        $employeeResearches = [];
 
+        foreach ($userResearches as $research) {
+            $employeeResearch = EmployeeResearch::firstOrCreate(
+                ['user_researches_id' => $research->pivot->id, 'employee_id' => $id]
+            );
+            $researchCategory = ResearchCategory::find($research->id);
 
+            if ($researchCategory->category_id === $employeeCategoryId) {
+                $research->category;
+                $research->research;
+                if (!is_null($employeeResearch->date)) {
+                    $research->date = $employeeResearch->date->format('Y-m-d');
+                }
+                $employeeResearches[] = $research;
+            }
+        }
 
+        return response()->json([
+            'employeeResearches' => $employeeResearches
+        ]);
+    }
 
     /**
-     * Исследования сотрудников
+     * Обновить или сохранить дату исследований сотрудника
+     *
+     * @param Request $request
+     * @param         $id
      */
+    public function researchesStore(Request $request, $id) {
+        $employeeResearches = $request->employeeResearch;
 
-    public function createResearch(Request $request, $id_employee){
-        $employee = Employee::find($id_employee);
-        $employee->researches()->attach($request->name, ['date' => $request->date]);
-    }
-
-    public function editResearch($id_employee, $id_research){
-        $employee = Employee::find($id_employee);
-
-        return response()->json([
-            'employee_research' => $employee->researches->find($id_research)
-        ]);
-    }
-
-    public function destroyResearch($id_employee, $id_research){
-        $employee = Employee::find($id_employee);
-        $employee->researches()->detach($id_research);
-    }
-
-    public function updateResearch(Request $request, $id_employee, $id_research){
-        Employee::find($id_employee)->researches()->updateExistingPivot($id_research, ['date' => $request['date']]);
-    }
-
-    public function storeResearches($id){
-        $employee = Employee::find($id);
-
-        return response()->json([
-            'employee_researches' => $employee->researches
-        ]);
+        foreach ($employeeResearches as $key => $value) {
+            EmployeeResearch::updateOrCreate(
+                ['user_researches_id' => $key, 'employee_id' => $id],
+                ['date' => $value]
+            );
+        }
     }
 }

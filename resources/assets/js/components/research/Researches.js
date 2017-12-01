@@ -1,4 +1,4 @@
-import {fetchResearches} from '../../actions/researchActions';
+import {fetchUserResearches} from '../../actions/researchActions';
 import {Link} from 'react-router';
 import React from 'react';
 import {connect} from 'react-redux';
@@ -8,55 +8,105 @@ import {
     Card,
     CardHeader,
     CardBlock,
-    Table
+    Table,
+    Form,
+    Button,
+    Input
 } from 'reactstrap';
 import PropTypes from 'prop-types';
+import axios from 'axios';
 
 class Researches extends React.Component {
+    constructor(props) {
+        super(props);
+
+        this.toggle = this.toggle.bind(this);
+        this.state = {
+            activeTab: '1'
+        };
+        this.handleClick = this.handleClick.bind(this);
+    }
+
     componentWillMount() {
-        this.props.dispatch(fetchResearches());
+        this.props.dispatch(fetchUserResearches());
+    }
+
+    toggle(tab) {
+        if (this.state.activeTab !== tab) {
+            this.setState({
+                activeTab: tab
+            });
+        }
+    }
+
+    handleClick() {
+        const formElement = document.querySelector('form');
+
+        axios.post('/userResearches/store', new FormData(formElement))
+            .then(() => {
+                alert('Изменения сохранены');
+            })
+            .catch((error) => {
+                const errors = error;
+
+                this.setState({
+                    errors: errors
+                });
+            });
     }
 
     render() {
         return (
             <div className="animated fadeIn">
                 <Row>
-                    <Col xs="12" lg="12">
+                    <Col xs="12" md="12" lg="8">
                         <Card>
                             <CardHeader>
                                 <i className="fa fa-heartbeat" aria-hidden="true"/>Исследования
-                                ({this.props.researches.length})
-                                <Link to="researches/create" className="btn btn-primary btn-sm pull-right">
-                                    Добавить <i className="icon-plus"/>
-                                </Link>
+                                ({this.props.userResearches.length})
+                                <Button type="submit" size="sm"
+                                        color="success pull-right"
+                                        onClick={this.handleClick}
+                                >
+                                    <i className="fa fa-dot-circle-o"/> Сохранить
+                                </Button>
                             </CardHeader>
                             <CardBlock className="card-body">
-                                <Table responsive>
-                                    <thead>
-                                    <tr>
-                                        <th>Наименование</th>
-                                        <th>Период</th>
-                                        <th>Редактировать</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    { this.props.researches.map((research) => {
-                                        return (
-                                            <tr key={research.id}>
-                                                <td>{research.name}</td>
-                                                <td>{research.research_period.name}</td>
-                                                <td>
-                                                    <Link to={`researches/edit/${research.id}`}
-                                                          className="btn btn-success btn-xs pull-left">Редатировать
-                                                        <i className="glyphicon glyphicon-pencil"/>
-                                                    </Link>
-                                                </td>
-                                            </tr>
-                                        );
-                                    })
-                                    }
-                                    </tbody>
-                                </Table>
+                                <Form>
+                                    <Table responsive>
+                                        <thead>
+                                        <tr>
+                                            <th>Категория</th>
+                                            <th>Исследование</th>
+                                            <th/>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                            { this.props.userResearches.map((research) => {
+                                                let check = '';
+
+                                                if (research.check) {
+                                                    check = 'checked';
+                                                }
+
+                                                return (
+                                                    <tr key={research.id}>
+                                                        <td>{research.category.name}</td>
+                                                        <td>{research.research.name}</td>
+                                                        <td>
+                                                            <Input type="checkbox"
+                                                                   name={`research[${research.id}]`}
+                                                                   defaultChecked={check}
+                                                                   value={research.id}
+                                                            />
+                                                        </td>
+                                                    </tr>
+                                                );
+                                            })
+                                            }
+                                        </tbody>
+                                    </Table>
+                                </Form>
                             </CardBlock>
                         </Card>
                     </Col>
@@ -73,13 +123,13 @@ class Researches extends React.Component {
  */
 function mapStateToProps(state) {
     return {
-        researches: state.researches.researches
+        userResearches: state.researches.userResearches
     };
 }
 
 Researches.propTypes = {
     dispatch: PropTypes.func.isRequired,
-    researches: PropTypes.array.isRequired
+    userResearches: PropTypes.array.isRequired
 };
 
 export default connect(mapStateToProps)(Researches);

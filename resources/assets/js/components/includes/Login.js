@@ -109,7 +109,6 @@ class Login extends Component {
                                             </Row>
                                         </Form>
                                     </CardBlock>
-
                                 </Card>
                             </CardGroup>
                         </Col>

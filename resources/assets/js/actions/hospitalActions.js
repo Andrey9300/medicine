@@ -50,6 +50,29 @@ export function fetchHospital(id) {
 }
 
 /**
+ * Получить доступные исследования
+ *
+ * @returns {function(*)}
+ */
+export function fetchHospitalResearches(id) {
+    return (dispatch) => {
+        axios.post(`/hospitals/researches/${id}`)
+            .then((response) => {
+                dispatch({
+                    payload: response,
+                    type: 'HOSPITAL_RESEARCHES_FULFILLED'
+                });
+            })
+            .catch((error) => {
+                dispatch({
+                    payload: error,
+                    type: 'HOSPITAL_RESEARCHES_REJECTED'
+                });
+            });
+    };
+}
+
+/**
  * Удалить медицинскую организацию
  *
  * @param id number
@@ -66,31 +89,3 @@ export function deleteHospital(id) {
             });
     };
 }
-
-/**
- * TODO Исследования медицинских учреждений
- */
-
-/**
- * Вывести все исследования для категорий организаций
- * @param id - id мед учреждения
- * @returns {function(*)}
- */
-export function fetchHospitalResearches() {
-    return (dispatch) => {
-        axios.post('/researches/onCategories')
-            .then((response) => {
-                dispatch({
-                    payload: response,
-                    type: 'HOSPITAL_RESEARCHES_FULFILLED'
-                });
-            })
-            .catch((error) => {
-                dispatch({
-                    payload: error,
-                    type: 'HOSPITAL_RESEARCHES_REJECTED'
-                });
-            });
-    };
-}
-

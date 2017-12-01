@@ -58,7 +58,7 @@ export default function reducer(state = initialState, action) {
             return {
                 ...state,
                 fetched: true,
-                employeeResearches: action.payload.employee_researches
+                employeeResearches: action.payload.employeeResearches
             };
         }
         case 'EMPLOYEE_RESEARCH_REJECTED': {

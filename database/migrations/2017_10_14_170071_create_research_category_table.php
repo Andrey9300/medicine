@@ -13,7 +13,7 @@ class CreateResearchCategoryTable extends Migration
      */
     public function up()
     {
-        Schema::create('research_category', function (Blueprint $table) {
+        Schema::create('research_categories', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('category_id')->unsigned();
             $table->foreign('category_id')->references('id')->on('categories');
@@ -30,6 +30,6 @@ class CreateResearchCategoryTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('research_category');
+        Schema::dropIfExists('research_categories');
     }
 }

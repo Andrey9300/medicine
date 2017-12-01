@@ -13,8 +13,7 @@ class LegalEntityController extends Controller
     /**
      * Создать юридическое лицо
      *
-     * @param  \Illuminate\Http\Request $request
-     * @return void
+     * @param StoreLegalEntity $request
      */
     public function store(StoreLegalEntity $request)
     {
@@ -29,7 +28,7 @@ class LegalEntityController extends Controller
     }
 
     /**
-     * Вывести юридическое лицо
+     * Вывести юридические лица
      *
      * @return \Illuminate\Http\JsonResponse
      */
@@ -61,8 +60,8 @@ class LegalEntityController extends Controller
     /**
      * Обновить юридическое лицо
      *
-     * @param int $id
-     * @param  \Illuminate\Http\Request  $request
+     * @param UpdateLegalEntity $request
+     * @param                   $id
      * @return void
      */
     public function update(UpdateLegalEntity $request, $id)

@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Notifications\ActivateAccount;
 use App\User;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
 
@@ -62,10 +64,30 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        return User::create([
+        $newUser = User::create([
             'fio' => $data['fio'],
             'email' => $data['email'],
             'password' => bcrypt($data['password']),
         ]);
+        $newUser->notify(new ActivateAccount($newUser));
+
+        return $newUser;
+    }
+
+    /**
+     * Make user activation.
+     */
+    protected function activation($userId, $token)
+    {
+        $user = User::findOrFail($userId);
+
+        if (md5($user->email) === $token) {
+            $user->active = 1;
+            $user->save();
+
+            Auth::login($user, true);
+
+            return redirect('/#/activateAccount');
+        }
     }
 }

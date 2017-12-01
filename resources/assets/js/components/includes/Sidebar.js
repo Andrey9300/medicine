@@ -22,17 +22,17 @@ class Sidebar extends Component {
                         </li>
                         <li>
                             <Link to="legalEntities" className="nav-link">
-                                <i className="fa fa-briefcase" aria-hidden="true"/>Организации (юридические лица)
+                                <i className="fa fa-briefcase" aria-hidden="true"/>Компании (юридические лица)
                             </Link>
                         </li>
                         <li>
                             <Link to="organizations" className="nav-link">
-                                <i className="fa fa-building-o" aria-hidden="true"/>Объекты организаций
+                                <i className="fa fa-building-o" aria-hidden="true"/>Объекты компаний
                             </Link>
                         </li>
                         <li>
                             <Link to="employees" className="nav-link">
-                                <i className="fa fa-users" aria-hidden="true"/>Сотрудники организаций
+                                <i className="fa fa-users" aria-hidden="true"/>Сотрудники компаний
                             </Link>
                         </li>
                         <li>

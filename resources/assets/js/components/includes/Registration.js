@@ -11,7 +11,8 @@ import {
     Button,
     Input,
     InputGroup,
-    InputGroupAddon
+    InputGroupAddon,
+    CardGroup
 } from 'reactstrap';
 import PropTypes from 'prop-types';
 import {hashHistory} from 'react-router';
@@ -32,7 +33,8 @@ class Registration extends Component {
 
         axios.post('/register', new FormData(formElement))
             .then(() => {
-                alert('Вы зарегистрированы');
+                alert('Вам отправлен email для активации аккаунта');
+
                 axios.post('/logout', new FormData(formElement))
                     .then(() => {
                         hashHistory.push('/login');
@@ -94,35 +96,37 @@ class Registration extends Component {
                     <Row className="justify-content-center">
                         <Col md="6">
                             {errors}
-                            <Card className="mx-4">
-                                <CardBlock className="card-body">
-                                    <Form onSubmit={this.handleSubmit}>
-                                        <h1>Регистрация</h1>
-                                        <p className="text-muted">Создайте свой аккаунт</p>
-                                        <InputGroup className="mb-3">
-                                            <InputGroupAddon><i className="icon-user"/></InputGroupAddon>
-                                            <Input type="text" name="fio" placeholder="ФИО"/>
-                                        </InputGroup>
-                                        <InputGroup className="mb-3">
-                                            <InputGroupAddon>@</InputGroupAddon>
-                                            <Input type="email" name="email" placeholder="E-mail"/>
-                                        </InputGroup>
-                                        <InputGroup className="mb-3">
-                                            <InputGroupAddon><i className="icon-lock"/></InputGroupAddon>
-                                            <Input type="password" name="password" placeholder="Пароль"/>
-                                        </InputGroup>
-                                        <InputGroup className="mb-3">
-                                            <InputGroupAddon><i className="icon-lock"/></InputGroupAddon>
-                                            <Input type="password" name="password_confirmation"
-                                                   placeholder="Повторите пароль"/>
-                                        </InputGroup>
-                                        <Button color="success" block>Создать аккаунт</Button>
-                                        <Button color="primary" block onClick={this.handleLogin}>
-                                            Уже есть аккаунт
-                                        </Button>
-                                    </Form>
-                                </CardBlock>
-                            </Card>
+                            <CardGroup className="mb-0">
+                                <Card className="p-4">
+                                    <CardBlock className="card-body">
+                                        <Form onSubmit={this.handleSubmit}>
+                                            <h1>Регистрация</h1>
+                                            <p className="text-muted">Создайте свой аккаунт</p>
+                                            <InputGroup className="mb-3">
+                                                <InputGroupAddon><i className="icon-user"/></InputGroupAddon>
+                                                <Input type="text" name="fio" placeholder="ФИО"/>
+                                            </InputGroup>
+                                            <InputGroup className="mb-3">
+                                                <InputGroupAddon>@</InputGroupAddon>
+                                                <Input type="email" name="email" placeholder="E-mail"/>
+                                            </InputGroup>
+                                            <InputGroup className="mb-3">
+                                                <InputGroupAddon><i className="icon-lock"/></InputGroupAddon>
+                                                <Input type="password" name="password" placeholder="Пароль"/>
+                                            </InputGroup>
+                                            <InputGroup className="mb-3">
+                                                <InputGroupAddon><i className="icon-lock"/></InputGroupAddon>
+                                                <Input type="password" name="password_confirmation"
+                                                       placeholder="Повторите пароль"/>
+                                            </InputGroup>
+                                            <Button color="success" block>Создать аккаунт</Button>
+                                            <Button color="primary" block onClick={this.handleLogin}>
+                                                Уже есть аккаунт
+                                            </Button>
+                                        </Form>
+                                    </CardBlock>
+                                </Card>
+                            </CardGroup>
                         </Col>
                     </Row>
                 </Container>

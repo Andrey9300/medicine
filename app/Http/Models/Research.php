@@ -9,7 +9,7 @@ class Research extends Model
     public $timestamps = false;
 
     /**
-     * период
+     * Период исследования
      */
     public function researchPeriod()
     {

@@ -3,8 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Models\Hospital;
-use App\Http\Models\Region;
-use App\Http\Models\Research;
+use App\Http\Models\HospitalResearch;
 use App\Http\Requests\StoreHospital;
 use App\Http\Requests\UpdateHospital;
 use Illuminate\Http\Request;
@@ -15,7 +14,7 @@ class HospitalController extends Controller
     /**
      * Создать медицинскую организацию
      *
-     * @param  \Illuminate\Http\Request $request
+     * @param StoreHospital $request
      * @return void
      */
     public function store(StoreHospital $request)
@@ -67,9 +66,8 @@ class HospitalController extends Controller
     /**
      * Обновить медицинскиую организацию
      *
-     * @param int $id
-     * @param  \Illuminate\Http\Request  $request
-     * @return void
+     * @param UpdateHospital $request
+     * @param                $id
      */
     public function update(UpdateHospital $request, $id)
     {
@@ -99,6 +97,45 @@ class HospitalController extends Controller
     }
 
     /**
-     * Исследования медицинских учреждений
+     * Цены на исследования
+     *
+     * @param $id - hospital_id
+     * @return \Illuminate\Http\JsonResponse
      */
+    public function researches($id) {
+        $user = Auth::user();
+
+        $userResearches = $user->researches;
+
+        foreach ($userResearches as $research) {
+            $hospitalResearch = HospitalResearch::firstOrCreate(
+                ['user_researches_id' => $research->pivot->id, 'hospital_id' => $id]
+            );
+
+            $research->category;
+            $research->research;
+            $research->price = $hospitalResearch->price;
+        }
+
+        return response()->json([
+            'hospitalResearches' => $userResearches
+        ]);
+    }
+
+    /**
+     * Обновить или сохранить цены на исследований
+     *
+     * @param Request $request
+     * @param         $id
+     */
+    public function researchesStore(Request $request, $id) {
+        $hospitalResearches = $request->hospitalResearch;
+
+        foreach ($hospitalResearches as $key => $value) {
+            HospitalResearch::updateOrCreate(
+                ['user_researches_id' => $key, 'hospital_id' => $id],
+                ['price' => $value]
+            );
+        }
+    }
 }

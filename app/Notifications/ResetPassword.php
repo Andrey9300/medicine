@@ -7,26 +7,25 @@ use Illuminate\Notifications\Notification;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 
-class SendPassword extends Notification
+class ResetPassword extends Notification
 {
     use Queueable;
 
-    protected $email;
-    protected $password;
-    protected $organization_name;
+    /**
+     * The password reset token.
+     *
+     * @var string
+     */
+    public $token;
 
     /**
-     * SendPassword constructor.
+     * ResetPassword constructor.
      *
-     * @param $email
-     * @param $password
-     * @param $organization_name
+     * @param $token
      */
-    public function __construct($email, $password, $organization_name)
+    public function __construct($token)
     {
-        $this->email = $email;
-        $this->password = $password;
-        $this->organization_name = $organization_name;
+        $this->token = $token;
     }
 
     /**
@@ -49,12 +48,11 @@ class SendPassword extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
-            ->subject('Доступ к сервису медицинских книжек')
+            ->subject('Восстановление пароля к сервису медицинских книжек')
             ->greeting('Здравствуйте!')
-            ->line('Вас назначили руководителем объекта ' . $this->organization_name . ' в сервисе медицинских книжек')
-            ->line('Логин для входа: ' . $this->email)
-            ->line('Пароль для входа: ' . $this->password)
-            ->action('Войти', url(env('APP_URL') . '/#/login'));
+            ->line('Вы получили это письмо, потому что мы получили запрос на сброс пароля для Вашей учетной записи.')
+            ->action('Cброс пароля', url(env('APP_URL') . '/#/resetPassword?token=' . $this->token . '&email=' . urlencode($notifiable->email) ))
+            ->line('Если вы не запросили сброс пароля, дальнейшие действия не требуются.');
     }
 
     /**

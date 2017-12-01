@@ -11,10 +11,9 @@ class EmployeePolicy
     use HandlesAuthorization;
 
     /**
-     * @param User     $user
-     * @param Employee $employee
+     * @param User $user
      *
-     * @return mixed
+     * @return bool
      */
     public function isAdmin(User $user)
     {
@@ -25,7 +24,7 @@ class EmployeePolicy
      * @param User     $user
      * @param Employee $employee
      *
-     * @return mixed
+     * @return bool
      */
     public function isAdminAndOwner(User $user, Employee $employee)
     {

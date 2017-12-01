@@ -15,6 +15,7 @@ return [
     */
 
     'accepted'             => 'Вы должны принять :attribute.',
+    'active'               => 'У вас не подтвержден email',
     'active_url'           => 'Поле :attribute содержит недействительный URL.',
     'after'                => 'В поле :attribute должна быть дата после :date.',
     'after_or_equal'       => 'В поле :attribute должна быть дата после или равняться :date.',
