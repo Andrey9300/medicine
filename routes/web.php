@@ -6,6 +6,7 @@ Route::get('activateAccount/{id}/{token}', 'Auth\RegisterController@activation')
 Route::middleware(['auth'])->group(function () {
     Route::prefix('legalEntities')->group(function () {
         Route::post('/store', 'LegalEntityController@store');
+        Route::post('/commonInfo/{id}', 'LegalEntityController@commonInfo');
         Route::post('/destroy/{id}', 'LegalEntityController@destroy');
         Route::post('/update/{id}', 'LegalEntityController@update');
         Route::post('/{id}', 'LegalEntityController@show');
@@ -28,6 +29,7 @@ Route::middleware(['auth'])->group(function () {
 
     Route::prefix('organizations')->group(function () {
         Route::post('/store', 'OrganizationController@store');
+        Route::post('/expired', 'OrganizationController@expired');
         Route::post('/destroy/{id}', 'OrganizationController@destroy');
         Route::post('/update/{id}', 'OrganizationController@update');
         Route::post('/{id}', 'OrganizationController@show');

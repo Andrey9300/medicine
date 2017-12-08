@@ -1,5 +1,4 @@
 import {fetchEmployeeResearches} from '../../../actions/employeeActions';
-import {Link} from 'react-router';
 import React from 'react';
 import {connect} from 'react-redux';
 import {
@@ -8,9 +7,13 @@ import {
     Col,
     Card,
     CardHeader,
-    CardBlock
+    CardBlock,
+    Button,
+    Form,
+    Input
 } from 'reactstrap';
 import PropTypes from 'prop-types';
+import axios from 'axios';
 
 class EmployeeResearches extends React.Component {
     constructor(props) {
@@ -19,10 +22,27 @@ class EmployeeResearches extends React.Component {
             errors: '',
             employeeId: props.idEmployee
         };
+        this.handleClick = this.handleClick.bind(this);
     }
 
     componentWillMount() {
         this.props.dispatch(fetchEmployeeResearches(this.state.employeeId));
+    }
+
+    handleClick() {
+        const formElement = document.getElementById('employeeResearch');
+
+        axios.post(`/employees/researches/store/${this.state.employeeId}`, new FormData(formElement))
+            .then(() => {
+                alert('Изменения сохранены');
+            })
+            .catch((error) => {
+                const errors = error;
+
+                this.setState({
+                    errors: errors
+                });
+            });
     }
 
     render() {
@@ -32,62 +52,44 @@ class EmployeeResearches extends React.Component {
                     <Col xs="12" lg="12">
                         <Card>
                             <CardHeader>
-                                <i className="fa fa-heartbeat" aria-hidden="true"/>Исследования сотрудника
-                                <Link to={`employees/researches/${this.state.employeeId}/create`}
-                                      className="btn btn-primary btn-sm pull-right">
-                                    Добавить <i className="icon-plus"/>
-                                </Link>
+                                <i className="fa fa-heartbeat" aria-hidden="true"/>Даты исследований
+                                ({this.props.employeeResearches.length})
+                                <Button type="submit" size="sm"
+                                        color="success pull-right"
+                                        onClick={this.handleClick}
+                                >
+                                    <i className="fa fa-dot-circle-o"/> Сохранить
+                                </Button>
                             </CardHeader>
                             <CardBlock className="card-body">
-                                <Table responsive>
-                                    <thead>
-                                    <tr>
-                                        <th>Название</th>
-                                        <th>Период</th>
-                                        <th>Дата</th>
-                                        <th>Редактировать</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    { this.props.employeeResearches.map((research) => {
-                                        return (
-                                            <tr key={research.id}>
-                                                <td>{research.name}</td>
-                                                <td>
-                                                    {(() => {
-                                                        switch (research.period) {
-                                                            case '-1':
-                                                                return 'При поступлении на работу.' +
-                                                                    'При смене юридического лица';
-                                                            case '1':
-                                                                return 'Раз в жизни';
-                                                            case '365':
-                                                                return 'Раз в год';
-                                                            case '730':
-                                                                return 'Раз в два года';
-                                                            case '1827':
-                                                                return 'Раз в 5 лет';
-                                                            case '3653':
-                                                                return 'Раз в 10 лет';
-                                                            default :
-                                                                return research.period;
-                                                        }
-                                                    })()}
-                                                </td>
-                                                <td>{research.pivot.date}</td>
-                                                <td>
-                                                    <Link to={`employees/researches/edit/${this.state.employeeId}/${research.id}`}
-                                                          className="btn btn-success btn-xs pull-left">Редактировать
-                                                        <i className="glyphicon glyphicon-pencil"/>
-                                                    </Link>
-                                                </td>
-                                            </tr>
-
-                                        );
-                                    })
-                                    }
-                                    </tbody>
-                                </Table>
+                                <Form id="employeeResearch">
+                                    <Table responsive>
+                                        <thead>
+                                        <tr>
+                                            <th>Категория</th>
+                                            <th>Исследование</th>
+                                            <th>Дата</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        { this.props.employeeResearches.map((employeeResearch) => {
+                                            return (
+                                                <tr key={employeeResearch.id}>
+                                                    <td>{employeeResearch.category.name}</td>
+                                                    <td>{employeeResearch.research.name}</td>
+                                                    <td>
+                                                        <Input type="text"
+                                                               name={`employeeResearch[${employeeResearch.pivot.id}]`}
+                                                               defaultValue={employeeResearch.date}
+                                                        />
+                                                    </td>
+                                                </tr>
+                                            );
+                                        })
+                                        }
+                                        </tbody>
+                                    </Table>
+                                </Form>
                             </CardBlock>
                         </Card>
                     </Col>
@@ -109,10 +111,7 @@ function mapStateToProps(state) {
 }
 
 EmployeeResearches.propTypes = {
-    dispatch: PropTypes.func.isRequired,
-    idEmployee: PropTypes.number.isRequired,
-    router: PropTypes.object.isRequired,
-    employeeResearches: PropTypes.array.isRequired
+    dispatch: PropTypes.func.isRequired
 };
 
 export default connect(mapStateToProps)(EmployeeResearches);

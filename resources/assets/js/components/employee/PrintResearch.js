@@ -27,7 +27,7 @@ class PrintEmployee extends React.Component {
     researches() {
         const bufferTr = [];
         let bufferTd = [];
-        const researches = this.props.employee.researches_expired.concat(this.props.employee.researches_ended);
+        const researches = this.props.employee.researches_expired.concat(this.props.employee.researches_ends);
 
         researches.map((research, index) => {
             if (index % 2) {
@@ -36,9 +36,11 @@ class PrintEmployee extends React.Component {
             } else {
                 bufferTd.push(<td key={research.id}>{research.name}</td>);
             }
-
-            return bufferTd;
         });
+
+        if ((bufferTr.length % 2 === 1 && bufferTd.length) || (bufferTr.length === 0 && bufferTd.length)) {
+            bufferTr.push(<tr key={1}>{bufferTd}</tr>);
+        }
 
         return bufferTr;
     }
@@ -87,7 +89,7 @@ class PrintEmployee extends React.Component {
                                             </tr>
                                             <tr>
                                                 <td colSpan="2">
-                                                    От: «{employee.organization.legal_entity}»
+                                                    От: «{employee.legal_entity}»
                                                 </td>
                                             </tr>
                                             <tr>
@@ -116,7 +118,9 @@ class PrintEmployee extends React.Component {
                                                     Подпись _______________________________
                                                 </td>
                                                 <td style={{textAlign: 'left'}}>
-                                                    {new Date(Date.now()).toLocaleDateString('ru-RU', {year: 'numeric', month: 'long', day: 'numeric' })}</td>
+                                                    {new Date(Date.now()).toLocaleDateString('ru-RU',
+                                                        {year: 'numeric', month: 'long', day: 'numeric' })}
+                                                </td>
                                             </tr>
                                             <tr style={{borderBottom: '1px solid'}}>
                                                 <td style={{ textAlign: 'right', fontWeight: 'italic'}} colSpan="2">
@@ -141,7 +145,7 @@ class PrintEmployee extends React.Component {
                                                     Адрес: Петровский бульвар 12 стр. 2, метро «Трубная»<br/>
                                                     Режим работы: пн.- пт. 9.00-18.00 сб. 9.00-17.00, вс-вых.<br/>
                                                     Телефон: 8 (495)-150-16-56
-                                                    <img width="670" height="300" src="/img/map_to_medical_center.png" />
+                                                    <img width="670" height="300" src="/img/map_to_medical_center.png"/>
                                                 </td>
                                             </tr>
                                         </tbody>
@@ -174,10 +178,7 @@ function mapStateToProps(state) {
 }
 
 PrintEmployee.propTypes = {
-    dispatch: PropTypes.func.isRequired,
-    params: PropTypes.object.isRequired,
-    router: PropTypes.object.isRequired,
-    employee: PropTypes.object.isRequired
+    dispatch: PropTypes.func.isRequired
 };
 
 export default connect(mapStateToProps)(PrintEmployee);

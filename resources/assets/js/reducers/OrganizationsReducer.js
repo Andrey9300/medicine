@@ -3,6 +3,7 @@ const initialState = {
     fetched: false,
     organization: null,
     organizations: [],
+    expired: [],
     organizationEmployees: []
 };
 
@@ -26,6 +27,20 @@ export default function reducer(state = initialState, action) {
                 ...state,
                 fetched: true,
                 organizations: action.payload.data.organizations
+            };
+        }
+        case 'EXPIRED_ORGANIZATIONS_REJECTED': {
+            return {
+                ...state,
+                error: action.payload,
+                fetched: false
+            };
+        }
+        case 'EXPIRED_ORGANIZATIONS_FULFILLED': {
+            return {
+                ...state,
+                fetched: true,
+                expired: action.payload.data.expired
             };
         }
         case 'ORGANIZATION_REJECTED': {

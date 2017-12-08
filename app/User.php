@@ -11,7 +11,7 @@ class User extends Authenticatable
     use Notifiable;
 
     protected $fillable = [
-        'fio', 'email', 'password', 'role'
+        'fio', 'email', 'password', 'role', 'active'
     ];
 
     protected $hidden = [
@@ -50,9 +50,17 @@ class User extends Authenticatable
     /**
      * Все юридические лица user
      */
-    public function legal_entities()
+    public function legalEntities()
     {
         return $this->hasMany('App\Http\Models\LegalEntity');
+    }
+
+    /**
+     * Все сотрудинки user
+     */
+    public function employees()
+    {
+        return $this->hasMany('App\Http\Models\Employee');
     }
 
     /**

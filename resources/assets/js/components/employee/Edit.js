@@ -24,8 +24,8 @@ class EditEmployee extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            employeeId: props.params.id,
-            errors: ''
+            errors: '',
+            employeeId: props.params.id
         };
         this.handleSubmit = this.handleSubmit.bind(this);
     }
@@ -38,11 +38,9 @@ class EditEmployee extends React.Component {
             .then(() => {
                 hashHistory.push(`/employees/${this.state.employeeId}`);
             })
-            .catch((error) => {
-                const errors = error.response.data.message;
-
+            .catch((errors) => {
                 this.setState({
-                    errors: errors
+                    errors: errors.response.data.errors
                 });
             });
     }
@@ -53,8 +51,16 @@ class EditEmployee extends React.Component {
     }
 
     createMarkup() {
+        let html = '';
+
+        Object.keys(this.state.errors).forEach((item) => {
+            this.state.errors[item].forEach((value) => {
+                html += `<p>${value}</p>`;
+            });
+        });
+
         return {
-            __html: this.state.errors
+            __html: html
         };
     }
 
@@ -100,8 +106,9 @@ class EditEmployee extends React.Component {
                                         </Col>
                                         <Col xs="12" md="9">
                                             <Input type="text" id="date_birthday" name="date_birthday"
-                                                   placeholder="Дата рождения"
+                                                   placeholder="Y-m-d"
                                                    defaultValue={employee.date_birthday}/>
+                                            <FormText color="muted">Введите дату рождения</FormText>
                                         </Col>
                                     </FormGroup>
                                     <FormGroup row>
@@ -109,8 +116,8 @@ class EditEmployee extends React.Component {
                                             <Label htmlFor="text-input">Дата приема на работу</Label>
                                         </Col>
                                         <Col xs="12" md="9">
-                                            <Input type="date" id="date_employment" name="date_employment"
-                                                   placeholder="Дата приема на работу"
+                                            <Input type="text" id="date_employment" name="date_employment"
+                                                   placeholder="Y-m-d"
                                                    defaultValue={employee.date_employment}/>
                                             <FormText color="muted">Введите дату приема на работу</FormText>
                                         </Col>

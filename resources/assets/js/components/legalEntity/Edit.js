@@ -2,6 +2,8 @@ import React from 'react';
 import axios from 'axios';
 import {connect} from 'react-redux';
 import {fetchLegalEntity} from './../../actions/legalEntityActions';
+import PropTypes from 'prop-types';
+import {hashHistory} from 'react-router';
 import {
     Row,
     Col,
@@ -16,8 +18,6 @@ import {
     Label,
     Input
 } from 'reactstrap';
-import PropTypes from 'prop-types';
-import {hashHistory} from 'react-router';
 
 class EditLegalEntity extends React.Component {
     constructor(props) {
@@ -63,10 +63,11 @@ class EditLegalEntity extends React.Component {
     }
 
     componentWillReceiveProps(nextProps) {
+        console.log(this.props.legalEntity );
         if (this.props.legalEntity && nextProps.legalEntity &&
             nextProps.legalEntity.name !== this.props.legalEntity.name
         ) {
-            window.location.reload();
+            //window.location.reload();
         }
     }
 
@@ -164,9 +165,7 @@ function mapStateToProps(state) {
 }
 
 EditLegalEntity.propTypes = {
-    dispatch: PropTypes.func.isRequired,
-    params: PropTypes.object.isRequired,
-    router: PropTypes.object.isRequired
+    dispatch: PropTypes.func.isRequired
 };
 
 export default connect(mapStateToProps)(EditLegalEntity);

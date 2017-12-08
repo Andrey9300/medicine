@@ -13,6 +13,11 @@ import EditLegalEntity from './components/legalEntity/Edit';
 import LegalEntity from './components/legalEntity/LegalEntity';
 import LegalEntities from './components/legalEntity/LegalEntities';
 import NewLegalEntity from './components/legalEntity/New';
+import LegalEntityEmployees from './components/legalEntity/LegalEntityEmployees';
+import LegalEntityOrganizations from './components/legalEntity/LegalEntityOrganizations';
+import LegalEntityExpiredOrganizations from './components/legalEntity/LegalEntityExpiredOrganizations';
+import LegalEntityExpiredEmployees from './components/legalEntity/LegalEntityExpiredEmployees';
+import LegalEntityEndsEmployees from './components/legalEntity/LegalEntityEndsEmployees';
 
 import EditHospital from './components/hospital/Edit';
 import Hospital from './components/hospital/Hospital';
@@ -27,6 +32,7 @@ import Organizations from './components/organization/Organizations';
 import NewOrganization from './components/organization/New';
 import OrganizationEmployees from './components/organization/OrganizationEmployees';
 import NewOrganizationEmployee from './components/organization/employee/New';
+import OrganizationBudget from './components/organization/budget/Budget';
 
 import EditResearch from './components/research/Edit';
 import Researches from './components/research/Researches';
@@ -57,6 +63,11 @@ ReactDOM.render(
 
                 <Route path = "legalEntities" component={LegalEntities}/>
                 <Route path = "legalEntities/create" component = { NewLegalEntity }/>
+                <Route path = "legalEntities/employees/:legalEntityId" component = { LegalEntityEmployees }/>
+                <Route path = "legalEntities/organizations/:legalEntityId" component = { LegalEntityOrganizations }/>
+                <Route path = "legalEntities/expiredOrganizations/:legalEntityId" component = { LegalEntityExpiredOrganizations }/>
+                <Route path = "legalEntities/expiredEmployees/:legalEntityId" component = { LegalEntityExpiredEmployees }/>
+                <Route path = "legalEntities/endsEmployees/:legalEntityId" component = { LegalEntityEndsEmployees }/>
                 <Route path = "legalEntities/:id" component = { LegalEntity }/>
                 <Route path = "legalEntities/edit/:id" component = { EditLegalEntity }/>
 
@@ -68,10 +79,11 @@ ReactDOM.render(
 
                 <Route path = "organizations" component = { Organizations }/>
                 <Route path = "organizations/create" component = { NewOrganization }/>
-                <Route path = "organizations/:id" component = { Organization }/>
                 <Route path = "organizations/employees/create/:idOrganization" component = { NewOrganizationEmployee }/>
                 <Route path = "organizations/employees/:idOrganization" component = { OrganizationEmployees }/>
+                <Route path = "organizations/budget/:idOrganization" component = { OrganizationBudget }/>
                 <Route path = "organizations/edit/:id" component = { EditOrganization }/>
+                <Route path = "organizations/:id" component = { Organization }/>
 
                 <Route path = "researches" component = { Researches }/>
                 <Route path = "researches/create" component = { NewResearch }/>

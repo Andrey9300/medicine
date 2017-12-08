@@ -1,8 +1,10 @@
 import React, {Component} from 'react';
-import {IndexLink, Link} from 'react-router';
 import {logoutUser} from '../../actions/userActions';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
+import {
+    Nav, NavItem, NavLink
+} from 'reactstrap';
 
 class Sidebar extends Component {
     logout(event) {
@@ -11,57 +13,63 @@ class Sidebar extends Component {
     }
 
     render() {
+        const {location} = this.props;
+        const homeClass = location.pathname === '/' ? 'active' : '';
+        const legalEntitiesClass = location.pathname.match(/^\/legalEntities/) ? 'active' : '';
+        const organizationsClass = location.pathname.match(/^\/organizations/) ? 'active' : '';
+        const employeesClass = location.pathname.match(/^\/employees/) ? 'active' : '';
+        const hospitalsClass = location.pathname.match(/^\/hospitals/) ? 'active' : '';
+        const researchesClass = location.pathname.match(/^\/researches/) ? 'active' : '';
+
         return (
             <div className="sidebar">
-                <nav className="sidebar-nav">
-                    <ul className="nav-item" id="main_nav">
-                        <li>
-                            <IndexLink to="/" className="nav-link">
-                                <i className="icon-home"/>Главная
-                            </IndexLink>
-                        </li>
-                        <li>
-                            <Link to="legalEntities" className="nav-link">
-                                <i className="fa fa-briefcase" aria-hidden="true"/>Компании (юридические лица)
-                            </Link>
-                        </li>
-                        <li>
-                            <Link to="organizations" className="nav-link">
-                                <i className="fa fa-building-o" aria-hidden="true"/>Объекты компаний
-                            </Link>
-                        </li>
-                        <li>
-                            <Link to="employees" className="nav-link">
-                                <i className="fa fa-users" aria-hidden="true"/>Сотрудники компаний
-                            </Link>
-                        </li>
-                        <li>
-                            <Link to="hospitals" className="nav-link">
-                                <i className="fa fa-stethoscope" aria-hidden="true"/>Медицинские центры
-                            </Link>
-                        </li>
-                        <li>
-                            <Link to="researches" className="nav-link">
-                                <i className="fa fa-heartbeat" aria-hidden="true"/>Исследования
-                            </Link>
-                        </li>
-                        <li>
-                            <Link to="#" className="nav-link">
-                                <i className="fa fa-bar-chart" aria-hidden="true"/>Отчеты
-                            </Link>
-                        </li>
-                        <li>
-                            <Link to="#" className="nav-link">
-                                <i className="fa fa-handshake-o" aria-hidden="true"/>Партнеры
-                            </Link>
-                        </li>
-                        <li>
-                            <Link to="/" onClick={this.logout.bind(this)} className="nav-link">
-                                <i className="fa fa-lock" aria-hidden="true"/>Выход
-                            </Link>
-                        </li>
-                    </ul>
-                </nav>
+                <Nav>
+                    <NavItem>
+                        <NavLink href="#/" className={homeClass}>
+                            <i className="icon-home"/>Главная
+                        </NavLink>
+                    </NavItem>
+                    <NavItem>
+                        <NavLink href="#/legalEntities" className={legalEntitiesClass}>
+                            <i className="fa fa-briefcase" aria-hidden="true"/>Компании (юридические лица)
+                        </NavLink>
+                    </NavItem>
+                    <NavItem>
+                        <NavLink href="#/organizations" className={organizationsClass}>
+                            <i className="fa fa-building-o" aria-hidden="true"/>Объекты компаний
+                        </NavLink>
+                    </NavItem>
+                    <NavItem>
+                        <NavLink href="#/employees" className={employeesClass}>
+                            <i className="fa fa-users" aria-hidden="true"/>Сотрудники компаний
+                        </NavLink>
+                    </NavItem>
+                    <NavItem>
+                        <NavLink href="#/hospitals" className={hospitalsClass}>
+                            <i className="fa fa-stethoscope" aria-hidden="true"/>Медицинские центры
+                        </NavLink>
+                    </NavItem>
+                    <NavItem>
+                        <NavLink href="#/researches" className={researchesClass}>
+                            <i className="fa fa-heartbeat" aria-hidden="true"/>Исследования
+                        </NavLink>
+                    </NavItem>
+                    <NavItem>
+                        <NavLink href="#">
+                            <i className="fa fa-bar-chart" aria-hidden="true"/>Отчеты
+                        </NavLink>
+                    </NavItem>
+                    <NavItem>
+                        <NavLink href="#">
+                            <i className="fa fa-handshake-o" aria-hidden="true"/>Партнеры
+                        </NavLink>
+                    </NavItem>
+                    <NavItem>
+                        <NavLink href="#" onClick={this.logout.bind(this)}>
+                            <i className="fa fa-lock" aria-hidden="true"/>Выход
+                        </NavLink>
+                    </NavItem>
+                </Nav>
                 <button className="sidebar-minimizer brand-minimizer" type="button"/>
             </div>
         );

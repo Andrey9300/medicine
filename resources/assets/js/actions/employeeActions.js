@@ -6,9 +6,11 @@ import {hashHistory} from 'react-router';
  *
  * @returns {function(*)}
  */
-export function fetchEmployees() {
+export function fetchEmployees(legalEntityId = null) {
     return (dispatch) => {
-        axios.post('/employees')
+        axios.post('/employees', {
+            legalEntityId: legalEntityId
+        })
             .then((response) => {
                 dispatch({
                     payload: response.data,

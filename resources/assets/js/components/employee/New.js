@@ -96,12 +96,10 @@ class NewEmployee extends React.Component {
                                             <Label htmlFor="text-input">Дата рождения</Label>
                                         </Col>
                                         <Col xs="12" md="9">
-                                            <Input type="date" id="date_birthday" name="date_birthday"
-                                                   placeholder="Дата рождения"
+                                            <Input type="text" id="date_birthday" name="date_birthday"
+                                                   placeholder="Y-m-d"
                                                    required/>
-                                            <FormText color="muted">
-                                                Введите дату рождения в формате дд.мм.гггг
-                                            </FormText>
+                                            <FormText color="muted">Введите дату рождения</FormText>
                                         </Col>
                                     </FormGroup>
                                     <FormGroup row>
@@ -109,8 +107,8 @@ class NewEmployee extends React.Component {
                                             <Label htmlFor="text-input">Дата приема на работу</Label>
                                         </Col>
                                         <Col xs="12" md="9">
-                                            <Input type="date" id="date_employment" name="date_employment"
-                                                   placeholder="Дата приема на работу" required/>
+                                            <Input type="text" id="date_employment" name="date_employment"
+                                                   placeholder="Y-m-d" required/>
                                             <FormText color="muted">Введите дату приема на работу</FormText>
                                         </Col>
                                     </FormGroup>

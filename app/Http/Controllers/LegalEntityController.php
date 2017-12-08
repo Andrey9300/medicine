@@ -37,7 +37,7 @@ class LegalEntityController extends Controller
         $user = Auth::user();
 
         return response()->json([
-            'legal_entities' => $user->legal_entities
+            'legalEntities' => $user->legalEntities
         ]);
     }
 
@@ -46,14 +46,63 @@ class LegalEntityController extends Controller
      *
      * @param int $id
      * @return \Illuminate\Http\JsonResponse
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function show($id)
     {
-        $legal_entity = LegalEntity::find($id);
-        $this->authorize('isAdminAndOwner', $legal_entity);
+        $legalEntity = LegalEntity::find($id);
+        $this->authorize('isAdminAndOwner', $legalEntity);
 
         return response()->json([
-            'legal_entity' => $legal_entity
+            'legalEntity' => $legalEntity
+        ]);
+    }
+
+    /**
+     * Общая информация по юридическому лицу для admin
+     */
+    public function commonInfo($id) {
+        $user = Auth::user();
+        $legalEntity = $user->legalEntities->find($id);
+        $this->authorize('isAdminAndOwner', $legalEntity);
+        $organizations = $user->organizations->where('legal_entity_id', '=', $id);
+
+        $employees = [];
+        $employeesResearchesEnds = [];
+        $employeesResearchesExpired = [];
+
+        foreach ($organizations as $organization) {
+            $employees_current = $organization->employees;
+            $organization->medicalResearchesProblem = false;
+
+            foreach ($employees_current as $employee) {
+                OrganizationController::checkMedicalResearch($employee);
+                if (count($employee->researches_ends)) {
+                    $employeesResearchesEnds[] = $employee;
+                    $organization->medicalResearchesProblem = true;
+                } else if (count($employee->researches_expired)) {
+                    $employeesResearchesExpired[] = $employee;
+                    $organization->medicalResearchesProblem = true;
+                }
+                $employees[] = $employee;
+            }
+        }
+
+        $countOrganizationsWithResearchProblems = $organizations->reduce(function ($carry, $item) {
+            if ($item->medicalResearchesProblem) {
+                return $carry + 1;
+            }
+        });
+
+        return response()->json([
+            'user' => $user,
+            'legalEntity' => $legalEntity,
+            'organizations' => $organizations,
+            'countOrganizationsWithResearchProblems' => $countOrganizationsWithResearchProblems,
+            'hospitals' => $user->hospitals,
+            'employees' => $employees,
+            'employeesResearchesEnds' => $employeesResearchesEnds,
+            'employeesResearchesExpired' => $employeesResearchesExpired,
         ]);
     }
 

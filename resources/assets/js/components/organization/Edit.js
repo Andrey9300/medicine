@@ -69,7 +69,9 @@ class EditOrganization extends React.Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        if (this.props.organization && nextProps.organization && nextProps.organization.legal_entity !== this.props.organization.legal_entity) {
+        if (this.props.organization && nextProps.organization &&
+            nextProps.organization.legal_entity !== this.props.organization.legal_entity
+        ) {
             window.location.reload();
         }
     }
@@ -177,7 +179,7 @@ class EditOrganization extends React.Component {
                                             <Label htmlFor="text-input">Категория</Label>
                                         </Col>
                                         <Col xs="12" md="9">
-                                            <Input type="select" name="region_id" id="select"
+                                            <Input type="select" name="category_id" id="select"
                                                    defaultValue={organization.category.id}>
                                                 { this.props.categories.map((category) => {
                                                     return (

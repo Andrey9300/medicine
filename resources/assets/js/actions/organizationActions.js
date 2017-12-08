@@ -6,9 +6,11 @@ import {hashHistory} from 'react-router';
  *
  * @returns {function(*)}
  */
-export function fetchOrganizations() {
+export function fetchOrganizations(legalEntityId = null) {
     return (dispatch) => {
-        axios.post('/organizations')
+        axios.post('/organizations', {
+            legalEntityId: legalEntityId
+        })
             .then((response) => {
                 dispatch({
                     payload: response,
@@ -21,6 +23,33 @@ export function fetchOrganizations() {
                 dispatch({
                     payload: error,
                     type: 'ORGANIZATIONS_REJECTED'
+                });
+            });
+    };
+}
+
+/**
+ * Получить все организации начальника качества
+ *
+ * @returns {function(*)}
+ */
+export function fetchExpiredOrganizations(legalEntityId = null) {
+    return (dispatch) => {
+        axios.post('/organizations/expired', {
+            legalEntityId: legalEntityId
+        })
+            .then((response) => {
+                dispatch({
+                    payload: response,
+                    type: 'EXPIRED_ORGANIZATIONS_FULFILLED'
+                });
+            })
+            .catch((error) => {
+                hashHistory.replace('login');
+
+                dispatch({
+                    payload: error,
+                    type: 'EXPIRED_ORGANIZATIONS_REJECTED'
                 });
             });
     };

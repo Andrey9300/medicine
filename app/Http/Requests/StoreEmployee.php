@@ -31,8 +31,8 @@ class StoreEmployee extends FormRequest
                 "," . $request['date_birthday'] .
                 ',' . $request['date_employment'] .
                 ',' . $this->user()->id,
-            'date_birthday' => "required|date",
-            'date_employment' => "required|date",
+            'date_birthday' => 'date_format:"Y-m-d"|required',
+            'date_employment' => 'date_format:"Y-m-d"|required',
             'medical_book' => "max:255",
         ];
     }

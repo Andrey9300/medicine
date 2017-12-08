@@ -34,7 +34,7 @@ return [
     'boolean'              => 'Поле :attribute должно иметь значение логического типа.', // калька 'истина' или 'ложь' звучала бы слишком неестественно
     'confirmed'            => 'Поле :attribute не совпадает с подтверждением.',
     'date'                 => 'Поле :attribute не является датой.',
-    'date_format'          => 'Поле :attribute не соответствует формату :format.',
+    'date_format'          => 'Поле :attribute не соответствует формату :format. Пример: 2017-01-01',
     'different'            => 'Поля :attribute и :other должны различаться.',
     'digits'               => 'Длина цифрового поля :attribute должна быть :digits.',
     'digits_between'       => 'Длина цифрового поля :attribute должна быть между :min и :max.',
@@ -136,7 +136,10 @@ return [
 
     'attributes'           => [
         'name' => '«Наименование»',
-        'head_email' => '«Email руководителя»'
+        'head_email' => '«Email руководителя»',
+        'legal_entity_id' => '«Юридическое лицо»',
+        'date_birthday' => '«Дата рождения»',
+        'date_employment' => '«Дата устройства на работу»',
     ],
 
 ];

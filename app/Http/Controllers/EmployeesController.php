@@ -8,6 +8,7 @@ use App\Http\Models\Research;
 use App\Http\Models\Employee;
 use App\Http\Models\ResearchCategory;
 use App\Http\Requests\StoreEmployee;
+use App\Http\Requests\UpdateEmployee;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -39,14 +40,22 @@ class EmployeesController extends Controller
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function showAll()
+    public function showAll(Request $request)
     {
         $user = Auth::user();
         $organizations_name = [];
-        foreach($user->organizations as $organization){
+
+        if ($request->legalEntityId) {
+            $organizations = $user->organizations()->where('legal_entity_id', '=', $request->legalEntityId)->get();
+        } else {
+            $organizations = $user->organizations;
+        }
+
+        foreach($organizations as $organization){
             array_push($organizations_name, $organization->name);
         }
 
+        // можно через $user->employees
         $employees = Employee::whereIn('organization_name', $organizations_name)
             ->get();
         $deleted = Employee::whereIn('organization_name', $organizations_name)
@@ -73,11 +82,12 @@ class EmployeesController extends Controller
     public function show($id)
     {
         $employee = Employee::withTrashed()->where('id', $id)->first();
-        $employee->organization;
-
+        $organization = $employee->organization;
+        OrganizationController::checkMedicalResearch($employee);
+        $employee->legal_entity = $organization->legal_entity->name;
         //$this->authorize('owner', $employee->organization);
         /*$employee->organization;
-        $employee = OrganizationController::checkMedicalResearch($employee);
+
 
         $employment_date = Carbon::parse($employee->date_employment);
         $diffDatesResearch = $employment_date->diffInMonths(Carbon::now());
@@ -97,10 +107,10 @@ class EmployeesController extends Controller
      * Обновить сотрудника
      *
      * @param int $id
-     * @param  \Illuminate\Http\Request  $request
+     * @param  UpdateEmployee $request
      * @return void
      */
-    public function update(Request $request, $id)
+    public function update(UpdateEmployee $request, $id)
     {
         $employee = Employee::find($id);
         $employee->fio = $request->fio;
@@ -132,9 +142,7 @@ class EmployeesController extends Controller
      */
     public function forceDelete($id)
     {
-        $employee = Employee::onlyTrashed()
-            ->where('id', $id)
-            ->first();
+        $employee = Employee::find($id);
         $this->authorize('isAdminAndOwner', $employee);
         $employee->forceDelete();
     }
@@ -161,9 +169,7 @@ class EmployeesController extends Controller
             if ($researchCategory->category_id === $employeeCategoryId) {
                 $research->category;
                 $research->research;
-                if (!is_null($employeeResearch->date)) {
-                    $research->date = $employeeResearch->date->format('Y-m-d');
-                }
+                $research->date = $employeeResearch->date;
                 $employeeResearches[] = $research;
             }
         }

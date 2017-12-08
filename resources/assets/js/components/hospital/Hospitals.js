@@ -89,6 +89,7 @@ class Hospitals extends React.Component {
  * @returns {{hospitals: (*|Array)}}
  */
 function mapStateToProps(state) {
+    console.log(state.hospitals.hospitals);
     return {
         hospitals: state.hospitals.hospitals
     };

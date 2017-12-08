@@ -66,3 +66,27 @@ export function deleteLegalEntity(id) {
             });
     };
 }
+
+
+/**
+ * Получить общую информацию по юр лицу для админа
+ *
+ * @returns {function(*)}
+ */
+export function fetchCommonInfo(id) {
+    return (dispatch) => {
+        axios.post(`legalEntities/commonInfo/${id}`)
+            .then((response) => {
+                dispatch({
+                    payload: response,
+                    type: 'LEGAL_ENTITY_COMMON_INFO_FULFILLED'
+                });
+            })
+            .catch((error) => {
+                dispatch({
+                    payload: error,
+                    type: 'LEGAL_ENTITY_COMMON_INFO_REJECTED'
+                });
+            });
+    };
+}

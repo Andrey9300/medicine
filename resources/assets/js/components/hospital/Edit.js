@@ -3,6 +3,8 @@ import axios from 'axios';
 import {connect} from 'react-redux';
 import {fetchHospital} from './../../actions/hospitalActions';
 import {fetchRegions} from './../../actions/regionActions';
+import PropTypes from 'prop-types';
+import {hashHistory} from 'react-router';
 import {
     Row,
     Col,
@@ -17,15 +19,13 @@ import {
     Label,
     Input
 } from 'reactstrap';
-import PropTypes from 'prop-types';
-import {hashHistory} from 'react-router';
 
 class EditHospital extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             errors: '',
-            hospitalId: props.params.id,
+            hospitalId: props.params.id
         };
         this.handleSubmit = this.handleSubmit.bind(this);
     }

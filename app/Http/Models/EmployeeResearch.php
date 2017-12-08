@@ -10,8 +10,6 @@ class EmployeeResearch extends Model
 
     protected $table = 'employee_research';
 
-    protected $dates = ['date'];
-
     protected $fillable = [
         'user_researches_id', 'employee_id', 'date'
     ];
