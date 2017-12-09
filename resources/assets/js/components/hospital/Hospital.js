@@ -2,9 +2,9 @@ import React from 'react';
 import {connect} from 'react-redux';
 import {fetchHospital, deleteHospital} from './../../actions/hospitalActions';
 import {Link} from 'react-router';
-import {Row, Col, Card, CardHeader, CardBlock, Table} from 'reactstrap';
 import PropTypes from 'prop-types';
 import HospitalResearches from './research/HospitalResearches';
+import {Row, Col, Card, CardHeader, CardBlock, Table} from 'reactstrap';
 
 class Hospital extends React.Component {
     constructor(props) {
@@ -77,7 +77,7 @@ class Hospital extends React.Component {
                                             <tr>
                                                 <td>
                                                     <Link to={`hospitals/edit/${hospital.id}`}
-                                                          className="btn btn-success btn-xs pull-left">Редактировать
+                                                          className="btn btn-success btn-xs">Редактировать
                                                         <i className="glyphicon glyphicon-pencil"/>
                                                     </Link>
                                                 </td>
@@ -115,20 +115,15 @@ class Hospital extends React.Component {
     }
 }
 
-/**
- * Map
- * @param state
- * @returns {{hospital: (*|null)}}
- */
-function mapStateToProps(state) {
-    return {
-        hospital: state.hospitals.hospital
-    };
-}
-
 Hospital.propTypes = {
     dispatch: PropTypes.func.isRequired,
     params: PropTypes.object.isRequired
+};
+
+const mapStateToProps = (state) => {
+    return {
+        hospital: state.hospitals.hospital
+    };
 };
 
 export default connect(mapStateToProps)(Hospital);

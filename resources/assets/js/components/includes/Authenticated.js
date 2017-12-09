@@ -36,11 +36,11 @@ export default function requireAuthentication(Component) {
         }
     }
 
-    function mapStateToProps(state) {
+    const mapStateToProps = (state) => {
         return {
             users: state.users
         };
-    }
+    };
 
     AuthenticatedComponent.propTypes = {
         dispatch: PropTypes.func.isRequired,

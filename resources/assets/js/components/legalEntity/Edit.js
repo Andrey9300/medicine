@@ -4,19 +4,7 @@ import {connect} from 'react-redux';
 import {fetchLegalEntity} from './../../actions/legalEntityActions';
 import PropTypes from 'prop-types';
 import {hashHistory} from 'react-router';
-import {
-    Row,
-    Col,
-    Button,
-    Card,
-    CardHeader,
-    CardFooter,
-    CardBlock,
-    Form,
-    FormGroup,
-    FormText,
-    Label,
-    Input
+import {Row, Col, Button, Card, CardHeader, CardFooter, CardBlock, Form, FormGroup, FormText, Label, Input
 } from 'reactstrap';
 
 class EditLegalEntity extends React.Component {
@@ -63,7 +51,6 @@ class EditLegalEntity extends React.Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        console.log(this.props.legalEntity );
         if (this.props.legalEntity && nextProps.legalEntity &&
             nextProps.legalEntity.name !== this.props.legalEntity.name
         ) {
@@ -153,19 +140,14 @@ class EditLegalEntity extends React.Component {
     }
 }
 
-/**
- * Map
- * @param state
- * @returns {{legalEntity: (*|null)}}
- */
-function mapStateToProps(state) {
+EditLegalEntity.propTypes = {
+    dispatch: PropTypes.func.isRequired
+};
+
+const mapStateToProps = (state) => {
     return {
         legalEntity: state.legalEntities.legalEntity
     };
-}
-
-EditLegalEntity.propTypes = {
-    dispatch: PropTypes.func.isRequired
 };
 
 export default connect(mapStateToProps)(EditLegalEntity);

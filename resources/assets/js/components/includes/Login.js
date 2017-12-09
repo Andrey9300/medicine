@@ -2,22 +2,11 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {Link} from 'react-router';
 import {loginUser} from '../../actions/userActions';
-import {
-    Container,
-    Row,
-    Col,
-    CardGroup,
-    Card,
-    CardBlock,
-    Form,
-    Button,
-    Input,
-    InputGroup,
-    InputGroupAddon
-} from 'reactstrap';
 import PropTypes from 'prop-types';
 import axios from 'axios';
 import {hashHistory} from 'react-router';
+import {Container, Row, Col, CardGroup, Card, CardBlock, Form, Button, Input, InputGroup, InputGroupAddon
+} from 'reactstrap';
 
 class Login extends Component {
     constructor() {
@@ -119,19 +108,14 @@ class Login extends Component {
     }
 }
 
-/**
- * Map
- * @param state
- * @returns {{users: (*|Array)}}
- */
-function mapStateToProps(state) {
+Login.propTypes = {
+    dispatch: PropTypes.func.isRequired
+};
+
+const mapStateToProps = (state) => {
     return {
         users: state.users.users
     };
-}
-
-Login.propTypes = {
-    dispatch: PropTypes.func.isRequired
 };
 
 export default connect(mapStateToProps)(Login);

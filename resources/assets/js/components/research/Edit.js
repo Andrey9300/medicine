@@ -3,21 +3,9 @@ import axios from 'axios';
 import {connect} from 'react-redux';
 import {fetchResearch} from './../../actions/researchActions';
 import {hashHistory} from 'react-router';
-import {
-    Row,
-    Col,
-    Button,
-    Card,
-    CardHeader,
-    CardFooter,
-    CardBlock,
-    Form,
-    FormGroup,
-    FormText,
-    Label,
-    Input
-} from 'reactstrap';
 import PropTypes from 'prop-types';
+import {Row, Col, Button, Card, CardHeader, CardFooter, CardBlock, Form, FormGroup, FormText, Label, Input
+} from 'reactstrap';
 
 class EditResearch extends React.Component {
     constructor(props) {
@@ -132,22 +120,17 @@ class EditResearch extends React.Component {
     }
 }
 
-/**
- * Map
- * @param state
- * @returns {{research: (*|null)}}
- */
-function mapStateToProps(state) {
-    return {
-        research: state.researches.research,
-        periods: state.researches.periods
-    };
-}
-
 EditResearch.propTypes = {
     dispatch: PropTypes.func.isRequired,
     params: PropTypes.object.isRequired,
     periods: PropTypes.array.isRequired
+};
+
+const mapStateToProps = (state) => {
+    return {
+        research: state.researches.research,
+        periods: state.researches.periods
+    };
 };
 
 export default connect(mapStateToProps)(EditResearch);

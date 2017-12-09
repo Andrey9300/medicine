@@ -1,19 +1,9 @@
 import {fetchHospitalResearches} from '../../../actions/hospitalActions';
 import React from 'react';
 import {connect} from 'react-redux';
-import {
-    Row,
-    Col,
-    Card,
-    CardHeader,
-    CardBlock,
-    Table,
-    Form,
-    Button,
-    Input
-} from 'reactstrap';
 import PropTypes from 'prop-types';
 import axios from 'axios';
+import {Row, Col, Card, CardHeader, CardBlock, Table, Form, Button, Input} from 'reactstrap';
 
 class HospitalResearches extends React.Component {
     constructor(props) {
@@ -101,20 +91,14 @@ class HospitalResearches extends React.Component {
     }
 }
 
-/**
- * Map
- * @param state
- * @returns {{researchesHospital: (*|Array)}}
- */
-function mapStateToProps(state) {
-    return {
-        hospitalResearches: state.hospitals.hospitalResearches
-    };
-}
-
 HospitalResearches.propTypes = {
     dispatch: PropTypes.func.isRequired
 };
 
+const mapStateToProps = (state) => {
+    return {
+        hospitalResearches: state.hospitals.hospitalResearches
+    };
+};
 
 export default connect(mapStateToProps)(HospitalResearches);

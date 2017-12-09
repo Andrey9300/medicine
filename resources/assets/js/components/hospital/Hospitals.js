@@ -2,14 +2,7 @@ import {deleteHospital, fetchHospitals} from '../../actions/hospitalActions';
 import {Link} from 'react-router';
 import React from 'react';
 import {connect} from 'react-redux';
-import {
-    Row,
-    Col,
-    Card,
-    CardHeader,
-    CardBlock,
-    Table
-} from 'reactstrap';
+import {Row, Col, Card, CardHeader, CardBlock, Table} from 'reactstrap';
 
 class Hospitals extends React.Component {
     constructor() {
@@ -64,8 +57,8 @@ class Hospitals extends React.Component {
                                                 <td>{hospital.phone}</td>
                                                 <td>
                                                     <Link to={`hospitals/edit/${hospital.id}`}
-                                                          className="btn btn-success btn-xs pull-left">Редактировать
-                                                        <i className="glyphicon glyphicon-pencil"></i>
+                                                          className="btn btn-success btn-xs">Редактировать
+                                                        <i className="glyphicon glyphicon-pencil"/>
                                                     </Link>
                                                 </td>
                                             </tr>
@@ -83,15 +76,10 @@ class Hospitals extends React.Component {
     }
 }
 
-/**
- * Map
- * @param state
- * @returns {{hospitals: (*|Array)}}
- */
-function mapStateToProps(state) {
-    console.log(state.hospitals.hospitals);
+const mapStateToProps = (state) => {
     return {
         hospitals: state.hospitals.hospitals
     };
-}
+};
+
 export default connect(mapStateToProps)(Hospitals);

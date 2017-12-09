@@ -1,20 +1,9 @@
 import {fetchUserResearches} from '../../actions/researchActions';
-import {Link} from 'react-router';
 import React from 'react';
 import {connect} from 'react-redux';
-import {
-    Row,
-    Col,
-    Card,
-    CardHeader,
-    CardBlock,
-    Table,
-    Form,
-    Button,
-    Input
-} from 'reactstrap';
 import PropTypes from 'prop-types';
 import axios from 'axios';
+import {Row, Col, Card, CardHeader, CardBlock, Table, Form, Button, Input} from 'reactstrap';
 
 class Researches extends React.Component {
     constructor(props) {
@@ -116,20 +105,15 @@ class Researches extends React.Component {
     }
 }
 
-/**
- * Map
- * @param state
- * @returns {{researches: (*|Array)}}
- */
-function mapStateToProps(state) {
-    return {
-        userResearches: state.researches.userResearches
-    };
-}
-
 Researches.propTypes = {
     dispatch: PropTypes.func.isRequired,
     userResearches: PropTypes.array.isRequired
+};
+
+const mapStateToProps = (state) => {
+    return {
+        userResearches: state.researches.userResearches
+    };
 };
 
 export default connect(mapStateToProps)(Researches);

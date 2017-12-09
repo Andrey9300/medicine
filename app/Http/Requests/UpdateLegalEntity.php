@@ -29,7 +29,7 @@ class UpdateLegalEntity extends FormRequest
             'name' => "required|max:255",
             'address' => "max:255",
             'phone' => "max:255",
-            'inn' => "required|unique:legal_entities",
+            'inn' => "required",
         ];
     }
 }

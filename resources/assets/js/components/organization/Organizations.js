@@ -2,15 +2,8 @@ import {fetchOrganizations} from '../../actions/organizationActions';
 import {Link} from 'react-router';
 import React from 'react';
 import {connect} from 'react-redux';
-import {
-    Row,
-    Col,
-    Card,
-    CardHeader,
-    CardBlock,
-    Table
-} from 'reactstrap';
 import PropTypes from 'prop-types';
+import {Row, Col, Card, CardHeader, CardBlock, Table} from 'reactstrap';
 
 class Organizations extends React.Component {
     componentWillMount() {
@@ -81,20 +74,15 @@ class Organizations extends React.Component {
     }
 }
 
-/**
- * Map
- * @param state
- * @returns {{organizations: (*|Array)}}
- */
-function mapStateToProps(state) {
-    return {
-        organizations: state.organizations.organizations
-    };
-}
-
 Organizations.propTypes = {
     dispatch: PropTypes.func.isRequired,
     organizations: PropTypes.array.isRequired
+};
+
+const mapStateToProps = (state) => {
+    return {
+        organizations: state.organizations.organizations
+    };
 };
 
 export default connect(mapStateToProps)(Organizations);

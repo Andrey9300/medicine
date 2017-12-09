@@ -5,19 +5,7 @@ import {fetchHospital} from './../../actions/hospitalActions';
 import {fetchRegions} from './../../actions/regionActions';
 import PropTypes from 'prop-types';
 import {hashHistory} from 'react-router';
-import {
-    Row,
-    Col,
-    Button,
-    Card,
-    CardHeader,
-    CardFooter,
-    CardBlock,
-    Form,
-    FormGroup,
-    FormText,
-    Label,
-    Input
+import {Row, Col, Button, Card, CardHeader, CardFooter, CardBlock, Form, FormGroup, FormText, Label, Input
 } from 'reactstrap';
 
 class EditHospital extends React.Component {
@@ -191,22 +179,17 @@ class EditHospital extends React.Component {
     }
 }
 
-/**
- * Map
- * @param state
- * @returns {{hospital: (*|null)}}
- */
-function mapStateToProps(state) {
-    return {
-        hospital: state.hospitals.hospital,
-        regions: state.regions.regions
-    };
-}
-
 EditHospital.propTypes = {
     dispatch: PropTypes.func.isRequired,
     params: PropTypes.object.isRequired,
     router: PropTypes.object.isRequired
+};
+
+const mapStateToProps = (state) => {
+    return {
+        hospital: state.hospitals.hospital,
+        regions: state.regions.regions
+    };
 };
 
 export default connect(mapStateToProps)(EditHospital);

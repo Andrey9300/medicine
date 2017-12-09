@@ -2,9 +2,7 @@ import React, {Component} from 'react';
 import {logoutUser} from '../../actions/userActions';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
-import {
-    Nav, NavItem, NavLink
-} from 'reactstrap';
+import {Nav, NavItem, NavLink} from 'reactstrap';
 
 class Sidebar extends Component {
     logout(event) {
@@ -76,19 +74,14 @@ class Sidebar extends Component {
     }
 }
 
-/**
- * Map
- * @param state
- * @returns {{research: (*|null)}}
- */
-function mapStateToProps(state) {
+Sidebar.propTypes = {
+    dispatch: PropTypes.func.isRequired
+};
+
+const mapStateToProps = (state) => {
     return {
         research: state.researches.research
     };
-}
-
-Sidebar.propTypes = {
-    dispatch: PropTypes.func.isRequired
 };
 
 export default connect(mapStateToProps)(Sidebar);

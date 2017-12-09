@@ -1,26 +1,14 @@
 import React from 'react';
 import axios from 'axios';
 import {connect} from 'react-redux';
-import {fetchOrganization} from './../../actions/organizationActions';
-import {
-    Row,
-    Col,
-    Button,
-    Card,
-    CardHeader,
-    CardFooter,
-    CardBlock,
-    Form,
-    FormGroup,
-    FormText,
-    Label,
-    Input
-} from 'reactstrap';
 import PropTypes from 'prop-types';
 import {hashHistory} from 'react-router';
+import {fetchOrganization} from './../../actions/organizationActions';
 import {fetchLegalEntities} from '../../actions/legalEntityActions';
 import {fetchRegions} from '../../actions/regionActions';
 import {fetchCategories} from '../../actions/categoryActions';
+import {Row, Col, Button, Card, CardHeader, CardFooter, CardBlock, Form, FormGroup, FormText, Label, Input
+} from 'reactstrap';
 
 class EditOrganization extends React.Component {
     constructor(props) {
@@ -213,24 +201,23 @@ class EditOrganization extends React.Component {
     }
 }
 
-/**
- * Map
- * @param state
- * @returns {{organization: (*|null)}}
- */
-function mapStateToProps(state) {
+EditOrganization.propTypes = {
+    dispatch: PropTypes.func.isRequired,
+    params: PropTypes.object.isRequired,
+    categories: PropTypes.object.isRequired,
+    legalEntities: PropTypes.object.isRequired,
+    organization: PropTypes.object.isRequired,
+    regions: PropTypes.object.isRequired,
+    router: PropTypes.object.isRequired
+};
+
+const mapStateToProps = (state) => {
     return {
         regions: state.regions.regions,
         categories: state.categories.categories,
         legalEntities: state.legalEntities.legalEntities,
         organization: state.organizations.organization
     };
-}
-
-EditOrganization.propTypes = {
-    dispatch: PropTypes.func.isRequired,
-    params: PropTypes.object.isRequired,
-    router: PropTypes.object.isRequired
 };
 
 export default connect(mapStateToProps)(EditOrganization);

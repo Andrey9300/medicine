@@ -2,15 +2,8 @@ import {fetchOrganizationEmployees, deleteOrganizationEmployee} from '../../acti
 import {Link} from 'react-router';
 import React from 'react';
 import {connect} from 'react-redux';
-import {
-    Row,
-    Col,
-    Card,
-    CardHeader,
-    CardBlock,
-    Table
-} from 'reactstrap';
 import PropTypes from 'prop-types';
+import {Row, Col, Card, CardHeader, CardBlock, Table} from 'reactstrap';
 
 class OrganizationEmployee extends React.Component {
     constructor(props) {
@@ -101,21 +94,16 @@ class OrganizationEmployee extends React.Component {
     }
 }
 
-/**
- * Map
- * @param state
- * @returns {{researchesEmployee: (*|Array)}}
- */
-function mapStateToProps(state) {
-    return {
-        organizationEmployees: state.organizations.organizationEmployees
-    };
-}
-
 OrganizationEmployee.propTypes = {
     dispatch: PropTypes.func.isRequired,
     params: PropTypes.object.isRequired,
     router: PropTypes.object.isRequired
+};
+
+const mapStateToProps = (state) => {
+    return {
+        organizationEmployees: state.organizations.organizationEmployees
+    };
 };
 
 export default connect(mapStateToProps)(OrganizationEmployee);

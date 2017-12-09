@@ -2,15 +2,8 @@ import {fetchExpiredOrganizations} from '../../actions/organizationActions';
 import {Link} from 'react-router';
 import React from 'react';
 import {connect} from 'react-redux';
-import {
-    Row,
-    Col,
-    Card,
-    CardHeader,
-    CardBlock,
-    Table
-} from 'reactstrap';
 import PropTypes from 'prop-types';
+import {Row, Col, Card, CardHeader, CardBlock, Table} from 'reactstrap';
 
 class LegalEntityExpiredOrganizations extends React.Component {
     constructor(props) {
@@ -89,20 +82,15 @@ class LegalEntityExpiredOrganizations extends React.Component {
     }
 }
 
-/**
- * Map
- * @param state
- * @returns {{organizations: (*|Array)}}
- */
-function mapStateToProps(state) {
-    return {
-        organizations: state.organizations.expired
-    };
-}
-
 LegalEntityExpiredOrganizations.propTypes = {
     dispatch: PropTypes.func.isRequired,
     organizations: PropTypes.array.isRequired
+};
+
+const mapStateToProps = (state) => {
+    return {
+        organizations: state.organizations.expired
+    };
 };
 
 export default connect(mapStateToProps)(LegalEntityExpiredOrganizations);

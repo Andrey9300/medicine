@@ -1,22 +1,10 @@
 import React from 'react';
 import axios from 'axios';
-import {
-    Row,
-    Col,
-    Button,
-    Card,
-    CardHeader,
-    CardFooter,
-    CardBlock,
-    Form,
-    FormGroup,
-    FormText,
-    Label,
-    Input
-} from 'reactstrap';
 import {connect} from 'react-redux';
 import {fetchRegions} from './../../actions/regionActions';
 import {hashHistory} from 'react-router';
+import {Row, Col, Button, Card, CardHeader, CardFooter, CardBlock, Form, FormGroup, FormText, Label, Input
+} from 'reactstrap';
 
 class NewHospital extends React.Component {
     constructor() {
@@ -183,10 +171,10 @@ class NewHospital extends React.Component {
     }
 }
 
-function mapStateToProps(state) {
+const mapStateToProps = (state) => {
     return {
         regions: state.regions.regions
     };
-}
+};
 
 export default connect(mapStateToProps)(NewHospital);

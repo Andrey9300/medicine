@@ -1,23 +1,11 @@
 import React from 'react';
 import axios from 'axios';
-import {
-    Row,
-    Col,
-    Button,
-    Card,
-    CardHeader,
-    CardFooter,
-    CardBlock,
-    Form,
-    FormGroup,
-    FormText,
-    Label,
-    Input
-} from 'reactstrap';
 import PropTypes from 'prop-types';
 import {fetchPeriods} from '../../actions/researchPeriodActions';
 import {connect} from 'react-redux';
 import {hashHistory} from 'react-router';
+import {Row, Col, Button, Card, CardHeader, CardFooter, CardBlock, Form, FormGroup, FormText, Label, Input
+} from 'reactstrap';
 
 class NewResearch extends React.Component {
     constructor() {
@@ -128,10 +116,10 @@ NewResearch.propTypes = {
     router: PropTypes.object.isRequired
 };
 
-function mapStateToProps(state) {
+const mapStateToProps = (state) => {
     return {
         researchPeriods: state.researchPeriods.researchPeriods
     };
-}
+};
 
 export default connect(mapStateToProps)(NewResearch);

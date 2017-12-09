@@ -2,9 +2,9 @@ import React from 'react';
 import {connect} from 'react-redux';
 import {fetchOrganization, deleteOrganization} from './../../../actions/organizationActions';
 import {Link} from 'react-router';
-import {Row, Col, Card, CardHeader, CardBlock, Table} from 'reactstrap';
 import PropTypes from 'prop-types';
 import {fetchHospitals} from '../../../actions/hospitalActions';
+import {Row, Col, Card, CardHeader, CardBlock, Table} from 'reactstrap';
 
 class Budget extends React.Component {
     constructor(props) {
@@ -120,22 +120,17 @@ class Budget extends React.Component {
     }
 }
 
-/**
- * Map
- * @param state
- * @returns {{organization: (*|null)}}
- */
-function mapStateToProps(state) {
-    return {
-        organization: state.organizations.organization,
-        hospitals: state.hospitals.hospitals
-    };
-}
-
 Budget.propTypes = {
     dispatch: PropTypes.func.isRequired,
     params: PropTypes.object.isRequired,
     router: PropTypes.object.isRequired
+};
+
+const mapStateToProps = (state) => {
+    return {
+        organization: state.organizations.organization,
+        hospitals: state.hospitals.hospitals
+    };
 };
 
 export default connect(mapStateToProps)(Budget);

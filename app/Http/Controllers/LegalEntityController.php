@@ -128,7 +128,7 @@ class LegalEntityController extends Controller
      * Удалить юридическое лицо
      *
      * @param int $id
-     * @return void
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function destroy($id)
     {

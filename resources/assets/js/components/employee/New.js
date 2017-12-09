@@ -1,23 +1,11 @@
 import React from 'react';
 import axios from 'axios';
-import {
-    Row,
-    Col,
-    Button,
-    Card,
-    CardHeader,
-    CardFooter,
-    CardBlock,
-    Form,
-    FormGroup,
-    FormText,
-    Label,
-    Input
-} from 'reactstrap';
 import PropTypes from 'prop-types';
 import {fetchOrganizations} from './../../actions/organizationActions';
 import {connect} from 'react-redux';
 import {hashHistory} from 'react-router';
+import {Row, Col, Button, Card, CardHeader, CardFooter, CardBlock, Form, FormGroup, FormText, Label, Input
+} from 'reactstrap';
 
 class NewEmployee extends React.Component {
     constructor() {
@@ -158,10 +146,10 @@ NewEmployee.propTypes = {
     router: PropTypes.object.isRequired
 };
 
-function mapStateToProps(state) {
+const mapStateToProps = (state) => {
     return {
         organizations: state.organizations.organizations
     };
-}
+};
 
 export default connect(mapStateToProps)(NewEmployee);

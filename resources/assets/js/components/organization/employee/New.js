@@ -1,21 +1,9 @@
 import React from 'react';
 import axios from 'axios';
-import {
-    Row,
-    Col,
-    Button,
-    Card,
-    CardHeader,
-    CardFooter,
-    CardBlock,
-    Form,
-    FormGroup,
-    FormText,
-    Label,
-    Input
-} from 'reactstrap';
 import {hashHistory} from 'react-router';
 import {connect} from 'react-redux';
+import {Row, Col, Button, Card, CardHeader, CardFooter, CardBlock, Form, FormGroup, FormText, Label, Input
+} from 'reactstrap';
 
 class NewOrganizationEmployee extends React.Component {
     constructor(props) {
@@ -131,16 +119,10 @@ class NewOrganizationEmployee extends React.Component {
     }
 }
 
-
-/**
- * Map
- * @param state
- * @returns {{researchesEmployee: (*|Array)}}
- */
-function mapStateToProps(state) {
+const mapStateToProps = (state) => {
     return {
         organizationEmployees: state.organizations.organizationEmployees
     };
-}
+};
 
 export default connect(mapStateToProps)(NewOrganizationEmployee);

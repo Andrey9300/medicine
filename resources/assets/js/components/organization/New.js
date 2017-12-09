@@ -2,23 +2,11 @@ import React from 'react';
 import axios from 'axios';
 import {fetchRegions} from './../../actions/regionActions';
 import {fetchCategories} from './../../actions/categoryActions';
-import {connect} from 'react-redux';
-import {
-    Row,
-    Col,
-    Button,
-    Card,
-    CardHeader,
-    CardBlock,
-    CardFooter,
-    Form,
-    FormGroup,
-    FormText,
-    Label,
-    Input
-} from 'reactstrap';
-import {hashHistory} from 'react-router';
 import {fetchLegalEntities} from '../../actions/legalEntityActions';
+import {connect} from 'react-redux';
+import {hashHistory} from 'react-router';
+import {Row, Col, Button, Card, CardHeader, CardBlock, CardFooter, Form, FormGroup, FormText, Label, Input
+} from 'reactstrap';
 
 class NewOrganization extends React.Component {
     constructor() {
@@ -203,13 +191,13 @@ class NewOrganization extends React.Component {
     }
 }
 
-function mapStateToProps(state) {
+const mapStateToProps = (state) => {
     return {
         regions: state.regions.regions,
         categories: state.categories.categories,
         legalEntities: state.legalEntities.legalEntities,
         users: state.users.user
     };
-}
+};
 
 export default connect(mapStateToProps)(NewOrganization);

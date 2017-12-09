@@ -2,15 +2,8 @@ import {deleteEmployee, forceDeleteEmployee, fetchEmployees} from '../../actions
 import {Link} from 'react-router';
 import React from 'react';
 import {connect} from 'react-redux';
-import {
-    Row,
-    Col,
-    Card,
-    CardHeader,
-    CardBlock,
-    Table
-} from 'reactstrap';
 import PropTypes from 'prop-types';
+import {Row, Col, Card, CardHeader, CardBlock, Table} from 'reactstrap';
 
 class Employees extends React.Component {
     constructor() {
@@ -207,23 +200,18 @@ class Employees extends React.Component {
     }
 }
 
-/**
- * Map
- * @param state
- * @returns {{employees: (*|Array)}}
- */
-function mapStateToProps(state) {
+Employees.propTypes = {
+    dispatch: PropTypes.func.isRequired,
+    employees: PropTypes.array.isRequired,
+    deleted: PropTypes.array.isRequired
+};
+
+const mapStateToProps = (state) => {
     return {
         employees: state.employees.employees,
         deleted: state.employees.deleted,
         withoutOrganization: state.employees.withoutOrganization
     };
-}
-
-Employees.propTypes = {
-    dispatch: PropTypes.func.isRequired,
-    employees: PropTypes.array.isRequired,
-    deleted: PropTypes.array.isRequired
 };
 
 export default connect(mapStateToProps)(Employees);

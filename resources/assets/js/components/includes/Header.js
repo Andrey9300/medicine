@@ -1,9 +1,5 @@
 import React, {Component} from 'react';
-import {
-    Nav,
-    NavbarToggler,
-    NavbarBrand
-} from 'reactstrap';
+import {Nav, NavbarToggler, NavbarBrand} from 'reactstrap';
 
 class Header extends Component {
     constructor(props) {

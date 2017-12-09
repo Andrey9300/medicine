@@ -1,21 +1,10 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import {
-    Container,
-    Row,
-    Col,
-    CardGroup,
-    Card,
-    CardBlock,
-    Form,
-    Button,
-    Input,
-    InputGroup,
-    InputGroupAddon
-} from 'reactstrap';
 import PropTypes from 'prop-types';
 import axios from 'axios';
 import {hashHistory} from 'react-router';
+import {Container, Row, Col, CardGroup, Card, CardBlock, Form, Button, Input, InputGroup, InputGroupAddon
+} from 'reactstrap';
 
 class ResetPassword extends Component {
     constructor() {
@@ -111,19 +100,14 @@ class ResetPassword extends Component {
     }
 }
 
-/**
- * Map
- * @param state
- * @returns {{users: (*|Array)}}
- */
-function mapStateToProps(state) {
+ResetPassword.propTypes = {
+    dispatch: PropTypes.func.isRequired
+};
+
+const mapStateToProps = (state) => {
     return {
         users: state.users.users
     };
-}
-
-ResetPassword.propTypes = {
-    dispatch: PropTypes.func.isRequired
 };
 
 export default connect(mapStateToProps)(ResetPassword);

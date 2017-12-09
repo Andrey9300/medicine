@@ -280,8 +280,9 @@ class OrganizationController extends Controller
     /**
      * Получить данные организации
      *
-     * @param int $id
+     * @param $id
      * @return \Illuminate\Http\JsonResponse
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function show($id)
     {

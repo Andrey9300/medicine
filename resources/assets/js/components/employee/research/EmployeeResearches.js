@@ -1,19 +1,9 @@
 import {fetchEmployeeResearches} from '../../../actions/employeeActions';
 import React from 'react';
 import {connect} from 'react-redux';
-import {
-    Table,
-    Row,
-    Col,
-    Card,
-    CardHeader,
-    CardBlock,
-    Button,
-    Form,
-    Input
-} from 'reactstrap';
 import PropTypes from 'prop-types';
 import axios from 'axios';
+import {Table, Row, Col, Card, CardHeader, CardBlock, Button, Form, Input} from 'reactstrap';
 
 class EmployeeResearches extends React.Component {
     constructor(props) {
@@ -99,19 +89,14 @@ class EmployeeResearches extends React.Component {
     }
 }
 
-/**
- * Map
- * @param state
- * @returns {{researchesEmployee: (*|Array)}}
- */
-function mapStateToProps(state) {
+EmployeeResearches.propTypes = {
+    dispatch: PropTypes.func.isRequired
+};
+
+const mapStateToProps = (state) => {
     return {
         employeeResearches: state.employees.employeeResearches
     };
-}
-
-EmployeeResearches.propTypes = {
-    dispatch: PropTypes.func.isRequired
 };
 
 export default connect(mapStateToProps)(EmployeeResearches);

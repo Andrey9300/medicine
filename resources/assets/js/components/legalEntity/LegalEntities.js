@@ -2,14 +2,7 @@ import {deleteLegalEntity, fetchLegalEntities} from '../../actions/legalEntityAc
 import {Link} from 'react-router';
 import React from 'react';
 import {connect} from 'react-redux';
-import {
-    Row,
-    Col,
-    Card,
-    CardHeader,
-    CardBlock,
-    Table
-} from 'reactstrap';
+import {Row, Col, Card, CardHeader, CardBlock, Table} from 'reactstrap';
 
 class LegalEntities extends React.Component {
     constructor() {
@@ -83,14 +76,10 @@ class LegalEntities extends React.Component {
     }
 }
 
-/**
- * Map
- * @param state
- * @returns {{legalEntitys: (*|Array)}}
- */
-function mapStateToProps(state) {
+const mapStateToProps = (state) => {
     return {
         legalEntities: state.legalEntities.legalEntities
     };
-}
+};
+
 export default connect(mapStateToProps)(LegalEntities);

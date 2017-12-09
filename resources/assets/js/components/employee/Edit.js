@@ -3,22 +3,10 @@ import axios from 'axios';
 import {connect} from 'react-redux';
 import {fetchEmployee} from './../../actions/employeeActions';
 import {fetchOrganizations} from './../../actions/organizationActions';
-import {
-    Row,
-    Col,
-    Button,
-    Card,
-    CardHeader,
-    CardFooter,
-    CardBlock,
-    Form,
-    FormGroup,
-    FormText,
-    Label,
-    Input
-} from 'reactstrap';
 import PropTypes from 'prop-types';
 import {hashHistory} from 'react-router';
+import {Row, Col, Button, Card, CardHeader, CardFooter, CardBlock, Form, FormGroup, FormText, Label, Input
+} from 'reactstrap';
 
 class EditEmployee extends React.Component {
     constructor(props) {
@@ -172,22 +160,17 @@ class EditEmployee extends React.Component {
     }
 }
 
-/**
- * Map
- * @param state
- * @returns {{employee: (*|null)}}
- */
-function mapStateToProps(state) {
-    return {
-        employee: state.employees.employee,
-        organizations: state.organizations.organizations
-    };
-}
-
 EditEmployee.propTypes = {
     dispatch: PropTypes.func.isRequired,
     params: PropTypes.object.isRequired,
     router: PropTypes.object.isRequired
+};
+
+const mapStateToProps = (state) => {
+    return {
+        employee: state.employees.employee,
+        organizations: state.organizations.organizations
+    };
 };
 
 export default connect(mapStateToProps)(EditEmployee);

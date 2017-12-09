@@ -3,8 +3,8 @@ import {connect} from 'react-redux';
 import {fetchEmployee, deleteEmployee} from './../../actions/employeeActions';
 import EmployeeResearches from './research/EmployeeResearches';
 import {Link} from 'react-router';
-import {Row, Col, Card, CardHeader, CardBlock, Table} from 'reactstrap';
 import PropTypes from 'prop-types';
+import {Row, Col, Card, CardHeader, CardBlock, Table} from 'reactstrap';
 
 class Employee extends React.Component {
     constructor(props) {
@@ -129,20 +129,15 @@ class Employee extends React.Component {
     }
 }
 
-/**
- * Map
- * @param state
- * @returns {{employee: (*|null)}}
- */
-function mapStateToProps(state) {
-    return {
-        employee: state.employees.employee
-    };
-}
-
 Employee.propTypes = {
     dispatch: PropTypes.func.isRequired,
     params: PropTypes.object.isRequired
+};
+
+const mapStateToProps = (state) => {
+    return {
+        employee: state.employees.employee
+    };
 };
 
 export default connect(mapStateToProps)(Employee);

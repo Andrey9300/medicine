@@ -1,22 +1,11 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {registrationUser} from '../../actions/userActions';
-import {
-    Container,
-    Row,
-    Col,
-    Card,
-    Form,
-    CardBlock,
-    Button,
-    Input,
-    InputGroup,
-    InputGroupAddon,
-    CardGroup
-} from 'reactstrap';
 import PropTypes from 'prop-types';
 import {hashHistory} from 'react-router';
 import axios from 'axios';
+import {Container, Row, Col, Card, Form, CardBlock, Button, Input, InputGroup, InputGroupAddon, CardGroup
+} from 'reactstrap';
 
 class Registration extends Component {
     constructor() {
@@ -135,19 +124,14 @@ class Registration extends Component {
     }
 }
 
-/**
- * Map
- * @param state
- * @returns {{users: (*|Array)}}
- */
-function mapStateToProps(state) {
+Registration.propTypes = {
+    dispatch: PropTypes.func.isRequired
+};
+
+const mapStateToProps = (state) => {
     return {
         users: state.users.users
     };
-}
-
-Registration.propTypes = {
-    dispatch: PropTypes.func.isRequired
 };
 
 export default connect(mapStateToProps)(Registration);

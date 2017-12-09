@@ -1,11 +1,5 @@
 import React, {Component} from 'react';
-import {
-    Row,
-    Col,
-    Card,
-    CardBlock,
-    CardHeader
-} from 'reactstrap';
+import {Row, Col, Card, CardBlock, CardHeader} from 'reactstrap';
 
 class ActivateAccount extends Component {
     render() {

@@ -2,8 +2,8 @@ import React from 'react';
 import {connect} from 'react-redux';
 import {fetchEmployee} from './../../actions/employeeActions';
 import {Link} from 'react-router';
-import {Row, Col, Card, CardHeader, CardBlock, Table} from 'reactstrap';
 import PropTypes from 'prop-types';
+import {Row, Col, Card, CardHeader, CardBlock, Table} from 'reactstrap';
 
 class PrintEmployee extends React.Component {
     constructor(props) {
@@ -166,19 +166,14 @@ class PrintEmployee extends React.Component {
     }
 }
 
-/**
- * Map
- * @param state
- * @returns {{employee: (*|null)}}
- */
-function mapStateToProps(state) {
+PrintEmployee.propTypes = {
+    dispatch: PropTypes.func.isRequired
+};
+
+const mapStateToProps = (state) => {
     return {
         employee: state.employees.employee
     };
-}
-
-PrintEmployee.propTypes = {
-    dispatch: PropTypes.func.isRequired
 };
 
 export default connect(mapStateToProps)(PrintEmployee);

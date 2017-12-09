@@ -1,21 +1,8 @@
 import React from 'react';
 import axios from 'axios';
-import {
-    Row,
-    Col,
-    Button,
-    Card,
-    CardHeader,
-    CardFooter,
-    CardBlock,
-    Form,
-    FormGroup,
-    FormText,
-    Label,
-    Input
-} from 'reactstrap';
-import {connect} from 'react-redux';
 import {hashHistory} from 'react-router';
+import {Row, Col, Button, Card, CardHeader, CardFooter, CardBlock, Form, FormGroup, FormText, Label, Input
+} from 'reactstrap';
 
 class NewLegalEntity extends React.Component {
     constructor() {

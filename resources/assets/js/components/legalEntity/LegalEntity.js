@@ -1,9 +1,9 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import {fetchCommonInfo, fetchLegalEntity, deleteLegalEntity} from './../../actions/legalEntityActions';
+import {fetchCommonInfo, deleteLegalEntity} from './../../actions/legalEntityActions';
 import {Link} from 'react-router';
-import {Row, Col, Card, CardHeader, CardBlock, Table} from 'reactstrap';
 import PropTypes from 'prop-types';
+import {Row, Col, Card, CardHeader, CardBlock, Table} from 'reactstrap';
 
 class LegalEntity extends React.Component {
     constructor(props) {
@@ -221,12 +221,12 @@ class LegalEntity extends React.Component {
     }
 }
 
-/**
- * Map
- * @param state
- * @returns {{legalEntity: (*|null)}}
- */
-function mapStateToProps(state) {
+LegalEntity.propTypes = {
+    dispatch: PropTypes.func.isRequired,
+    params: PropTypes.object.isRequired
+};
+
+const mapStateToProps = (state) => {
     return {
         user: state.legalEntities.legalEntityCommonInfo.user,
         legalEntity: state.legalEntities.legalEntityCommonInfo.legalEntity,
@@ -237,11 +237,6 @@ function mapStateToProps(state) {
         employeesResearchesEnds: state.legalEntities.legalEntityCommonInfo.employeesResearchesEnds,
         employeesResearchesExpired: state.legalEntities.legalEntityCommonInfo.employeesResearchesExpired
     };
-}
-
-LegalEntity.propTypes = {
-    dispatch: PropTypes.func.isRequired,
-    params: PropTypes.object.isRequired
 };
 
 export default connect(mapStateToProps)(LegalEntity);
