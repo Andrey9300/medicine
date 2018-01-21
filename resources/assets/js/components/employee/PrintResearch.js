@@ -4,6 +4,7 @@ import {fetchEmployee} from './../../actions/employeeActions';
 import {Link} from 'react-router';
 import PropTypes from 'prop-types';
 import {Row, Col, Card, CardHeader, CardBlock, Table} from 'reactstrap';
+import {fetchHospitals} from '../../actions/hospitalActions';
 
 class PrintEmployee extends React.Component {
     constructor(props) {
@@ -16,6 +17,7 @@ class PrintEmployee extends React.Component {
 
     componentWillMount() {
         this.props.dispatch(fetchEmployee(this.state.employeeId));
+        this.props.dispatch(fetchHospitals());
     }
 
     createMarkup() {
@@ -47,6 +49,7 @@ class PrintEmployee extends React.Component {
 
     render() {
         const {employee} = this.props;
+        const hospital = this.props.hospital[0];
         let errors = '';
         let formElements = '';
 
@@ -137,15 +140,15 @@ class PrintEmployee extends React.Component {
 
                                             <tr style={{borderTop: '1px solid', borderBottom: '1px solid'}}>
                                                 <td style={{textAlign: 'center', fontWeight: 'bold'}} colSpan="2">
-                                                    ИНФОРМАЦИЯ О МЕДИЦИНСКОЙ ОРГАНИЗАЦИИ «НВ-Медика»
+                                                    ИНФОРМАЦИЯ О МЕДИЦИНСКОЙ ОРГАНИЗАЦИИ «{hospital.name}»
                                                 </td>
                                             </tr>
                                             <tr>
                                                 <td colSpan="2">
-                                                    Адрес: Петровский бульвар 12 стр. 2, метро «Трубная»<br/>
-                                                    Режим работы: пн.- пт. 9.00-18.00 сб. 9.00-17.00, вс-вых.<br/>
-                                                    Телефон: 8 (495)-150-16-56
-                                                    <img width="670" height="300" src="/img/map_to_medical_center.png"/>
+                                                    Адрес: {hospital.address}<br/>
+                                                    Режим работы: {hospital.shedule}<br/>
+                                                    Телефон: {hospital.phone}
+                                                    <img width="670" height="300" src={hospital.photo_map}/>
                                                 </td>
                                             </tr>
                                         </tbody>
@@ -172,7 +175,8 @@ PrintEmployee.propTypes = {
 
 const mapStateToProps = (state) => {
     return {
-        employee: state.employees.employee
+        employee: state.employees.employee,
+        hospital: state.hospitals.hospitals
     };
 };
 

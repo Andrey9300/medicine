@@ -7,6 +7,8 @@ import axios from 'axios';
 import {hashHistory} from 'react-router';
 import {Container, Row, Col, CardGroup, Card, CardBlock, Form, Button, Input, InputGroup, InputGroupAddon
 } from 'reactstrap';
+import Sidebar from './Sidebar';
+import {fetchHospital} from '../../actions/hospitalActions';
 
 class Login extends Component {
     constructor() {
@@ -24,6 +26,7 @@ class Login extends Component {
         axios.post('/login', new FormData(formElement))
             .then(() => {
                 hashHistory.push('/organizations');
+                window.location.reload();
             })
             .catch((error) => {
                 if (!error.response.data.errors) {
@@ -34,7 +37,6 @@ class Login extends Component {
                     errors: error.response.data.errors
                 });
             });
-
         // this.props.dispatch(loginUser(new FormData(formElement))); //TODO сделать через reducer
     }
 
@@ -53,6 +55,10 @@ class Login extends Component {
     }
 
     render() {
+        if (this.props.user) {
+            hashHistory.push('organizations');
+        }
+
         let errors = '';
 
         if (this.state.errors !== '') {
@@ -114,7 +120,7 @@ Login.propTypes = {
 
 const mapStateToProps = (state) => {
     return {
-        users: state.users.users
+        user: state.users.user
     };
 };
 

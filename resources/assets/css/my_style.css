@@ -1,3 +1,7 @@
+table.table, div.card-body.card-block{
+    margin-bottom: 4px;
+    padding-bottom: 0;
+}
 table#printResearches td{
     border: none;
     padding: .15rem;

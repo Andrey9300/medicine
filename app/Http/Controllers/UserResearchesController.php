@@ -13,12 +13,13 @@ class UserResearchesController extends Controller
      * Сохранить исследования выбранные админом
      *
      * @param  \Illuminate\Http\Request $request
-     * @return void
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function store(Request $request)
     {
         $researches = $request->research;
         $user = Auth::user();
+        $this->authorize('isAdmin', $user);
         $userResearches = $user->researches;
 
         foreach ($userResearches as $userResearch) {
@@ -28,7 +29,6 @@ class UserResearchesController extends Controller
         }
 
         foreach ($researches as $research) {
-
             UserResearches::firstOrCreate([
                 'research_categories_id' => $research,
                 'user_id' => $user->id
@@ -43,16 +43,16 @@ class UserResearchesController extends Controller
      */
     public function showAll()
     {
-        $user = Auth::user();
+        $userAdmin = IndexController::findAdmin();
         $categoriesId = [];
 
-        foreach ($user->organizations as $organization) {
+        foreach ($userAdmin->organizations as $organization) {
             array_push($categoriesId, $organization->category_id);
         }
 
         $categoriesId = array_unique($categoriesId);
         $researches = ResearchCategory::whereIn('category_id', $categoriesId)->get();
-        $userReseaches = $user->researches;
+        $userReseaches = $userAdmin->researches;
 
         foreach ($researches as $research) {
             foreach ($userReseaches as $userReseach) {

@@ -17,6 +17,7 @@ class CreateLegalEntitiesTable extends Migration
             $table->increments('id');
             $table->string('name');
             $table->string('address')->nullable();
+            $table->string('site')->nullable();
             $table->string('phone')->nullable();
             $table->string('inn')->unique();
             $table->integer('user_id')->unsigned();

@@ -139,10 +139,19 @@ class NewOrganization extends React.Component {
                                     </FormGroup>
                                     <FormGroup row>
                                         <Col md="3">
+                                            <Label htmlFor="text-input">ФИО руководителя</Label>
+                                        </Col>
+                                        <Col xs="12" md="9">
+                                            <Input type="text" id="head_fio" name="head_fio"
+                                                   placeholder="ФИО руководителя" required/>
+                                        </Col>
+                                    </FormGroup>
+                                    <FormGroup row>
+                                        <Col md="3">
                                             <Label htmlFor="text-input">E-mail руководителя</Label>
                                         </Col>
                                         <Col xs="12" md="9">
-                                            <Input type="text" id="head_email" name="head_email"
+                                            <Input type="email" id="head_email" name="head_email"
                                                    placeholder="E-mail руководителя" required/>
                                             <FormText color="muted">Если у вас нет отдельного руководителя объекта, то
                                                 укажите свой e-mail, который используете для входа в систему.

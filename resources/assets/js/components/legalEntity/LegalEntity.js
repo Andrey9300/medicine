@@ -44,10 +44,19 @@ class LegalEntity extends React.Component {
             formElements =
                 <div className="animated fadeIn">
                     <Row>
-                        <Col xs="4" sm="4" md="4">
+                        <Col xs="6" sm="6" md="6">
                             <Card>
                                 <CardHeader>
-                                    «{legalEntity.name}»
+                                    <i className="fa fa-briefcase" aria-hidden="true"/>«{legalEntity.name}»
+                                    <Link to={`legalEntities/edit/${legalEntity.id}`}
+                                          style={{marginLeft: '18px'}}
+                                    >
+                                        <i className="fa fa-pencil"/>
+                                    </Link>
+                                    <span className="pull-right"
+                                          onClick={(event) => this.handleBtnDelete(legalEntity.id, event)}>
+                                        <i className="fa fa-trash"/>
+                                    </span>
                                 </CardHeader>
                                 <CardBlock className="card-body">
                                     <Table responsive>
@@ -61,7 +70,11 @@ class LegalEntity extends React.Component {
                                                 <td>{legalEntity.phone}</td>
                                             </tr>
                                             <tr>
-                                                <td>Инн: </td>
+                                                <td>Сайт: </td>
+                                                <td>{legalEntity.site}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>ИНН: </td>
                                                 <td>{legalEntity.inn}</td>
                                             </tr>
                                             <tr>
@@ -69,65 +82,52 @@ class LegalEntity extends React.Component {
                                                 <td>{this.props.user.fio}</td>
                                             </tr>
                                             <tr>
-                                                <td>E-mail администратора: </td>
+                                                <td>E-mail: </td>
                                                 <td>{this.props.user.email}</td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <Link to={`legalEntities/edit/${legalEntity.id}`}
-                                                          className="btn btn-success btn-xs pull-left">Редактировать
-                                                        <i className="glyphicon glyphicon-pencil"/>
-                                                    </Link>
-                                                </td>
-                                                <td>
-                                                    <form id={`form_${legalEntity.id}`}
-                                                          className="pull-left" method="post">
-                                                        <input type="hidden" name="legalEntity_id"
-                                                               value={legalEntity.id} />
-                                                        <a className="btn btn-danger btn-xs"
-                                                           onClick={(e) => this.handleBtnDelete(legalEntity.id, e)}
-                                                           href="#" id={legalEntity.id}>Удалить
-                                                            <i className="glyphicon glyphicon-trash"/>
-                                                        </a>
-                                                    </form>
-                                                </td>
                                             </tr>
                                         </tbody>
                                     </Table>
                                 </CardBlock>
                             </Card>
-                        </Col>
-                        <Col xs="4" sm="4" md="4">
                             <Card>
                                 <CardHeader>
-                                    Медицинские исследования проводит:
+                                    <i className="fa fa-money" aria-hidden="true"/>
+                                    Бюджет
                                 </CardHeader>
                                 <CardBlock className="card-body">
                                     <Table responsive>
                                         <tbody>
-                                            { this.props.hospitals.map((hospital) => {
-                                                return (
-                                                    <tr key={hospital.id}>
-                                                        <td>
-                                                            <Link to={`hospitals/${hospital.id}`}>
-                                                                {hospital.name}
-                                                            </Link>
-                                                        </td>
-                                                    </tr>
-                                                );
-                                            })
-                                            }
+                                        <tr>
+                                            <td>
+                                                Плановый бюджет МО в 2017 году составляет (с учетом указанных
+                                                цен в мед учреждении)
+                                            </td>
+                                            <td>
+                                                <Link>
+                                                    111&nbsp;
+                                                    <i className="fa fa-rub" aria-hidden="true"/>
+                                                </Link>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>В прошлом месяце израсходовано</td>
+                                            <td>
+                                                <Link>
+                                                    111&nbsp;
+                                                    <i className="fa fa-rub" aria-hidden="true"/>
+                                                </Link>
+                                            </td>
+                                        </tr>
                                         </tbody>
                                     </Table>
                                 </CardBlock>
                             </Card>
                         </Col>
-                    </Row>
-                    <Row>
-                        <Col xs="4" sm="4" md="4">
+                        <Col xs="6" sm="6" md="6">
                             <Card>
                                 <CardHeader>
-                                    Общая информация об объектах:
+                                    <i className="fa fa-building-o" aria-hidden="true"/>
+                                    Объекты
                                 </CardHeader>
                                 <CardBlock className="card-body">
                                     <Table responsive>
@@ -153,11 +153,10 @@ class LegalEntity extends React.Component {
 
                                 </CardBlock>
                             </Card>
-                        </Col>
-                        <Col xs="4" sm="4" md="4">
                             <Card>
                                 <CardHeader>
-                                    Общая информация по сотрудникам
+                                    <i className="fa fa-users" aria-hidden="true"/>
+                                    Сотрудники
                                 </CardHeader>
                                 <CardBlock className="card-body">
                                     <Table responsive>
@@ -191,13 +190,45 @@ class LegalEntity extends React.Component {
                                     </Table>
                                 </CardBlock>
                             </Card>
+                            <Card>
+                                <CardHeader>
+                                    <i className="fa fa-stethoscope" aria-hidden="true"/>
+                                    Медицинские центры
+                                </CardHeader>
+                                <CardBlock className="card-body">
+                                    <Table responsive>
+                                        <tbody>
+                                        { this.props.hospitals.map((hospital) => {
+                                            return (
+                                                <tr key={hospital.id}>
+                                                    <td>
+                                                        <Link to={`hospitals/${hospital.id}`}>
+                                                            {hospital.name}
+                                                        </Link>
+                                                    </td>
+                                                </tr>
+                                            );
+                                        })
+                                        }
+                                        </tbody>
+                                    </Table>
+                                </CardBlock>
+                            </Card>
                         </Col>
                     </Row>
                     <Row>
-                        <Col xs="4" sm="4" md="4">
+                        <Col xs="6" sm="6" md="6">
+                        </Col>
+                        <Col xs="6" sm="6" md="6">
+
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col xs="6" sm="6" md="6">
                             <Card>
                                 <CardHeader>
-                                    Общая информация
+                                    <i className="fa fa-info" aria-hidden="true"/>
+                                    Информация
                                 </CardHeader>
                                 <CardBlock className="card-body">
                                     <Link to={`legalEntities/edit/${legalEntity.id}`}>

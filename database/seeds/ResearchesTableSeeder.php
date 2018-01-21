@@ -43,12 +43,12 @@ class ResearchesTableSeeder extends Seeder
         ]);
         DB::table('researches')->insert([
             'id' => 7,
-            'name' => 'Исследования на гельминтозы',
+            'name' => 'Рентгенография грудной клетки',
             'period_id' => 3
         ]);
         DB::table('researches')->insert([
             'id' => 8,
-            'name' => 'Рентгенография грудной клетки',
+            'name' => 'Исследования на гельминтозы',
             'period_id' => 3
         ]);
         DB::table('researches')->insert([
@@ -58,58 +58,48 @@ class ResearchesTableSeeder extends Seeder
         ]);
         DB::table('researches')->insert([
             'id' => 10,
-            'name' => 'Исследования на носительство возбудителей кишечных инфекций',
+            'name' => 'Исследование кишечных инфекций',
             'period_id' => 2
         ]);
         DB::table('researches')->insert([
             'id' => 11,
-            'name' => 'Серологическое обследование на брюшной тиф',
+            'name' => 'Исследование на брюшной тиф',
             'period_id' => 2
         ]);
         DB::table('researches')->insert([
             'id' => 12,
-            'name' => 'Мазок из зева и носа на наличие патогенного стафилококка',
+            'name' => 'Исследование на наличие патогенного стафилококка',
             'period_id' => 2
         ]);
         DB::table('researches')->insert([
             'id' => 13,
-            'name' => 'Вакцинация притив шегеллезов (дизентерия Зонне)',
+            'name' => 'Исследование на гонорею',
             'period_id' => 3
         ]);
         DB::table('researches')->insert([
             'id' => 14,
+            'name' => 'Вакцинация притив шегеллезов (дизентерия Зонне)',
+            'period_id' => 3
+        ]);
+        DB::table('researches')->insert([
+            'id' => 15,
             'name' => 'Вакцинация Вирусный Гепатит А',
             'period_id' => 1
         ]);
         DB::table('researches')->insert([
-            'id' => 15,
+            'id' => 16,
             'name' => 'Вакцинация против Кори',
             'period_id' => 6
         ]);
         DB::table('researches')->insert([
-            'id' => 16,
+            'id' => 17,
             'name' => 'Вакцинация против Дифтерии',
             'period_id' => 6
         ]);
         DB::table('researches')->insert([
-            'id' => 17,
+            'id' => 18,
             'name' => 'Гигиеническое обучение и аттестация',
             'period_id' => 4
-        ]);
-        DB::table('researches')->insert([
-            'id' => 18,
-            'name' => 'Мазки на гонорею',
-            'period_id' => 3
-        ]);
-        DB::table('researches')->insert([
-            'id' => 19,
-            'name' => 'Флюорография легких',
-            'period_id' => 3
-        ]);
-        DB::table('researches')->insert([
-            'id' => 20,
-            'name' => 'Вакцинация против Шигеллезов',
-            'period_id' => 3
         ]);
     }
 }

@@ -13,11 +13,6 @@ class OrganizationEmployees extends React.Component {
             employees: props.employees
         };
         this.handleClick = this.handleClick.bind(this);
-        console.log(props.employees);
-    }
-
-    componentWillMount() {
-
     }
 
     handleClick() {
@@ -47,7 +42,7 @@ class OrganizationEmployees extends React.Component {
                                 ({organization.employees.length})
                                 <Link to={`organizations/employees/create/${this.state.organizationId}`}
                                       className="btn btn-primary btn-sm pull-right">
-                                    Добавить <i className="icon-plus"/>
+                                    Добавить Убрать для рук-ля <i className="icon-plus"/>
                                 </Link>
                             </CardHeader>
                             <CardBlock className="card-body">

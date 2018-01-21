@@ -11,35 +11,37 @@ class Sidebar extends Component {
     }
 
     render() {
+        const {user} = this.props;
         const {location} = this.props;
-        const homeClass = location.pathname === '/' ? 'active' : '';
         const legalEntitiesClass = location.pathname.match(/^\/legalEntities/) ? 'active' : '';
         const organizationsClass = location.pathname.match(/^\/organizations/) ? 'active' : '';
         const employeesClass = location.pathname.match(/^\/employees/) ? 'active' : '';
         const hospitalsClass = location.pathname.match(/^\/hospitals/) ? 'active' : '';
         const researchesClass = location.pathname.match(/^\/researches/) ? 'active' : '';
+        let closedNavs = null;
+        let navItems = null;
 
-        return (
-            <div className="sidebar">
+        if (user && user.role === 'admin') {
+            closedNavs =
+                <NavItem>
+                    <NavLink href="#/legalEntities" className={legalEntitiesClass}>
+                        <i className="fa fa-briefcase" aria-hidden="true"/>Компании (юридические лица)
+                    </NavLink>
+                </NavItem>;
+        }
+
+        if (user) {
+            navItems =
                 <Nav>
-                    <NavItem>
-                        <NavLink href="#/" className={homeClass}>
-                            <i className="icon-home"/>Главная
-                        </NavLink>
-                    </NavItem>
-                    <NavItem>
-                        <NavLink href="#/legalEntities" className={legalEntitiesClass}>
-                            <i className="fa fa-briefcase" aria-hidden="true"/>Компании (юридические лица)
-                        </NavLink>
-                    </NavItem>
+                    {closedNavs}
                     <NavItem>
                         <NavLink href="#/organizations" className={organizationsClass}>
-                            <i className="fa fa-building-o" aria-hidden="true"/>Объекты компаний
+                            <i className="fa fa-building-o" aria-hidden="true"/>Объекты
                         </NavLink>
                     </NavItem>
                     <NavItem>
                         <NavLink href="#/employees" className={employeesClass}>
-                            <i className="fa fa-users" aria-hidden="true"/>Сотрудники компаний
+                            <i className="fa fa-users" aria-hidden="true"/>Сотрудники
                         </NavLink>
                     </NavItem>
                     <NavItem>
@@ -67,7 +69,21 @@ class Sidebar extends Component {
                             <i className="fa fa-lock" aria-hidden="true"/>Выход
                         </NavLink>
                     </NavItem>
-                </Nav>
+                </Nav>;
+        } else {
+            navItems =
+                <Nav>
+                    <NavItem>
+                        <NavLink href="/#/login">
+                            <i className="fa fa-lock" aria-hidden="true"/>Вход
+                        </NavLink>
+                    </NavItem>
+                </Nav>;
+        }
+
+        return (
+            <div className="sidebar">
+                {navItems}
                 <button className="sidebar-minimizer brand-minimizer" type="button"/>
             </div>
         );
@@ -80,7 +96,8 @@ Sidebar.propTypes = {
 
 const mapStateToProps = (state) => {
     return {
-        research: state.researches.research
+        research: state.researches.research,
+        user: state.users.user
     };
 };
 

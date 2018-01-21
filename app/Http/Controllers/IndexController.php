@@ -17,8 +17,26 @@ class IndexController extends Controller
         return view('layouts.app');
     }
 
-    public function logout(){
+    public function logout()
+    {
         Auth::logout();
         return redirect('/');
+    }
+
+    public function sendNotification()
+    {
+
+    }
+
+    static function findAdmin() {
+        $user = Auth::user();
+
+        if ($user->role !== 'admin') {
+            $userAdmin = $user->organizations()->first()->users->where('role', '=', 'admin')->first();
+        } else {
+            $userAdmin = $user;
+        }
+
+        return $userAdmin;
     }
 }

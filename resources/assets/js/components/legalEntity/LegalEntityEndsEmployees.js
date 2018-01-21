@@ -42,7 +42,8 @@ class LegalEntityEndsEmployees extends React.Component {
                         <Col xs="12" lg="12">
                             <Card>
                                 <CardHeader>
-                                    <i className="fa fa-users" aria-hidden="true"/>Сотрудники
+                                    <i className="fa fa-users" aria-hidden="true"/>
+                                    Сотрудники «{legalEntity.name}» с заканчивающимся медицинским осмотром
                                     ({this.props.employeesResearchesEnds.length})
                                     <Link to="employees/create" className="btn btn-primary btn-sm pull-right">
                                         Добавить <i className="icon-plus"/>
@@ -53,8 +54,8 @@ class LegalEntityEndsEmployees extends React.Component {
                                         <thead>
                                         <tr>
                                             <th>ФИО</th>
-                                            <th>Организация</th>
-                                            <th>Редактировать</th>
+                                            <th>Объект</th>
+                                            <th>Статус МО</th>
                                             <th>Уволить</th>
                                         </tr>
                                         </thead>
@@ -69,10 +70,24 @@ class LegalEntityEndsEmployees extends React.Component {
                                                     </td>
                                                     <td>{employee.organization_name}</td>
                                                     <td>
-                                                        <Link to={`employees/edit/${employee.id}`}
-                                                              className="btn btn-success btn-xs pull-left">Редактировать
-                                                            <i className="glyphicon glyphicon-pencil"/>
-                                                        </Link>
+                                                        {(() => {
+                                                            let text = '';
+                                                            let classSpan = '';
+
+                                                            if (employee.researches_expired) {
+                                                                text = 'Просрочено';
+                                                                classSpan = 'badge badge-danger';
+                                                            } else if (employee.researches_ended) {
+                                                                text = 'Заканчивается';
+                                                                classSpan = 'badge badge-warning';
+                                                            }
+
+                                                            return (
+                                                                <span className={classSpan}>
+                                                                    {text}
+                                                                </span>
+                                                            );
+                                                        })()}
                                                     </td>
                                                     <td>
                                                         <form id={`form_${employee.id}`} className="pull-left"

@@ -3,7 +3,6 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-use App\Http\Models\Hospital;
 
 class UpdateHospital extends FormRequest
 {
@@ -14,7 +13,7 @@ class UpdateHospital extends FormRequest
      */
     public function authorize()
     {
-        $hospital = Hospital::find($this->route('id'));
+        $hospital = $this->user()->hospitals->find($this->route('id'));
         return $hospital && $this->user()->can('isAdminAndOwner', $hospital);
     }
 

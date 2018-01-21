@@ -83,6 +83,7 @@ export function fetchCommonInfo(id) {
                 });
             })
             .catch((error) => {
+                hashHistory.replace('login');
                 dispatch({
                     payload: error,
                     type: 'LEGAL_ENTITY_COMMON_INFO_REJECTED'
