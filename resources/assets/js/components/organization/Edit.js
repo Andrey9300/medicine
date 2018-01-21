@@ -141,6 +141,18 @@ class EditOrganization extends React.Component {
                                     </FormGroup>
                                     <FormGroup row>
                                         <Col md="3">
+                                            <Label htmlFor="text-input">ФИО руководителя</Label>
+                                        </Col>
+                                        <Col xs="12" md="9">
+                                            <Input type="text" id="head_fio" name="head_fio"
+                                                   placeholder="ФИО руководителя"
+                                                   defaultValue={organization.head_fio}
+                                                   required/>
+                                            <FormText color="muted">Введите фио руководителя</FormText>
+                                        </Col>
+                                    </FormGroup>
+                                    <FormGroup row>
+                                        <Col md="3">
                                             <Label htmlFor="text-input">E-mail руководителя</Label>
                                         </Col>
                                         <Col xs="12" md="9">
@@ -204,10 +216,9 @@ class EditOrganization extends React.Component {
 EditOrganization.propTypes = {
     dispatch: PropTypes.func.isRequired,
     params: PropTypes.object.isRequired,
-    categories: PropTypes.object.isRequired,
-    legalEntities: PropTypes.object.isRequired,
-    organization: PropTypes.object.isRequired,
-    regions: PropTypes.object.isRequired,
+    categories: PropTypes.array.isRequired,
+    legalEntities: PropTypes.array.isRequired,
+    regions: PropTypes.array.isRequired,
     router: PropTypes.object.isRequired
 };
 

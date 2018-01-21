@@ -14,7 +14,7 @@ class UpdateOrganization extends FormRequest
      */
     public function authorize()
     {
-        $organization = Organization::find($this->route('id'));
+        $organization = $this->user()->organizations->find($this->route('id'));
         return $organization && $this->user()->can('isAdminAndOwner', $organization);
     }
 

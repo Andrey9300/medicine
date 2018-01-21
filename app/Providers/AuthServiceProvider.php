@@ -10,6 +10,8 @@ use App\Policies\EmployeePolicy;
 use App\Policies\HospitalPolicy;
 use App\Policies\LegalEntityPolicy;
 use App\Policies\OrganizationPolicy;
+use App\Policies\UserPolicy;
+use App\User;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 
@@ -26,6 +28,7 @@ class AuthServiceProvider extends ServiceProvider
         Hospital::class => HospitalPolicy::class,
         Employee::class => EmployeePolicy::class,
         LegalEntity::class => LegalEntityPolicy::class,
+        User::class => UserPolicy::class,
     ];
 
     /**

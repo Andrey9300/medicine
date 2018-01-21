@@ -4,7 +4,7 @@ import {fetchHospital, deleteHospital} from './../../actions/hospitalActions';
 import {Link} from 'react-router';
 import PropTypes from 'prop-types';
 import HospitalResearches from './research/HospitalResearches';
-import {Row, Col, Card, CardHeader, CardBlock, Table} from 'reactstrap';
+import {Row, Col, Card, CardHeader, CardBlock, Table, Button} from 'reactstrap';
 
 class Hospital extends React.Component {
     constructor(props) {
@@ -33,23 +33,44 @@ class Hospital extends React.Component {
 
     render() {
         const {hospital} = this.props;
+        const {user} = this.props;
         let errors = '';
         let formElements = '';
+        let linkEdit = null;
+        let buttonDelete = null;
 
         if (this.state.errors !== '') {
-            errors = <div className="alert alert-danger" role="alert">
-                <div dangerouslySetInnerHTML={this.createMarkup()} />
-            </div>;
+            errors =
+                <div className="alert alert-danger" role="alert">
+                    <div dangerouslySetInnerHTML={this.createMarkup()} />
+                </div>;
         }
 
         if (hospital !== null) {
+            if (user && user.role === 'admin') {
+                linkEdit =
+                    <Link to={`hospitals/edit/${hospital.id}`}
+                          style={{marginLeft: '18px'}}
+                    >
+                        <i className="fa fa-pencil"/>
+                    </Link>;
+                buttonDelete =
+                    <span className="pull-right"
+                          onClick={(event) => this.handleBtnDelete(hospital.id, event)}>
+                        <i className="fa fa-trash"/>
+                    </span>;
+            }
+
             formElements =
                 <div className="animated fadeIn">
                     <Row>
-                        <Col xs="12" sm="12" md="12">
+                        <Col xs="6" sm="6" md="6">
                             <Card>
                                 <CardHeader>
+                                    <i className="fa fa-stethoscope" aria-hidden="true"/>
                                     «{hospital.name}»
+                                    {linkEdit}
+                                    {buttonDelete}
                                 </CardHeader>
                                 <CardBlock className="card-body">
                                     <Table responsive>
@@ -73,26 +94,6 @@ class Hospital extends React.Component {
                                             <tr>
                                                 <td>Контактное лицо: </td>
                                                 <td>{hospital.head_fio}</td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <Link to={`hospitals/edit/${hospital.id}`}
-                                                          className="btn btn-success btn-xs">Редактировать
-                                                        <i className="glyphicon glyphicon-pencil"/>
-                                                    </Link>
-                                                </td>
-                                                <td>
-                                                    <form id={`form_${hospital.id}`}
-                                                          className="pull-left" method="post">
-                                                        <input type="hidden" name="hospital_id"
-                                                               value={hospital.id} />
-                                                        <a className="btn btn-danger btn-xs"
-                                                           onClick={(event) => this.handleBtnDelete(hospital.id, event)}
-                                                           href="#" id={hospital.id}>Удалить
-                                                            <i className="glyphicon glyphicon-trash"/>
-                                                        </a>
-                                                    </form>
-                                                </td>
                                             </tr>
                                         </tbody>
                                     </Table>
@@ -122,7 +123,8 @@ Hospital.propTypes = {
 
 const mapStateToProps = (state) => {
     return {
-        hospital: state.hospitals.hospital
+        hospital: state.hospitals.hospital,
+        user: state.users.user
     };
 };
 

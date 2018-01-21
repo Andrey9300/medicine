@@ -13,7 +13,7 @@ export function fetchEmployees(legalEntityId = null) {
         })
             .then((response) => {
                 dispatch({
-                    payload: response.data,
+                    payload: response,
                     type: 'EMPLOYEES_FULFILLED'
                 });
             })
@@ -102,7 +102,7 @@ export function fetchEmployeeResearches(id) {
         axios.post(`/employees/researches/${id}`)
             .then((response) => {
                 dispatch({
-                    payload: response.data,
+                    payload: response,
                     type: 'EMPLOYEE_RESEARCHES_FULFILLED'
                 });
             })

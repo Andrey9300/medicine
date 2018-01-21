@@ -27,8 +27,8 @@ class OrganizationController extends Controller
      * @param $employee
      */
     public static function checkMedicalResearch($employee){
-        $user = Auth::user();
-        $userResearches = $user->researches;
+        $userAdmin = IndexController::findAdmin();
+        $userResearches = $userAdmin->researches;
         $options_ends = $employee->researches_ends = []; // подходит к концу
         $options_expired = $employee->researches_expired = []; // просрочено
         $employee->sumForReseaches = 0;
@@ -156,6 +156,7 @@ class OrganizationController extends Controller
         } else {
             $passwordNewUser = str_random(8);
             $newUser = User::create([
+                'fio' => $request->head_fio,
                 'email' => $request->head_email,
                 'password' => bcrypt($passwordNewUser),
                 'role' => 'head',
@@ -357,6 +358,8 @@ class OrganizationController extends Controller
 
             if (User::where('email', $organization_new['head_email'])->exists()) {
                 $user = User::where('email', $organization_new['head_email'])->first();
+                $user->fio = $organization_new['head_fio'];
+                $user->save();
                 if (!$organization->users->contains($user)) { // если руководителем снова стал admin
                     $user->organizations()->attach($organization);
                     $user->notify(new YouHead($organization->name));
@@ -364,6 +367,7 @@ class OrganizationController extends Controller
             } else {
                 $passwordNewUser = str_random(8);
                 $newUser = User::create([
+                    'fio' => $organization_new['head_fio'],
                     'email' => $organization_new['head_email'],
                     'password' => bcrypt($passwordNewUser),
                     'role' => 'head',
@@ -374,6 +378,10 @@ class OrganizationController extends Controller
             }
 
             $organization->head_email = $organization_new['head_email'];
+        } else {
+            $currentUser = User::where('email', $organization->head_email)->first();
+            $currentUser->fio = $organization_new['head_fio'];
+            $currentUser->save();
         }
 
         $organization->save();
@@ -385,7 +393,7 @@ class OrganizationController extends Controller
      * Удалить организацию
      *
      * @param int $id
-     * @return void
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function destroy($id)
     {

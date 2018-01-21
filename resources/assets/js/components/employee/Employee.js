@@ -4,7 +4,7 @@ import {fetchEmployee, deleteEmployee} from './../../actions/employeeActions';
 import EmployeeResearches from './research/EmployeeResearches';
 import {Link} from 'react-router';
 import PropTypes from 'prop-types';
-import {Row, Col, Card, CardHeader, CardBlock, Table} from 'reactstrap';
+import {Row, Col, Card, CardHeader, CardBlock, Table, Button} from 'reactstrap';
 
 class Employee extends React.Component {
     constructor(props) {
@@ -33,8 +33,11 @@ class Employee extends React.Component {
 
     render() {
         const {employee} = this.props;
+        const {user} = this.props;
         let errors = '';
         let formElements = '';
+        let linkEdit = null;
+        let buttonDelete = null;
 
         if (this.state.errors !== '') {
             errors = <div className="alert alert-danger" role="alert">
@@ -43,19 +46,36 @@ class Employee extends React.Component {
         }
 
         if (employee !== null) {
+            if (user && user.role === 'admin') {
+                linkEdit =
+                    <Link to={`employees/edit/${employee.id}`}
+                          style={{marginLeft: '18px'}}
+                    >
+                        <i className="fa fa-pencil"/>
+                    </Link>;
+                buttonDelete =
+                    <span className="pull-right"
+                          onClick={(event) => this.handleBtnDelete(employee.id, event)}>
+                        <i className="fa fa-trash"/>
+                    </span>;
+            }
+
             formElements =
                 <div className="animated fadeIn">
                     <Row>
-                        <Col xs="12" sm="12" md="12">
+                        <Col xs="6" sm="6" md="6">
                             <Card>
                                 <CardHeader>
+                                    <i className="fa fa-users" aria-hidden="true"/>
                                     {employee.fio}
+                                    {linkEdit}
+                                    {buttonDelete}
                                 </CardHeader>
                                 <CardBlock className="card-body">
                                     <Table responsive>
                                         <tbody>
                                             <tr>
-                                                <td>Организация: </td>
+                                                <td>Объект: </td>
                                                 <td>
                                                     {(() => {
                                                         if (employee.organization_name) {
@@ -90,24 +110,6 @@ class Employee extends React.Component {
                                                     })()}
                                                 </td>
                                             </tr>
-                                            <tr>
-                                                <td>
-                                                    <Link to={`employees/edit/${employee.id}`}
-                                                          className="btn btn-success btn-xs pull-left">Редактировать
-                                                        <i className="glyphicon glyphicon-pencil"/>
-                                                    </Link>
-                                                </td>
-                                                <td>
-                                                    <form id={`form_${employee.id}`} className="pull-left">
-                                                        <input type="hidden" name="employee_id" value={employee.id} />
-                                                        <a className="btn btn-danger btn-xs"
-                                                           onClick={(event) => this.handleBtnDelete(employee.id, event)}
-                                                           href="#" id={employee.id}>Удалить
-                                                            <i className="glyphicon glyphicon-trash"/>
-                                                        </a>
-                                                    </form>
-                                                </td>
-                                            </tr>
                                         </tbody>
                                     </Table>
                                 </CardBlock>
@@ -136,7 +138,8 @@ Employee.propTypes = {
 
 const mapStateToProps = (state) => {
     return {
-        employee: state.employees.employee
+        employee: state.employees.employee,
+        user: state.users.user
     };
 };
 

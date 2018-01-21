@@ -3,7 +3,7 @@ import React from 'react';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
 import axios from 'axios';
-import {Row, Col, Card, CardHeader, CardBlock, Table, Form, Button, Input} from 'reactstrap';
+import {Row, Col, Card, CardHeader, CardBlock, CardFooter, Table, Form, Button, Input} from 'reactstrap';
 
 class Researches extends React.Component {
     constructor(props) {
@@ -45,20 +45,27 @@ class Researches extends React.Component {
     }
 
     render() {
+        const {user} = this.props;
+        let buttonSave = '';
+
+        if (user) {
+            if (user.role === 'admin') {
+                buttonSave =
+                    <Button type="submit" size="sm" color="success pull-right" onClick={this.handleClick}>
+                        <i className="fa fa-dot-circle-o"/> Сохранить
+                    </Button>;
+            }
+        }
+
         return (
             <div className="animated fadeIn">
                 <Row>
-                    <Col xs="12" md="12" lg="8">
+                    <Col xs="12" md="12" lg="12">
                         <Card>
                             <CardHeader>
                                 <i className="fa fa-heartbeat" aria-hidden="true"/>Исследования
                                 ({this.props.userResearches.length})
-                                <Button type="submit" size="sm"
-                                        color="success pull-right"
-                                        onClick={this.handleClick}
-                                >
-                                    <i className="fa fa-dot-circle-o"/> Сохранить
-                                </Button>
+                                {buttonSave}
                             </CardHeader>
                             <CardBlock className="card-body">
                                 <Form>
@@ -72,10 +79,21 @@ class Researches extends React.Component {
                                         </thead>
                                         <tbody>
                                             { this.props.userResearches.map((research) => {
-                                                let check = '';
+                                                let researchCheckBox = '';
 
-                                                if (research.check) {
-                                                    check = 'checked';
+                                                if (user && user.role === 'admin') {
+                                                    let check = '';
+
+                                                    if (research.check) {
+                                                        check = 'checked';
+                                                    }
+
+                                                    researchCheckBox =
+                                                        <Input type="checkbox"
+                                                               name={`research[${research.id}]`}
+                                                               defaultChecked={check}
+                                                               value={research.id}
+                                                        />;
                                                 }
 
                                                 return (
@@ -83,11 +101,7 @@ class Researches extends React.Component {
                                                         <td>{research.category.name}</td>
                                                         <td>{research.research.name}</td>
                                                         <td>
-                                                            <Input type="checkbox"
-                                                                   name={`research[${research.id}]`}
-                                                                   defaultChecked={check}
-                                                                   value={research.id}
-                                                            />
+                                                            {researchCheckBox}
                                                         </td>
                                                     </tr>
                                                 );
@@ -97,6 +111,9 @@ class Researches extends React.Component {
                                     </Table>
                                 </Form>
                             </CardBlock>
+                            <CardFooter>
+                                {buttonSave}
+                            </CardFooter>
                         </Card>
                     </Col>
                 </Row>
@@ -112,7 +129,8 @@ Researches.propTypes = {
 
 const mapStateToProps = (state) => {
     return {
-        userResearches: state.researches.userResearches
+        userResearches: state.researches.userResearches,
+        user: state.users.user
     };
 };
 

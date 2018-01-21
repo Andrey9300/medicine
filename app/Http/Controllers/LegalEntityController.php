@@ -18,9 +18,11 @@ class LegalEntityController extends Controller
     public function store(StoreLegalEntity $request)
     {
         $user = Auth::user();
+        // TODO заменить на fill
         $legal_entity = new LegalEntity;
         $legal_entity->name = $request->name;
         $legal_entity->address = $request->address;
+        $legal_entity->site = $request->site;
         $legal_entity->phone = $request->phone;
         $legal_entity->inn = $request->inn;
         $legal_entity->user_id = $user->id;
@@ -31,13 +33,15 @@ class LegalEntityController extends Controller
      * Вывести юридические лица
      *
      * @return \Illuminate\Http\JsonResponse
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function showAll()
     {
-        $user = Auth::user();
+        $userAdmin = IndexController::findAdmin();
+        $this->authorize('isAdmin', $userAdmin);
 
         return response()->json([
-            'legalEntities' => $user->legalEntities
+            'legalEntities' => $userAdmin->legalEntities
         ]);
     }
 
@@ -50,7 +54,8 @@ class LegalEntityController extends Controller
      */
     public function show($id)
     {
-        $legalEntity = LegalEntity::find($id);
+        $userAdmin = IndexController::findAdmin();
+        $legalEntity = $userAdmin->legalEntities->find($id);
         $this->authorize('isAdminAndOwner', $legalEntity);
 
         return response()->json([
@@ -60,6 +65,10 @@ class LegalEntityController extends Controller
 
     /**
      * Общая информация по юридическому лицу для admin
+     *
+     * @param $id
+     * @return \Illuminate\Http\JsonResponse
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function commonInfo($id) {
         $user = Auth::user();
@@ -119,6 +128,7 @@ class LegalEntityController extends Controller
         $legal_entity = LegalEntity::find($id);
         $legal_entity->name = $legal_entity_new['name'];
         $legal_entity->address = $legal_entity_new['address'];
+        $legal_entity->site = $legal_entity_new['site'];
         $legal_entity->phone = $legal_entity_new['phone'];
         $legal_entity->inn = $legal_entity_new['inn'];
         $legal_entity->save();

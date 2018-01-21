@@ -3,7 +3,7 @@ import {Link} from 'react-router';
 import React from 'react';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
-import {Row, Col, Card, CardHeader, CardBlock, Table} from 'reactstrap';
+import {Row, Col, Card, CardHeader, CardBlock, CardFooter, Table, Button} from 'reactstrap';
 
 class Employees extends React.Component {
     constructor() {
@@ -26,6 +26,16 @@ class Employees extends React.Component {
     }
 
     render() {
+        const {user} = this.props;
+        let addButton = null;
+
+        if (user && user.role === 'admin') {
+            addButton =
+                <Link to="employees/create" className="btn btn-primary btn-sm pull-right">
+                    Добавить <i className="icon-plus"/>
+                </Link>;
+        }
+
         return (
             <div className="animated fadeIn">
                 <Row>
@@ -34,17 +44,15 @@ class Employees extends React.Component {
                             <CardHeader>
                                 <i className="fa fa-users" aria-hidden="true"/>Сотрудники
                                 ({this.props.employees.length})
-                                <Link to="employees/create" className="btn btn-primary btn-sm pull-right">
-                                    Добавить <i className="icon-plus"/>
-                                </Link>
+                                {addButton}
                             </CardHeader>
                             <CardBlock className="card-body">
                                 <Table responsive>
                                     <thead>
                                     <tr>
                                         <th>ФИО</th>
-                                        <th>Организация</th>
-                                        <th>Редактировать</th>
+                                        <th>Объект</th>
+                                        <th>Статус МО</th>
                                         <th>Уволить</th>
                                     </tr>
                                     </thead>
@@ -59,21 +67,33 @@ class Employees extends React.Component {
                                                 </td>
                                                 <td>{employee.organization_name}</td>
                                                 <td>
-                                                    <Link to={`employees/edit/${employee.id}`}
-                                                          className="btn btn-success btn-xs pull-left">Редактировать
-                                                        <i className="glyphicon glyphicon-pencil"/>
-                                                    </Link>
+                                                    {(() => {
+                                                        let text = '';
+                                                        let classSpan = '';
+
+                                                        if (employee.researches_expired) {
+                                                            text = 'Просрочено';
+                                                            classSpan = 'badge badge-danger';
+                                                        } else if (employee.researches_ended) {
+                                                            text = 'Заканчивается';
+                                                            classSpan = 'badge badge-warning';
+                                                        }
+
+                                                        return (
+                                                            <span className={classSpan}>
+                                                                    {text}
+                                                                </span>
+                                                        );
+                                                    })()}
                                                 </td>
                                                 <td>
-                                                    <form id={`form_${employee.id}`} className="pull-left"
-                                                          method="post">
-                                                        <input type="hidden" name="employee_id" value={employee.id} />
-                                                        <a className="btn btn-danger btn-xs"
-                                                           onClick={(event) => this.handleBtnDelete(employee.id, event)}
-                                                           href="#" id={employee.id}>Уволить
-                                                            <i className="glyphicon glyphicon-trash"/>
-                                                        </a>
-                                                    </form>
+                                                    <Button type="submit" size="sm" color="danger"
+                                                            onClick={
+                                                                (event) => this.handleBtnDelete(employee.id, event)
+                                                            }
+                                                    >
+                                                        Уволить
+                                                    </Button>
                                                 </td>
                                             </tr>
                                         );
@@ -82,15 +102,17 @@ class Employees extends React.Component {
                                     </tbody>
                                 </Table>
                             </CardBlock>
+                            <CardFooter>
+                                {addButton}
+                            </CardFooter>
                         </Card>
                     </Col>
                 </Row>
-
                 <Row>
-                    <Col xs="12" lg="12">
+                    <Col xs="6" lg="6">
                         <Card>
                             <CardHeader>
-                                <i className="fa fa-employees" aria-hidden="true"/>Уволенные Сотрудники
+                                <i className="fa fa-users" aria-hidden="true"/>Уволенные Сотрудники
                                 ({this.props.deleted.length})
                             </CardHeader>
                             <CardBlock className="card-body">
@@ -98,13 +120,28 @@ class Employees extends React.Component {
                                     <thead>
                                     <tr>
                                         <th>ФИО</th>
-                                        <th>Организация</th>
-                                        <th>Редактировать</th>
-                                        <th>Удалить</th>
+                                        <th>Объект</th>
+                                        <th>Статус МО</th>
+                                        {user && user.role === 'admin' ? <th>Удалить</th> : null}
                                     </tr>
                                     </thead>
                                     <tbody>
                                     { this.props.deleted.map((employee) => {
+                                        let tdLinkDelete = null;
+
+                                        if (user && user.role === 'admin') {
+                                            tdLinkDelete =
+                                                <td>
+                                                    <Button type="submit" size="sm" color="danger"
+                                                            onClick={
+                                                                (event) => this.handleBtnForceDelete(employee.id, event)
+                                                            }
+                                                    >
+                                                        Удалить
+                                                    </Button>
+                                                </td>;
+                                        }
+
                                         return (
                                             <tr key={employee.id}>
                                                 <td>
@@ -114,22 +151,26 @@ class Employees extends React.Component {
                                                 </td>
                                                 <td>{employee.organization_name}</td>
                                                 <td>
-                                                    <Link to={`employees/edit/${employee.id}`}
-                                                          className="btn btn-success btn-xs pull-left">Редактировать
-                                                        <i className="glyphicon glyphicon-pencil"/>
-                                                    </Link>
+                                                    {(() => {
+                                                        let text = '';
+                                                        let classSpan = '';
+
+                                                        if (employee.researches_expired) {
+                                                            text = 'Просрочено';
+                                                            classSpan = 'badge badge-danger';
+                                                        } else if (employee.researches_ended) {
+                                                            text = 'Заканчивается';
+                                                            classSpan = 'badge badge-warning';
+                                                        }
+
+                                                        return (
+                                                            <span className={classSpan}>
+                                                                    {text}
+                                                                </span>
+                                                        );
+                                                    })()}
                                                 </td>
-                                                <td>
-                                                    <form id={`form_${employee.id}`} className="pull-left"
-                                                          method="post">
-                                                        <input type="hidden" name="employee_id" value={employee.id} />
-                                                        <a className="btn btn-danger btn-xs"
-                                                           onClick={(event) => this.handleBtnForceDelete(employee.id, event)}
-                                                           href="#" id={employee.id}>Удалить
-                                                            <i className="glyphicon glyphicon-trash"/>
-                                                        </a>
-                                                    </form>
-                                                </td>
+                                                {tdLinkDelete}
                                             </tr>
                                         );
                                     })
@@ -139,13 +180,10 @@ class Employees extends React.Component {
                             </CardBlock>
                         </Card>
                     </Col>
-                </Row>
-
-                <Row>
-                    <Col xs="12" lg="12">
+                    <Col xs="6" lg="6">
                         <Card>
                             <CardHeader>
-                                <i className="fa fa-employees" aria-hidden="true"/>Сотрудники без организации
+                                <i className="fa fa-users" aria-hidden="true"/>Сотрудники без организации
                                 ({this.props.withoutOrganization.length})
                             </CardHeader>
                             <CardBlock className="card-body">
@@ -153,13 +191,27 @@ class Employees extends React.Component {
                                     <thead>
                                     <tr>
                                         <th>ФИО</th>
-                                        <th>Организация</th>
-                                        <th>Редактировать</th>
-                                        <th>Удалить</th>
+                                        <th>Статус МО</th>
+                                        {user && user.role === 'admin' ? <th>Удалить</th> : null}
                                     </tr>
                                     </thead>
                                     <tbody>
                                     { this.props.withoutOrganization.map((employee) => {
+                                        let tdLinkDelete = null;
+
+                                        if (user && user.role === 'admin') {
+                                            tdLinkDelete =
+                                                <td>
+                                                    <Button type="submit" size="sm" color="danger"
+                                                            onClick={
+                                                                (event) => this.handleBtnForceDelete(employee.id, event)
+                                                            }
+                                                    >
+                                                        Удалить
+                                                    </Button>
+                                                </td>;
+                                        }
+
                                         return (
                                             <tr key={employee.id}>
                                                 <td>
@@ -167,24 +219,27 @@ class Employees extends React.Component {
                                                         {employee.fio}
                                                     </Link>
                                                 </td>
-                                                <td>{employee.organization_name}</td>
                                                 <td>
-                                                    <Link to={`employees/edit/${employee.id}`}
-                                                          className="btn btn-success btn-xs pull-left">Редактировать
-                                                        <i className="glyphicon glyphicon-pencil"/>
-                                                    </Link>
+                                                    {(() => {
+                                                        let text = '';
+                                                        let classSpan = '';
+
+                                                        if (employee.researches_expired) {
+                                                            text = 'Просрочено';
+                                                            classSpan = 'badge badge-danger';
+                                                        } else if (employee.researches_ended) {
+                                                            text = 'Заканчивается';
+                                                            classSpan = 'badge badge-warning';
+                                                        }
+
+                                                        return (
+                                                            <span className={classSpan}>
+                                                                    {text}
+                                                                </span>
+                                                        );
+                                                    })()}
                                                 </td>
-                                                <td>
-                                                    <form id={`form_${employee.id}`} className="pull-left"
-                                                          method="post">
-                                                        <input type="hidden" name="employee_id" value={employee.id} />
-                                                        <a className="btn btn-danger btn-xs"
-                                                           onClick={(event) => this.handleBtnForceDelete(employee.id, event)}
-                                                           href="#" id={employee.id}>Удалить
-                                                            <i className="glyphicon glyphicon-trash"/>
-                                                        </a>
-                                                    </form>
-                                                </td>
+                                                {tdLinkDelete}
                                             </tr>
                                         );
                                     })
@@ -208,6 +263,7 @@ Employees.propTypes = {
 
 const mapStateToProps = (state) => {
     return {
+        user: state.users.user,
         employees: state.employees.employees,
         deleted: state.employees.deleted,
         withoutOrganization: state.employees.withoutOrganization

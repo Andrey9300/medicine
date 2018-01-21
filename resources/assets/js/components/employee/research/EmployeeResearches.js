@@ -3,7 +3,7 @@ import React from 'react';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
 import axios from 'axios';
-import {Table, Row, Col, Card, CardHeader, CardBlock, Button, Form, Input} from 'reactstrap';
+import {Table, Row, Col, Card, CardHeader, CardBlock, Button, Form, Input, CardFooter} from 'reactstrap';
 
 class EmployeeResearches extends React.Component {
     constructor(props) {
@@ -81,6 +81,14 @@ class EmployeeResearches extends React.Component {
                                     </Table>
                                 </Form>
                             </CardBlock>
+                            <CardFooter>
+                                <Button type="submit" size="sm"
+                                        color="success pull-right"
+                                        onClick={this.handleClick}
+                                >
+                                    <i className="fa fa-dot-circle-o"/> Сохранить
+                                </Button>
+                            </CardFooter>
                         </Card>
                     </Col>
                 </Row>
@@ -95,7 +103,8 @@ EmployeeResearches.propTypes = {
 
 const mapStateToProps = (state) => {
     return {
-        employeeResearches: state.employees.employeeResearches
+        employeeResearches: state.employees.employeeResearches,
+        user: state.users.user
     };
 };
 

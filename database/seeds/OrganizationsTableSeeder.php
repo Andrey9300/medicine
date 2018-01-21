@@ -52,7 +52,7 @@ class OrganizationsTableSeeder extends Seeder
             'head_email' => 'kalin@meet.ru',
             'phone' => '+79991234569',
             'region_id' => 1,
-            'category_id' => '1',
+            'category_id' => '2',
         ]);
 
         DB::table('organizations')->insert([
@@ -63,7 +63,7 @@ class OrganizationsTableSeeder extends Seeder
             'head_email' => 'kalin@meet.ru',
             'phone' => '+79991234569',
             'region_id' => '1',
-            'category_id' => '1',
+            'category_id' => '3',
         ]);
     }
 }

@@ -13,52 +13,52 @@ class EmployeeResearchTableSeeder extends Seeder
     {
         DB::table('employee_research')->insert([
             'employee_id' => 1,
-            'research_categories_id' => 1,
+            'user_researches_id' => 1,
             'date' => '2017-01-01'
         ]);
         DB::table('employee_research')->insert([
             'employee_id' => 1,
-            'research_categories_id' => 2,
+            'user_researches_id' => 2,
             'date' => '2017-01-01'
         ]);
         DB::table('employee_research')->insert([
             'employee_id' => 1,
-            'research_categories_id' => 3,
+            'user_researches_id' => 3,
             'date' => '2017-01-01'
         ]);
         DB::table('employee_research')->insert([
             'employee_id' => 1,
-            'research_categories_id' => 4,
+            'user_researches_id' => 4,
             'date' => '2017-01-01'
         ]);
         DB::table('employee_research')->insert([
             'employee_id' => 2,
-            'research_categories_id' => 1,
+            'user_researches_id' => 1,
             'date' => '2017-01-01'
         ]);
         DB::table('employee_research')->insert([
             'employee_id' => 2,
-            'research_categories_id' => 2,
+            'user_researches_id' => 2,
             'date' => '2017-01-01'
         ]);
         DB::table('employee_research')->insert([
             'employee_id' => 2,
-            'research_categories_id' => 3,
+            'user_researches_id' => 3,
             'date' => '2017-01-01'
         ]);
         DB::table('employee_research')->insert([
             'employee_id' => 2,
-            'research_categories_id' => 4,
+            'user_researches_id' => 4,
             'date' => '2017-01-01'
         ]);
         DB::table('employee_research')->insert([
             'employee_id' => 1,
-            'research_categories_id' => 9,
+            'user_researches_id' => 9,
             'date' => '2017-01-01'
         ]);
         DB::table('employee_research')->insert([
             'employee_id' => 1,
-            'research_categories_id' => 10,
+            'user_researches_id' => 10,
             'date' => '2017-01-01'
         ]);
     }

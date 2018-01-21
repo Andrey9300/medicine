@@ -39,10 +39,10 @@ class HospitalController extends Controller
      */
     public function showAll()
     {
-        $user = Auth::user();
+        $userAdmin = IndexController::findAdmin();
 
         return response()->json([
-            'hospitals' => $user->hospitals
+            'hospitals' => $userAdmin->hospitals
         ]);
     }
 
@@ -54,8 +54,8 @@ class HospitalController extends Controller
      */
     public function show($id)
     {
-        $hospital = Hospital::find($id);
-        $this->authorize('isAdminAndOwner', $hospital);
+        $userAdmin = IndexController::findAdmin();
+        $hospital = $userAdmin->hospitals->find($id);
         $hospital->region;
 
         return response()->json([
@@ -87,11 +87,12 @@ class HospitalController extends Controller
      * Удалить медицинскиую организацию
      *
      * @param int $id
-     * @return void
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function destroy($id)
     {
-        $hospital = Hospital::find($id);
+        $user = Auth::user();
+        $hospital = $user->hospitals->find($id);
         $this->authorize('isAdminAndOwner', $hospital);
         $hospital->destroy($id);
     }
@@ -103,9 +104,8 @@ class HospitalController extends Controller
      * @return \Illuminate\Http\JsonResponse
      */
     public function researches($id) {
-        $user = Auth::user();
-
-        $userResearches = $user->researches;
+        $userAdmin = IndexController::findAdmin();
+        $userResearches = $userAdmin->researches;
 
         foreach ($userResearches as $research) {
             $hospitalResearch = HospitalResearch::firstOrCreate(
@@ -127,8 +127,11 @@ class HospitalController extends Controller
      *
      * @param Request $request
      * @param         $id
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function researchesStore(Request $request, $id) {
+        $user = Auth::user();
+        $this->authorize('isAdmin', $user);
         $hospitalResearches = $request->hospitalResearch;
 
         foreach ($hospitalResearches as $key => $value) {

@@ -2,7 +2,7 @@
 
 namespace App\Http\Requests;
 
-use App\Http\Models\Hospital;
+use App\User;
 use Illuminate\Foundation\Http\FormRequest;
 
 class StoreHospital extends FormRequest
@@ -14,7 +14,7 @@ class StoreHospital extends FormRequest
      */
     public function authorize()
     {
-        return $this->user()->can('store', Hospital::class);
+        return $this->user()->can('isAdmin', User::class);
     }
 
     /**

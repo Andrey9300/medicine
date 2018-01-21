@@ -43,6 +43,7 @@ class EmployeesController extends Controller
     public function showAll(Request $request)
     {
         $user = Auth::user();
+        $userAdmin = IndexController::findAdmin();
         $organizations_name = [];
 
         if ($request->legalEntityId) {
@@ -62,9 +63,19 @@ class EmployeesController extends Controller
             ->onlyTrashed()
             ->get();
         $withoutOrganization = DB::table('employees')
-            ->where('user_id', '=', $user->id)
+            ->where('user_id', '=', $userAdmin->id)
             ->whereNull('organization_name')
             ->get();
+
+        foreach ($employees as $employee) {
+            OrganizationController::checkMedicalResearch($employee);
+        }
+        foreach ($deleted as $employee) {
+            OrganizationController::checkMedicalResearch($employee);
+        }
+        foreach ($withoutOrganization as $employee) {
+            OrganizationController::checkMedicalResearch($employee);
+        }
 
         return response()->json([
             'employees' => $employees,
@@ -85,9 +96,22 @@ class EmployeesController extends Controller
         $organization = $employee->organization;
         OrganizationController::checkMedicalResearch($employee);
         $employee->legal_entity = $organization->legal_entity->name;
-        //$this->authorize('owner', $employee->organization);
-        /*$employee->organization;
+        $head_exist = false;
 
+        // устанавливаем фио руководителя
+        // если есть head берём его, если нет, то админа
+        foreach ($organization->users as $user) {
+            if ($user->role === 'head') {
+                if (!is_null($user->fio)) {
+                    $organization->head_fio = $user->fio;
+                    $head_exist = true;
+                }
+            }
+        }
+
+        if (!$head_exist) {
+            $organization->head_fio = $organization->users[0]->fio;
+        }
 
         $employment_date = Carbon::parse($employee->date_employment);
         $diffDatesResearch = $employment_date->diffInMonths(Carbon::now());
@@ -96,7 +120,7 @@ class EmployeesController extends Controller
             $employee->pay = true; // сотрудник платит наличными
         } else {
             $employee->pay = false; // платит орагнизация
-        }*/
+        }
 
         return response()->json([
             'employee' => $employee
@@ -129,8 +153,8 @@ class EmployeesController extends Controller
      */
     public function softDelete($id)
     {
-        // TODO проверку прав
-        $employee = Employee::find($id);
+        $userAdmin = IndexController::findAdmin();
+        $employee = $userAdmin->employees->find($id);
         $employee->delete();
     }
 
@@ -138,11 +162,12 @@ class EmployeesController extends Controller
      * Полное удаление сотрудника
      *
      * @param int $id
-     * @return void
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function forceDelete($id)
     {
-        $employee = Employee::find($id);
+        $userAdmin = IndexController::findAdmin();
+        $employee = $userAdmin->employees->find($id);
         $this->authorize('isAdminAndOwner', $employee);
         $employee->forceDelete();
     }
@@ -156,8 +181,8 @@ class EmployeesController extends Controller
     public function researches($id) {
         $employee = Employee::find($id);
         $employeeCategoryId = $employee->organization->category_id;
-        $user = Auth::user();
-        $userResearches = $user->researches;
+        $userAdmin = IndexController::findAdmin();
+        $userResearches = $userAdmin->researches;
         $employeeResearches = [];
 
         foreach ($userResearches as $research) {
@@ -184,8 +209,11 @@ class EmployeesController extends Controller
      *
      * @param Request $request
      * @param         $id
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function researchesStore(Request $request, $id) {
+        $user = Auth::user();
+        //$this->authorize('isAdmin', $user);
         $employeeResearches = $request->employeeResearch;
 
         foreach ($employeeResearches as $key => $value) {

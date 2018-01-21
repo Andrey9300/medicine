@@ -65,7 +65,7 @@ export default function reducer(state = initialState, action) {
             return {
                 ...state,
                 fetched: true,
-                users: action.payload.users
+                users: action.payload.data.users
             };
         }
         case 'USER_REJECTED': {
@@ -79,7 +79,7 @@ export default function reducer(state = initialState, action) {
             return {
                 ...state,
                 fetched: true,
-                user: action.payload
+                user: action.payload.data.user
             };
         }
         default:

@@ -89,7 +89,7 @@ export function fetchUsers() {
         axios.post('/users')
             .then((response) => {
                 dispatch({
-                    payload: response.data,
+                    payload: response,
                     type: 'USERS_FULFILLED'
                 });
             })
@@ -103,17 +103,16 @@ export function fetchUsers() {
 }
 
 /**
- * Получить пользователя системы
+ * Получить текущего пользователя системы, если есть
  *
- * @param id
  * @returns {function(*)}
  */
-export function fetchUser(id) {
+export function fetchUser() {
     return (dispatch) => {
-        axios.post(`/users/${id}`)
+        axios.post('/users/current')
             .then((response) => {
                 dispatch({
-                    payload: response.data.user,
+                    payload: response,
                     type: 'USER_FULFILLED'
                 });
             })

@@ -11,6 +11,16 @@ class Organizations extends React.Component {
     }
 
     render() {
+        const {user} = this.props;
+        let linkAdd = null;
+
+        if (user && user.role === 'admin') {
+            linkAdd =
+                <Link to="organizations/create" className="btn btn-primary btn-sm pull-right">
+                    Добавить <i className="icon-plus"/>
+                </Link>;
+        }
+
         return (
             <div className="animated fadeIn">
                 <Row>
@@ -19,43 +29,38 @@ class Organizations extends React.Component {
                             <CardHeader>
                                 <i className="fa fa-building-o" aria-hidden="true"/>Объекты
                                 ({this.props.organizations.length})
-                                <Link to="organizations/create" className="btn btn-primary btn-sm pull-right">
-                                    Добавить <i className="icon-plus"/>
-                                </Link>
+                                {linkAdd}
                             </CardHeader>
                             <CardBlock className="card-body">
                                 <Table responsive>
                                     <thead>
                                         <tr>
-                                            <th>Название</th>
                                             <th>Юридическое лицо</th>
+                                            <th>Наименование</th>
+                                            <th>Адрес</th>
                                             <th>Руководитель</th>
-                                            <th>E-mail руководителя</th>
+                                            <th>Телефон</th>
+                                            <th>E-mail</th>
                                             <th>Сотрудники</th>
-                                            <th>Редактировать</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                     { this.props.organizations.map((organization) => {
                                         return (
                                             <tr key={organization.id}>
+                                                <td>{organization.legal_entity.name}</td>
                                                 <td>
                                                     <Link to={`organizations/${organization.id}`}>
                                                         {organization.name}
                                                     </Link>
                                                 </td>
-                                                <td>{organization.legal_entity.name}</td>
+                                                <td>{organization.address}</td>
                                                 <td>{organization.head_fio}</td>
+                                                <td>{organization.phone}</td>
                                                 <td>{organization.head_email}</td>
                                                 <td>
                                                     <Link to={`organizations/employees/${organization.id}`}
                                                           className="btn btn-info btn-xs pull-left">Сотрудники
-                                                        <i className="glyphicon glyphicon-pencil"/>
-                                                    </Link>
-                                                </td>
-                                                <td>
-                                                    <Link to={`organizations/edit/${organization.id}`}
-                                                          className="btn btn-success btn-xs pull-left">Редактировать
                                                         <i className="glyphicon glyphicon-pencil"/>
                                                     </Link>
                                                 </td>
@@ -81,7 +86,8 @@ Organizations.propTypes = {
 
 const mapStateToProps = (state) => {
     return {
-        organizations: state.organizations.organizations
+        organizations: state.organizations.organizations,
+        user: state.users.user
     };
 };
 

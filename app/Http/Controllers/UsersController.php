@@ -7,6 +7,7 @@ use App\Http\Models\Research;
 use App\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class UsersController extends Controller
 {
@@ -33,26 +34,12 @@ class UsersController extends Controller
     /**
      * Получить данные пользователя
      *
-     * @param int $id
      * @return \Illuminate\Http\JsonResponse
      */
-    public function show($id)
+    public function show()
     {
-        $user = User::find($id);
-        $user->organization;
-        $user = OrganizationController::checkMedicalResearch($user);
-
-        $employment_date = Carbon::parse($user->date_employment);
-        $diffDatesResearch = $employment_date->diffInMonths(Carbon::now());
-
-        if ($diffDatesResearch < 3) {
-            $user->pay = true; // сотрудник платит наличными
-        } else {
-            $user->pay = false; // платит орагнизация
-        }
-
         return response()->json([
-            'user' => $user
+            'user' => Auth::user()
         ]);
     }
 

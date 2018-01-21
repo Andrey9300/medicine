@@ -1,7 +1,9 @@
 <?php
 Auth::routes();
+Route::view('/welcome', 'layouts.main');
 Route::get('/', 'IndexController@index');
 Route::get('activateAccount/{id}/{token}', 'Auth\RegisterController@activation')->name('activation');
+Route::post('users/current', 'UsersController@show');
 
 Route::middleware(['auth'])->group(function () {
     Route::prefix('legalEntities')->group(function () {

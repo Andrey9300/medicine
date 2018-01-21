@@ -44,6 +44,8 @@ import Employee from './components/employee/Employee';
 import Employees from './components/employee/Employees';
 import NewEmployee from './components/employee/New';
 
+import Main from './components/main/Main';
+
 import EmployeeResearches from './components/employee/research/EmployeeResearches';
 
 import Layout from './components/Layout';
@@ -55,6 +57,7 @@ ReactDOM.render(
         <Router history = { hashHistory }>
             <Route path = "/" component = { Layout }>
                 <IndexRoute component = { Organizations }/>
+                <Route path = "main" component = { Main }/>
                 <Route path = "login" component = { Login }/>
                 <Route path = "registration" component = { Registration }/>
                 <Route path = "restorePassword" component = { RestorePassword }/>

@@ -28,9 +28,9 @@ export default function reducer(state = initialState, action) {
             return {
                 ...state,
                 fetched: true,
-                employees: action.payload.employees,
-                deleted: action.payload.deleted,
-                withoutOrganization: action.payload.withoutOrganization
+                employees: action.payload.data.employees,
+                deleted: action.payload.data.deleted,
+                withoutOrganization: action.payload.data.withoutOrganization
             };
         }
         case 'EMPLOYEE_REJECTED': {
@@ -58,7 +58,7 @@ export default function reducer(state = initialState, action) {
             return {
                 ...state,
                 fetched: true,
-                employeeResearches: action.payload.employeeResearches
+                employeeResearches: action.payload.data.employeeResearches
             };
         }
         case 'EMPLOYEE_RESEARCH_REJECTED': {

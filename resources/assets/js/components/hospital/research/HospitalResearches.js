@@ -3,7 +3,7 @@ import React from 'react';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
 import axios from 'axios';
-import {Row, Col, Card, CardHeader, CardBlock, Table, Form, Button, Input} from 'reactstrap';
+import {Row, Col, Card, CardHeader, CardBlock, CardFooter, Table, Form, Button, Input} from 'reactstrap';
 
 class HospitalResearches extends React.Component {
     constructor(props) {
@@ -36,6 +36,19 @@ class HospitalResearches extends React.Component {
     }
 
     render() {
+        const {user} = this.props;
+        let buttonSave = null;
+        let readOnly = null;
+
+        if (user && user.role === 'admin') {
+            buttonSave =
+                <Button type="submit" size="sm" color="success pull-right" onClick={this.handleClick}>
+                    <i className="fa fa-dot-circle-o"/> Сохранить
+                </Button>;
+        } else {
+            readOnly = 'readOnly';
+        }
+
         return (
             <div className="animated fadeIn">
                 <Row>
@@ -44,12 +57,7 @@ class HospitalResearches extends React.Component {
                             <CardHeader>
                                 <i className="fa fa-heartbeat" aria-hidden="true"/>Цены на исследования
                                 ({this.props.hospitalResearches.length})
-                                <Button type="submit" size="sm"
-                                        color="success pull-right"
-                                        onClick={this.handleClick}
-                                >
-                                    <i className="fa fa-dot-circle-o"/> Сохранить
-                                </Button>
+                                {buttonSave}
                             </CardHeader>
                             <CardBlock className="card-body">
                                 <Form id="hospitalResearch">
@@ -72,6 +80,7 @@ class HospitalResearches extends React.Component {
                                                         <Input type="text"
                                                                name={`hospitalResearch[${research.pivot.id}]`}
                                                                defaultValue={research.price}
+                                                               readOnly={readOnly}
                                                         />
                                                     </td>
                                                     <td><i className="fa fa-rub" aria-hidden="true"/></td>
@@ -83,6 +92,9 @@ class HospitalResearches extends React.Component {
                                     </Table>
                                 </Form>
                             </CardBlock>
+                            <CardFooter>
+                                {buttonSave}
+                            </CardFooter>
                         </Card>
                     </Col>
                 </Row>
@@ -97,7 +109,8 @@ HospitalResearches.propTypes = {
 
 const mapStateToProps = (state) => {
     return {
-        hospitalResearches: state.hospitals.hospitalResearches
+        hospitalResearches: state.hospitals.hospitalResearches,
+        user: state.users.user
     };
 };
 

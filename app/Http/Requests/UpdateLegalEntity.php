@@ -14,7 +14,7 @@ class UpdateLegalEntity extends FormRequest
      */
     public function authorize()
     {
-        $legalEntity = LegalEntity::find($this->route('id'));
+        $legalEntity = $this->user()->legalEntities->find($this->route('id'));
         return $legalEntity && $this->user()->can('isAdminAndOwner', $legalEntity);
     }
 

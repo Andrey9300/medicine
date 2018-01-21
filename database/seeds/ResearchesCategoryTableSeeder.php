@@ -102,16 +102,6 @@ class ResearchesCategoryTableSeeder extends Seeder
             'research_id' => 18,
         ]);
         DB::table('research_categories')->insert([
-            'id' => 19,
-            'category_id' => 1,
-            'research_id' => 19,
-        ]);
-        DB::table('research_categories')->insert([
-            'id' => 20,
-            'category_id' => 1,
-            'research_id' => 20,
-        ]);
-        DB::table('research_categories')->insert([
             'id' => 21,
             'category_id' => 2,
             'research_id' => 1,
@@ -202,16 +192,6 @@ class ResearchesCategoryTableSeeder extends Seeder
             'research_id' => 18,
         ]);
         DB::table('research_categories')->insert([
-            'id' => 39,
-            'category_id' => 2,
-            'research_id' => 19,
-        ]);
-        DB::table('research_categories')->insert([
-            'id' => 40,
-            'category_id' => 2,
-            'research_id' => 20,
-        ]);
-        DB::table('research_categories')->insert([
             'id' => 41,
             'category_id' => 3,
             'research_id' => 1,
@@ -300,16 +280,6 @@ class ResearchesCategoryTableSeeder extends Seeder
             'id' => 58,
             'category_id' => 3,
             'research_id' => 18,
-        ]);
-        DB::table('research_categories')->insert([
-            'id' => 59,
-            'category_id' => 3,
-            'research_id' => 19,
-        ]);
-        DB::table('research_categories')->insert([
-            'id' => 60,
-            'category_id' => 3,
-            'research_id' => 20,
         ]);
     }
 }

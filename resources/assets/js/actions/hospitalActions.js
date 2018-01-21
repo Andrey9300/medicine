@@ -11,7 +11,7 @@ export function fetchHospitals() {
         axios.post('/hospitals')
             .then((response) => {
                 dispatch({
-                    payload: response.data,
+                    payload: response,
                     type: 'HOSPITALS_FULFILLED'
                 });
             })
@@ -36,11 +36,12 @@ export function fetchHospital(id) {
         axios.post(`/hospitals/${id}`)
             .then((response) => {
                 dispatch({
-                    payload: response.data.hospital,
+                    payload: response,
                     type: 'HOSPITAL_FULFILLED'
                 });
             })
             .catch((error) => {
+                hashHistory.replace('login');
                 dispatch({
                     payload: error,
                     type: 'HOSPITAL_REJECTED'

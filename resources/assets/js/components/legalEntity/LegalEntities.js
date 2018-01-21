@@ -26,7 +26,7 @@ class LegalEntities extends React.Component {
                     <Col xs="12" lg="12">
                         <Card>
                             <CardHeader>
-                                <i className="fa fa-briefcase" aria-hidden="true"/>Организации
+                                <i className="fa fa-briefcase" aria-hidden="true"/>Юридические лица
                                 ({this.props.legalEntities.length})
                                 <Link to="legalEntities/create" className="btn btn-primary btn-sm pull-right">
                                     Добавить <i className="icon-plus"/>
@@ -39,8 +39,8 @@ class LegalEntities extends React.Component {
                                         <th>Название</th>
                                         <th>Адрес</th>
                                         <th>Телефон</th>
+                                        <th>Сайт</th>
                                         <th>ИНН</th>
-                                        <th>Редактировать</th>
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -54,13 +54,8 @@ class LegalEntities extends React.Component {
                                                 </td>
                                                 <td>{legalEntity.address}</td>
                                                 <td>{legalEntity.phone}</td>
+                                                <td>{legalEntity.site}</td>
                                                 <td>{legalEntity.inn}</td>
-                                                <td>
-                                                    <Link to={`legalEntities/edit/${legalEntity.id}`}
-                                                          className="btn btn-success btn-xs pull-left">Редактировать
-                                                        <i className="glyphicon glyphicon-pencil"/>
-                                                    </Link>
-                                                </td>
                                             </tr>
                                         );
                                     })

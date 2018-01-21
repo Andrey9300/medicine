@@ -20,28 +20,36 @@ class Hospitals extends React.Component {
     }
 
     render() {
+        const {user} = this.props;
+        let linkAdd = null;
+
+        if (user && user.role === 'admin' && this.props.hospitals.length < 1) {
+            linkAdd =
+                <Link to="hospitals/create" className="btn btn-primary btn-sm pull-right">
+                    Добавить <i className="icon-plus"/>
+                </Link>;
+        }
+
         return (
             <div className="animated fadeIn">
                 <Row>
                     <Col xs="12" lg="12">
                         <Card>
                             <CardHeader>
-                                <i className="fa fa-stethoscope" aria-hidden="true"/>Медицинские организации
+                                <i className="fa fa-stethoscope" aria-hidden="true"/>
+                                Медицинские центры
                                 ({this.props.hospitals.length})
-                                <Link to="hospitals/create" className="btn btn-primary btn-sm pull-right">
-                                    Добавить <i className="icon-plus"/>
-                                </Link>
+                                {linkAdd}
                             </CardHeader>
                             <CardBlock className="card-body">
                                 <Table responsive>
                                     <thead>
-                                    <tr>
-                                        <th>Название</th>
-                                        <th>Адрес</th>
-                                        <th>Расписание</th>
-                                        <th>Телефон</th>
-                                        <th>Редактировать</th>
-                                    </tr>
+                                        <tr>
+                                            <th>Название</th>
+                                            <th>Адрес</th>
+                                            <th>Контактное лицо</th>
+                                            <th>Телефон</th>
+                                        </tr>
                                     </thead>
                                     <tbody>
                                     { this.props.hospitals.map((hospital) => {
@@ -53,14 +61,8 @@ class Hospitals extends React.Component {
                                                     </Link>
                                                 </td>
                                                 <td>{hospital.address}</td>
-                                                <td>{hospital.shedule}</td>
+                                                <td>{hospital.head_fio}</td>
                                                 <td>{hospital.phone}</td>
-                                                <td>
-                                                    <Link to={`hospitals/edit/${hospital.id}`}
-                                                          className="btn btn-success btn-xs">Редактировать
-                                                        <i className="glyphicon glyphicon-pencil"/>
-                                                    </Link>
-                                                </td>
                                             </tr>
                                         );
                                     })
@@ -78,7 +80,8 @@ class Hospitals extends React.Component {
 
 const mapStateToProps = (state) => {
     return {
-        hospitals: state.hospitals.hospitals
+        hospitals: state.hospitals.hospitals,
+        user: state.users.user
     };
 };
 
