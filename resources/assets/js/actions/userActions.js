@@ -4,22 +4,19 @@ import {hashHistory} from 'react-router';
 /**
  * Вход
  *
- * @param formData
+ * @param formElement
  * @returns {function(*)}
  */
-export function loginUser(formData) {
+export function loginUser(formElement = null) {
     return (dispatch) => {
-        axios.post('/login', formData)
+        axios.post('/login', new FormData(formElement))
             .then(() => {
-                dispatch({
-                    payload: true,
-                    type: 'LOGIN_USER_FULFILLED'
-                });
-                hashHistory.replace('/organizations');
+                hashHistory.push('/organizations');
+                window.location.reload();
             })
-            .catch((error) => {
+            .catch((errors) => {
                 dispatch({
-                    payload: error,
+                    payload: errors.response.data.errors,
                     type: 'LOGIN_USER_REJECTED'
                 });
             });
@@ -59,19 +56,16 @@ export function logoutUser() {
  * @param formData
  * @returns {function(*)}
  */
-export function registrationUser(formData) {
+export function registrationUser(formElement = null) {
     return (dispatch) => {
-        axios.post('/register', formData)
+        axios.post('/register', new FormData(formElement))
             .then(() => {
-                dispatch({
-                    payload: true,
-                    type: 'REGISTRATION_USER_FULFILLED'
-                });
+                alert('Вам отправлен email для активации аккаунта');
                 hashHistory.replace('/login');
             })
-            .catch((error) => {
+            .catch((errors) => {
                 dispatch({
-                    payload: error,
+                    payload: errors.response.data.errors,
                     type: 'REGISTRATION_USER_REJECTED'
                 });
             });

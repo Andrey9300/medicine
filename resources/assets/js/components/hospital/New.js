@@ -1,17 +1,13 @@
 import React from 'react';
-import axios from 'axios';
 import {connect} from 'react-redux';
 import {fetchRegions} from './../../actions/regionActions';
-import {hashHistory} from 'react-router';
 import {Row, Col, Button, Card, CardHeader, CardFooter, CardBlock, Form, FormGroup, FormText, Label, Input
 } from 'reactstrap';
+import {addHospital} from '../../actions/hospitalActions';
 
 class NewHospital extends React.Component {
     constructor() {
         super();
-        this.state = {
-            errors: ''
-        };
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
@@ -21,35 +17,14 @@ class NewHospital extends React.Component {
 
     handleSubmit(event) {
         event.preventDefault();
-        const formElement = document.querySelector('form');
-
-        axios.post('/hospitals/store', new FormData(formElement))
-            .then(() => {
-                hashHistory.push('hospitals');
-            })
-            .catch((error) => {
-                let {errors} = error.response.data;
-
-                if (error.response.status === 403) {
-                    const forbidden = [];
-                    const access = [];
-
-                    access.push('У вас нет прав');
-                    forbidden.access = access;
-                    errors = forbidden;
-                }
-
-                this.setState({
-                    errors: errors
-                });
-            });
+        this.props.dispatch(addHospital(document.querySelector('form')));
     }
 
     createMarkup() {
         let html = '';
 
-        Object.keys(this.state.errors).forEach((item) => {
-            this.state.errors[item].forEach((value) => {
+        Object.keys(this.props.errors).forEach((item) => {
+            this.props.errors[item].forEach((value) => {
                 html += `<p>${value}</p>`;
             });
         });
@@ -60,17 +35,18 @@ class NewHospital extends React.Component {
     }
 
     render() {
-        let errors = '';
+        const {regions, errors} = this.props;
+        let errorsMessage = '';
 
-        if (this.state.errors) {
-            errors = <div className="alert alert-danger" role="alert">
+        if (errors) {
+            errorsMessage = <div className="alert alert-danger" role="alert">
                 <div dangerouslySetInnerHTML={this.createMarkup()} />
             </div>;
         }
 
         return (
             <div className="animated fadeIn">
-                {errors}
+                {errorsMessage}
                 <Row>
                     <Col xs="12" md="6">
                         <Card>
@@ -95,7 +71,7 @@ class NewHospital extends React.Component {
                                         </Col>
                                         <Col xs="12" md="9">
                                             <Input type="select" name="region_id" id="region">
-                                                { this.props.regions.map((region) => {
+                                                {regions.map((region) => {
                                                     return (
                                                         <option key={region.id} value={region.id}>
                                                             {region.name}
@@ -136,16 +112,16 @@ class NewHospital extends React.Component {
                                             <FormText color="muted">Введите расписание</FormText>
                                         </Col>
                                     </FormGroup>
-                                    <FormGroup row>
-                                        <Col md="3">
-                                            <Label htmlFor="text-input">Фото карты</Label>
-                                        </Col>
-                                        <Col xs="12" md="9">
-                                            <Input type="text" id="photo_map" name="photo_map"
-                                                   placeholder="Фото карты"/>
-                                            <FormText color="muted">Добавьте фото карты</FormText>
-                                        </Col>
-                                    </FormGroup>
+                                    {/*<FormGroup row>*/}
+                                        {/*<Col md="3">*/}
+                                            {/*<Label htmlFor="text-input">Фото карты</Label>*/}
+                                        {/*</Col>*/}
+                                        {/*<Col xs="12" md="9">*/}
+                                            {/*<Input type="text" id="photo_map" name="photo_map"*/}
+                                                   {/*placeholder="Фото карты"/>*/}
+                                            {/*<FormText color="muted">Добавьте фото карты</FormText>*/}
+                                        {/*</Col>*/}
+                                    {/*</FormGroup>*/}
                                     <FormGroup row>
                                         <Col md="3">
                                             <Label htmlFor="text-input">Телефон</Label>
@@ -173,6 +149,7 @@ class NewHospital extends React.Component {
 
 const mapStateToProps = (state) => {
     return {
+        errors: state.regions.errors,
         regions: state.regions.regions
     };
 };

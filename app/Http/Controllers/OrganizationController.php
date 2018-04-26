@@ -29,11 +29,16 @@ class OrganizationController extends Controller
     public static function checkMedicalResearch($employee){
         $userAdmin = IndexController::findAdmin();
         $userResearches = $userAdmin->researches;
-        $options_ends = $employee->researches_ends = []; // подходит к концу
-        $options_expired = $employee->researches_expired = []; // просрочено
+        $options_ends = $employee->researches_ends = []; // просрочено
+        $options_expired = $employee->researches_expired = []; // подходит к концу
         $employee->sumForReseaches = 0;
+        $employeeCategoryId = $employee->organization->category_id;
 
         foreach ($userResearches as $userResearch) {
+            if ($userResearch->category_id !== $employeeCategoryId) {
+                continue;
+            }
+
             $research = Research::find($userResearch->research_id);
             $research->researchPeriod->period; // периодичность конкретного исследования
 
@@ -44,12 +49,11 @@ class OrganizationController extends Controller
                 ->first();
 
             if (is_null($employeeResearch) || is_null($employeeResearch->date)) {
-                $options_expired[] = $research;
+                $options_ends[] = $research;
             } else {
                 switch ($research->researchPeriod->period) {
                     case -1:
-                        $employment_date
-                            = Carbon::parse($employee->date_employment);
+                        $employment_date = Carbon::parse($employee->date_employment);
                         $research_date = Carbon::parse($employeeResearch->date);
                         $research_date->addMonths(1);
                         $diffDatesResearch = $employment_date->diffInDays($research_date, false);
@@ -65,8 +69,7 @@ class OrganizationController extends Controller
                         break;
                     case 365:
                         $research_date = Carbon::parse($employeeResearch->date);
-                        $diffDatesResearch
-                            = $research_date->diffInDays(Carbon::now());
+                        $diffDatesResearch = $research_date->diffInDays(Carbon::now());
 
                         if ($diffDatesResearch > 365) {
                             array_push($options_ends, $research);
@@ -426,24 +429,5 @@ class OrganizationController extends Controller
         $employee->user_id = $userAdmin->id;
         $employee->organization_name = $organization->name;
         $employee->save();
-    }
-
-    /**
-     * Показать сотрудников организации
-     *
-     * @param $id
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function showAllEmployees($id){
-        $organization = Organization::find($id);
-        $this->authorize('owner', $organization);
-        $employees = [];
-        /*foreach ($organization->users as $user) {
-            array_push($users, $this->checkMedicalResearch($user));
-        }*/
-
-        return response()->json([
-            'organization_employees' => $organization->employees
-        ]);
     }
 }

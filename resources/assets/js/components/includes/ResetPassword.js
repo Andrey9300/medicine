@@ -10,7 +10,8 @@ class ResetPassword extends Component {
     constructor() {
         super();
         this.state = {
-            errors: ''
+            errors: '',
+            doubleClick: false
         };
         this.handleSubmit = this.handleSubmit.bind(this);
     }
@@ -19,13 +20,18 @@ class ResetPassword extends Component {
         event.preventDefault();
         const formElement = document.querySelector('form');
 
+        this.setState({
+            doubleClick: true
+        });
+
         axios.post('/password/reset', new FormData(formElement))
             .then(() => {
                 hashHistory.push('/login');
             })
             .catch((error) => {
                 this.setState({
-                    errors: error.response.data.errors
+                    errors: error.response.data.errors,
+                    doubleClick: false
                 });
             });
     }
@@ -83,7 +89,10 @@ class ResetPassword extends Component {
                                                    defaultValue={this.props.location.query.token}/>
                                             <Row>
                                                 <Col xs="6">
-                                                    <Button color="primary" className="px-4 btn-sm">
+                                                    <Button color="primary"
+                                                            className="px-4 btn-sm"
+                                                            disabled={this.state.doubleClick}
+                                                    >
                                                         Сбросить пароль
                                                     </Button>
                                                 </Col>

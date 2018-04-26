@@ -1,20 +1,18 @@
 import React from 'react';
-import axios from 'axios';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
-import {hashHistory} from 'react-router';
 import {fetchOrganization} from './../../actions/organizationActions';
 import {fetchLegalEntities} from '../../actions/legalEntityActions';
 import {fetchRegions} from '../../actions/regionActions';
 import {fetchCategories} from '../../actions/categoryActions';
 import {Row, Col, Button, Card, CardHeader, CardFooter, CardBlock, Form, FormGroup, FormText, Label, Input
 } from 'reactstrap';
+import {editOrganization} from '../../actions/organizationActions';
 
 class EditOrganization extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            errors: '',
             organizationId: props.params.id
         };
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -22,17 +20,7 @@ class EditOrganization extends React.Component {
 
     handleSubmit(event) {
         event.preventDefault();
-        const formElement = document.querySelector('form');
-
-        axios.post(`/organizations/update/${this.state.organizationId}`, new FormData(formElement))
-            .then(() => {
-                hashHistory.push(`/organizations/${this.state.organizationId}`);
-            })
-            .catch((errors) => {
-                this.setState({
-                    errors: errors.response.data.errors
-                });
-            });
+        this.props.dispatch(editOrganization(document.querySelector('form'), this.state.organizationId));
     }
 
     componentWillMount() {
@@ -45,8 +33,8 @@ class EditOrganization extends React.Component {
     createMarkup() {
         let html = '';
 
-        Object.keys(this.state.errors).forEach((item) => {
-            this.state.errors[item].forEach((value) => {
+        Object.keys(this.props.errors).forEach((item) => {
+            this.props.errors[item].forEach((value) => {
                 html += `<p>${value}</p>`;
             });
         });
@@ -56,27 +44,23 @@ class EditOrganization extends React.Component {
         };
     }
 
-    componentWillReceiveProps(nextProps) {
-        if (this.props.organization && nextProps.organization &&
-            nextProps.organization.legal_entity !== this.props.organization.legal_entity
-        ) {
-            window.location.reload();
-        }
-    }
-
     render() {
-        const {organization} = this.props;
-        let errors = '';
-        let formElements = '';
+        const {organization, categories, legalEntities, regions, errors} = this.props;
+        let errorsMessage = '';
 
-        if (this.state.errors !== '') {
-            errors = <div className="alert alert-danger" role="alert">
+        if (errors) {
+            errorsMessage = <div className="alert alert-danger" role="alert">
                 <div dangerouslySetInnerHTML={this.createMarkup()} />
             </div>;
         }
 
-        if (organization !== null) {
-            formElements =
+        if (organization === null) {
+            return null;
+        }
+
+        return (
+            <div className="animated fadeIn">
+                {errorsMessage}
                 <Row>
                     <Col xs="12" md="6">
                         <Card>
@@ -101,7 +85,7 @@ class EditOrganization extends React.Component {
                                         <Col xs="12" md="9">
                                             <Input type="select" name="region_id" id="select"
                                                    defaultValue={organization.region.id}>
-                                                { this.props.regions.map((region) => {
+                                                {regions.map((region) => {
                                                     return (
                                                         <option key={region.id} value={region.id}>
                                                             {region.name}
@@ -128,7 +112,7 @@ class EditOrganization extends React.Component {
                                         <Col xs="12" md="9">
                                             <Input type="select" name="legal_entity_id" id="select"
                                                    defaultValue={organization.legal_entity.id}>
-                                                { this.props.legalEntities.map((legalEntity) => {
+                                                {legalEntities.map((legalEntity) => {
                                                     return (
                                                         <option key={legalEntity.id} value={legalEntity.id}>
                                                             {legalEntity.name}
@@ -181,7 +165,7 @@ class EditOrganization extends React.Component {
                                         <Col xs="12" md="9">
                                             <Input type="select" name="category_id" id="select"
                                                    defaultValue={organization.category.id}>
-                                                { this.props.categories.map((category) => {
+                                                {categories.map((category) => {
                                                     return (
                                                         <option key={category.id} value={category.id}>
                                                             {category.name}
@@ -201,13 +185,7 @@ class EditOrganization extends React.Component {
                             </Form>
                         </Card>
                     </Col>
-                </Row>;
-        }
-
-        return (
-            <div className="animated fadeIn">
-                {errors}
-                {formElements}
+                </Row>
             </div>
         );
     }
@@ -224,6 +202,7 @@ EditOrganization.propTypes = {
 
 const mapStateToProps = (state) => {
     return {
+        errors: state.organizations.errors,
         regions: state.regions.regions,
         categories: state.categories.categories,
         legalEntities: state.legalEntities.legalEntities,

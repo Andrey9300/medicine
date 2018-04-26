@@ -42,7 +42,6 @@ class ActivateAccount extends Notification
      */
     public function toMail($notifiable)
     {
-        $token = md5($this->newUser->email);
         $activationLink = route('activation', ['id' => $this->newUser->id, 'token' => md5($this->newUser->email)]);
 
         return (new MailMessage)

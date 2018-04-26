@@ -1,5 +1,5 @@
 const initialState = {
-    error: null,
+    errors: null,
     fetched: false,
     legalEntityCommonInfo: {
         user: null,
@@ -23,15 +23,28 @@ const initialState = {
  */
 export default function reducer(state = initialState, action) {
     switch (action.type) {
+        case 'LEGAL_ENTITY_ADD_REJECTED': {
+            return {
+                ...state,
+                errors: action.payload,
+                fetched: false
+            };
+        }
+        case 'LEGAL_ENTITY_EDIT_REJECTED': {
+            return {
+                ...state,
+                errors: action.payload,
+                fetched: false
+            };
+        }
         case 'LEGAL_ENTITIES_REJECTED': {
             return {
                 ...state,
-                error: action.payload,
+                errors: action.payload,
                 fetched: false
             };
         }
         case 'LEGAL_ENTITIES_FULFILLED': {
-
             return {
                 ...state,
                 fetched: true,
@@ -41,7 +54,7 @@ export default function reducer(state = initialState, action) {
         case 'LEGAL_ENTITY_REJECTED': {
             return {
                 ...state,
-                error: action.payload,
+                errors: action.payload,
                 fetched: false
             };
         }
@@ -55,7 +68,7 @@ export default function reducer(state = initialState, action) {
         case 'LEGAL_ENTITY_COMMON_INFO_REJECTED': {
             return {
                 ...state,
-                error: action.payload,
+                errors: action.payload,
                 fetched: false
             };
         }

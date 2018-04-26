@@ -49,3 +49,19 @@ export function fetchUserResearches() {
     };
 }
 
+export function addUserResearches(formElement = null) {
+    return (dispatch) => {
+        axios.post('/userResearches/store', new FormData(formElement))
+            .then(() => {
+                alert('Изменения сохранены');
+                window.location.reload();
+            })
+            .catch((errors) => {
+                dispatch({
+                    payload: errors.response.data.errors,
+                    type: 'ADD_USER_RESEARCH_REJECTED'
+                });
+            });
+    };
+}
+

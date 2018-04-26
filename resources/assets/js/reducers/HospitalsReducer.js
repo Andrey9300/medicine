@@ -14,6 +14,20 @@ const initialState = {
  */
 export default function reducer(state = initialState, action) {
     switch (action.type) {
+        case 'ADD_REJECTED': {
+            return {
+                ...state,
+                error: action.payload,
+                fetched: false
+            };
+        }
+        case 'EDIT_REJECTED': {
+            return {
+                ...state,
+                error: action.payload,
+                fetched: false
+            };
+        }
         case 'HOSPITALS_REJECTED': {
             return {
                 ...state,
@@ -40,6 +54,19 @@ export default function reducer(state = initialState, action) {
                 ...state,
                 fetched: true,
                 hospital: action.payload.data.hospital
+            };
+        }
+
+        /**
+         * Медицинские ииследования для мед учреждения
+         * TODO выделить в отдельный action по мере роста
+         */
+
+        case 'STORE_RESEARCHES_REJECTED': {
+            return {
+                ...state,
+                error: action.payload,
+                fetched: false
             };
         }
         case 'HOSPITAL_RESEARCHES_REJECTED': {

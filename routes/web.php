@@ -38,7 +38,6 @@ Route::middleware(['auth'])->group(function () {
         Route::post('/', 'OrganizationController@showAll');
         Route::prefix('employees')->group(function () {
             Route::post('/store/{id_organization}', 'OrganizationController@storeEmployee');
-            Route::post('/{id_organization}', 'OrganizationController@showAllEmployees');
         });
     });
 

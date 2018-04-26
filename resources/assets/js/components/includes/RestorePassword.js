@@ -10,7 +10,8 @@ class RestorePassword extends Component {
     constructor() {
         super();
         this.state = {
-            errors: ''
+            errors: '',
+            doubleClick: false
         };
         this.handleSubmit = this.handleSubmit.bind(this);
     }
@@ -18,6 +19,10 @@ class RestorePassword extends Component {
     handleSubmit(event) {
         event.preventDefault();
         const formElement = document.querySelector('form');
+
+        this.setState({
+            doubleClick: true
+        });
 
         axios.post('/password/email', new FormData(formElement))
             .then(() => {
@@ -30,7 +35,8 @@ class RestorePassword extends Component {
                 }
 
                 this.setState({
-                    errors: error.response.data.errors
+                    errors: error.response.data.errors,
+                    doubleClick: false
                 });
             });
     }
@@ -76,7 +82,10 @@ class RestorePassword extends Component {
                                             </InputGroup>
                                             <Row>
                                                 <Col xs="6">
-                                                    <Button color="primary" className="px-4 btn-sm">
+                                                    <Button color="primary"
+                                                            className="px-4 btn-sm"
+                                                            disabled={this.state.doubleClick}
+                                                    >
                                                         Восстановить
                                                     </Button>
                                                 </Col>

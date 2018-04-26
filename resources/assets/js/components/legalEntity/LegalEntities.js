@@ -20,6 +20,12 @@ class LegalEntities extends React.Component {
     }
 
     render() {
+        const {legalEntities} = this.props;
+
+        if (legalEntities === null) {
+            return null;
+        }
+
         return (
             <div className="animated fadeIn">
                 <Row>
@@ -27,7 +33,7 @@ class LegalEntities extends React.Component {
                         <Card>
                             <CardHeader>
                                 <i className="fa fa-briefcase" aria-hidden="true"/>Юридические лица
-                                ({this.props.legalEntities.length})
+                                ({legalEntities.length})
                                 <Link to="legalEntities/create" className="btn btn-primary btn-sm pull-right">
                                     Добавить <i className="icon-plus"/>
                                 </Link>
@@ -39,12 +45,11 @@ class LegalEntities extends React.Component {
                                         <th>Название</th>
                                         <th>Адрес</th>
                                         <th>Телефон</th>
-                                        <th>Сайт</th>
                                         <th>ИНН</th>
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    { this.props.legalEntities.map((legalEntity) => {
+                                    {legalEntities.map((legalEntity) => {
                                         return (
                                             <tr key={legalEntity.id}>
                                                 <td>
@@ -54,7 +59,6 @@ class LegalEntities extends React.Component {
                                                 </td>
                                                 <td>{legalEntity.address}</td>
                                                 <td>{legalEntity.phone}</td>
-                                                <td>{legalEntity.site}</td>
                                                 <td>{legalEntity.inn}</td>
                                             </tr>
                                         );

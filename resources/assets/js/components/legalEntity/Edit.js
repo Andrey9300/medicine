@@ -1,17 +1,15 @@
 import React from 'react';
-import axios from 'axios';
 import {connect} from 'react-redux';
 import {fetchLegalEntity} from './../../actions/legalEntityActions';
 import PropTypes from 'prop-types';
-import {hashHistory} from 'react-router';
 import {Row, Col, Button, Card, CardHeader, CardFooter, CardBlock, Form, FormGroup, FormText, Label, Input
 } from 'reactstrap';
+import {editLegalEntity} from '../../actions/legalEntityActions';
 
 class EditLegalEntity extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            errors: '',
             legalEntityId: props.params.id
         };
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -19,17 +17,7 @@ class EditLegalEntity extends React.Component {
 
     handleSubmit(event) {
         event.preventDefault();
-        const formElement = document.querySelector('form');
-
-        axios.post(`/legalEntities/update/${this.state.legalEntityId}`, new FormData(formElement))
-            .then(() => {
-                hashHistory.push(`/legalEntities/${this.state.legalEntityId}`);
-            })
-            .catch((errors) => {
-                this.setState({
-                    errors: errors.response.data.errors
-                });
-            });
+        this.props.dispatch(editLegalEntity(document.querySelector('form'), this.state.legalEntityId));
     }
 
     componentWillMount() {
@@ -39,8 +27,8 @@ class EditLegalEntity extends React.Component {
     createMarkup() {
         let html = '';
 
-        Object.keys(this.state.errors).forEach((item) => {
-            this.state.errors[item].forEach((value) => {
+        Object.keys(this.props.errors).forEach((item) => {
+            this.props.errors[item].forEach((value) => {
                 html += `<p>${value}</p>`;
             });
         });
@@ -50,27 +38,23 @@ class EditLegalEntity extends React.Component {
         };
     }
 
-    componentWillReceiveProps(nextProps) {
-        if (this.props.legalEntity && nextProps.legalEntity &&
-            nextProps.legalEntity.name !== this.props.legalEntity.name
-        ) {
-            //window.location.reload();
-        }
-    }
-
     render() {
-        const {legalEntity} = this.props;
-        let errors = '';
-        let formElements = '';
+        const {legalEntity, errors} = this.props;
+        let errorsMessage = '';
 
-        if (this.state.errors !== '') {
-            errors = <div className="alert alert-danger" role="alert">
+        if (errors) {
+            errorsMessage = <div className="alert alert-danger" role="alert">
                 <div dangerouslySetInnerHTML={this.createMarkup()} />
             </div>;
         }
 
-        if (legalEntity !== null) {
-            formElements =
+        if (legalEntity === null) {
+            return null;
+        }
+
+        return (
+            <div>
+                {errorsMessage}
                 <Row>
                     <Col xs="12" md="6">
                         <Card>
@@ -128,13 +112,7 @@ class EditLegalEntity extends React.Component {
                             </Form>
                         </Card>
                     </Col>
-                </Row>;
-        }
-
-        return (
-            <div>
-                {errors}
-                {formElements}
+                </Row>
             </div>
         );
     }
@@ -146,6 +124,7 @@ EditLegalEntity.propTypes = {
 
 const mapStateToProps = (state) => {
     return {
+        errors: state.legalEntities.errors,
         legalEntity: state.legalEntities.legalEntity
     };
 };

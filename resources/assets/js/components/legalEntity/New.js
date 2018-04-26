@@ -1,49 +1,26 @@
 import React from 'react';
-import axios from 'axios';
-import {hashHistory} from 'react-router';
 import {Row, Col, Button, Card, CardHeader, CardFooter, CardBlock, Form, FormGroup, FormText, Label, Input
 } from 'reactstrap';
+import {addLegalEntity} from '../../actions/legalEntityActions';
+import {connect} from 'react-redux';
+import PropTypes from 'prop-types';
 
 class NewLegalEntity extends React.Component {
     constructor() {
         super();
-        this.state = {
-            errors: ''
-        };
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
     handleSubmit(event) {
         event.preventDefault();
-        const formElement = document.querySelector('form');
-
-        axios.post('/legalEntities/store', new FormData(formElement))
-            .then(() => {
-                hashHistory.push('legalEntities');
-            })
-            .catch((error) => {
-                let {errors} = error.response.data;
-
-                if (error.response.status === 403) {
-                    const forbidden = [];
-                    const access = [];
-
-                    access.push('У вас нет прав');
-                    forbidden.access = access;
-                    errors = forbidden;
-                }
-
-                this.setState({
-                    errors: errors
-                });
-            });
+        this.props.dispatch(addLegalEntity(document.querySelector('form')));
     }
 
     createMarkup() {
         let html = '';
 
-        Object.keys(this.state.errors).forEach((item) => {
-            this.state.errors[item].forEach((value) => {
+        Object.keys(this.props.errors).forEach((item) => {
+            this.props.errors[item].forEach((value) => {
                 html += `<p>${value}</p>`;
             });
         });
@@ -54,17 +31,18 @@ class NewLegalEntity extends React.Component {
     }
 
     render() {
-        let errors = '';
+        const {errors} = this.props;
+        let errorsMessage = '';
 
-        if (this.state.errors) {
-            errors = <div className="alert alert-danger" role="alert">
+        if (errors) {
+            errorsMessage = <div className="alert alert-danger" role="alert">
                 <div dangerouslySetInnerHTML={this.createMarkup()} />
             </div>;
         }
 
         return (
             <div className="animated fadeIn">
-                {errors}
+                {errorsMessage}
                 <Row>
                     <Col xs="12" md="6">
                         <Card>
@@ -126,4 +104,15 @@ class NewLegalEntity extends React.Component {
     }
 }
 
-export default NewLegalEntity;
+
+NewLegalEntity.propTypes = {
+    router: PropTypes.object.isRequired
+};
+
+const mapStateToProps = (state) => {
+    return {
+        errors: state.legalEntities.errors
+    };
+};
+
+export default connect(mapStateToProps)(NewLegalEntity);

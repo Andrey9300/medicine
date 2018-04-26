@@ -1,6 +1,38 @@
 import axios from 'axios';
 import {hashHistory} from 'react-router';
 
+export function addOrganization(formElement = null) {
+    return (dispatch) => {
+        axios.post('/organizations/store', new FormData(formElement))
+            .then(() => {
+                alert('Объект успешно создан');
+                hashHistory.push('organizations');
+            })
+            .catch((errors) => {
+                dispatch({
+                    payload: errors.response.data.errors,
+                    type: 'ORGANIZATION_ADD_REJECTED'
+                });
+            });
+    };
+}
+
+export function editOrganization(formElement = null, legalEntityId) {
+    return (dispatch) => {
+        axios.post(`/organizations/update/${legalEntityId}`, new FormData(formElement))
+            .then(() => {
+                alert('Объект успешно отредактирован');
+                hashHistory.push(`/organizations/${legalEntityId}`);
+            })
+            .catch((errors) => {
+                dispatch({
+                    payload: errors.response.data.errors,
+                    type: 'ORGANIZATION_EDIT_REJECTED'
+                });
+            });
+    };
+}
+
 /**
  * Получить все организации начальника качества
  *
@@ -93,30 +125,6 @@ export function deleteOrganization(id) {
             })
             .catch((error) => {
                 return error;
-            });
-    };
-}
-
-/**
- * Сотрудники организации
- *
- * @param idOrganization - id организации
- * @returns {function(*)}
- */
-export function fetchOrganizationEmployees(idOrganization) {
-    return (dispatch) => {
-        axios.post(`/organizations/employees/${idOrganization}`)
-            .then((response) => {
-                dispatch({
-                    payload: response,
-                    type: 'ORGANIZATION_EMPLOYEES_FULFILLED'
-                });
-            })
-            .catch((error) => {
-                dispatch({
-                    payload: error,
-                    type: 'ORGANIZATION_EMPLOYEE_REJECTED'
-                });
             });
     };
 }

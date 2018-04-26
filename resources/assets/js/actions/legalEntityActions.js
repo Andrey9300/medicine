@@ -1,6 +1,38 @@
 import axios from 'axios';
 import {hashHistory} from 'react-router';
 
+export function addLegalEntity(formElement = null) {
+    return (dispatch) => {
+        axios.post('/legalEntities/store', new FormData(formElement))
+            .then(() => {
+                alert('Юридическое лицо успешно создано');
+                hashHistory.push('legalEntities');
+            })
+            .catch((errors) => {
+                dispatch({
+                    payload: errors.response.data.errors,
+                    type: 'LEGAL_ENTITY_ADD_REJECTED'
+                });
+            });
+    };
+}
+
+export function editLegalEntity(formElement = null, legalEntityId) {
+    return (dispatch) => {
+        axios.post(`/legalEntities/update/${legalEntityId}`, new FormData(formElement))
+            .then(() => {
+                alert('Юридическое лицо успешно отредактировано');
+                hashHistory.push(`/legalEntities/${legalEntityId}`);
+            })
+            .catch((errors) => {
+                dispatch({
+                    payload: errors.response.data.errors,
+                    type: 'LEGAL_ENTITY_EDIT_REJECTED'
+                });
+            });
+    };
+}
+
 /**
  * Все юридические лица
  *

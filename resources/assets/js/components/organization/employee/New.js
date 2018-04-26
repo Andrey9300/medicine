@@ -7,6 +7,7 @@ import {Row, Col, Button, Card, CardHeader, CardFooter, CardBlock, Form, FormGro
 
 class NewOrganizationEmployee extends React.Component {
     constructor(props) {
+        // TODO может не нужнен?
         super(props);
         this.state = {
             errors: '',
@@ -80,7 +81,7 @@ class NewOrganizationEmployee extends React.Component {
                                         </Col>
                                         <Col xs="12" md="9">
                                             <Input type="text" id="date_birthday" name="date_birthday"
-                                                   placeholder="Y-m-d" required/>
+                                                   placeholder="дд-мм-гггг" required/>
                                             <FormText color="muted">Введите дату рождения</FormText>
                                         </Col>
                                     </FormGroup>
@@ -90,7 +91,7 @@ class NewOrganizationEmployee extends React.Component {
                                         </Col>
                                         <Col xs="12" md="9">
                                             <Input type="text" id="date_employment" name="date_employment"
-                                                   placeholder="Y-m-d" required/>
+                                                   placeholder="дд-мм-гггг" required/>
                                             <FormText color="muted">Введите дату приема на работу</FormText>
                                         </Col>
                                     </FormGroup>

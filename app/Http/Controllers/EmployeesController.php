@@ -24,11 +24,13 @@ class EmployeesController extends Controller
      */
     public function store(StoreEmployee $request)
     {
+        $date_birthday = Carbon::createFromFormat('d-m-Y', $request->date_birthday)->format('Y-m-d');
+        $date_employment = Carbon::createFromFormat('d-m-Y', $request->date_birthday)->format('Y-m-d');
         $userAdmin = Auth::user(); // только админ
         $employee = new Employee;
         $employee->fio = $request->fio;
-        $employee->date_birthday = $request->date_birthday;
-        $employee->date_employment = $request->date_employment;
+        $employee->date_birthday = $date_birthday;
+        $employee->date_employment = $date_employment;
         $employee->medical_book = $request->medical_book;
         $employee->user_id = $userAdmin->id;
         $employee->organization_name = $request->organization_name;
@@ -73,9 +75,6 @@ class EmployeesController extends Controller
         foreach ($deleted as $employee) {
             OrganizationController::checkMedicalResearch($employee);
         }
-        foreach ($withoutOrganization as $employee) {
-            OrganizationController::checkMedicalResearch($employee);
-        }
 
         return response()->json([
             'employees' => $employees,
@@ -113,7 +112,10 @@ class EmployeesController extends Controller
             $organization->head_fio = $organization->users[0]->fio;
         }
 
-        $employment_date = Carbon::parse($employee->date_employment);
+        $employee->date_birthday = Carbon::createFromFormat('Y-m-d', $employee->date_birthday)->format('d-m-Y');
+        $employee->date_employment = Carbon::createFromFormat('Y-m-d', $employee->date_employment)->format('d-m-Y');
+
+        $employment_date =  Carbon::parse($employee->date_employment);
         $diffDatesResearch = $employment_date->diffInMonths(Carbon::now());
 
         if ($diffDatesResearch < 3) {
@@ -136,10 +138,13 @@ class EmployeesController extends Controller
      */
     public function update(UpdateEmployee $request, $id)
     {
+        $date_birthday = Carbon::createFromFormat('d-m-Y', $request->date_birthday)->format('Y-m-d');
+        $date_employment = Carbon::createFromFormat('d-m-Y', $request->date_employment)->format('Y-m-d');
+
         $employee = Employee::find($id);
         $employee->fio = $request->fio;
-        $employee->date_birthday = $request->date_birthday;
-        $employee->date_employment = $request->date_employment;
+        $employee->date_birthday = $date_birthday;
+        $employee->date_employment = $date_employment;
         $employee->medical_book = $request->medical_book;
         $employee->organization_name = $request->organization_name;
         $employee->save();
@@ -179,7 +184,7 @@ class EmployeesController extends Controller
      * @return \Illuminate\Http\JsonResponse
      */
     public function researches($id) {
-        $employee = Employee::find($id);
+        $employee = Employee::withTrashed()->where('id', $id)->first();
         $employeeCategoryId = $employee->organization->category_id;
         $userAdmin = IndexController::findAdmin();
         $userResearches = $userAdmin->researches;
@@ -190,7 +195,9 @@ class EmployeesController extends Controller
                 ['user_researches_id' => $research->pivot->id, 'employee_id' => $id]
             );
             $researchCategory = ResearchCategory::find($research->id);
-
+            if ($employeeResearch->date) {
+                $employeeResearch->date = Carbon::createFromFormat('Y-m-d', $employeeResearch->date)->format('d-m-Y');
+            }
             if ($researchCategory->category_id === $employeeCategoryId) {
                 $research->category;
                 $research->research;
@@ -213,13 +220,17 @@ class EmployeesController extends Controller
      */
     public function researchesStore(Request $request, $id) {
         $user = Auth::user();
-        //$this->authorize('isAdmin', $user);
+        $this->authorize('isAdmin', $user);
         $employeeResearches = $request->employeeResearch;
 
-        foreach ($employeeResearches as $key => $value) {
+        foreach ($employeeResearches as $key => $date) {
+            if ($date) {
+                $date = Carbon::createFromFormat('d-m-Y', $date)->format('Y-m-d');
+            }
+
             EmployeeResearch::updateOrCreate(
                 ['user_researches_id' => $key, 'employee_id' => $id],
-                ['date' => $value]
+                ['date' => $date]
             );
         }
     }

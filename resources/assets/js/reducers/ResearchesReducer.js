@@ -58,6 +58,13 @@ export default function reducer(state = initialState, action) {
                 userResearches: action.payload.data.userResearches
             };
         }
+        case 'ADD_USER_RESEARCH_REJECTED': {
+            return {
+                ...state,
+                error: action.payload,
+                fetched: false
+            };
+        }
         default: return {
             ...state
         };

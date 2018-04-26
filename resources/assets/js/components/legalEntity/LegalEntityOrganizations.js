@@ -19,6 +19,12 @@ class LegalEntityOrganizations extends React.Component {
     }
 
     render() {
+        const {organizations} = this.props;
+
+        if (organizations === null) {
+            return null;
+        }
+
         return (
             <div className="animated fadeIn">
                 <Row>
@@ -26,7 +32,7 @@ class LegalEntityOrganizations extends React.Component {
                         <Card>
                             <CardHeader>
                                 <i className="fa fa-building-o" aria-hidden="true"/>Объекты
-                                ({this.props.organizations.length})
+                                ({organizations.length})
                                 <Link to="organizations/create" className="btn btn-primary btn-sm pull-right">
                                     Добавить <i className="icon-plus"/>
                                 </Link>
@@ -44,7 +50,7 @@ class LegalEntityOrganizations extends React.Component {
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    { this.props.organizations.map((organization) => {
+                                    {organizations.map((organization) => {
                                         return (
                                             <tr key={organization.id}>
                                                 <td>

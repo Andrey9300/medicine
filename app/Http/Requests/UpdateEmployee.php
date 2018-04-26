@@ -25,8 +25,8 @@ class UpdateEmployee extends FormRequest
     {
         return [
             'fio' => "required|max:255",
-            'date_birthday' => 'date_format:"Y-m-d"|required',
-            'date_employment' => 'date_format:"Y-m-d"|required',
+            'date_birthday' => 'date_format:"d-m-Y"|required',
+            'date_employment' => 'date_format:"d-m-Y"|required',
             'medical_book' => "max:255",
         ];
     }

@@ -1,18 +1,16 @@
 import React from 'react';
-import axios from 'axios';
 import {connect} from 'react-redux';
 import {fetchEmployee} from './../../actions/employeeActions';
 import {fetchOrganizations} from './../../actions/organizationActions';
 import PropTypes from 'prop-types';
-import {hashHistory} from 'react-router';
 import {Row, Col, Button, Card, CardHeader, CardFooter, CardBlock, Form, FormGroup, FormText, Label, Input
 } from 'reactstrap';
+import {editEmployee} from '../../actions/employeeActions';
 
 class EditEmployee extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            errors: '',
             employeeId: props.params.id
         };
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -20,17 +18,7 @@ class EditEmployee extends React.Component {
 
     handleSubmit(event) {
         event.preventDefault();
-        const formElement = document.querySelector('form');
-
-        axios.post(`/employees/update/${this.state.employeeId}`, new FormData(formElement))
-            .then(() => {
-                hashHistory.push(`/employees/${this.state.employeeId}`);
-            })
-            .catch((errors) => {
-                this.setState({
-                    errors: errors.response.data.errors
-                });
-            });
+        this.props.dispatch(editEmployee(document.querySelector('form'), this.state.employeeId));
     }
 
     componentWillMount() {
@@ -41,8 +29,8 @@ class EditEmployee extends React.Component {
     createMarkup() {
         let html = '';
 
-        Object.keys(this.state.errors).forEach((item) => {
-            this.state.errors[item].forEach((value) => {
+        Object.keys(this.props.errors).forEach((item) => {
+            this.props.errors[item].forEach((value) => {
                 html += `<p>${value}</p>`;
             });
         });
@@ -52,25 +40,24 @@ class EditEmployee extends React.Component {
         };
     }
 
-    componentWillReceiveProps(nextProps) {
-        if (this.props.employee && nextProps.employee && nextProps.employee.fio !== this.props.employee.fio) {
-            window.location.reload();
-        }
-    }
-
     render() {
-        const {employee} = this.props;
-        let errors = '';
-        let formElements = '';
+        const {employee, organizations, errors} = this.props;
+        let errorsMessage = '';
 
-        if (this.state.errors !== '') {
-            errors = <div className="alert alert-danger" role="alert">
-                <div dangerouslySetInnerHTML={this.createMarkup()} />
-            </div>;
+        if (errors) {
+            errorsMessage =
+                <div className="alert alert-danger" role="alert">
+                    <div dangerouslySetInnerHTML={this.createMarkup()} />
+                </div>;
         }
 
-        if (employee !== null) {
-            formElements =
+        if (employee === null) {
+            return null;
+        }
+
+        return (
+            <div>
+                {errorsMessage}
                 <Row>
                     <Col xs="12" md="6">
                         <Card>
@@ -94,7 +81,7 @@ class EditEmployee extends React.Component {
                                         </Col>
                                         <Col xs="12" md="9">
                                             <Input type="text" id="date_birthday" name="date_birthday"
-                                                   placeholder="Y-m-d"
+                                                   placeholder="дд-мм-гггг"
                                                    defaultValue={employee.date_birthday}/>
                                             <FormText color="muted">Введите дату рождения</FormText>
                                         </Col>
@@ -105,7 +92,7 @@ class EditEmployee extends React.Component {
                                         </Col>
                                         <Col xs="12" md="9">
                                             <Input type="text" id="date_employment" name="date_employment"
-                                                   placeholder="Y-m-d"
+                                                   placeholder="дд-мм-гггг"
                                                    defaultValue={employee.date_employment}/>
                                             <FormText color="muted">Введите дату приема на работу</FormText>
                                         </Col>
@@ -128,7 +115,7 @@ class EditEmployee extends React.Component {
                                         <Col xs="12" md="9">
                                             <Input type="select" name="organization_name" id="organization_name"
                                                    defaultValue={employee.organization.name}>
-                                                { this.props.organizations.map((organization) => {
+                                                {organizations.map((organization) => {
                                                     return (
                                                         <option key={organization.id} value={organization.name}>
                                                             {organization.name}
@@ -148,13 +135,7 @@ class EditEmployee extends React.Component {
                             </Form>
                         </Card>
                     </Col>
-                </Row>;
-        }
-
-        return (
-            <div>
-                {errors}
-                {formElements}
+                </Row>
             </div>
         );
     }
@@ -168,6 +149,7 @@ EditEmployee.propTypes = {
 
 const mapStateToProps = (state) => {
     return {
+        errors: state.employees.errors,
         employee: state.employees.employee,
         organizations: state.organizations.organizations
     };

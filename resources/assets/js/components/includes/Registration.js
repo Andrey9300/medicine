@@ -3,7 +3,6 @@ import {connect} from 'react-redux';
 import {registrationUser} from '../../actions/userActions';
 import PropTypes from 'prop-types';
 import {hashHistory} from 'react-router';
-import axios from 'axios';
 import {Container, Row, Col, Card, Form, CardBlock, Button, Input, InputGroup, InputGroupAddon, CardGroup
 } from 'reactstrap';
 
@@ -11,45 +10,23 @@ class Registration extends Component {
     constructor() {
         super();
         this.state = {
-            errors: ''
+            doubleClick: false
         };
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
+    componentWillReceiveProps() {
+        this.setState({
+            doubleClick: false
+        });
+    }
+
     handleSubmit(event) {
         event.preventDefault();
-        const formElement = document.querySelector('form');
-
-        axios.post('/register', new FormData(formElement))
-            .then(() => {
-                alert('Вам отправлен email для активации аккаунта');
-
-                axios.post('/logout', new FormData(formElement))
-                    .then(() => {
-                        hashHistory.push('/login');
-                        window.location.reload();
-                    })
-                    .catch((error) => {
-                        if (!error.response.data.errors) {
-                            window.location.reload();
-                        }
-
-                        this.setState({
-                            errors: error.response.data.errors
-                        });
-                    });
-            })
-            .catch((error) => {
-                if (!error.response.data.errors) {
-                    window.location.reload();
-                }
-
-                this.setState({
-                    errors: error.response.data.errors
-                });
-            });
-
-        // this.props.dispatch(registrationUser(new FormData(formElement))); //TODO сделать через reducer
+        this.setState({
+            doubleClick: true
+        });
+        this.props.dispatch(registrationUser(document.querySelector('form')));
     }
 
     handleLogin() {
@@ -59,8 +36,8 @@ class Registration extends Component {
     createMarkup() {
         let html = '';
 
-        Object.keys(this.state.errors).forEach((item) => {
-            this.state.errors[item].forEach((value) => {
+        Object.keys(this.props.errors).forEach((item) => {
+            this.props.errors[item].forEach((value) => {
                 html += `<p>${value}</p>`;
             });
         });
@@ -71,10 +48,11 @@ class Registration extends Component {
     }
 
     render() {
-        let errors = '';
+        const {errors} = this.props;
+        let errorsMessage = '';
 
-        if (this.state.errors !== '') {
-            errors = <div className="alert alert-danger" role="alert">
+        if (errors) {
+            errorsMessage = <div className="alert alert-danger" role="alert">
                 <div dangerouslySetInnerHTML={this.createMarkup()} />
             </div>;
         }
@@ -84,7 +62,7 @@ class Registration extends Component {
                 <Container>
                     <Row className="justify-content-center">
                         <Col md="6">
-                            {errors}
+                            {errorsMessage}
                             <CardGroup className="mb-0">
                                 <Card className="p-4">
                                     <CardBlock className="card-body">
@@ -93,22 +71,24 @@ class Registration extends Component {
                                             <p className="text-muted">Создайте свой аккаунт</p>
                                             <InputGroup className="mb-3">
                                                 <InputGroupAddon><i className="icon-user"/></InputGroupAddon>
-                                                <Input type="text" name="fio" placeholder="ФИО"/>
+                                                <Input type="text" name="fio" placeholder="ФИО" required/>
                                             </InputGroup>
                                             <InputGroup className="mb-3">
                                                 <InputGroupAddon>@</InputGroupAddon>
-                                                <Input type="email" name="email" placeholder="E-mail"/>
+                                                <Input type="email" name="email" placeholder="E-mail" required/>
                                             </InputGroup>
                                             <InputGroup className="mb-3">
                                                 <InputGroupAddon><i className="icon-lock"/></InputGroupAddon>
-                                                <Input type="password" name="password" placeholder="Пароль"/>
+                                                <Input type="password" name="password" placeholder="Пароль" required/>
                                             </InputGroup>
                                             <InputGroup className="mb-3">
                                                 <InputGroupAddon><i className="icon-lock"/></InputGroupAddon>
                                                 <Input type="password" name="password_confirmation"
-                                                       placeholder="Повторите пароль"/>
+                                                       placeholder="Повторите пароль" required/>
                                             </InputGroup>
-                                            <Button color="success" block>Создать аккаунт</Button>
+                                            <Button color="success" block disabled={this.state.doubleClick}>
+                                                Создать аккаунт
+                                            </Button>
                                             <Button color="primary" block onClick={this.handleLogin}>
                                                 Уже есть аккаунт
                                             </Button>
@@ -130,6 +110,7 @@ Registration.propTypes = {
 
 const mapStateToProps = (state) => {
     return {
+        errors: state.users.errors,
         users: state.users.users
     };
 };

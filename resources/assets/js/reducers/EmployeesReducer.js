@@ -1,5 +1,5 @@
 const initialState = {
-    error: null,
+    errors: null,
     fetched: false,
     employee: null,
     employeeResearch: null,
@@ -20,7 +20,7 @@ export default function reducer(state = initialState, action) {
         case 'EMPLOYEES_REJECTED': {
             return {
                 ...state,
-                error: action.payload,
+                errors: action.payload,
                 fetched: false
             };
         }
@@ -36,7 +36,7 @@ export default function reducer(state = initialState, action) {
         case 'EMPLOYEE_REJECTED': {
             return {
                 ...state,
-                error: action.payload,
+                errors: action.payload,
                 fetched: false
             };
         }
@@ -50,7 +50,7 @@ export default function reducer(state = initialState, action) {
         case 'EMPLOYEE_RESEARCHES_REJECTED': {
             return {
                 ...state,
-                error: action.payload,
+                errors: action.payload,
                 fetched: false
             };
         }
@@ -64,7 +64,7 @@ export default function reducer(state = initialState, action) {
         case 'EMPLOYEE_RESEARCH_REJECTED': {
             return {
                 ...state,
-                error: action.payload,
+                errors: action.payload,
                 fetched: false
             };
         }
@@ -73,6 +73,20 @@ export default function reducer(state = initialState, action) {
                 ...state,
                 fetched: true,
                 employeeResearch: action.payload
+            };
+        }
+        case 'EMPLOYEE_ADD_REJECTED': {
+            return {
+                ...state,
+                errors: action.payload,
+                fetched: false
+            };
+        }
+        case 'EMPLOYEE_RESEARCHES_ADD_REJECTED': {
+            return {
+                ...state,
+                errors: action.payload,
+                fetched: false
             };
         }
         default:

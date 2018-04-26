@@ -17,7 +17,7 @@ class Layout extends React.Component {
     }
 
     render() {
-        const {location} = this.props;
+        const {location, children} = this.props;
 
         return (
             <div className="app">
@@ -25,7 +25,7 @@ class Layout extends React.Component {
                 <div className="app-body">
                     <Sidebar location={location}/>
                     <main className="main">
-                        {this.props.children}
+                        {children}
                     </main>
                 </div>
                 <Footer />

@@ -2,6 +2,44 @@ import axios from 'axios';
 import {hashHistory} from 'react-router';
 
 /**
+ * @returns {function(*)}
+ */
+export function addEmployee(formElement = null) {
+    return (dispatch) => {
+        axios.post('/employees/store', new FormData(formElement))
+            .then(() => {
+                alert('Сотрудник успешно создан');
+                hashHistory.push('/employees');
+            })
+            .catch((errors) => {
+                dispatch({
+                    payload: errors.response.data.errors,
+                    type: 'EMPLOYEE_ADD_REJECTED'
+                });
+            });
+    };
+}
+
+/**
+ * @returns {function(*)}
+ */
+export function editEmployee(formElement = null, employeeId) {
+    return (dispatch) => {
+        axios.post(`/employees/update/${employeeId}`, new FormData(formElement))
+            .then(() => {
+                alert('Сотрудник успешно отредактирован');
+                hashHistory.push(`/employees/${employeeId}`);
+            })
+            .catch((errors) => {
+                dispatch({
+                    payload: errors.response.data.errors,
+                    type: 'EMPLOYEE_ADD_REJECTED'
+                });
+            });
+    };
+}
+
+/**
  * Список сотрудников
  *
  * @returns {function(*)}
@@ -62,6 +100,7 @@ export function deleteEmployee(id, organizationId) {
     return () => {
         axios.post(`/employees/softDelete/${id}`)
             .then(() => {
+                alert('Сотрудник уволен');
                 if (organizationId) {
                     hashHistory.push(`/organizations/${organizationId}`);
                 } else {
@@ -88,6 +127,27 @@ export function forceDeleteEmployee(id) {
             })
             .catch((error) => {
                 return error;
+            });
+    };
+}
+
+/**
+ * @param formElement
+ * @param employeeId
+ * @returns {Function}
+ */
+export function addEmployeeResearches(formElement = null, employeeId) {
+    return (dispatch) => {
+        axios.post(`/employees/researches/store/${employeeId}`, new FormData(formElement))
+            .then(() => {
+                alert('Даты исследования успешно сохранены');
+                window.location.reload();
+            })
+            .catch((errors) => {
+                dispatch({
+                    payload: errors.response.data.errors,
+                    type: 'EMPLOYEE_RESEARCHES_ADD_REJECTED'
+                });
             });
     };
 }

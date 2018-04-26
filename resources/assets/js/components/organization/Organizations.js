@@ -11,8 +11,12 @@ class Organizations extends React.Component {
     }
 
     render() {
-        const {user} = this.props;
+        const {user, organizations} = this.props;
         let linkAdd = null;
+
+        if (organizations === null) {
+            return null;
+        }
 
         if (user && user.role === 'admin') {
             linkAdd =
@@ -28,7 +32,7 @@ class Organizations extends React.Component {
                         <Card>
                             <CardHeader>
                                 <i className="fa fa-building-o" aria-hidden="true"/>Объекты
-                                ({this.props.organizations.length})
+                                ({organizations.length})
                                 {linkAdd}
                             </CardHeader>
                             <CardBlock className="card-body">
@@ -45,7 +49,7 @@ class Organizations extends React.Component {
                                         </tr>
                                     </thead>
                                     <tbody>
-                                    { this.props.organizations.map((organization) => {
+                                    {organizations.map((organization) => {
                                         return (
                                             <tr key={organization.id}>
                                                 <td>{organization.legal_entity.name}</td>

@@ -1,18 +1,14 @@
 import React from 'react';
-import axios from 'axios';
 import PropTypes from 'prop-types';
 import {fetchOrganizations} from './../../actions/organizationActions';
+import {addEmployee} from './../../actions/employeeActions';
 import {connect} from 'react-redux';
-import {hashHistory} from 'react-router';
 import {Row, Col, Button, Card, CardHeader, CardFooter, CardBlock, Form, FormGroup, FormText, Label, Input
 } from 'reactstrap';
 
 class NewEmployee extends React.Component {
     constructor() {
         super();
-        this.state = {
-            errors: ''
-        };
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
@@ -22,24 +18,14 @@ class NewEmployee extends React.Component {
 
     handleSubmit(event) {
         event.preventDefault();
-        const formElement = document.querySelector('form');
-
-        axios.post('/employees/store', new FormData(formElement))
-            .then(() => {
-                hashHistory.push('/employees');
-            })
-            .catch((error) => {
-                this.setState({
-                    errors: error.response.data.errors
-                });
-            });
+        this.props.dispatch(addEmployee(document.querySelector('form')));
     }
 
     createMarkup() {
         let html = '';
 
-        Object.keys(this.state.errors).forEach((item) => {
-            this.state.errors[item].forEach((value) => {
+        Object.keys(this.props.errors).forEach((item) => {
+            this.props.errors[item].forEach((value) => {
                 html += `<p>${value}</p>`;
             });
         });
@@ -50,17 +36,19 @@ class NewEmployee extends React.Component {
     }
 
     render() {
-        let errors = '';
+        const {organizations, errors} = this.props;
+        let errorsMessage = '';
 
-        if (this.state.errors) {
-            errors = <div className="alert alert-danger" role="alert">
-                <div dangerouslySetInnerHTML={this.createMarkup()} />
-            </div>;
+        if (errors) {
+            errorsMessage =
+                <div className="alert alert-danger" role="alert">
+                    <div dangerouslySetInnerHTML={this.createMarkup()} />
+                </div>;
         }
 
         return (
             <div>
-                {errors}
+                {errorsMessage}
                 <Row>
                     <Col xs="12" md="6">
                         <Card>
@@ -74,8 +62,7 @@ class NewEmployee extends React.Component {
                                             <Label htmlFor="text-input">ФИО</Label>
                                         </Col>
                                         <Col xs="12" md="9">
-                                            <Input type="text" id="name" name="fio"
-                                                   placeholder="ФИО" required/>
+                                            <Input type="text" id="name" name="fio" placeholder="ФИО" required/>
                                             <FormText color="muted">Введите ФИО</FormText>
                                         </Col>
                                     </FormGroup>
@@ -85,7 +72,7 @@ class NewEmployee extends React.Component {
                                         </Col>
                                         <Col xs="12" md="9">
                                             <Input type="text" id="date_birthday" name="date_birthday"
-                                                   placeholder="Y-m-d"
+                                                   placeholder="дд-мм-гггг"
                                                    required/>
                                             <FormText color="muted">Введите дату рождения</FormText>
                                         </Col>
@@ -96,7 +83,7 @@ class NewEmployee extends React.Component {
                                         </Col>
                                         <Col xs="12" md="9">
                                             <Input type="text" id="date_employment" name="date_employment"
-                                                   placeholder="Y-m-d" required/>
+                                                   placeholder="дд-мм-гггг" required/>
                                             <FormText color="muted">Введите дату приема на работу</FormText>
                                         </Col>
                                     </FormGroup>
@@ -116,7 +103,7 @@ class NewEmployee extends React.Component {
                                         </Col>
                                         <Col xs="12" md="9">
                                             <Input type="select" name="organization_name" id="organization_name">
-                                                { this.props.organizations.map((organization) => {
+                                                {organizations.map((organization) => {
                                                     return (
                                                         <option key={organization.id} value={organization.name}>
                                                             {organization.name}
@@ -148,6 +135,7 @@ NewEmployee.propTypes = {
 
 const mapStateToProps = (state) => {
     return {
+        errors: state.employees.errors,
         organizations: state.organizations.organizations
     };
 };

@@ -1,22 +1,21 @@
-import {fetchOrganizationEmployees, deleteOrganizationEmployee} from '../../actions/organizationActions';
-import {Link} from 'react-router';
+import {fetchOrganization, deleteOrganizationEmployee} from '../../actions/organizationActions';
+import {EmployeesList} from '../employee/EmployeesList';
 import React from 'react';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
-import {Row, Col, Card, CardHeader, CardBlock, Table} from 'reactstrap';
+import {Row, Col} from 'reactstrap';
 
 class OrganizationEmployee extends React.Component {
     constructor(props) {
         super(props);
 
         this.state = {
-            errors: '',
             organizationId: props.params.idOrganization
         };
     }
 
     componentWillMount() {
-        this.props.dispatch(fetchOrganizationEmployees(this.state.organizationId));
+        this.props.dispatch(fetchOrganization(this.state.organizationId));
     }
 
     handleBtnDelete(idEmployee, event) {
@@ -25,68 +24,21 @@ class OrganizationEmployee extends React.Component {
     }
 
     render() {
+        const {organization} = this.props;
+
+        if (organization.organization === null) {
+            return null;
+        }
+
         return (
             <div className="animated fadeIn">
                 <Row>
                     <Col xs="12" lg="12">
-                        <Card>
-                            <CardHeader>
-                                <i className="fa fa-align-justify"/>Сотрудники
-                                ({this.props.organizationEmployees.length})
-                                <Link to={`organizations/employees/create/${this.state.organizationId}`}
-                                      className="btn btn-primary btn-sm pull-right">
-                                    Добавить <i className="icon-plus"/>
-                                </Link>
-                            </CardHeader>
-                            <CardBlock className="card-body">
-                                <Table responsive>
-                                    <thead>
-                                    <tr>
-                                        <th>ФИО</th>
-                                        {/*<th>Исследования</th>*/}
-                                        <th>Редактировать</th>
-                                        {/*<th>Удалить</th>*/}
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    { this.props.organizationEmployees.map((employee) => {
-                                        return (
-                                            <tr key={employee.id}>
-                                                <td>
-                                                    <Link to={`employees/${employee.id}`}>
-                                                        {employee.fio}
-                                                    </Link>
-                                                </td>
-                                                {/*<td>
-                                                    <Link to={`employees/researches/${employee.id}`}
-                                                          className="btn btn-primary btn-xs pull-left">Исследования
-                                                        <i className="glyphicon glyphicon-pencil"/>
-                                                    </Link>
-                                                </td>*/}
-                                                <td>
-                                                    <Link to={`employees/edit/${employee.id}`}
-                                                          className="btn btn-success btn-xs pull-left">Редактировать
-                                                        <i className="glyphicon glyphicon-pencil"/>
-                                                    </Link>
-                                                </td>
-                                                {/*<td>
-                                                    <form id={`form_${employee.id}`} className="pull-left" method="post">
-                                                        <input type="hidden" name="employee_id" value={employee.id} />
-                                                        <a className="btn btn-danger btn-xs"
-                                                           onClick={(event) => this.handleBtnDelete(employee.id, event)}
-                                                           href="#" id={employee.id}>Удалить
-                                                            <i className="glyphicon glyphicon-trash"/>
-                                                        </a>
-                                                    </form>
-                                                </td>*/}
-                                            </tr>
-                                        );
-                                    })
-                                    }
-                                    </tbody>
-                                </Table>
-                            </CardBlock>
-                        </Card>
+                        <EmployeesList
+                            employees = {organization.organization.employees}
+                            handleBtnDelete = {this.handleBtnDelete.bind(this)}
+                            title = {`Сотрудники «${organization.organization.name}» `}
+                        />
                     </Col>
                 </Row>
             </div>
@@ -102,7 +54,7 @@ OrganizationEmployee.propTypes = {
 
 const mapStateToProps = (state) => {
     return {
-        organizationEmployees: state.organizations.organizationEmployees
+        organization: state.organizations
     };
 };
 

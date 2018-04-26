@@ -1,19 +1,15 @@
 import React from 'react';
-import axios from 'axios';
 import {fetchRegions} from './../../actions/regionActions';
 import {fetchCategories} from './../../actions/categoryActions';
 import {fetchLegalEntities} from '../../actions/legalEntityActions';
 import {connect} from 'react-redux';
-import {hashHistory} from 'react-router';
 import {Row, Col, Button, Card, CardHeader, CardBlock, CardFooter, Form, FormGroup, FormText, Label, Input
 } from 'reactstrap';
+import {addOrganization} from '../../actions/organizationActions';
 
 class NewOrganization extends React.Component {
     constructor() {
         super();
-        this.state = {
-            errors: ''
-        };
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
@@ -25,35 +21,14 @@ class NewOrganization extends React.Component {
 
     handleSubmit(event) {
         event.preventDefault();
-        const formElement = document.querySelector('form');
-
-        axios.post('/organizations/store', new FormData(formElement))
-            .then(() => {
-                hashHistory.push('organizations');
-            })
-            .catch((error) => {
-                let {errors} = error.response.data;
-
-                if (error.response.status === 403) {
-                    const forbidden = [];
-                    const access = [];
-
-                    access.push('У вас нет прав');
-                    forbidden.access = access;
-                    errors = forbidden;
-                }
-
-                this.setState({
-                    errors: errors
-                });
-            });
+        this.props.dispatch(addOrganization(document.querySelector('form')));
     }
 
     createMarkup() {
         let html = '';
 
-        Object.keys(this.state.errors).forEach((item) => {
-            this.state.errors[item].forEach((value) => {
+        Object.keys(this.props.errors).forEach((item) => {
+            this.props.errors[item].forEach((value) => {
                 html += `<p>${value}</p>`;
             });
         });
@@ -64,17 +39,18 @@ class NewOrganization extends React.Component {
     }
 
     render() {
-        let errors = '';
+        const {categories, legalEntities, regions, errors} = this.props;
+        let errorsMessage = '';
 
-        if (this.state.errors) {
-            errors = <div className="alert alert-danger" role="alert">
+        if (errors) {
+            errorsMessage = <div className="alert alert-danger" role="alert">
                 <div dangerouslySetInnerHTML={this.createMarkup()} />
             </div>;
         }
 
         return (
             <div className="animated fadeIn">
-                {errors}
+                {errorsMessage}
                 <Row>
                     <Col xs="12" md="6">
                         <Card>
@@ -99,7 +75,7 @@ class NewOrganization extends React.Component {
                                         </Col>
                                         <Col xs="12" md="9">
                                             <Input type="select" name="region_id" id="region">
-                                                { this.props.regions.map((region) => {
+                                                {regions.map((region) => {
                                                     return (
                                                         <option key={region.id} value={region.id}>
                                                             {region.name}
@@ -126,7 +102,7 @@ class NewOrganization extends React.Component {
                                         </Col>
                                         <Col xs="12" md="9">
                                             <Input type="select" name="legal_entity_id" id="legal_entity_id">
-                                                { this.props.legalEntities.map((legalEntity) => {
+                                                {legalEntities.map((legalEntity) => {
                                                     return (
                                                         <option key={legalEntity.id} value={legalEntity.id}>
                                                             {legalEntity.name}
@@ -153,8 +129,7 @@ class NewOrganization extends React.Component {
                                         <Col xs="12" md="9">
                                             <Input type="email" id="head_email" name="head_email"
                                                    placeholder="E-mail руководителя" required/>
-                                            <FormText color="muted">Если у вас нет отдельного руководителя объекта, то
-                                                укажите свой e-mail, который используете для входа в систему.
+                                            <FormText color="muted">На этот e-mail будут присылаться уведомления
                                             </FormText>
                                         </Col>
                                     </FormGroup>
@@ -174,7 +149,7 @@ class NewOrganization extends React.Component {
                                         </Col>
                                         <Col xs="12" md="9">
                                             <Input type="select" name="category_id" id="category">
-                                                { this.props.categories.map((category) => {
+                                                {categories.map((category) => {
                                                     return (
                                                         <option key={category.id} value={category.id}>
                                                             {category.name}
@@ -202,6 +177,7 @@ class NewOrganization extends React.Component {
 
 const mapStateToProps = (state) => {
     return {
+        errors: state.organizations.errors,
         regions: state.regions.regions,
         categories: state.categories.categories,
         legalEntities: state.legalEntities.legalEntities,

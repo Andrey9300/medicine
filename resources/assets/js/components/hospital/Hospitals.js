@@ -20,10 +20,14 @@ class Hospitals extends React.Component {
     }
 
     render() {
-        const {user} = this.props;
+        const {user, hospitals} = this.props;
         let linkAdd = null;
 
-        if (user && user.role === 'admin' && this.props.hospitals.length < 1) {
+        if (hospitals === null) {
+            return null;
+        }
+        // Пока ограничиваемся одним мед центром
+        if (user && user.role === 'admin' && hospitals.length < 1) {
             linkAdd =
                 <Link to="hospitals/create" className="btn btn-primary btn-sm pull-right">
                     Добавить <i className="icon-plus"/>
@@ -38,7 +42,7 @@ class Hospitals extends React.Component {
                             <CardHeader>
                                 <i className="fa fa-stethoscope" aria-hidden="true"/>
                                 Медицинские центры
-                                ({this.props.hospitals.length})
+                                ({hospitals.length})
                                 {linkAdd}
                             </CardHeader>
                             <CardBlock className="card-body">
@@ -52,7 +56,7 @@ class Hospitals extends React.Component {
                                         </tr>
                                     </thead>
                                     <tbody>
-                                    { this.props.hospitals.map((hospital) => {
+                                    {hospitals.map((hospital) => {
                                         return (
                                             <tr key={hospital.id}>
                                                 <td>

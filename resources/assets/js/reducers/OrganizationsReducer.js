@@ -1,5 +1,5 @@
 const initialState = {
-    error: null,
+    errors: null,
     fetched: false,
     organization: null,
     organizations: [],
@@ -15,10 +15,24 @@ const initialState = {
  */
 export default function reducer(state = initialState, action) {
     switch (action.type) {
+        case 'ORGANIZATION_ADD_REJECTED': {
+            return {
+                ...state,
+                errors: action.payload,
+                fetched: false
+            };
+        }
+        case 'ORGANIZATION_EDIT_REJECTED': {
+            return {
+                ...state,
+                errors: action.payload,
+                fetched: false
+            };
+        }
         case 'ORGANIZATIONS_REJECTED': {
             return {
                 ...state,
-                error: action.payload,
+                errors: action.payload,
                 fetched: false
             };
         }
@@ -32,7 +46,7 @@ export default function reducer(state = initialState, action) {
         case 'EXPIRED_ORGANIZATIONS_REJECTED': {
             return {
                 ...state,
-                error: action.payload,
+                errors: action.payload,
                 fetched: false
             };
         }
@@ -46,7 +60,7 @@ export default function reducer(state = initialState, action) {
         case 'ORGANIZATION_REJECTED': {
             return {
                 ...state,
-                error: action.payload,
+                errors: action.payload,
                 fetched: false
             };
         }
@@ -55,20 +69,6 @@ export default function reducer(state = initialState, action) {
                 ...state,
                 fetched: true,
                 organization: action.payload.data.organization
-            };
-        }
-        case 'ORGANIZATION_EMPLOYEES_REJECTED': {
-            return {
-                ...state,
-                error: action.payload,
-                fetched: false
-            };
-        }
-        case 'ORGANIZATION_EMPLOYEES_FULFILLED': {
-            return {
-                ...state,
-                fetched: true,
-                organizationEmployees: action.payload.data.organization_employees
             };
         }
         default: return {

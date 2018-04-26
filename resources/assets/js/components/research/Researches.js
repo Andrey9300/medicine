@@ -1,8 +1,7 @@
-import {fetchUserResearches} from '../../actions/researchActions';
+import {addUserResearches, fetchUserResearches} from '../../actions/researchActions';
 import React from 'react';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
-import axios from 'axios';
 import {Row, Col, Card, CardHeader, CardBlock, CardFooter, Table, Form, Button, Input} from 'reactstrap';
 
 class Researches extends React.Component {
@@ -29,42 +28,41 @@ class Researches extends React.Component {
     }
 
     handleClick() {
-        const formElement = document.querySelector('form');
-
-        axios.post('/userResearches/store', new FormData(formElement))
-            .then(() => {
-                alert('Изменения сохранены');
-            })
-            .catch((error) => {
-                const errors = error;
-
-                this.setState({
-                    errors: errors
-                });
-            });
+        this.props.dispatch(addUserResearches(document.querySelector('form')));
     }
 
     render() {
-        const {user} = this.props;
+        const {user, userResearches, errors} = this.props;
         let buttonSave = '';
+        let errorsMessage = '';
 
-        if (user) {
-            if (user.role === 'admin') {
-                buttonSave =
-                    <Button type="submit" size="sm" color="success pull-right" onClick={this.handleClick}>
-                        <i className="fa fa-dot-circle-o"/> Сохранить
-                    </Button>;
-            }
+        if (userResearches === null) {
+            return null;
+        }
+
+        if (user && user.role === 'admin') {
+            buttonSave =
+                <Button type="submit" size="sm" color="success pull-right" onClick={this.handleClick}>
+                    <i className="fa fa-dot-circle-o"/> Сохранить
+                </Button>;
+        }
+
+        if (errors) {
+            errorsMessage =
+                <div className="alert alert-danger" role="alert">
+                    <div dangerouslySetInnerHTML={this.createMarkup()} />
+                </div>;
         }
 
         return (
             <div className="animated fadeIn">
+                {errorsMessage}
                 <Row>
-                    <Col xs="12" md="12" lg="12">
+                    <Col xs="12" md="12" lg="8">
                         <Card>
                             <CardHeader>
                                 <i className="fa fa-heartbeat" aria-hidden="true"/>Исследования
-                                ({this.props.userResearches.length})
+                                ({userResearches.length})
                                 {buttonSave}
                             </CardHeader>
                             <CardBlock className="card-body">
@@ -78,7 +76,7 @@ class Researches extends React.Component {
                                         </tr>
                                         </thead>
                                         <tbody>
-                                            { this.props.userResearches.map((research) => {
+                                            {userResearches.map((research) => {
                                                 let researchCheckBox = '';
 
                                                 if (user && user.role === 'admin') {
@@ -124,11 +122,13 @@ class Researches extends React.Component {
 
 Researches.propTypes = {
     dispatch: PropTypes.func.isRequired,
-    userResearches: PropTypes.array.isRequired
+    userResearches: PropTypes.array.isRequired,
+    user: PropTypes.object
 };
 
 const mapStateToProps = (state) => {
     return {
+        errors: state.researches.errors,
         userResearches: state.researches.userResearches,
         user: state.users.user
     };

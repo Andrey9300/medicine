@@ -1,50 +1,39 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import {Link} from 'react-router';
-import {loginUser} from '../../actions/userActions';
+import {Link, hashHistory} from 'react-router';
 import PropTypes from 'prop-types';
-import axios from 'axios';
-import {hashHistory} from 'react-router';
 import {Container, Row, Col, CardGroup, Card, CardBlock, Form, Button, Input, InputGroup, InputGroupAddon
 } from 'reactstrap';
-import Sidebar from './Sidebar';
-import {fetchHospital} from '../../actions/hospitalActions';
+import {loginUser} from '../../actions/userActions';
 
 class Login extends Component {
     constructor() {
         super();
         this.state = {
-            errors: ''
+            doubleClick: false
         };
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
+    componentWillReceiveProps() {
+        this.setState({
+            doubleClick: false
+        });
+    }
+
     handleSubmit(event) {
         event.preventDefault();
-        const formElement = document.querySelector('form');
-
-        axios.post('/login', new FormData(formElement))
-            .then(() => {
-                hashHistory.push('/organizations');
-                window.location.reload();
-            })
-            .catch((error) => {
-                if (!error.response.data.errors) {
-                    window.location.reload();
-                }
-
-                this.setState({
-                    errors: error.response.data.errors
-                });
-            });
-        // this.props.dispatch(loginUser(new FormData(formElement))); //TODO сделать через reducer
+        this.setState({
+            doubleClick: true
+        });
+        this.props.dispatch(loginUser(document.querySelector('form')));
     }
 
     createMarkup() {
         let html = '';
 
-        Object.keys(this.state.errors).forEach((item) => {
-            this.state.errors[item].forEach((value) => {
+        Object.keys(this.props.errors).forEach((item) => {
+            this.props.errors[item].forEach((value) => {
                 html += `<p>${value}</p>`;
             });
         });
@@ -55,14 +44,15 @@ class Login extends Component {
     }
 
     render() {
-        if (this.props.user) {
+        const {user, errors} = this.props;
+        let errorsMessage = '';
+
+        if (user) {
             hashHistory.push('organizations');
         }
 
-        let errors = '';
-
-        if (this.state.errors !== '') {
-            errors = <div className="alert alert-danger" role="alert">
+        if (errors) {
+            errorsMessage = <div className="alert alert-danger" role="alert">
                 <div dangerouslySetInnerHTML={this.createMarkup()} />
             </div>;
         }
@@ -72,7 +62,7 @@ class Login extends Component {
                 <Container>
                     <Row className="justify-content-center">
                         <Col md="6">
-                            {errors}
+                            {errorsMessage}
                             <CardGroup className="mb-0">
                                 <Card className="p-4">
                                     <CardBlock className="card-body">
@@ -89,7 +79,11 @@ class Login extends Component {
                                             </InputGroup>
                                             <Row>
                                                 <Col xs="4">
-                                                    <Button color="primary" className="px-4 btn-sm">Войти</Button>
+                                                    <Button disabled={this.state.doubleClick}
+                                                            color="primary"
+                                                            className="px-4 btn-sm">
+                                                        Войти
+                                                    </Button>
                                                 </Col>
                                                 <Col xs="4" className="text-right">
                                                     <Link to="registration" className="btn btn-success btn-sm">
@@ -120,6 +114,7 @@ Login.propTypes = {
 
 const mapStateToProps = (state) => {
     return {
+        errors: state.users.errors,
         user: state.users.user
     };
 };
