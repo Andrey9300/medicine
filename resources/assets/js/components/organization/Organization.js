@@ -76,22 +76,6 @@ class Organization extends React.Component {
                                 <Table responsive>
                                     <tbody>
                                     <tr>
-                                        <td>Регион:</td>
-                                        <td>{organization.region.name}</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Адрес:</td>
-                                        <td>{organization.address}</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Юридическое лицо:</td>
-                                        <td>«{organization.legal_entity.name}»</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Телефон:</td>
-                                        <td>{organization.phone}</td>
-                                    </tr>
-                                    <tr>
                                         <td>Руководитель:</td>
                                         <td>{organization.head_fio}</td>
                                     </tr>
@@ -101,7 +85,9 @@ class Organization extends React.Component {
                                     </tr>
                                     <tr>
                                         <td>Категория:</td>
-                                        <td>{organization.category.name}</td>
+                                        <td>
+                                            {organization.category.name}
+                                        </td>
                                     </tr>
                                     </tbody>
                                 </Table>
@@ -164,7 +150,7 @@ class Organization extends React.Component {
                                             составляет (с учетом указанных цен в мед учреждении)
                                         </td>
                                         <td>
-                                            <Link to={`legalEntities/endsEmployees/${organization.id}`}>
+                                            <Link>
                                                 {organization.totalSumForResearches}&nbsp;
                                                 <i className="fa fa-rub" aria-hidden="true"/>
                                             </Link>
@@ -173,7 +159,7 @@ class Organization extends React.Component {
                                     <tr>
                                         <td>В прошлом месяце израсходовано</td>
                                         <td>
-                                            <Link to={`legalEntities/endsEmployees/${organization.id}`}>
+                                            <Link>
                                                 {organization.totalSumForCompletedResearches}&nbsp;
                                                 <i className="fa fa-rub" aria-hidden="true"/>
                                             </Link>

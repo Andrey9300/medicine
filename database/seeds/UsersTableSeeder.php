@@ -35,29 +35,29 @@ class UsersTableSeeder extends Seeder
             'active' => true,
             'role' => 'admin'
         ]);
-        DB::table('users')->insert([
-            'id' => 4,
-            'fio' => 'Калин Олег Иванович',
-            'password' => bcrypt('secret'),
-            'email' => 'kalin@meet.ru',
-            'active' => true,
-            'role' => 'head'
-        ]);
-        DB::table('users')->insert([
-            'id' => 5,
-            'fio' => 'Бранин Василий Петрович',
-            'password' => bcrypt('secret'),
-            'email' => 'branin@meet.ru',
-            'active' => true,
-            'role' => 'head'
-        ]);
-        DB::table('users')->insert([
-            'id' => 6,
-            'fio' => 'Бран Петр Васильевич',
-            'password' => bcrypt('secret'),
-            'email' => 'bran@fish.ru',
-            'active' => true,
-            'role' => 'head'
-        ]);
+//        DB::table('users')->insert([
+//            'id' => 4,
+//            'fio' => 'Калин Олег Иванович',
+//            'password' => bcrypt('secret'),
+//            'email' => 'kalin@meet.ru',
+//            'active' => true,
+//            'role' => 'head'
+//        ]);
+//        DB::table('users')->insert([
+//            'id' => 5,
+//            'fio' => 'Бранин Василий Петрович',
+//            'password' => bcrypt('secret'),
+//            'email' => 'branin@meet.ru',
+//            'active' => true,
+//            'role' => 'head'
+//        ]);
+//        DB::table('users')->insert([
+//            'id' => 6,
+//            'fio' => 'Бран Петр Васильевич',
+//            'password' => bcrypt('secret'),
+//            'email' => 'bran@fish.ru',
+//            'active' => true,
+//            'role' => 'head'
+//        ]);
     }
 }

@@ -1,29 +1,20 @@
-import {deleteEmployee, forceDeleteEmployee, fetchEmployees} from '../../actions/employeeActions';
+import {fetchEmployees} from '../../actions/employeeActions';
 import {EmployeesList} from './EmployeesList';
 import React from 'react';
+import {Link} from 'react-router';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
-import {Row, Col} from 'reactstrap';
+import {Row, Col, Card, CardHeader} from 'reactstrap';
 
 class Employees extends React.Component {
     componentWillMount() {
         this.props.dispatch(fetchEmployees());
     }
 
-    handleBtnForceDelete(id, event) {
-        event.preventDefault();
-        this.props.dispatch(forceDeleteEmployee(id));
-    }
-
-    handleBtnDelete(id, event) {
-        event.preventDefault();
-        this.props.dispatch(deleteEmployee(id));
-    }
-
     render() {
-        const {user, employees, deleted} = this.props;
+        const {user, employees} = this.props;
 
-        if (!user || !employees.length || !deleted.length) {
+        if (!user || !employees) {
             return null;
         }
 
@@ -35,21 +26,22 @@ class Employees extends React.Component {
                             <EmployeesList
                                 employees = {employees}
                                 user = {user}
-                                handleBtnDelete = {this.handleBtnDelete.bind(this)}
                                 title = {'Сотрудники '}
                             />
                         </Col>
                     </Row>
                     <Row>
-                        <Col xs="6" lg="6">
-                            <EmployeesList
-                                employees = {deleted}
-                                user = {user}
-                                title = {'Уволенные сотрудники '}
-                            />
+                        <Col xs="12" lg="12">
+                            <Card>
+                                <CardHeader>
+                                    <Link to={'employeesDeleted'}>
+                                        Уволенные сотрудники
+                                    </Link>
+                                </CardHeader>
+                            </Card>
                         </Col>
                     </Row>
-                </div>;
+                </div>
             </div>
         );
     }
@@ -58,7 +50,6 @@ class Employees extends React.Component {
 Employees.propTypes = {
     dispatch: PropTypes.func.isRequired,
     employees: PropTypes.array.isRequired,
-    deleted: PropTypes.array.isRequired,
     user: PropTypes.object
 };
 
@@ -66,8 +57,7 @@ const mapStateToProps = (state) => {
     return {
         user: state.users.user,
         employees: state.employees.employees,
-        organization: state.organizations.organization,
-        deleted: state.employees.deleted
+        organization: state.organizations.organization
     };
 };
 

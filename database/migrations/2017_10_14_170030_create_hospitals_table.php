@@ -23,8 +23,6 @@ class CreateHospitalsTable extends Migration
             $table->string('head_fio')->nullable();
             $table->integer('user_id')->unsigned();
             $table->foreign('user_id')->references('id')->on('users');
-            $table->integer('region_id')->unsigned();
-            $table->foreign('region_id')->references('id')->on('regions');
             $table->unique(array('name', 'user_id'));
         });
     }

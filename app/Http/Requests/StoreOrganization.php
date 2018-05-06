@@ -25,11 +25,7 @@ class StoreOrganization extends FormRequest
     public function rules()
     {
         return [
-            'name' => "required|unique:organizations",
-            'address' => "max:255",
-            'legal_entity_id' => "required|max:255",
-            'head_email' => "required|email|max:255",
-            'phone' => "max:255",
+            'name' => "required|unique:organizations"
         ];
     }
 }

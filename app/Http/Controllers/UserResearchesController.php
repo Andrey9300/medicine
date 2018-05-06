@@ -13,7 +13,6 @@ class UserResearchesController extends Controller
      * Сохранить исследования выбранные админом
      *
      * @param  \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\JsonResponse
      * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function store(Request $request)

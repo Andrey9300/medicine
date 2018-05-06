@@ -1,6 +1,5 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import {fetchRegions} from './../../actions/regionActions';
 import {Row, Col, Button, Card, CardHeader, CardFooter, CardBlock, Form, FormGroup, FormText, Label, Input
 } from 'reactstrap';
 import {addHospital} from '../../actions/hospitalActions';
@@ -9,10 +8,6 @@ class NewHospital extends React.Component {
     constructor() {
         super();
         this.handleSubmit = this.handleSubmit.bind(this);
-    }
-
-    componentWillMount() {
-        this.props.dispatch(fetchRegions());
     }
 
     handleSubmit(event) {
@@ -35,7 +30,7 @@ class NewHospital extends React.Component {
     }
 
     render() {
-        const {regions, errors} = this.props;
+        const {errors} = this.props;
         let errorsMessage = '';
 
         if (errors) {
@@ -60,26 +55,7 @@ class NewHospital extends React.Component {
                                             <Label htmlFor="text-input">Наименование</Label>
                                         </Col>
                                         <Col xs="12" md="9">
-                                            <Input type="text" id="name" name="name"
-                                                   placeholder="Наименование" required/>
-                                            <FormText color="muted">Введите наименование</FormText>
-                                        </Col>
-                                    </FormGroup>
-                                    <FormGroup row>
-                                        <Col md="3">
-                                            <Label htmlFor="text-input">Регион</Label>
-                                        </Col>
-                                        <Col xs="12" md="9">
-                                            <Input type="select" name="region_id" id="region">
-                                                {regions.map((region) => {
-                                                    return (
-                                                        <option key={region.id} value={region.id}>
-                                                            {region.name}
-                                                        </option>
-                                                    );
-                                                })
-                                                }
-                                            </Input>
+                                            <Input type="text" id="name" name="name" required/>
                                         </Col>
                                     </FormGroup>
                                     <FormGroup row>
@@ -87,9 +63,7 @@ class NewHospital extends React.Component {
                                             <Label htmlFor="text-input">Фактический адрес</Label>
                                         </Col>
                                         <Col xs="12" md="9">
-                                            <Input type="text" id="address" name="address"
-                                                   placeholder="Фактический адрес" required/>
-                                            <FormText color="muted">Введите адрес</FormText>
+                                            <Input type="text" id="address" name="address" required/>
                                         </Col>
                                     </FormGroup>
                                     <FormGroup row>
@@ -97,9 +71,7 @@ class NewHospital extends React.Component {
                                             <Label htmlFor="text-input">Контактное лицо</Label>
                                         </Col>
                                         <Col xs="12" md="9">
-                                            <Input type="text" id="head_fio" name="head_fio"
-                                                   placeholder="Контактное лицо" required/>
-                                            <FormText color="muted">Введите контактное лицо</FormText>
+                                            <Input type="text" id="head_fio" name="head_fio" required/>
                                         </Col>
                                     </FormGroup>
                                     <FormGroup row>
@@ -107,9 +79,7 @@ class NewHospital extends React.Component {
                                             <Label htmlFor="text-input">Расписание</Label>
                                         </Col>
                                         <Col xs="12" md="9">
-                                            <Input type="text" id="shedule" name="shedule"
-                                                   placeholder="Расписание"/>
-                                            <FormText color="muted">Введите расписание</FormText>
+                                            <Input type="text" id="shedule" name="shedule"/>
                                         </Col>
                                     </FormGroup>
                                     {/*<FormGroup row>*/}
@@ -118,8 +88,6 @@ class NewHospital extends React.Component {
                                         {/*</Col>*/}
                                         {/*<Col xs="12" md="9">*/}
                                             {/*<Input type="text" id="photo_map" name="photo_map"*/}
-                                                   {/*placeholder="Фото карты"/>*/}
-                                            {/*<FormText color="muted">Добавьте фото карты</FormText>*/}
                                         {/*</Col>*/}
                                     {/*</FormGroup>*/}
                                     <FormGroup row>
@@ -127,9 +95,7 @@ class NewHospital extends React.Component {
                                             <Label htmlFor="text-input">Телефон</Label>
                                         </Col>
                                         <Col xs="12" md="9">
-                                            <Input type="text" id="phone" name="phone"
-                                                   placeholder="Телефон"/>
-                                            <FormText color="muted">Введите телефон</FormText>
+                                            <Input type="text" id="phone" name="phone"/>
                                         </Col>
                                     </FormGroup>
                                 </CardBlock>
@@ -148,10 +114,7 @@ class NewHospital extends React.Component {
 }
 
 const mapStateToProps = (state) => {
-    return {
-        errors: state.regions.errors,
-        regions: state.regions.regions
-    };
+    return {};
 };
 
 export default connect(mapStateToProps)(NewHospital);

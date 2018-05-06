@@ -76,10 +76,6 @@ class Hospital extends React.Component {
                                     <Table responsive>
                                         <tbody>
                                         <tr>
-                                            <td>Регион: </td>
-                                            <td>{hospital.region.name}</td>
-                                        </tr>
-                                        <tr>
                                             <td>Адрес: </td>
                                             <td>{hospital.address}</td>
                                         </tr>
@@ -102,9 +98,9 @@ class Hospital extends React.Component {
                         </Col>
                     </Row>
                 </div>
-                <HospitalResearches
-                    idHospital={this.state.hospitalId}
-                />
+                {/*<HospitalResearches*/}
+                    {/*idHospital={this.state.hospitalId}*/}
+                {/*/>*/}
             </div>
         );
     }

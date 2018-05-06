@@ -12,6 +12,6 @@ ul#main_nav{
 ul#main_nav li{
     list-style-type: none;
 }
-.fa-trash{
+.pull-right{
     cursor: pointer;
 }

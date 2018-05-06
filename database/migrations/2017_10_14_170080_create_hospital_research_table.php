@@ -13,7 +13,7 @@ class CreateHospitalResearchTable extends Migration
      */
     public function up()
     {
-        Schema::create('hospital_research', function (Blueprint $table) {
+        Schema::create('hospital_researches', function (Blueprint $table) {
             $table->increments('id');
             $table->double('price')->nullable();
             $table->integer('user_researches_id')->unsigned();
@@ -31,6 +31,6 @@ class CreateHospitalResearchTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('hospital_research');
+        Schema::dropIfExists('hospital_researches');
     }
 }

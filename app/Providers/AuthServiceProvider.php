@@ -4,11 +4,9 @@ namespace App\Providers;
 
 use App\Http\Models\Employee;
 use App\Http\Models\Hospital;
-use App\Http\Models\LegalEntity;
 use App\Http\Models\Organization;
 use App\Policies\EmployeePolicy;
 use App\Policies\HospitalPolicy;
-use App\Policies\LegalEntityPolicy;
 use App\Policies\OrganizationPolicy;
 use App\Policies\UserPolicy;
 use App\User;
@@ -27,7 +25,6 @@ class AuthServiceProvider extends ServiceProvider
         Organization::class => OrganizationPolicy::class,
         Hospital::class => HospitalPolicy::class,
         Employee::class => EmployeePolicy::class,
-        LegalEntity::class => LegalEntityPolicy::class,
         User::class => UserPolicy::class,
     ];
 

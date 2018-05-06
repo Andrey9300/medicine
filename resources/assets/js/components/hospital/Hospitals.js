@@ -23,8 +23,25 @@ class Hospitals extends React.Component {
         const {user, hospitals} = this.props;
         let linkAdd = null;
 
-        if (hospitals === null) {
-            return null;
+        if (!hospitals) {
+            return (
+                <div className="animated fadeIn">
+                    <Row>
+                        <Col xs="12" sm="6" md="4">
+                            <Card className="text-center">
+                                <CardHeader>
+                                    Медицинских центров нет
+                                </CardHeader>
+                                <CardBlock>
+                                    <Link to={'hospitals/create'}>
+                                        Добавить медицинский центр
+                                    </Link>
+                                </CardBlock>
+                            </Card>
+                        </Col>
+                    </Row>
+                </div>
+            );
         }
         // Пока ограничиваемся одним мед центром
         if (user && user.role === 'admin' && hospitals.length < 1) {

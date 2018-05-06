@@ -2,131 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Models\Employee;
-use App\Http\Models\EmployeeResearch;
 use App\Http\Models\HospitalResearch;
-use App\Http\Models\Research;
-use App\Http\Models\UserResearches;
-use App\Http\Requests\StoreEmployee;
 use App\Http\Requests\StoreOrganization;
 use App\Http\Requests\UpdateOrganization;
 use App\Notifications\SendPassword;
 use App\Notifications\YouHead;
 use App\User;
 use App\Http\Models\Organization;
-use Carbon\Carbon;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class OrganizationController extends Controller
 {
-
-    /**
-     * Поиск просроченных иследований
-     *
-     * @param $employee
-     */
-    public static function checkMedicalResearch($employee){
-        $userAdmin = IndexController::findAdmin();
-        $userResearches = $userAdmin->researches;
-        $options_ends = $employee->researches_ends = []; // просрочено
-        $options_expired = $employee->researches_expired = []; // подходит к концу
-        $employee->sumForReseaches = 0;
-        $employeeCategoryId = $employee->organization->category_id;
-
-        foreach ($userResearches as $userResearch) {
-            if ($userResearch->category_id !== $employeeCategoryId) {
-                continue;
-            }
-
-            $research = Research::find($userResearch->research_id);
-            $research->researchPeriod->period; // периодичность конкретного исследования
-
-            //$userResearch->pivot->id; //user_researches.id
-
-            $employeeResearch = EmployeeResearch::where('employee_id', '=', $employee->id)
-                ->where('user_researches_id', '=', $userResearch->pivot->id)
-                ->first();
-
-            if (is_null($employeeResearch) || is_null($employeeResearch->date)) {
-                $options_ends[] = $research;
-            } else {
-                switch ($research->researchPeriod->period) {
-                    case -1:
-                        $employment_date = Carbon::parse($employee->date_employment);
-                        $research_date = Carbon::parse($employeeResearch->date);
-                        $research_date->addMonths(1);
-                        $diffDatesResearch = $employment_date->diffInDays($research_date, false);
-
-                        if ($diffDatesResearch < 0) {
-                            array_push($options_expired, $research);
-                        }
-                        break;
-                    case 1:
-                        if (is_null($employeeResearch->date)) {
-                            array_push($options_expired, $research);
-                        }
-                        break;
-                    case 365:
-                        $research_date = Carbon::parse($employeeResearch->date);
-                        $diffDatesResearch = $research_date->diffInDays(Carbon::now());
-
-                        if ($diffDatesResearch > 365) {
-                            array_push($options_ends, $research);
-                        } else if ($diffDatesResearch > 335) {
-                            array_push($options_expired, $research);
-                        }
-                        break;
-                    case 730:
-                        $research_date = Carbon::parse($employeeResearch->date);
-                        $diffDatesResearch
-                            = $research_date->diffInDays(Carbon::now());
-
-                        if ($diffDatesResearch > 730) {
-                            array_push($options_ends, $research);
-                        } else if ($diffDatesResearch > 700) {
-                            array_push($options_expired, $research);
-                        }
-                        break;
-                    case 1827:
-                        $research_date = Carbon::parse($employeeResearch->date);
-                        $diffDatesResearch
-                            = $research_date->diffInDays(Carbon::now());
-
-                        if ($diffDatesResearch > 1827) {
-                            array_push($options_ends, $research);
-                        } else if ($diffDatesResearch > 1797) {
-                            array_push($options_expired, $research);
-                        }
-                        break;
-                    case 3653:
-                        $research_date = Carbon::parse($employeeResearch->date);
-                        $diffDatesResearch
-                            = $research_date->diffInDays(Carbon::now());
-
-                        if ($diffDatesResearch > 3653) {
-                            array_push($options_ends, $research);
-                        } else if ($diffDatesResearch > 3623) {
-                            array_push($options_expired, $research);
-                        }
-                        break;
-                }
-
-                if (Carbon::parse($employeeResearch->date)->year === Carbon::now()->year &&
-                    Carbon::parse($employeeResearch->date)->month === Carbon::now()->subMonth()->month
-                ) {
-                    $researchPrice = HospitalResearch::where('user_researches_id', '=', $employeeResearch->user_researches_id)->first()->price;
-                    if (!is_null($researchPrice)){
-                        $employee->sumForReseaches += $researchPrice;
-                    }
-                }
-            }
-        }
-
-        $employee->researches_ends = $options_ends;
-        $employee->researches_expired = $options_expired;
-    }
-
     /**
      * Создать организацию
      *
@@ -137,11 +23,7 @@ class OrganizationController extends Controller
     {
         $organization = new Organization;
         $organization->name = $request->name;
-        $organization->address = $request->address;
-        $organization->legal_entity_id = $request->legal_entity_id;
-        $organization->region_id = $request->region_id;
         $organization->category_id = $request->category_id;
-        $organization->phone = $request->phone;
 
         // привязка руководителя к организации: по умолчанию текущий user,
         // иначе создаем user с role = head или ищем в системе
@@ -152,9 +34,9 @@ class OrganizationController extends Controller
             $user->organizations()->attach($organization);
             $user->notify(new YouHead($organization->name));
 
-            $userAdmin = Auth::user();
-            if ($userAdmin->email != $user->email) {
-                $userAdmin->organizations()->attach($organization);
+            $currentUser = Auth::user();
+            if ($currentUser->email != $user->email) {
+                $currentUser->organizations()->attach($organization);
             }
         } else {
             $passwordNewUser = str_random(8);
@@ -177,32 +59,24 @@ class OrganizationController extends Controller
     }
 
     /**
-     * Вывести организации начальника качества
-     * Если указано юридическое лицо, то только организации этого юр лица
-     *
-     * @param Request $request
      * @return \Illuminate\Http\JsonResponse
      */
-    public function showAll(Request $request)
+    public function showAll()
     {
         $user = Auth::user();
-
-        if ($request->legalEntityId) {
-            $organizations = $user->organizations()->where('legal_entity_id', '=', $request->legalEntityId)->get();
-        } else {
-            $organizations = $user->organizations;
-        }
-
+        $organizations = $user->organizations;
         $head_exist = false;
 
         foreach ($organizations as $organization) {
             // устанавливаем фио руководителя
             // если есть head берём его, если нет, то админа
             foreach ($organization->users as $user) {
-                if ($user->role === 'head'){
+                if ($user->role === 'head') {
                     $organization->head_fio = $user->fio;
                     $organization->head_email = $user->email;
                     $head_exist = true;
+                } else {
+                    $head_exist = false;
                 }
             }
 
@@ -210,8 +84,6 @@ class OrganizationController extends Controller
                 $organization->head_fio = $organization->users[0]->fio;
                 $organization->head_email = $organization->users[0]->email;
             }
-
-            $organization->legal_entity;
         }
 
         return response()->json([
@@ -220,21 +92,13 @@ class OrganizationController extends Controller
     }
 
     /**
-     * Вывести организации с учетом юр лица, имеющие сотрудников с просроченными МО
-     *
-     * @param Request $request
      * @return \Illuminate\Http\JsonResponse
      */
-    public function expired(Request $request)
+    public function expired()
     {
+        // TODO будет еще endsEmployees, нужно объединить или дополнить showAll
         $user = Auth::user();
-
-        if ($request->legalEntityId) {
-            $organizations = $user->organizations()->where('legal_entity_id', '=', $request->legalEntityId)->get();
-        } else {
-            $organizations = $user->organizations;
-        }
-
+        $organizations = $user->organizations;
         $head_exist = false;
         $expiredOrganizations = [];
 
@@ -254,13 +118,11 @@ class OrganizationController extends Controller
                 $organization->head_email = $organization->users[0]->email;
             }
 
-            $organization->legal_entity;
-
             $employees_current = $organization->employees;
             $medicalResearchesProblem = false;
 
             foreach ($employees_current as $employee) {
-                OrganizationController::checkMedicalResearch($employee);
+                EmployeesController::checkMedicalResearch($employee);
                 if (count($employee->researches_ends)) {
                     $employeesResearchesEnds[] = $employee;
                     $medicalResearchesProblem = true;
@@ -292,16 +154,14 @@ class OrganizationController extends Controller
     {
         $organization = Organization::find($id);
         $this->authorize('owner', $organization);
-        $organization->region;
         $organization->category;
-        $organization->legal_entity;
         $head_exist = false;
         $organization->totalSumForCompletedResearches = 0;
         $organization->totalSumForResearches = 0;
         $user = Auth::user();
         $employees = $organization->employees;
         foreach ($employees as $employee) {
-            $this->checkMedicalResearch($employee);
+            EmployeesController::checkMedicalResearch($employee);
             $organization->totalSumForCompletedResearches += $employee->sumForReseaches;
         }
 
@@ -344,12 +204,7 @@ class OrganizationController extends Controller
     {
         $organization_new = $request->all();
         $organization = Organization::find($id);
-        $organization->name = $organization_new['name'];
-        $organization->address = $organization_new['address'];
-        $organization->legal_entity_id = $organization_new['legal_entity_id'];
-        $organization->region_id = $organization_new['region_id'];
         $organization->category_id = $organization_new['category_id'];
-        $organization->phone = $organization_new['phone'];
 
         // админов может быть несколько
         // руководитель 1 или 0
@@ -409,25 +264,5 @@ class OrganizationController extends Controller
         }
 
         $organization->destroy($id);
-    }
-
-    /**
-     * Создать сотрудника организации
-     *
-     * @param StoreEmployee $request
-     * @param               $organization_id
-     */
-    public function storeEmployee(StoreEmployee $request, $organization_id)
-    {
-        $organization = Organization::find($organization_id);
-        $userAdmin = $organization->users->where('role', '=', 'admin')->first();
-        $employee = new Employee;
-        $employee->fio = $request->fio;
-        $employee->date_birthday = $request->date_birthday;
-        $employee->date_employment = $request->date_employment;
-        $employee->medical_book = $request->medical_book;
-        $employee->user_id = $userAdmin->id;
-        $employee->organization_name = $organization->name;
-        $employee->save();
     }
 }

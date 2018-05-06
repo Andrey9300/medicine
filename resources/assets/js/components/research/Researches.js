@@ -2,6 +2,7 @@ import {addUserResearches, fetchUserResearches} from '../../actions/researchActi
 import React from 'react';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
+import {Link} from 'react-router';
 import {Row, Col, Card, CardHeader, CardBlock, CardFooter, Table, Form, Button, Input} from 'reactstrap';
 
 class Researches extends React.Component {
@@ -37,7 +38,25 @@ class Researches extends React.Component {
         let errorsMessage = '';
 
         if (userResearches === null) {
-            return null;
+            return (
+                <div className="animated fadeIn">
+                    <Row>
+                        <Col xs="12" sm="6" md="4">
+                            <Card className="text-center">
+                                <CardHeader>
+                                    Исследований нет
+                                </CardHeader>
+                                <CardBlock>
+                                    <Link to={'organizations/create'}>
+                                        Добавьте организацию
+                                    </Link>
+                                    <p>На основе категорий организаций будут сформированы необходимые исследования</p>
+                                </CardBlock>
+                            </Card>
+                        </Col>
+                    </Row>
+                </div>
+            );
         }
 
         if (user && user.role === 'admin') {

@@ -76,9 +76,7 @@ class EditResearch extends React.Component {
                                             <Label htmlFor="text-input">Наименование</Label>
                                         </Col>
                                         <Col xs="12" md="9">
-                                            <Input type="text" id="name" name="name"
-                                                   placeholder="Наименование" defaultValue={research.name}/>
-                                            <FormText color="muted">Введите наименование</FormText>
+                                            <Input type="text" id="name" name="name" defaultValue={research.name}/>
                                         </Col>
                                     </FormGroup>
                                     <FormGroup row>

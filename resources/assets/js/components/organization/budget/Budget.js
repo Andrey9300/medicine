@@ -55,22 +55,6 @@ class Budget extends React.Component {
                                     <Table responsive>
                                         <tbody>
                                         <tr>
-                                            <td>Регион:</td>
-                                            <td>{organization.region.name}</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Адрес:</td>
-                                            <td>{organization.address}</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Юридическое лицо:</td>
-                                            <td>«{organization.legal_entity.name}»</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Телефон:</td>
-                                            <td>{organization.phone}</td>
-                                        </tr>
-                                        <tr>
                                             <td>Руководитель:</td>
                                             <td>{organization.head_fio}</td>
                                         </tr>

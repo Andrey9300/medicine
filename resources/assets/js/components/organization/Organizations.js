@@ -14,8 +14,25 @@ class Organizations extends React.Component {
         const {user, organizations} = this.props;
         let linkAdd = null;
 
-        if (organizations === null) {
-            return null;
+        if (!organizations) {
+            return (
+                <div className="animated fadeIn">
+                    <Row>
+                        <Col xs="12" sm="6" md="4">
+                            <Card className="text-center">
+                                <CardHeader>
+                                    Организаций нет
+                                </CardHeader>
+                                <CardBlock>
+                                    <Link to={'organizations/create'}>
+                                        Добавить организацию
+                                    </Link>
+                                </CardBlock>
+                            </Card>
+                        </Col>
+                    </Row>
+                </div>
+            );
         }
 
         if (user && user.role === 'admin') {
@@ -39,11 +56,8 @@ class Organizations extends React.Component {
                                 <Table responsive>
                                     <thead>
                                         <tr>
-                                            <th>Юридическое лицо</th>
                                             <th>Наименование</th>
-                                            <th>Адрес</th>
                                             <th>Руководитель</th>
-                                            <th>Телефон</th>
                                             <th>E-mail</th>
                                             <th>Сотрудники</th>
                                         </tr>
@@ -52,15 +66,12 @@ class Organizations extends React.Component {
                                     {organizations.map((organization) => {
                                         return (
                                             <tr key={organization.id}>
-                                                <td>{organization.legal_entity.name}</td>
                                                 <td>
                                                     <Link to={`organizations/${organization.id}`}>
                                                         {organization.name}
                                                     </Link>
                                                 </td>
-                                                <td>{organization.address}</td>
                                                 <td>{organization.head_fio}</td>
-                                                <td>{organization.phone}</td>
                                                 <td>{organization.head_email}</td>
                                                 <td>
                                                     <Link to={`organizations/employees/${organization.id}`}
@@ -90,8 +101,8 @@ Organizations.propTypes = {
 
 const mapStateToProps = (state) => {
     return {
-        organizations: state.organizations.organizations,
-        user: state.users.user
+        user: state.users.user,
+        organizations: state.organizations.organizations
     };
 };
 

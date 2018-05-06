@@ -19,7 +19,6 @@ class HospitalsTableSeeder extends Seeder
             'shedule' => 'пн.- пт. 9.00-18.00 сб. 9.00-17.00, вс-вых.',
             'phone' => '8(495)-111-22-33',
             'user_id' => '1',
-            'region_id' => '1',
         ]);
 
         DB::table('hospitals')->insert([
@@ -30,7 +29,6 @@ class HospitalsTableSeeder extends Seeder
             'shedule' => 'пн.- пт. 9.00-18.00 сб. 9.00-17.00, вс-вых.',
             'phone' => '8(495)-111-22-33',
             'user_id' => '1',
-            'region_id' => '1',
         ]);
 
         DB::table('hospitals')->insert([
@@ -41,7 +39,6 @@ class HospitalsTableSeeder extends Seeder
             'shedule' => 'пн.- пт. 9.00-18.00 сб. 9.00-17.00, вс-вых.',
             'phone' => '8(495)-111-22-33',
             'user_id' => '2',
-            'region_id' => '1',
         ]);
 
         DB::table('hospitals')->insert([
@@ -52,7 +49,6 @@ class HospitalsTableSeeder extends Seeder
             'shedule' => 'пн.- пт. 9.00-18.00 сб. 9.00-17.00, вс-вых.',
             'phone' => '8(495)-111-22-33',
             'user_id' => '3',
-            'region_id' => '1',
         ]);
     }
 }

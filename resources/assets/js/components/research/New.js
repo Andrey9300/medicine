@@ -75,8 +75,7 @@ class NewResearch extends React.Component {
                                             <Label htmlFor="text-input">Наименование</Label>
                                         </Col>
                                         <Col xs="12" md="9">
-                                            <Input type="text" id="name" name="name" placeholder="Наименование"/>
-                                            <FormText color="muted">Введите наименование</FormText>
+                                            <Input type="text" id="name" name="name"/>
                                         </Col>
                                     </FormGroup>
                                     <FormGroup row>

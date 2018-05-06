@@ -140,7 +140,6 @@ return [
         'password' => '«Пароль»',
         'name' => '«Наименование»',
         'head_email' => '«Email руководителя»',
-        'legal_entity_id' => '«Юридическое лицо»',
         'date_birthday' => '«Дата рождения»',
         'date_employment' => '«Дата устройства на работу»',
     ],

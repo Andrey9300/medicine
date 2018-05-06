@@ -9,16 +9,6 @@ import RestorePassword from './components/includes/RestorePassword';
 import ResetPassword from './components/includes/ResetPassword';
 import ActivateAccount from './components/includes/ActivateAccount';
 
-import EditLegalEntity from './components/legalEntity/Edit';
-import LegalEntity from './components/legalEntity/LegalEntity';
-import LegalEntities from './components/legalEntity/LegalEntities';
-import NewLegalEntity from './components/legalEntity/New';
-import LegalEntityEmployees from './components/legalEntity/LegalEntityEmployees';
-import LegalEntityOrganizations from './components/legalEntity/LegalEntityOrganizations';
-import LegalEntityExpiredOrganizations from './components/legalEntity/LegalEntityExpiredOrganizations';
-import LegalEntityExpiredEmployees from './components/legalEntity/LegalEntityExpiredEmployees';
-import LegalEntityEndsEmployees from './components/legalEntity/LegalEntityEndsEmployees';
-
 import EditHospital from './components/hospital/Edit';
 import Hospital from './components/hospital/Hospital';
 import Hospitals from './components/hospital/Hospitals';
@@ -31,7 +21,6 @@ import Organization from './components/organization/Organization';
 import Organizations from './components/organization/Organizations';
 import NewOrganization from './components/organization/New';
 import OrganizationEmployees from './components/organization/OrganizationEmployees';
-import NewOrganizationEmployee from './components/organization/employee/New';
 import OrganizationBudget from './components/organization/budget/Budget';
 
 import EditResearch from './components/research/Edit';
@@ -42,6 +31,7 @@ import EditEmployee from './components/employee/Edit';
 import PrintEmployee from './components/employee/PrintResearch';
 import Employee from './components/employee/Employee';
 import Employees from './components/employee/Employees';
+import EmployeesDeleted from './components/employee/EmployeesDeleted';
 import NewEmployee from './components/employee/New';
 
 import Main from './components/main/Main';
@@ -64,16 +54,6 @@ ReactDOM.render(
                 <Route path = "resetPassword" component = { ResetPassword }/>
                 <Route path = "activateAccount" component = { ActivateAccount }/>
 
-                <Route path = "legalEntities" component={LegalEntities}/>
-                <Route path = "legalEntities/create" component = { NewLegalEntity }/>
-                <Route path = "legalEntities/employees/:legalEntityId" component = { LegalEntityEmployees }/>
-                <Route path = "legalEntities/organizations/:legalEntityId" component = { LegalEntityOrganizations }/>
-                <Route path = "legalEntities/expiredOrganizations/:legalEntityId" component = { LegalEntityExpiredOrganizations }/>
-                <Route path = "legalEntities/expiredEmployees/:legalEntityId" component = { LegalEntityExpiredEmployees }/>
-                <Route path = "legalEntities/endsEmployees/:legalEntityId" component = { LegalEntityEndsEmployees }/>
-                <Route path = "legalEntities/:id" component = { LegalEntity }/>
-                <Route path = "legalEntities/edit/:id" component = { EditLegalEntity }/>
-
                 <Route path = "hospitals" component={Hospitals}/>
                 <Route path = "hospitals/create" component = { NewHospital }/>
                 <Route path = "hospitals/:id" component = { Hospital }/>
@@ -82,7 +62,6 @@ ReactDOM.render(
 
                 <Route path = "organizations" component = { Organizations }/>
                 <Route path = "organizations/create" component = { NewOrganization }/>
-                <Route path = "organizations/employees/create/:idOrganization" component = { NewOrganizationEmployee }/>
                 <Route path = "organizations/employees/:idOrganization" component = { OrganizationEmployees }/>
                 <Route path = "organizations/budget/:idOrganization" component = { OrganizationBudget }/>
                 <Route path = "organizations/edit/:id" component = { EditOrganization }/>
@@ -93,6 +72,7 @@ ReactDOM.render(
                 <Route path = "researches/edit/:id" component = { EditResearch }/>
 
                 <Route path = "employees" component = { Employees }/>
+                <Route path = "employeesDeleted" component = { EmployeesDeleted }/>
                 <Route path = "employees/create" component = { NewEmployee }/>
                 <Route path = "employees/:id" component = { Employee }/>
                 <Route path = "employees/edit/:id" component = { EditEmployee }/>

@@ -13,7 +13,7 @@ class CreateEmployeeResearchTable extends Migration
      */
     public function up()
     {
-        Schema::create('employee_research', function (Blueprint $table) {
+        Schema::create('employee_researches', function (Blueprint $table) {
             $table->increments('id');
             $table->date('date')->nullable();
             $table->integer('employee_id')->unsigned();
@@ -31,6 +31,6 @@ class CreateEmployeeResearchTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('employee_research');
+        Schema::dropIfExists('employee_researches');
     }
 }

@@ -34,15 +34,11 @@ export function editOrganization(formElement = null, legalEntityId) {
 }
 
 /**
- * Получить все организации начальника качества
- *
  * @returns {function(*)}
  */
-export function fetchOrganizations(legalEntityId = null) {
+export function fetchOrganizations() {
     return (dispatch) => {
-        axios.post('/organizations', {
-            legalEntityId: legalEntityId
-        })
+        axios.post('/organizations')
             .then((response) => {
                 dispatch({
                     payload: response,

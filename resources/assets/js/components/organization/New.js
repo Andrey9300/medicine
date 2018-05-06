@@ -1,7 +1,5 @@
 import React from 'react';
-import {fetchRegions} from './../../actions/regionActions';
 import {fetchCategories} from './../../actions/categoryActions';
-import {fetchLegalEntities} from '../../actions/legalEntityActions';
 import {connect} from 'react-redux';
 import {Row, Col, Button, Card, CardHeader, CardBlock, CardFooter, Form, FormGroup, FormText, Label, Input
 } from 'reactstrap';
@@ -14,8 +12,6 @@ class NewOrganization extends React.Component {
     }
 
     componentWillMount() {
-        this.props.dispatch(fetchLegalEntities());
-        this.props.dispatch(fetchRegions());
         this.props.dispatch(fetchCategories());
     }
 
@@ -39,7 +35,7 @@ class NewOrganization extends React.Component {
     }
 
     render() {
-        const {categories, legalEntities, regions, errors} = this.props;
+        const {categories, errors} = this.props;
         let errorsMessage = '';
 
         if (errors) {
@@ -64,83 +60,7 @@ class NewOrganization extends React.Component {
                                             <Label htmlFor="text-input">Наименование</Label>
                                         </Col>
                                         <Col xs="12" md="9">
-                                            <Input type="text" id="name" name="name"
-                                                   placeholder="Наименование" required/>
-                                            <FormText color="muted">Введите наименование</FormText>
-                                        </Col>
-                                    </FormGroup>
-                                    <FormGroup row>
-                                        <Col md="3">
-                                            <Label htmlFor="text-input">Регион</Label>
-                                        </Col>
-                                        <Col xs="12" md="9">
-                                            <Input type="select" name="region_id" id="region">
-                                                {regions.map((region) => {
-                                                    return (
-                                                        <option key={region.id} value={region.id}>
-                                                            {region.name}
-                                                        </option>
-                                                    );
-                                                })
-                                                }
-                                            </Input>
-                                        </Col>
-                                    </FormGroup>
-                                    <FormGroup row>
-                                        <Col md="3">
-                                            <Label htmlFor="text-input">Адрес</Label>
-                                        </Col>
-                                        <Col xs="12" md="9">
-                                            <Input type="text" id="address" name="address"
-                                                   placeholder="Адрес"/>
-                                            <FormText color="muted">Введите aдрес</FormText>
-                                        </Col>
-                                    </FormGroup>
-                                    <FormGroup row>
-                                        <Col md="3">
-                                            <Label htmlFor="text-input">Юридическое лицо</Label>
-                                        </Col>
-                                        <Col xs="12" md="9">
-                                            <Input type="select" name="legal_entity_id" id="legal_entity_id">
-                                                {legalEntities.map((legalEntity) => {
-                                                    return (
-                                                        <option key={legalEntity.id} value={legalEntity.id}>
-                                                            {legalEntity.name}
-                                                        </option>
-                                                    );
-                                                })
-                                                }
-                                            </Input>
-                                        </Col>
-                                    </FormGroup>
-                                    <FormGroup row>
-                                        <Col md="3">
-                                            <Label htmlFor="text-input">ФИО руководителя</Label>
-                                        </Col>
-                                        <Col xs="12" md="9">
-                                            <Input type="text" id="head_fio" name="head_fio"
-                                                   placeholder="ФИО руководителя" required/>
-                                        </Col>
-                                    </FormGroup>
-                                    <FormGroup row>
-                                        <Col md="3">
-                                            <Label htmlFor="text-input">E-mail руководителя</Label>
-                                        </Col>
-                                        <Col xs="12" md="9">
-                                            <Input type="email" id="head_email" name="head_email"
-                                                   placeholder="E-mail руководителя" required/>
-                                            <FormText color="muted">На этот e-mail будут присылаться уведомления
-                                            </FormText>
-                                        </Col>
-                                    </FormGroup>
-                                    <FormGroup row>
-                                        <Col md="3">
-                                            <Label htmlFor="text-input">Телефон</Label>
-                                        </Col>
-                                        <Col xs="12" md="9">
-                                            <Input type="text" id="phone" name="phone"
-                                                   placeholder="Телефон"/>
-                                            <FormText color="muted">Введите телефон</FormText>
+                                            <Input type="text" id="name" name="name" required/>
                                         </Col>
                                     </FormGroup>
                                     <FormGroup row>
@@ -178,9 +98,7 @@ class NewOrganization extends React.Component {
 const mapStateToProps = (state) => {
     return {
         errors: state.organizations.errors,
-        regions: state.regions.regions,
         categories: state.categories.categories,
-        legalEntities: state.legalEntities.legalEntities,
         users: state.users.user
     };
 };

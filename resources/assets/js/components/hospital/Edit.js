@@ -1,7 +1,6 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import {fetchHospital} from './../../actions/hospitalActions';
-import {fetchRegions} from './../../actions/regionActions';
 import PropTypes from 'prop-types';
 import {Row, Col, Button, Card, CardHeader, CardFooter, CardBlock, Form, FormGroup, FormText, Label, Input
 } from 'reactstrap';
@@ -22,7 +21,6 @@ class EditHospital extends React.Component {
     }
 
     componentWillMount() {
-        this.props.dispatch(fetchRegions());
         this.props.dispatch(fetchHospital(this.state.hospitalId));
     }
 
@@ -41,7 +39,7 @@ class EditHospital extends React.Component {
     }
 
     render() {
-        const {hospital, regions, errors} = this.props;
+        const {hospital, errors} = this.props;
         let errorsMessage = '';
 
         if (errors) {
@@ -50,7 +48,7 @@ class EditHospital extends React.Component {
             </div>;
         }
 
-        if (hospital === null) {
+        if (!hospital) {
             return null;
         }
 
@@ -70,27 +68,8 @@ class EditHospital extends React.Component {
                                             <Label htmlFor="text-input">Наименование</Label>
                                         </Col>
                                         <Col xs="12" md="9">
-                                            <Input type="text" id="name" name="name" placeholder="Наименование"
+                                            <Input type="text" id="name" name="name"
                                                    defaultValue={hospital.name} required/>
-                                            <FormText color="muted">Введите наименование</FormText>
-                                        </Col>
-                                    </FormGroup>
-                                    <FormGroup row>
-                                        <Col md="3">
-                                            <Label htmlFor="text-input">Регион</Label>
-                                        </Col>
-                                        <Col xs="12" md="9">
-                                            <Input type="select" name="region_id" id="select"
-                                                   defaultValue={hospital.region.id}>
-                                                {regions.map((region) => {
-                                                    return (
-                                                        <option key={region.id} value={region.id}>
-                                                            {region.name}
-                                                        </option>
-                                                    );
-                                                })
-                                                }
-                                            </Input>
                                         </Col>
                                     </FormGroup>
                                     <FormGroup row>
@@ -98,9 +77,8 @@ class EditHospital extends React.Component {
                                             <Label htmlFor="text-input">Адрес</Label>
                                         </Col>
                                         <Col xs="12" md="9">
-                                            <Input type="text" id="address" name="address" placeholder="Адрес"
+                                            <Input type="text" id="address" name="address"
                                                    defaultValue={hospital.address} required/>
-                                            <FormText color="muted">Введите aдрес</FormText>
                                         </Col>
                                     </FormGroup>
                                     <FormGroup row>
@@ -109,9 +87,7 @@ class EditHospital extends React.Component {
                                         </Col>
                                         <Col xs="12" md="9">
                                             <Input type="text" id="head_fio" name="head_fio"
-                                                   placeholder="Контактное лицо"
                                                    defaultValue={hospital.head_fio} required/>
-                                            <FormText color="muted">Введите контактное лицо</FormText>
                                         </Col>
                                     </FormGroup>
                                     <FormGroup row>
@@ -119,29 +95,27 @@ class EditHospital extends React.Component {
                                             <Label htmlFor="text-input">Расписание</Label>
                                         </Col>
                                         <Col xs="12" md="9">
-                                            <Input type="text" id="shedule" name="shedule" placeholder="Расписание"
+                                            <Input type="text" id="shedule" name="shedule"
                                                    defaultValue={hospital.shedule}/>
-                                            <FormText color="muted">Введите расписание</FormText>
                                         </Col>
                                     </FormGroup>
-                                    <FormGroup row>
-                                    <Col md="3">
-                                    <Label htmlFor="text-input">Фото карты</Label>
-                                    </Col>
-                                    <Col xs="12" md="9">
-                                    <Input type="text" id="photo_map" name="photo_map" placeholder="Фото карты"
-                                    defaultValue={hospital.photo_map}/>
-                                    <FormText color="muted">Загрузите фото карты</FormText>
-                                    </Col>
+                                        <FormGroup row>
+                                        <Col md="3">
+                                            <Label htmlFor="text-input">Фото карты</Label>
+                                        </Col>
+                                        <Col xs="12" md="9">
+                                            <Input type="text" id="photo_map" name="photo_map"
+                                                defaultValue={hospital.photo_map}/>
+                                            <FormText color="muted">Загрузите фото карты</FormText>
+                                        </Col>
                                     </FormGroup>
                                     <FormGroup row>
                                         <Col md="3">
                                             <Label htmlFor="text-input">Телефон</Label>
                                         </Col>
                                         <Col xs="12" md="9">
-                                            <Input type="text" id="phone" name="phone" placeholder="Телефон"
+                                            <Input type="text" id="phone" name="phone"
                                                    defaultValue={hospital.phone}/>
-                                            <FormText color="muted">Введите телефон</FormText>
                                         </Col>
                                     </FormGroup>
                                 </CardBlock>
@@ -168,8 +142,7 @@ EditHospital.propTypes = {
 const mapStateToProps = (state) => {
     return {
         errors: state.hospitals.errors,
-        hospital: state.hospitals.hospital,
-        regions: state.regions.regions
+        hospital: state.hospitals.hospital
     };
 };
 

@@ -17,22 +17,6 @@ class Organization extends Model
     }
 
     /**
-     * Регион организации
-     */
-    public function region()
-    {
-        return $this->belongsTo('App\Http\Models\Region');
-    }
-
-    /**
-     * Юридическое лицо организации
-     */
-    public function legal_entity()
-    {
-        return $this->belongsTo('App\Http\Models\LegalEntity');
-    }
-
-    /**
      * Users организации
      */
     public function users()

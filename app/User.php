@@ -48,14 +48,6 @@ class User extends Authenticatable
     }
 
     /**
-     * Все юридические лица user
-     */
-    public function legalEntities()
-    {
-        return $this->hasMany('App\Http\Models\LegalEntity');
-    }
-
-    /**
      * Все сотрудинки user
      */
     public function employees()

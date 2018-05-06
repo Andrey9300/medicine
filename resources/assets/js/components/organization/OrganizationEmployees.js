@@ -24,9 +24,9 @@ class OrganizationEmployee extends React.Component {
     }
 
     render() {
-        const {organization} = this.props;
+        const {user, organization} = this.props;
 
-        if (organization.organization === null) {
+        if (!organization.organization || !user) {
             return null;
         }
 
@@ -35,6 +35,7 @@ class OrganizationEmployee extends React.Component {
                 <Row>
                     <Col xs="12" lg="12">
                         <EmployeesList
+                            user = {user}
                             employees = {organization.organization.employees}
                             handleBtnDelete = {this.handleBtnDelete.bind(this)}
                             title = {`Сотрудники «${organization.organization.name}» `}
@@ -54,6 +55,7 @@ OrganizationEmployee.propTypes = {
 
 const mapStateToProps = (state) => {
     return {
+        user: state.users.user,
         organization: state.organizations
     };
 };

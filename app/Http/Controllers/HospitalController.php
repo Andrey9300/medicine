@@ -27,7 +27,6 @@ class HospitalController extends Controller
         $hospital->shedule = $request->shedule;
         $hospital->photo_map = $request->photo_map;
         $hospital->phone = $request->phone;
-        $hospital->region_id = $request->region_id;
         $hospital->user_id = $user->id;
         $hospital->save();
     }
@@ -56,7 +55,6 @@ class HospitalController extends Controller
     {
         $userAdmin = IndexController::findAdmin();
         $hospital = $userAdmin->hospitals->find($id);
-        $hospital->region;
 
         return response()->json([
             'hospital' => $hospital
@@ -79,7 +77,6 @@ class HospitalController extends Controller
         $hospital->shedule = $hospital_new['shedule'];
         $hospital->photo_map = $hospital_new['photo_map'];
         $hospital->phone = $hospital_new['phone'];
-        $hospital->region_id = $hospital_new['region_id'];
         $hospital->save();
     }
 

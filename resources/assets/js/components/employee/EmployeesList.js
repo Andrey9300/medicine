@@ -1,12 +1,28 @@
 import {Link} from 'react-router';
 import React from 'react';
-import {Card, CardHeader, CardBlock, CardFooter, Table, Button} from 'reactstrap';
+import {Row, Col, Card, CardHeader, CardBlock, CardFooter, Table} from 'reactstrap';
 import PropTypes from 'prop-types';
 
 export class EmployeesList extends React.Component {
     render() {
-        const {employees, user, handleBtnDelete, title} = this.props;
+        const {employees, user, title} = this.props;
         let addButton = null;
+
+        if (!employees || !employees.length) {
+            return (
+                <Card>
+                    <CardHeader>
+                        <i className="fa fa-users" aria-hidden="true"/>
+                        Cотрудников нет
+                    </CardHeader>
+                    <CardBlock className="card-body">
+                        <Link to={'employees'}>
+                            Перейти ко всем сотрудникам
+                        </Link>
+                    </CardBlock>
+                </Card>
+            );
+        }
 
         if (user && user.role === 'admin') {
             addButton =
@@ -29,11 +45,6 @@ export class EmployeesList extends React.Component {
                             <th>ФИО</th>
                             <th>Объект</th>
                             <th>Статус МО</th>
-                            {(() => {
-                                if (handleBtnDelete) {
-                                    return (<th>Уволить</th>);
-                                }
-                            })()}
                             <th>Направление</th>
                         </tr>
                         </thead>
@@ -68,21 +79,6 @@ export class EmployeesList extends React.Component {
                                             );
                                         })()}
                                     </td>
-                                    {(() => {
-                                        if (handleBtnDelete) {
-                                            return (
-                                                <td>
-                                                    <Button type="submit" size="sm" color="danger"
-                                                            onClick={
-                                                                (event) => handleBtnDelete(employee.id, event)
-                                                            }
-                                                    >
-                                                        Уволить
-                                                    </Button>
-                                                </td>
-                                            );
-                                        }
-                                    })()}
                                     <td>
                                         {(() => {
                                             if (employee.researches_ends.length || employee.researches_expired.length) {

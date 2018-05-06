@@ -43,7 +43,7 @@ class Employee extends React.Component {
             </div>;
         }
 
-        if (employee === null) {
+        if (!employee) {
             return null;
         }
 
@@ -54,7 +54,7 @@ class Employee extends React.Component {
                 </Link>;
             buttonDelete =
                 <span className="pull-right" onClick={(event) => this.handleBtnDelete(employee.id, event)}>
-                    <i className="fa fa-trash"/>
+                    <i className="fa fa-trash"/> Уволить
                 </span>;
         }
 

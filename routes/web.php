@@ -6,15 +6,6 @@ Route::get('activateAccount/{id}/{token}', 'Auth\RegisterController@activation')
 Route::post('users/current', 'UsersController@show');
 
 Route::middleware(['auth'])->group(function () {
-    Route::prefix('legalEntities')->group(function () {
-        Route::post('/store', 'LegalEntityController@store');
-        Route::post('/commonInfo/{id}', 'LegalEntityController@commonInfo');
-        Route::post('/destroy/{id}', 'LegalEntityController@destroy');
-        Route::post('/update/{id}', 'LegalEntityController@update');
-        Route::post('/{id}', 'LegalEntityController@show');
-        Route::post('/', 'LegalEntityController@showAll');
-    });
-
     Route::prefix('hospitals')->group(function () {
         Route::post('/researches/store/{id}', 'HospitalController@researchesStore');
         Route::post('/researches/{id}', 'HospitalController@researches');
@@ -23,10 +14,6 @@ Route::middleware(['auth'])->group(function () {
         Route::post('/update/{id}', 'HospitalController@update');
         Route::post('/{id}', 'HospitalController@show');
         Route::post('/', 'HospitalController@showAll');
-
-        //Route::prefix('researches')->group(function () {
-
-        //});
     });
 
     Route::prefix('organizations')->group(function () {
@@ -36,9 +23,6 @@ Route::middleware(['auth'])->group(function () {
         Route::post('/update/{id}', 'OrganizationController@update');
         Route::post('/{id}', 'OrganizationController@show');
         Route::post('/', 'OrganizationController@showAll');
-        Route::prefix('employees')->group(function () {
-            Route::post('/store/{id_organization}', 'OrganizationController@storeEmployee');
-        });
     });
 
     Route::prefix('researches')->group(function () {
@@ -69,10 +53,6 @@ Route::middleware(['auth'])->group(function () {
             Route::post('/store/{id_employee}', 'EmployeesController@researchesStore');
             Route::post('/{id_employee}', 'EmployeesController@researches');
         });
-    });
-
-    Route::prefix('regions')->group(function () {
-        Route::post('/', 'RegionController@showAll');
     });
 
     Route::prefix('categories')->group(function () {

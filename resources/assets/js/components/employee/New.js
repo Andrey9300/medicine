@@ -62,8 +62,7 @@ class NewEmployee extends React.Component {
                                             <Label htmlFor="text-input">ФИО</Label>
                                         </Col>
                                         <Col xs="12" md="9">
-                                            <Input type="text" id="name" name="fio" placeholder="ФИО" required/>
-                                            <FormText color="muted">Введите ФИО</FormText>
+                                            <Input type="text" id="name" name="fio" required/>
                                         </Col>
                                     </FormGroup>
                                     <FormGroup row>
@@ -74,7 +73,6 @@ class NewEmployee extends React.Component {
                                             <Input type="text" id="date_birthday" name="date_birthday"
                                                    placeholder="дд-мм-гггг"
                                                    required/>
-                                            <FormText color="muted">Введите дату рождения</FormText>
                                         </Col>
                                     </FormGroup>
                                     <FormGroup row>
@@ -84,7 +82,6 @@ class NewEmployee extends React.Component {
                                         <Col xs="12" md="9">
                                             <Input type="text" id="date_employment" name="date_employment"
                                                    placeholder="дд-мм-гггг" required/>
-                                            <FormText color="muted">Введите дату приема на работу</FormText>
                                         </Col>
                                     </FormGroup>
                                     <FormGroup row>
@@ -92,9 +89,7 @@ class NewEmployee extends React.Component {
                                             <Label htmlFor="text-input">Номер медицинской книжки</Label>
                                         </Col>
                                         <Col xs="12" md="9">
-                                            <Input type="text" id="medical_book" name="medical_book"
-                                                   placeholder="Номер медицинской книжки"/>
-                                            <FormText color="muted">Введите номер медицинской книжки</FormText>
+                                            <Input type="text" id="medical_book" name="medical_book"/>
                                         </Col>
                                     </FormGroup>
                                     <FormGroup row>

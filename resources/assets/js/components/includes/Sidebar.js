@@ -13,27 +13,15 @@ class Sidebar extends Component {
     render() {
         const {user} = this.props;
         const {location} = this.props;
-        const legalEntitiesClass = location.pathname.match(/^\/legalEntities/) ? 'active' : '';
         const organizationsClass = location.pathname.match(/^\/organizations/) ? 'active' : '';
         const employeesClass = location.pathname.match(/^\/employees/) ? 'active' : '';
         const hospitalsClass = location.pathname.match(/^\/hospitals/) ? 'active' : '';
         const researchesClass = location.pathname.match(/^\/researches/) ? 'active' : '';
-        let closedNavs = null;
         let navItems = null;
-
-        if (user && user.role === 'admin') {
-            closedNavs =
-                <NavItem>
-                    <NavLink href="#/legalEntities" className={legalEntitiesClass}>
-                        <i className="fa fa-briefcase" aria-hidden="true"/>Компании (юридические лица)
-                    </NavLink>
-                </NavItem>;
-        }
 
         if (user) {
             navItems =
                 <Nav>
-                    {closedNavs}
                     <NavItem>
                         <NavLink href="#/organizations" className={organizationsClass}>
                             <i className="fa fa-building-o" aria-hidden="true"/>Объекты
@@ -52,16 +40,6 @@ class Sidebar extends Component {
                     <NavItem>
                         <NavLink href="#/researches" className={researchesClass}>
                             <i className="fa fa-heartbeat" aria-hidden="true"/>Исследования
-                        </NavLink>
-                    </NavItem>
-                    <NavItem>
-                        <NavLink href="#">
-                            <i className="fa fa-bar-chart" aria-hidden="true"/>Отчеты
-                        </NavLink>
-                    </NavItem>
-                    <NavItem>
-                        <NavLink href="#">
-                            <i className="fa fa-handshake-o" aria-hidden="true"/>Партнеры
                         </NavLink>
                     </NavItem>
                     <NavItem>

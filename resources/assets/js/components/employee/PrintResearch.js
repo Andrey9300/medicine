@@ -98,12 +98,7 @@ class PrintEmployee extends React.Component {
                                         </tr>
                                         <tr>
                                             <td colSpan="2">
-                                                От: «{employee.legal_entity}»
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td colSpan="2">
-                                                Структурное подразделение / наименование объекта:
+                                                Структурное подразделение / наименование объекта:&nbsp;
                                                 {employee.organization_name}
                                             </td>
                                         </tr>

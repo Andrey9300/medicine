@@ -71,8 +71,7 @@ class EditEmployee extends React.Component {
                                             <Label htmlFor="text-input">ФИО</Label>
                                         </Col>
                                         <Col xs="12" md="9">
-                                            <Input type="text" id="fio" name="fio"
-                                                   placeholder="ФИО" defaultValue={employee.fio}/>
+                                            <Input type="text" id="fio" name="fio" defaultValue={employee.fio}/>
                                         </Col>
                                     </FormGroup>
                                     <FormGroup row>
@@ -83,7 +82,6 @@ class EditEmployee extends React.Component {
                                             <Input type="text" id="date_birthday" name="date_birthday"
                                                    placeholder="дд-мм-гггг"
                                                    defaultValue={employee.date_birthday}/>
-                                            <FormText color="muted">Введите дату рождения</FormText>
                                         </Col>
                                     </FormGroup>
                                     <FormGroup row>
@@ -94,7 +92,6 @@ class EditEmployee extends React.Component {
                                             <Input type="text" id="date_employment" name="date_employment"
                                                    placeholder="дд-мм-гггг"
                                                    defaultValue={employee.date_employment}/>
-                                            <FormText color="muted">Введите дату приема на работу</FormText>
                                         </Col>
                                     </FormGroup>
                                     <FormGroup row>
@@ -103,9 +100,7 @@ class EditEmployee extends React.Component {
                                         </Col>
                                         <Col xs="12" md="9">
                                             <Input type="text" id="medical_book" name="medical_book"
-                                                   placeholder="Номер медицинской книжки"
                                                    defaultValue={employee.medical_book}/>
-                                            <FormText color="muted">Введите номер медицинской книжки</FormText>
                                         </Col>
                                     </FormGroup>
                                     <FormGroup row>

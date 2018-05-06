@@ -12,8 +12,8 @@ class ActivateAccount extends Component {
                                 Вы активировали email
                             </CardHeader>
                             <CardBlock>
-                                <NavLink href="#/legalEntities/create" className={'active'}>
-                                    Добавить юридическое лицо
+                                <NavLink href="#/organizations/create" className={'active'}>
+                                    Добавить компанию
                                 </NavLink>
                             </CardBlock>
                         </Card>

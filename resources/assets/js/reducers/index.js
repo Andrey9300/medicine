@@ -4,10 +4,8 @@ import organizations from './OrganizationsReducer';
 import researches from './ResearchesReducer';
 import employees from './EmployeesReducer';
 import users from './UsersReducer';
-import regions from './RegionsReducer';
 import categories from './CategoriesReducer';
 import researchPeriods from './ResearchPeriodsReducer';
-import legalEntities from './LegalEntitiesReducer';
 
 export default combineReducers({
     hospitals,
@@ -15,8 +13,6 @@ export default combineReducers({
     researches,
     employees,
     users,
-    regions,
     categories,
-    researchPeriods,
-    legalEntities
+    researchPeriods
 });

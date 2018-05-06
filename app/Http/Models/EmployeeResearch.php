@@ -8,8 +8,6 @@ class EmployeeResearch extends Model
 {
     public $timestamps = false;
 
-    protected $table = 'employee_research';
-
     protected $fillable = [
         'user_researches_id', 'employee_id', 'date'
     ];

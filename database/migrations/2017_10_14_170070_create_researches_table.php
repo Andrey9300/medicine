@@ -17,7 +17,7 @@ class CreateResearchesTable extends Migration
             $table->increments('id');
             $table->string('name');
             $table->integer('period_id')->unsigned();
-            $table->foreign('period_id')->references('id')->on('research_period');
+            $table->foreign('period_id')->references('id')->on('research_periods');
             $table->unique(array('name', 'period_id'));
         });
     }

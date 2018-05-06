@@ -20,11 +20,8 @@ class CreateEmployeesTable extends Migration
             $table->date('date_employment');
             $table->string('medical_book')->nullable();
             $table->integer('user_id')->unsigned();
-            // при удалении начальника качества => удаляются все сотрудники и руководители
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->string('organization_name')->nullable();
-            // при удалении организаци => сотрудник не удаляется, нужно предварительно
-            // organization_name = null всем сотрудникам удаляемой организации
+            $table->foreign('user_id')->references('id')->on('users');
+            $table->string('organization_name');
             $table->foreign('organization_name')->references('name')->on('organizations');
             $table->unique(array('user_id', 'fio', 'date_birthday', 'date_employment'));
             $table->softDeletes();

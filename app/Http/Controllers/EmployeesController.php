@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Http\Models\EmployeeResearch;
-use App\Http\Models\Organization;
 use App\Http\Models\Research;
 use App\Http\Models\Employee;
 use App\Http\Models\ResearchCategory;
@@ -47,12 +46,7 @@ class EmployeesController extends Controller
         $user = Auth::user();
         $userAdmin = IndexController::findAdmin();
         $organizations_name = [];
-
-        if ($request->legalEntityId) {
-            $organizations = $user->organizations()->where('legal_entity_id', '=', $request->legalEntityId)->get();
-        } else {
-            $organizations = $user->organizations;
-        }
+        $organizations = $user->organizations;
 
         foreach($organizations as $organization){
             array_push($organizations_name, $organization->name);
@@ -70,10 +64,10 @@ class EmployeesController extends Controller
             ->get();
 
         foreach ($employees as $employee) {
-            OrganizationController::checkMedicalResearch($employee);
+            $this->checkMedicalResearch($employee);
         }
         foreach ($deleted as $employee) {
-            OrganizationController::checkMedicalResearch($employee);
+            $this->checkMedicalResearch($employee);
         }
 
         return response()->json([
@@ -84,8 +78,6 @@ class EmployeesController extends Controller
     }
 
     /**
-     * Получить данные сотрудника
-     *
      * @param int $id
      * @return \Illuminate\Http\JsonResponse
      */
@@ -93,8 +85,7 @@ class EmployeesController extends Controller
     {
         $employee = Employee::withTrashed()->where('id', $id)->first();
         $organization = $employee->organization;
-        OrganizationController::checkMedicalResearch($employee);
-        $employee->legal_entity = $organization->legal_entity->name;
+        $this->checkMedicalResearch($employee);
         $head_exist = false;
 
         // устанавливаем фио руководителя
@@ -233,5 +224,112 @@ class EmployeesController extends Controller
                 ['date' => $date]
             );
         }
+    }
+
+
+    /**
+     * Поиск просроченных иследований
+     *
+     * @param $employee
+     */
+    public static function checkMedicalResearch($employee) {
+        $userAdmin = IndexController::findAdmin();
+        $userResearches = $userAdmin->researches;
+        $options_ends = $employee->researches_ends = []; // просрочено
+        $options_expired = $employee->researches_expired = []; // подходит к концу
+        $employee->sumForReseaches = 0;
+        $employeeCategoryId = $employee->organization->category_id;
+
+        foreach ($userResearches as $userResearch) {
+            if ($userResearch->category_id !== $employeeCategoryId) {
+                continue;
+            }
+
+            $research = Research::find($userResearch->research_id);
+            $research->researchPeriod->period; // периодичность конкретного исследования
+
+            //$userResearch->pivot->id; //user_researches.id
+
+            $employeeResearch = EmployeeResearch::where('employee_id', '=', $employee->id)
+                ->where('user_researches_id', '=', $userResearch->pivot->id)
+                ->first();
+
+            if (is_null($employeeResearch) || is_null($employeeResearch->date)) {
+                $options_ends[] = $research;
+            } else {
+                switch ($research->researchPeriod->period) {
+                    case -1:
+                        $employment_date = Carbon::parse($employee->date_employment);
+                        $research_date = Carbon::parse($employeeResearch->date);
+                        $research_date->addMonths(1);
+                        $diffDatesResearch = $employment_date->diffInDays($research_date, false);
+
+                        if ($diffDatesResearch < 0) {
+                            array_push($options_expired, $research);
+                        }
+                        break;
+                    case 1:
+                        if (is_null($employeeResearch->date)) {
+                            array_push($options_expired, $research);
+                        }
+                        break;
+                    case 365:
+                        $research_date = Carbon::parse($employeeResearch->date);
+                        $diffDatesResearch = $research_date->diffInDays(Carbon::now());
+
+                        if ($diffDatesResearch > 365) {
+                            array_push($options_ends, $research);
+                        } else if ($diffDatesResearch > 335) {
+                            array_push($options_expired, $research);
+                        }
+                        break;
+                    case 730:
+                        $research_date = Carbon::parse($employeeResearch->date);
+                        $diffDatesResearch
+                            = $research_date->diffInDays(Carbon::now());
+
+                        if ($diffDatesResearch > 730) {
+                            array_push($options_ends, $research);
+                        } else if ($diffDatesResearch > 700) {
+                            array_push($options_expired, $research);
+                        }
+                        break;
+                    case 1827:
+                        $research_date = Carbon::parse($employeeResearch->date);
+                        $diffDatesResearch
+                            = $research_date->diffInDays(Carbon::now());
+
+                        if ($diffDatesResearch > 1827) {
+                            array_push($options_ends, $research);
+                        } else if ($diffDatesResearch > 1797) {
+                            array_push($options_expired, $research);
+                        }
+                        break;
+                    case 3653:
+                        $research_date = Carbon::parse($employeeResearch->date);
+                        $diffDatesResearch
+                            = $research_date->diffInDays(Carbon::now());
+
+                        if ($diffDatesResearch > 3653) {
+                            array_push($options_ends, $research);
+                        } else if ($diffDatesResearch > 3623) {
+                            array_push($options_expired, $research);
+                        }
+                        break;
+                }
+
+                if (Carbon::parse($employeeResearch->date)->year === Carbon::now()->year &&
+                    Carbon::parse($employeeResearch->date)->month === Carbon::now()->subMonth()->month
+                ) {
+                    $researchPrice = HospitalResearch::where('user_researches_id', '=', $employeeResearch->user_researches_id)->first()->price;
+                    if (!is_null($researchPrice)){
+                        $employee->sumForReseaches += $researchPrice;
+                    }
+                }
+            }
+        }
+
+        $employee->researches_ends = $options_ends;
+        $employee->researches_expired = $options_expired;
     }
 }

@@ -101,11 +101,7 @@ export function deleteEmployee(id, organizationId) {
         axios.post(`/employees/softDelete/${id}`)
             .then(() => {
                 alert('Сотрудник уволен');
-                if (organizationId) {
-                    hashHistory.push(`/organizations/${organizationId}`);
-                } else {
-                    window.location.reload();
-                }
+                hashHistory.push(`/organizations/${organizationId}`);
             })
             .catch((error) => {
                 return error;
