@@ -11,7 +11,7 @@ import 'react-notifications/lib/notifications.css';
 import {connect} from 'react-redux';
 import {fetchUser} from '../actions/userActions';
 
-class Layout extends React.Component {
+class LayoutComponent extends React.Component {
     componentDidMount() {
         this.props.dispatch(fetchUser());
     }
@@ -34,8 +34,8 @@ class Layout extends React.Component {
     }
 }
 
-Layout.propTypes = {
-    children: PropTypes.element.isRequired
+LayoutComponent.propTypes = {
+    children: PropTypes.element
 };
 
 const mapStateToProps = (state) => {
@@ -44,4 +44,4 @@ const mapStateToProps = (state) => {
     };
 };
 
-export default connect(mapStateToProps)(Layout);
+export const Layout = connect(mapStateToProps)(LayoutComponent);

@@ -1,7 +1,7 @@
 import React from 'react';
 import {connect} from 'react-redux';
 
-class Main extends React.Component {
+class MainComponent extends React.Component {
     render() {
         return (
             <div>123</div>
@@ -15,4 +15,4 @@ const mapStateToProps = (state) => {
     };
 };
 
-export default connect(mapStateToProps)(Main);
+export const Main = connect(mapStateToProps)(MainComponent);

@@ -1,5 +1,4 @@
 import axios from 'axios';
-import {hashHistory} from 'react-router';
 
 /**
  * @returns {function(*)}
@@ -9,7 +8,7 @@ export function addEmployee(formElement = null) {
         axios.post('/employees/store', new FormData(formElement))
             .then(() => {
                 alert('Сотрудник успешно создан');
-                hashHistory.push('/employees');
+                history.pushState(null, null, '/employees');
             })
             .catch((errors) => {
                 dispatch({
@@ -28,7 +27,7 @@ export function editEmployee(formElement = null, employeeId) {
         axios.post(`/employees/update/${employeeId}`, new FormData(formElement))
             .then(() => {
                 alert('Сотрудник успешно отредактирован');
-                hashHistory.push(`/employees/${employeeId}`);
+                history.pushState(null, null, `/employees/${employeeId}`);
             })
             .catch((errors) => {
                 dispatch({
@@ -56,7 +55,7 @@ export function fetchEmployees(legalEntityId = null) {
                 });
             })
             .catch((error) => {
-                hashHistory.replace('login');
+                // history.replace(null, null, 'login');
                 dispatch({
                     payload: error,
                     type: 'EMPLOYEES_REJECTED'
@@ -101,7 +100,7 @@ export function deleteEmployee(id, organizationId) {
         axios.post(`/employees/softDelete/${id}`)
             .then(() => {
                 alert('Сотрудник уволен');
-                hashHistory.push(`/organizations/${organizationId}`);
+                history.pushState(null, null, `/organizations/${organizationId}`);
             })
             .catch((error) => {
                 return error;

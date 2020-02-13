@@ -2,7 +2,7 @@ import {addUserResearches, fetchUserResearches} from '../../actions/researchActi
 import React from 'react';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
-import {Link} from 'react-router';
+import {Link} from 'react-router-dom';
 import {Row, Col, Card, CardHeader, CardBlock, CardFooter, Table, Form, Button, Input} from 'reactstrap';
 
 class Researches extends React.Component {

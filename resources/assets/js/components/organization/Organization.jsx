@@ -3,7 +3,7 @@ import {connect} from 'react-redux';
 import {fetchOrganization, deleteOrganization} from './../../actions/organizationActions';
 import {fetchHospitals} from '../../actions/hospitalActions';
 import {EmployeesList} from '../employee/EmployeesList';
-import {Link} from 'react-router';
+import {Link} from 'react-router-dom';
 import PropTypes from 'prop-types';
 import {Row, Col, Card, CardHeader, CardBlock, Table} from 'reactstrap';
 

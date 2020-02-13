@@ -19,7 +19,7 @@ class Sidebar extends Component {
         const researchesClass = location.pathname.match(/^\/researches/) ? 'active' : '';
         let navItems = null;
 
-        if (user) {
+        if (true) {
             navItems =
                 <Nav>
                     <NavItem>

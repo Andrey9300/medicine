@@ -1,5 +1,4 @@
 import axios from 'axios';
-import {hashHistory} from 'react-router';
 
 /**
  * Получить исследование
@@ -40,7 +39,7 @@ export function fetchUserResearches() {
                 });
             })
             .catch((error) => {
-                hashHistory.replace('login');
+                history.replace(null, null, 'login');
                 dispatch({
                     payload: error,
                     type: 'USER_RESEARCHES_REJECTED'

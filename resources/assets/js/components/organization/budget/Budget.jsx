@@ -1,7 +1,7 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import {fetchOrganization, deleteOrganization} from './../../../actions/organizationActions';
-import {Link} from 'react-router';
+import {Link} from 'react-router-dom';
 import PropTypes from 'prop-types';
 import {fetchHospitals} from '../../../actions/hospitalActions';
 import {Row, Col, Card, CardHeader, CardBlock, Table} from 'reactstrap';

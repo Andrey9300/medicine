@@ -1,5 +1,4 @@
 import axios from 'axios';
-import {hashHistory} from 'react-router';
 
 /**
  * Вход
@@ -11,7 +10,7 @@ export function loginUser(formElement = null) {
     return (dispatch) => {
         axios.post('/login', new FormData(formElement))
             .then(() => {
-                hashHistory.push('/organizations');
+                history.pushState(null, null, '/organizations');
                 window.location.reload();
             })
             .catch((errors) => {
@@ -38,7 +37,7 @@ export function logoutUser() {
                     },
                     type: 'LOGOUT_USER_FULFILLED'
                 });
-                hashHistory.replace('/login');
+                history.replace(null, null, '/login');
                 window.location.reload();
             })
             .catch((error) => {
@@ -61,7 +60,7 @@ export function registrationUser(formElement = null) {
         axios.post('/register', new FormData(formElement))
             .then(() => {
                 alert('Вам отправлен email для активации аккаунта');
-                hashHistory.replace('/login');
+                history.replace(null, null, '/login');
             })
             .catch((errors) => {
                 dispatch({
@@ -129,7 +128,7 @@ export function deleteUser(id) {
     return () => {
         axios.post(`/users/destroy/${id}`)
             .then(() => {
-                hashHistory.push('/users');
+                history.pushState(null, null, '/users');
             })
             .catch((error) => {
                 return error;

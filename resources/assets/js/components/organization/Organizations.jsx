@@ -1,5 +1,5 @@
 import {fetchOrganizations} from '../../actions/organizationActions';
-import {Link} from 'react-router';
+import {Link} from 'react-router-dom';
 import React from 'react';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';

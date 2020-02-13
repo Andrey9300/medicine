@@ -2,9 +2,7 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {registrationUser} from '../../actions/userActions';
 import PropTypes from 'prop-types';
-import {hashHistory} from 'react-router';
-import {Container, Row, Col, Card, Form, CardBlock, Button, Input, InputGroup, InputGroupAddon, CardGroup
-} from 'reactstrap';
+import {Container, Row, Col, Card, Form, CardBlock, Button, Input, InputGroup, InputGroupAddon, CardGroup} from 'reactstrap';
 
 class Registration extends Component {
     constructor() {
@@ -30,7 +28,7 @@ class Registration extends Component {
     }
 
     handleLogin() {
-        hashHistory.push('login');
+        history.pushState(null, null, 'login');
     }
 
     createMarkup() {

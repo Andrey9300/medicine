@@ -2,7 +2,6 @@ import React from 'react';
 import axios from 'axios';
 import {connect} from 'react-redux';
 import {fetchResearch} from './../../actions/researchActions';
-import {hashHistory} from 'react-router';
 import PropTypes from 'prop-types';
 import {Row, Col, Button, Card, CardHeader, CardFooter, CardBlock, Form, FormGroup, FormText, Label, Input
 } from 'reactstrap';
@@ -23,7 +22,7 @@ class EditResearch extends React.Component {
 
         axios.post(`/researches/update/${this.state.researchId}`, new FormData(formElement))
             .then(() => {
-                hashHistory.push('/researches');
+                history.pushState(null, null, '/researches');
             })
             .catch((error) => {
                 const errors = error;

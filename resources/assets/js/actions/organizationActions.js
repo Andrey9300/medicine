@@ -1,12 +1,11 @@
 import axios from 'axios';
-import {hashHistory} from 'react-router';
 
 export function addOrganization(formElement = null) {
     return (dispatch) => {
         axios.post('/organizations/store', new FormData(formElement))
             .then(() => {
                 alert('Объект успешно создан');
-                hashHistory.push('organizations');
+                history.pushState(null, null, 'organizations');
             })
             .catch((errors) => {
                 dispatch({
@@ -22,7 +21,7 @@ export function editOrganization(formElement = null, legalEntityId) {
         axios.post(`/organizations/update/${legalEntityId}`, new FormData(formElement))
             .then(() => {
                 alert('Объект успешно отредактирован');
-                hashHistory.push(`/organizations/${legalEntityId}`);
+                history.pushState(null, null, `/organizations/${legalEntityId}`);
             })
             .catch((errors) => {
                 dispatch({
@@ -46,7 +45,7 @@ export function fetchOrganizations() {
                 });
             })
             .catch((error) => {
-                hashHistory.replace('login');
+                history.replace(null, null, 'login');
 
                 dispatch({
                     payload: error,
@@ -73,7 +72,7 @@ export function fetchExpiredOrganizations(legalEntityId = null) {
                 });
             })
             .catch((error) => {
-                hashHistory.replace('login');
+                history.replace(null, null, 'login');
 
                 dispatch({
                     payload: error,
@@ -117,7 +116,7 @@ export function deleteOrganization(id) {
     return () => {
         axios.post(`/organizations/destroy/${id}`)
             .then(() => {
-                hashHistory.push('/organizations');
+                history.pushState(null, null, '/organizations');
             })
             .catch((error) => {
                 return error;
@@ -136,7 +135,7 @@ export function deleteOrganizationEmployee(idOrganization, idEmployee) {
     return () => {
         axios.post(`/organizations/employees/destroy/${idOrganization}/${idEmployee}`)
             .then(() => {
-                hashHistory.push(`/organizations/${idOrganization}`);
+                history.pushState(null, null, `/organizations/${idOrganization}`);
             })
             .catch((error) => {
                 return error;

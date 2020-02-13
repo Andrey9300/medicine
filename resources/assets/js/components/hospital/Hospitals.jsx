@@ -1,5 +1,5 @@
 import {deleteHospital, fetchHospitals} from '../../actions/hospitalActions';
-import {Link} from 'react-router';
+import {Link} from 'react-router-dom';
 import React from 'react';
 import {connect} from 'react-redux';
 import {Row, Col, Card, CardHeader, CardBlock, Table} from 'reactstrap';

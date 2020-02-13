@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import {Link, hashHistory} from 'react-router';
+import {Link} from 'react-router-dom';
 import PropTypes from 'prop-types';
 import {Container, Row, Col, CardGroup, Card, CardBlock, Form, Button, Input, InputGroup, InputGroupAddon
 } from 'reactstrap';
@@ -48,7 +48,7 @@ class Login extends Component {
         let errorsMessage = '';
 
         if (user) {
-            hashHistory.push('organizations');
+            // history.pushState(null, null, 'organizations');
         }
 
         if (errors) {

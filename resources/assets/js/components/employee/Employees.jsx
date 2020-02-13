@@ -1,7 +1,7 @@
 import {fetchEmployees} from '../../actions/employeeActions';
 import {EmployeesList} from './EmployeesList';
 import React from 'react';
-import {Link} from 'react-router';
+import {Link} from 'react-router-dom';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
 import {Row, Col, Card, CardHeader} from 'reactstrap';

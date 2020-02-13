@@ -1,11 +1,9 @@
 import React from 'react';
 import axios from 'axios';
 import PropTypes from 'prop-types';
-import {fetchPeriods} from '../../actions/researchPeriodActions';
 import {connect} from 'react-redux';
-import {hashHistory} from 'react-router';
-import {Row, Col, Button, Card, CardHeader, CardFooter, CardBlock, Form, FormGroup, FormText, Label, Input
-} from 'reactstrap';
+import {fetchPeriods} from '../../actions/researchPeriodActions';
+import {Row, Col, Button, Card, CardHeader, CardFooter, CardBlock, Form, FormGroup, FormText, Label, Input} from 'reactstrap';
 
 class NewResearch extends React.Component {
     constructor() {
@@ -27,7 +25,7 @@ class NewResearch extends React.Component {
 
         axios.post('/researches/store', formData)
             .then(() => {
-                hashHistory.push('researches');
+                history.pushState(null, null, 'researches');
             })
             .catch((errors) => {
                 this.setState({

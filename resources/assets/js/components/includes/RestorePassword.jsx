@@ -1,12 +1,12 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
+import {Link} from 'react-router-dom';
 import PropTypes from 'prop-types';
 import axios from 'axios';
-import {hashHistory} from 'react-router';
 import {Container, Row, Col, CardGroup, Card, CardBlock, Form, Button, Input, InputGroup, InputGroupAddon
 } from 'reactstrap';
 
-class ResetPassword extends Component {
+class RestorePassword extends Component {
     constructor() {
         super();
         this.state = {
@@ -24,11 +24,16 @@ class ResetPassword extends Component {
             doubleClick: true
         });
 
-        axios.post('/password/reset', new FormData(formElement))
+        axios.post('/password/email', new FormData(formElement))
             .then(() => {
-                hashHistory.push('/login');
+                alert('Вам отправлено письмо');
+                // history.pushState(null, null, '/login');
             })
             .catch((error) => {
+                if (!error.response.data.errors) {
+                    window.location.reload();
+                }
+
                 this.setState({
                     errors: error.response.data.errors,
                     doubleClick: false
@@ -69,32 +74,25 @@ class ResetPassword extends Component {
                                 <Card className="p-4">
                                     <CardBlock className="card-body">
                                         <Form onSubmit={this.handleSubmit}>
-                                            <h1>Сбросить пароль</h1>
-                                            <p className="text-muted">Сброс пароля</p>
+                                            <h1>Восстановить пароль</h1>
+                                            <p className="text-muted">Восстановление пароля</p>
                                             <InputGroup className="mb-3">
                                                 <InputGroupAddon><i className="icon-envelope"/></InputGroupAddon>
-                                                <Input type="email" name="email"
-                                                       defaultValue={this.props.location.query.email} readOnly/>
+                                                <Input type="email" name="email" placeholder="E-mail" required/>
                                             </InputGroup>
-                                            <InputGroup className="mb-3">
-                                                <InputGroupAddon><i className="icon-lock"/></InputGroupAddon>
-                                                <Input type="password" name="password" placeholder="Пароль" required/>
-                                            </InputGroup>
-                                            <InputGroup className="mb-3">
-                                                <InputGroupAddon><i className="icon-lock"/></InputGroupAddon>
-                                                <Input type="password" name="password_confirmation"
-                                                       placeholder="Подтвердите пароль" required/>
-                                            </InputGroup>
-                                            <Input type="hidden" name="token"
-                                                   defaultValue={this.props.location.query.token}/>
                                             <Row>
                                                 <Col xs="6">
                                                     <Button color="primary"
                                                             className="px-4 btn-sm"
                                                             disabled={this.state.doubleClick}
                                                     >
-                                                        Сбросить пароль
+                                                        Восстановить
                                                     </Button>
+                                                </Col>
+                                                <Col xs="6" className="text-right">
+                                                    <Link to="login" className="btn btn-success btn-sm">
+                                                        Вспомнил пароль
+                                                    </Link>
                                                 </Col>
                                             </Row>
                                         </Form>
@@ -109,7 +107,7 @@ class ResetPassword extends Component {
     }
 }
 
-ResetPassword.propTypes = {
+RestorePassword.propTypes = {
     dispatch: PropTypes.func.isRequired
 };
 
@@ -119,4 +117,4 @@ const mapStateToProps = (state) => {
     };
 };
 
-export default connect(mapStateToProps)(ResetPassword);
+export default connect(mapStateToProps)(RestorePassword);

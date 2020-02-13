@@ -1,11 +1,10 @@
 import axios from 'axios';
-import {hashHistory} from 'react-router';
 
 export function addHospital(formElement = null) {
     return (dispatch) => {
         axios.post('/hospitals/store', new FormData(formElement))
             .then(() => {
-                hashHistory.push('hospitals');
+                history.pushState(null, null, 'hospitals');
             })
             .catch((error) => {
                 let {errors} = error.response.data;
@@ -32,7 +31,7 @@ export function editHospital(formElement = null, hospitalId) {
         axios.post(`/hospitals/update/${hospitalId}`, new FormData(formElement))
             .then(() => {
                 alert('Медицинское учреждение успешно отредактировано');
-                hashHistory.push(`/hospitals/${hospitalId}`);
+                history.pushState(null, null, `/hospitals/${hospitalId}`);
             })
             .catch((errors) => {
                 dispatch({
@@ -58,7 +57,7 @@ export function fetchHospitals() {
                 });
             })
             .catch((error) => {
-                hashHistory.replace('login');
+                history.replace(null, null, 'login');
                 dispatch({
                     payload: error,
                     type: 'HOSPITALS_REJECTED'
@@ -83,7 +82,7 @@ export function fetchHospital(id) {
                 });
             })
             .catch((error) => {
-                hashHistory.replace('login');
+                history.replace(null, null, 'login');
                 dispatch({
                     payload: error,
                     type: 'HOSPITAL_REJECTED'
@@ -102,7 +101,7 @@ export function deleteHospital(id) {
     return () => {
         axios.post(`/hospitals/destroy/${id}`)
             .then(() => {
-                hashHistory.push('/hospitals');
+                history.pushState(null, null, '/hospitals');
             })
             .catch((error) => {
                 return error;
