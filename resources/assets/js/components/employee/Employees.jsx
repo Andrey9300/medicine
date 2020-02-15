@@ -6,7 +6,7 @@ import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
 import {Row, Col, Card, CardHeader} from 'reactstrap';
 
-class Employees extends React.Component {
+class Employees extends React.PureComponent {
   componentWillMount() {
     this.props.dispatch(fetchEmployees());
   }

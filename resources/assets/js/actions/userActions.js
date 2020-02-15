@@ -158,6 +158,7 @@ export function deleteUser(id) {
           null,
           '/#/users'
         );
+        window.location.reload();
       })
       .catch((error) => {
         return error;

@@ -1,10 +1,10 @@
 import React from 'react';
 import {fetchCategories} from './../../actions/categoryActions';
 import {connect} from 'react-redux';
-import {Row, Col, Button, Card, CardHeader, CardBlock, CardFooter, Form, FormGroup, FormText, Label, Input} from 'reactstrap';
+import {Row, Col, Button, Card, CardHeader, CardBlock, CardFooter, Form, FormGroup, Label, Input} from 'reactstrap';
 import {addOrganization} from '../../actions/organizationActions';
 
-class NewOrganization extends React.Component {
+class NewOrganization extends React.PureComponent {
   constructor() {
     super();
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -50,9 +50,7 @@ class NewOrganization extends React.Component {
           <Col xs="12" md="6">
             <Card>
               <Form className="form-horizontal" onSubmit={this.handleSubmit}>
-                <CardHeader>
-                                    Добавить организацию
-                </CardHeader>
+                <CardHeader>Добавить организацию</CardHeader>
                 <CardBlock className="card-body">
                   <FormGroup row>
                     <Col md="3">
@@ -102,4 +100,4 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps)(NewOrganization);
+export const NewOrganizationContainer = connect(mapStateToProps)(NewOrganization);

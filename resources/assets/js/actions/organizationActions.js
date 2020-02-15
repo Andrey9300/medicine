@@ -11,8 +11,9 @@ export function addOrganization(formElement = null) {
         history.pushState(
           null,
           null,
-          'organizations'
+          '/#/organizations'
         );
+        window.location.reload();
       })
       .catch((errors) => {
         dispatch({
@@ -34,8 +35,9 @@ export function editOrganization(formElement = null, legalEntityId) {
         history.pushState(
           null,
           null,
-          `/organizations/${legalEntityId}`
+          `/#/organization/${legalEntityId}`
         );
+        window.location.reload();
       })
       .catch((errors) => {
         dispatch({
@@ -62,9 +64,9 @@ export function fetchOrganizations() {
         history.replaceState(
           null,
           null,
-          'login'
+          '/#/login'
         );
-
+        window.location.reload();
         dispatch({
           payload: error,
           type: 'ORGANIZATIONS_REJECTED'
@@ -96,9 +98,9 @@ export function fetchExpiredOrganizations(legalEntityId = null) {
         history.replaceState(
           null,
           null,
-          'login'
+          '/#/login'
         );
-
+        window.location.reload();
         dispatch({
           payload: error,
           type: 'EXPIRED_ORGANIZATIONS_REJECTED'
@@ -144,8 +146,9 @@ export function deleteOrganization(id) {
         history.pushState(
           null,
           null,
-          '/organizations'
+          '/#/organizations'
         );
+        window.location.reload();
       })
       .catch((error) => {
         return error;
@@ -167,8 +170,9 @@ export function deleteOrganizationEmployee(idOrganization, idEmployee) {
         history.pushState(
           null,
           null,
-          `/organizations/${idOrganization}`
+          `/#/organization/${idOrganization}`
         );
+        window.location.reload();
       })
       .catch((error) => {
         return error;

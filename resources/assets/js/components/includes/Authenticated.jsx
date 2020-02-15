@@ -3,7 +3,7 @@ import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
 
 export default function requireAuthentication(Component) {
-  class AuthenticatedComponent extends React.Component {
+  class AuthenticatedComponent extends React.PureComponent {
     componentWillMount() {
       this.checkAuth(this.props.users);
     }
@@ -13,7 +13,7 @@ export default function requireAuthentication(Component) {
     }
 
     checkAuth(users) {
-      if (!users.isAuthenticated) {
+      if (!users || !users.isAuthenticated) {
         this.props.dispatch({
           payload: {
             method: 'replace',

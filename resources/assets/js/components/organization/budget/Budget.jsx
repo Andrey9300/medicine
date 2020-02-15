@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 import {fetchHospitals} from '../../../actions/hospitalActions';
 import {Row, Col, Card, CardHeader, CardBlock, Table} from 'reactstrap';
 
-class Budget extends React.Component {
+class Budget extends React.PureComponent {
   constructor(props) {
     super(props);
     this.state = {
@@ -33,75 +33,80 @@ class Budget extends React.Component {
 
   render() {
     const {organization} = this.props;
-    let errors = '';
-    let cardElements = '';
+    const {errors} = this.state;
+    let errorsMessage = '';
 
-    if (this.state.errors !== '') {
-      errors = <div className="alert alert-danger" role="alert">
+    if (errors !== '') {
+      errorsMessage = <div className="alert alert-danger" role="alert">
         <div dangerouslySetInnerHTML={this.createMarkup()} />
       </div>;
     }
 
-    if (organization !== null) {
-      cardElements =
-                <div className="animated fadeIn">
-                  <Row>
-                    <Col xs="6" sm="6" md="6">
-                      <Card>
-                        <CardHeader>
-                          <i className="fa fa-building-o" aria-hidden="true"/>«{organization.name}»
-                        </CardHeader>
-                        <CardBlock className="card-body">
-                          <Table responsive>
-                            <tbody>
-                              <tr>
-                                <td>Руководитель:</td>
-                                <td>{organization.head_fio}</td>
-                              </tr>
-                              <tr>
-                                <td>E-mail руководителя: </td>
-                                <td>{organization.head_email}</td>
-                              </tr>
-                              <tr>
-                                <td>Категория:</td>
-                                <td>{organization.category.name}</td>
-                              </tr>
-                              <tr>
-                                <td>
-                                  <Link to={`/organizations/edit/${organization.id}`}
-                                    className="btn btn-success btn-xs pull-left">Редактировать
-                                  </Link>
-                                </td>
-                                <td>
-                                  <form id={`form_${organization.id}`}
-                                    className="pull-left"
-                                    method="post">
-                                    <input type="hidden"
-                                      name="organization_id"
-                                      value={organization.id} />
-                                    <a className="btn btn-danger btn-xs"
-                                      onClick={(event) => this.handleBtnDelete(
-                                        organization.id,
-                                        event
-                                      )}
-                                      href="#" id={organization.id}>Удалить
-                                    </a>
-                                  </form>
-                                </td>
-                              </tr>
-                            </tbody>
-                          </Table>
-                        </CardBlock>
-                      </Card>
-                    </Col>
-                  </Row>
-                </div>;
+    if (!organization) {
+      return null;
     }
 
     return (
       <div>
-        {errors}
-        {cardElements}
+        {errorsMessage}
+        <div className="animated fadeIn">
+          <Row>
+            <Col xs="6" sm="6" md="6">
+              <Card>
+                <CardHeader>
+                  <i className="fa fa-building-o" aria-hidden="true"/>«{organization.name}»
+                </CardHeader>
+                <CardBlock className="card-body">
+                  <Table responsive>
+                    <tbody>
+                      <tr>
+                        <td>Руководитель:</td>
+                        <td>{organization.head_fio}</td>
+                      </tr>
+                      <tr>
+                        <td>E-mail руководителя: </td>
+                        <td>{organization.head_email}</td>
+                      </tr>
+                      <tr>
+                        <td>Категория:</td>
+                        <td>{organization.category.name}</td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <Link
+                            to={`/organizations/edit/${organization.id}`}
+                            className="btn btn-success btn-xs pull-left">Редактировать
+                          </Link>
+                        </td>
+                        <td>
+                          <form
+                            id={`form_${organization.id}`}
+                            className="pull-left"
+                            method="post">
+                            <input
+                              type="hidden"
+                              name="organization_id"
+                              value={organization.id} />
+                            <a
+                              className="btn btn-danger btn-xs"
+                              onClick={(event) => this.handleBtnDelete(
+                                organization.id,
+                                event
+                              )}
+                              href="#"
+                              id={organization.id}>
+                                Удалить
+                            </a>
+                          </form>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </Table>
+                </CardBlock>
+              </Card>
+            </Col>
+          </Row>
+        </div>
       </div>
     );
   }

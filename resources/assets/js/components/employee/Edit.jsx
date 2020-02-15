@@ -3,10 +3,10 @@ import {connect} from 'react-redux';
 import {fetchEmployee} from './../../actions/employeeActions';
 import {fetchOrganizations} from './../../actions/organizationActions';
 import PropTypes from 'prop-types';
-import {Row, Col, Button, Card, CardHeader, CardFooter, CardBlock, Form, FormGroup, FormText, Label, Input} from 'reactstrap';
+import {Row, Col, Button, Card, CardHeader, CardFooter, CardBlock, Form, FormGroup, Label, Input} from 'reactstrap';
 import {editEmployee} from '../../actions/employeeActions';
 
-class EditEmployee extends React.Component {
+class EditEmployee extends React.PureComponent {
   constructor(props) {
     super(props);
     this.state = {
@@ -48,12 +48,12 @@ class EditEmployee extends React.Component {
 
     if (errors) {
       errorsMessage =
-                <div className="alert alert-danger" role="alert">
-                  <div dangerouslySetInnerHTML={this.createMarkup()} />
-                </div>;
+        <div className="alert alert-danger" role="alert">
+          <div dangerouslySetInnerHTML={this.createMarkup()} />
+        </div>;
     }
 
-    if (employee === null) {
+    if (!employee || !organizations) {
       return null;
     }
 
@@ -64,9 +64,7 @@ class EditEmployee extends React.Component {
           <Col xs="12" md="6">
             <Card>
               <Form className="form-horizontal" onSubmit={this.handleSubmit}>
-                <CardHeader>
-                                    Редактировать сотрудника
-                </CardHeader>
+                <CardHeader>Редактировать сотрудника</CardHeader>
                 <CardBlock className="card-body">
                   <FormGroup row>
                     <Col md="3">

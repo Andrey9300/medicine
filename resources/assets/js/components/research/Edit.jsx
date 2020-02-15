@@ -5,7 +5,7 @@ import {fetchResearch} from './../../actions/researchActions';
 import PropTypes from 'prop-types';
 import {Row, Col, Button, Card, CardHeader, CardFooter, CardBlock, Form, FormGroup, FormText, Label, Input} from 'reactstrap';
 
-class EditResearch extends React.Component {
+class EditResearch extends React.PureComponent {
   constructor(props) {
     super(props);
     this.state = {
@@ -27,8 +27,9 @@ class EditResearch extends React.Component {
         history.pushState(
           null,
           null,
-          '/researches'
+          '/#/researches'
         );
+        window.location.reload();
       })
       .catch((error) => {
         const errors = error;
@@ -57,67 +58,69 @@ class EditResearch extends React.Component {
 
   render() {
     const {research} = this.props;
-    let errors = '';
-    let formElements = '';
+    const {errors} = this.state;
+    let errorsMessage = '';
 
-    if (this.state.errors !== '') {
-      errors = <div className="alert alert-danger" role="alert">
+    if (errors !== '') {
+      errorsMessage = <div className="alert alert-danger" role="alert">
         <div dangerouslySetInnerHTML={this.createMarkup()} />
       </div>;
     }
 
-    if (research !== null) {
-      formElements =
-                <Row>
-                  <Col xs="12" md="6">
-                    <Card>
-                      <CardHeader>
-                                Редактировать исследование
-                      </CardHeader>
-                      <CardBlock className="card-body">
-                        <Form className="form-horizontal">
-                          <FormGroup row>
-                            <Col md="3">
-                              <Label htmlFor="text-input">Наименование</Label>
-                            </Col>
-                            <Col xs="12" md="9">
-                              <Input type="text" id="name" name="name" defaultValue={research.name}/>
-                            </Col>
-                          </FormGroup>
-                          <FormGroup row>
-                            <Col md="3">
-                              <Label htmlFor="text-input">Период</Label>
-                            </Col>
-                            <Col xs="12" md="9">
-                              <Input type="select" name="period_id" id="select"
-                                defaultValue={research.research_period.id}>
-                                { this.props.periods.map((period) => {
-                                  return (
-                                    <option key={period.id} value={period.id}>
-                                      {period.name}
-                                    </option>
-                                  );
-                                })
-                                }
-                              </Input>
-                            </Col>
-                          </FormGroup>
-                        </Form>
-                      </CardBlock>
-                      <CardFooter>
-                        <Button type="submit" size="sm" color="success" onClick={this.handleSubmit}>
-                          <i className="fa fa-dot-circle-o"/> Сохранить
-                        </Button>
-                      </CardFooter>
-                    </Card>
-                  </Col>
-                </Row>;
+    if (!research) {
+      return null;
     }
 
     return (
       <div className="animated fadeIn">
-        {errors}
-        {formElements}
+        {errorsMessage}
+        <Row>
+          <Col xs="12" md="6">
+            <Card>
+              <CardHeader>
+                Редактировать исследование
+              </CardHeader>
+              <CardBlock className="card-body">
+                <Form className="form-horizontal">
+                  <FormGroup row>
+                    <Col md="3">
+                      <Label htmlFor="text-input">Наименование</Label>
+                    </Col>
+                    <Col xs="12" md="9">
+                      <Input type="text" id="name" name="name" defaultValue={research.name}/>
+                    </Col>
+                  </FormGroup>
+                  <FormGroup row>
+                    <Col md="3">
+                      <Label htmlFor="text-input">Период</Label>
+                    </Col>
+                    <Col xs="12" md="9">
+                      <Input
+                        type="select"
+                        name="period_id"
+                        id="select"
+                        defaultValue={research.research_period.id}>
+                        {this.props.periods.map((period) => {
+                          return (
+                            <option key={period.id} value={period.id}>
+                              {period.name}
+                            </option>
+                          );
+                        })
+                        }
+                      </Input>
+                    </Col>
+                  </FormGroup>
+                </Form>
+              </CardBlock>
+              <CardFooter>
+                <Button type="submit" size="sm" color="success" onClick={this.handleSubmit}>
+                  <i className="fa fa-dot-circle-o"/> Сохранить
+                </Button>
+              </CardFooter>
+            </Card>
+          </Col>
+        </Row>
       </div>
     );
   }

@@ -1,9 +1,9 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import {Row, Col, Button, Card, CardHeader, CardFooter, CardBlock, Form, FormGroup, FormText, Label, Input} from 'reactstrap';
+import {Row, Col, Button, Card, CardHeader, CardFooter, CardBlock, Form, FormGroup, Label, Input} from 'reactstrap';
 import {addHospital} from '../../actions/hospitalActions';
 
-class NewHospital extends React.Component {
+class NewHospital extends React.PureComponent {
   constructor() {
     super();
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -45,9 +45,7 @@ class NewHospital extends React.Component {
           <Col xs="12" md="6">
             <Card>
               <Form className="form-horizontal" onSubmit={this.handleSubmit}>
-                <CardHeader>
-                                    Добавить медицинскую организацию
-                </CardHeader>
+                <CardHeader>Добавить медицинскую организацию</CardHeader>
                 <CardBlock className="card-body">
                   <FormGroup row>
                     <Col md="3">

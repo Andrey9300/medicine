@@ -6,7 +6,7 @@ import {Link} from 'react-router-dom';
 import PropTypes from 'prop-types';
 import {Row, Col, Card, CardHeader, CardBlock, Table} from 'reactstrap';
 
-class Employee extends React.Component {
+class Employee extends React.PureComponent {
   constructor(props) {
     super(props);
     this.state = {
@@ -17,6 +17,7 @@ class Employee extends React.Component {
   }
 
   componentWillMount() {
+    console.log('mmm');
     this.props.dispatch(fetchEmployee(this.state.employeeId));
   }
 
@@ -36,17 +37,22 @@ class Employee extends React.Component {
 
   render() {
     const {employee} = this.props;
-    let errors = '';
+    const {errors} = this.state;
+    let errorsMessage = '';
 
-    if (this.state.errors !== '') {
-      errors = <div className="alert alert-danger" role="alert">
+    if (errors !== '') {
+      errorsMessage = <div className="alert alert-danger" role="alert">
         <div dangerouslySetInnerHTML={this.createMarkup()} />
       </div>;
     }
 
+    if (!employee) {
+      return null;
+    }
+
     return (
-      <div>
-        {errors}
+      <>
+        {errorsMessage}
         <div className="animated fadeIn">
           <Row>
             <Col xs="6" sm="6" md="6">
@@ -115,7 +121,7 @@ class Employee extends React.Component {
         <EmployeeResearches
           idEmployee={this.state.employeeId}
         />
-      </div>
+      </>
     );
   }
 }

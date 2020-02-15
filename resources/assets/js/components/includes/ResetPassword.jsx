@@ -5,8 +5,9 @@ import axios from 'axios';
 import {Container, Row, Col, CardGroup, Card, CardBlock, Form, Button, Input, InputGroup, InputGroupAddon} from 'reactstrap';
 
 class ResetPassword extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
+
     this.state = {
       errors: '',
       doubleClick: false
@@ -30,8 +31,9 @@ class ResetPassword extends Component {
         history.pushState(
           null,
           null,
-          '/login'
+          '/#/login'
         );
+        window.location.reload();
       })
       .catch((error) => {
         this.setState({
@@ -56,10 +58,12 @@ class ResetPassword extends Component {
   }
 
   render() {
-    let errors = '';
+    const {location} = this.props;
+    const {errors, doubleClick} = this.state;
+    let errorsMessage = '';
 
-    if (this.state.errors !== '') {
-      errors = <div className="alert alert-danger" role="alert">
+    if (errors !== '') {
+      errorsMessage = <div className="alert alert-danger" role="alert">
         <div dangerouslySetInnerHTML={this.createMarkup()} />
       </div>;
     }
@@ -69,7 +73,7 @@ class ResetPassword extends Component {
         <Container>
           <Row className="justify-content-center">
             <Col md="6">
-              {errors}
+              {errorsMessage}
               <CardGroup className="mb-0">
                 <Card className="p-4">
                   <CardBlock className="card-body">
@@ -79,7 +83,7 @@ class ResetPassword extends Component {
                       <InputGroup className="mb-3">
                         <InputGroupAddon><i className="icon-envelope"/></InputGroupAddon>
                         <Input type="email" name="email"
-                          defaultValue={this.props.location.query.email} readOnly/>
+                          defaultValue={location.query.email} readOnly/>
                       </InputGroup>
                       <InputGroup className="mb-3">
                         <InputGroupAddon><i className="icon-lock"/></InputGroupAddon>
@@ -91,14 +95,14 @@ class ResetPassword extends Component {
                           placeholder="Подтвердите пароль" required/>
                       </InputGroup>
                       <Input type="hidden" name="token"
-                        defaultValue={this.props.location.query.token}/>
+                        defaultValue={location.query.token}/>
                       <Row>
                         <Col xs="6">
                           <Button color="primary"
                             className="px-4 btn-sm"
-                            disabled={this.state.doubleClick}
+                            disabled={doubleClick}
                           >
-                                                        Сбросить пароль
+                            Сбросить пароль
                           </Button>
                         </Col>
                       </Row>

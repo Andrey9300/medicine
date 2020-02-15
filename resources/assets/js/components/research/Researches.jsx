@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import {Link} from 'react-router-dom';
 import {Row, Col, Card, CardHeader, CardBlock, CardFooter, Table, Form, Button, Input} from 'reactstrap';
 
-class Researches extends React.Component {
+class Researches extends React.PureComponent {
   constructor(props) {
     super(props);
 

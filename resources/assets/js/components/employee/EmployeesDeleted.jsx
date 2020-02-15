@@ -5,7 +5,7 @@ import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
 import {Row, Col} from 'reactstrap';
 
-class EmployeesDeleted extends React.Component {
+class EmployeesDeleted extends React.PureComponent {
   componentWillMount() {
     this.props.dispatch(fetchEmployees());
   }

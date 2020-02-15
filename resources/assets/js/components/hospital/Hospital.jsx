@@ -5,7 +5,7 @@ import {Link} from 'react-router-dom';
 import PropTypes from 'prop-types';
 import {Row, Col, Card, CardHeader, CardBlock, Table} from 'reactstrap';
 
-class Hospital extends React.Component {
+class Hospital extends React.PureComponent {
   constructor(props) {
     super(props);
     this.state = {
@@ -32,14 +32,15 @@ class Hospital extends React.Component {
 
   render() {
     const {hospital} = this.props;
-    let errors = '';
+    const {errors} = this.state;
+    let errorsMessage = '';
 
-    if (hospital === null) {
+    if (!hospital) {
       return null;
     }
 
     if (this.state.errors !== '') {
-      errors =
+      errorsMessage =
         <div className="alert alert-danger" role="alert">
           <div dangerouslySetInnerHTML={this.createMarkup()}/>
         </div>;
@@ -47,7 +48,7 @@ class Hospital extends React.Component {
 
     return (
       <div>
-        {errors}
+        {errorsMessage}
         <div className="animated fadeIn">
           <Row>
             <Col xs="6" sm="6" md="6">

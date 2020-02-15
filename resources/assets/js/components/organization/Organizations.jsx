@@ -5,7 +5,7 @@ import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
 import {Row, Col, Card, CardHeader, CardBlock, Table} from 'reactstrap';
 
-class Organizations extends React.Component {
+class Organizations extends React.PureComponent {
   componentWillMount() {
     this.props.dispatch(fetchOrganizations());
   }
@@ -36,8 +36,7 @@ class Organizations extends React.Component {
           <Col xs="12" lg="12">
             <Card>
               <CardHeader>
-                <i className="fa fa-building-o" aria-hidden="true"/>Объекты
-                                ({organizations.length})
+                <i className="fa fa-building-o" aria-hidden="true"/>Объекты ({organizations.length})
                 <Link to={'/organizations/create'} className="btn btn-primary btn-sm pull-right">
                   Добавить <i className="icon-plus"/>
                 </Link>
@@ -57,7 +56,7 @@ class Organizations extends React.Component {
                       return (
                         <tr key={organization.id}>
                           <td>
-                            <Link to={`/organizations/${organization.id}`}>
+                            <Link to={`/organization/${organization.id}`}>
                               {organization.name}
                             </Link>
                           </td>
@@ -95,4 +94,4 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps)(Organizations);
+export const OrganizationsContainer = connect(mapStateToProps)(Organizations);

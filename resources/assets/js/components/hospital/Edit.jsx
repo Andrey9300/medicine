@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import {Row, Col, Button, Card, CardHeader, CardFooter, CardBlock, Form, FormGroup, FormText, Label, Input} from 'reactstrap';
 import {editHospital} from '../../actions/hospitalActions';
 
-class EditHospital extends React.Component {
+class EditHospital extends React.PureComponent {
   constructor(props) {
     super(props);
     this.state = {
@@ -61,9 +61,7 @@ class EditHospital extends React.Component {
           <Col xs="12" md="6">
             <Card>
               <Form className="form-horizontal" onSubmit={this.handleSubmit}>
-                <CardHeader>
-                                    Редактировать медицинское учреждение
-                </CardHeader>
+                <CardHeader>Редактировать медицинское учреждение</CardHeader>
                 <CardBlock className="card-body">
                   <FormGroup row>
                     <Col md="3">

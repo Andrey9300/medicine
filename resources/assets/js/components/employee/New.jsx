@@ -3,9 +3,9 @@ import PropTypes from 'prop-types';
 import {fetchOrganizations} from './../../actions/organizationActions';
 import {addEmployee} from './../../actions/employeeActions';
 import {connect} from 'react-redux';
-import {Row, Col, Button, Card, CardHeader, CardFooter, CardBlock, Form, FormGroup, FormText, Label, Input} from 'reactstrap';
+import {Row, Col, Button, Card, CardHeader, CardFooter, CardBlock, Form, FormGroup, Label, Input} from 'reactstrap';
 
-class NewEmployee extends React.Component {
+class NewEmployee extends React.PureComponent {
   constructor() {
     super();
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -124,7 +124,7 @@ class NewEmployee extends React.Component {
 }
 
 NewEmployee.propTypes = {
-  router: PropTypes.object.isRequired
+  router: PropTypes.object
 };
 
 const mapStateToProps = (state) => {

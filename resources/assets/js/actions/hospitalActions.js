@@ -12,6 +12,7 @@ export function addHospital(formElement = null) {
           null,
           '/#/hospitals'
         );
+        window.location.reload();
       })
       .catch((error) => {
         let {errors} = error.response.data;
@@ -44,8 +45,9 @@ export function editHospital(formElement = null, hospitalId) {
         history.pushState(
           null,
           null,
-          `/hospitals/${hospitalId}`
+          `/#/hospital/${hospitalId}`
         );
+        window.location.reload();
       })
       .catch((errors) => {
         dispatch({
@@ -74,8 +76,9 @@ export function fetchHospitals() {
         history.replaceState(
           null,
           null,
-          'login'
+          '/#/login'
         );
+        window.location.reload();
         dispatch({
           payload: error,
           type: 'HOSPITALS_REJECTED'
@@ -103,8 +106,9 @@ export function fetchHospital(id) {
         history.replaceState(
           null,
           null,
-          'login'
+          '/#/login'
         );
+        window.location.reload();
         dispatch({
           payload: error,
           type: 'HOSPITAL_REJECTED'
@@ -126,8 +130,9 @@ export function deleteHospital(id) {
         history.pushState(
           null,
           null,
-          '/hospitals'
+          '/#/hospitals'
         );
+        window.location.reload();
       })
       .catch((error) => {
         return error;

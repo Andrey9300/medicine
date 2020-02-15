@@ -44,9 +44,10 @@ class Login extends Component {
 
   render() {
     const {user, errors} = this.props;
+    const {doubleClick} = this.state;
     let errorsMessage = '';
 
-    if (user) {
+    if (user && user.isAuthenticated) {
       window.history.pushState(null, null, '/#/organizations');
     }
 
@@ -78,7 +79,7 @@ class Login extends Component {
                       </InputGroup>
                       <Row>
                         <Col xs="4">
-                          <Button disabled={this.state.doubleClick}
+                          <Button disabled={doubleClick}
                             color="primary"
                             className="px-4 btn-sm">Войти
                           </Button>

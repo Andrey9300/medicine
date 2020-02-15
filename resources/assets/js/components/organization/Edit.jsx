@@ -6,7 +6,7 @@ import {fetchCategories} from '../../actions/categoryActions';
 import {Row, Col, Button, Card, CardHeader, CardFooter, CardBlock, Form, FormGroup, Label, Input} from 'reactstrap';
 import {editOrganization} from '../../actions/organizationActions';
 
-class EditOrganization extends React.Component {
+class EditOrganization extends React.PureComponent {
   constructor(props) {
     super(props);
     this.state = {

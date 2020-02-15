@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 import {Row, Col, Card, CardHeader, CardBlock, Table} from 'reactstrap';
 import {fetchHospitals} from '../../actions/hospitalActions';
 
-class PrintEmployee extends React.Component {
+class PrintEmployee extends React.PureComponent {
   constructor(props) {
     super(props);
     this.state = {
@@ -49,24 +49,25 @@ class PrintEmployee extends React.Component {
   }
 
   render() {
-    const {employee} = this.props;
-    const hospital = this.props.hospital[0]; // Пока одна мед организация
-    let errors = '';
+    const {employee, hospital} = this.props;
+    const {errors} = this.state;
+    const hospitalOrg = hospital[0]; // Пока одна мед организация
+    let errorsMessage = '';
 
-    if (this.state.errors !== '') {
-      errors =
-                <div className="alert alert-danger" role="alert">
-                  <div dangerouslySetInnerHTML={this.createMarkup()} />
-                </div>;
+    if (errors !== '') {
+      errorsMessage =
+        <div className="alert alert-danger" role="alert">
+          <div dangerouslySetInnerHTML={this.createMarkup()} />
+        </div>;
     }
 
-    if (!employee || !hospital) {
+    if (!employee || !hospitalOrg) {
       return null;
     }
 
     return (
       <div>
-        {errors}
+        {errorsMessage}
         <div className="animated fadeIn">
           <Row>
             <Col xs="12" sm="12" md="12">
@@ -176,15 +177,15 @@ class PrintEmployee extends React.Component {
                           textAlign: 'center',
                           fontWeight: 'bold'
                         }} colSpan="2">
-                                                ИНФОРМАЦИЯ О МЕДИЦИНСКОЙ ОРГАНИЗАЦИИ «{hospital.name}»
+                                                ИНФОРМАЦИЯ О МЕДИЦИНСКОЙ ОРГАНИЗАЦИИ «{hospitalOrg.name}»
                         </td>
                       </tr>
                       <tr>
                         <td colSpan="2">
-                                                Адрес: {hospital.address}<br/>
-                                                Режим работы: {hospital.shedule}<br/>
-                                                Телефон: {hospital.phone}
-                          <img width="670" height="300" src={hospital.photo_map}/>
+                                                Адрес: {hospitalOrg.address}<br/>
+                                                Режим работы: {hospitalOrg.shedule}<br/>
+                                                Телефон: {hospitalOrg.phone}
+                          <img width="670" height="300" src={hospitalOrg.photo_map}/>
                         </td>
                       </tr>
                     </tbody>

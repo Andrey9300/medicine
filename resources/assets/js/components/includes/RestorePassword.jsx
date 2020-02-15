@@ -30,6 +30,7 @@ class RestorePassword extends Component {
       .then(() => {
         alert('Вам отправлено письмо');
         window.history.pushState(null, null, '/#/login');
+        window.location.reload();
       })
       .catch((error) => {
         if (!error.response.data.errors) {
@@ -58,10 +59,11 @@ class RestorePassword extends Component {
   }
 
   render() {
-    let errors = '';
+    const {errors, doubleClick} = this.state;
+    let errorsMessage = '';
 
-    if (this.state.errors !== '') {
-      errors = <div className="alert alert-danger" role="alert">
+    if (errors !== '') {
+      errorsMessage = <div className="alert alert-danger" role="alert">
         <div dangerouslySetInnerHTML={this.createMarkup()} />
       </div>;
     }
@@ -71,7 +73,7 @@ class RestorePassword extends Component {
         <Container>
           <Row className="justify-content-center">
             <Col md="6">
-              {errors}
+              {errorsMessage}
               <CardGroup className="mb-0">
                 <Card className="p-4">
                   <CardBlock className="card-body">
@@ -86,14 +88,14 @@ class RestorePassword extends Component {
                         <Col xs="6">
                           <Button color="primary"
                             className="px-4 btn-sm"
-                            disabled={this.state.doubleClick}
+                            disabled={doubleClick}
                           >
-                                                        Восстановить
+                            Восстановить
                           </Button>
                         </Col>
                         <Col xs="6" className="text-right">
                           <Link to="login" className="btn btn-success btn-sm">
-                                                        Вспомнил пароль
+                            Вспомнил пароль
                           </Link>
                         </Col>
                       </Row>

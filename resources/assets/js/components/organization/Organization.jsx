@@ -7,7 +7,7 @@ import {Link} from 'react-router-dom';
 import PropTypes from 'prop-types';
 import {Row, Col, Card, CardHeader, CardBlock, Table} from 'reactstrap';
 
-class Organization extends React.Component {
+class Organization extends React.PureComponent {
   constructor(props) {
     super(props);
     this.state = {
@@ -28,7 +28,7 @@ class Organization extends React.Component {
   render() {
     const {organization, hospitals} = this.props;
 
-    if (organization === null) {
+    if (!organization || !hospitals) {
       return null;
     }
 
@@ -237,4 +237,4 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps)(Organization);
+export const OrganizationContainer = connect(mapStateToProps)(Organization);

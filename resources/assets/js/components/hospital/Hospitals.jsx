@@ -4,7 +4,7 @@ import React from 'react';
 import {connect} from 'react-redux';
 import {Row, Col, Card, CardHeader, CardBlock, Table} from 'reactstrap';
 
-class Hospitals extends React.Component {
+class Hospitals extends React.PureComponent {
   constructor() {
     super();
     this.handleBtnDelete = this.handleBtnDelete.bind(this);
@@ -21,9 +21,8 @@ class Hospitals extends React.Component {
 
   render() {
     const {hospitals} = this.props;
-    let linkAdd = null;
 
-    if (!hospitals) {
+    if (!hospitals.length) {
       return (
         <div className="animated fadeIn">
           <Row>
@@ -39,13 +38,6 @@ class Hospitals extends React.Component {
         </div>
       );
     }
-    // Пока ограничиваемся одним мед центром
-    if (hospitals.length < 1) {
-      linkAdd =
-        <Link to="hospitals/create" className="btn btn-primary btn-sm pull-right">
-            Добавить <i className="icon-plus"/>
-        </Link>;
-    }
 
     return (
       <div className="animated fadeIn">
@@ -54,7 +46,6 @@ class Hospitals extends React.Component {
             <Card>
               <CardHeader>
                 <i className="fa fa-stethoscope" aria-hidden="true"/>Медицинские центры ({hospitals.length})
-                {linkAdd}
               </CardHeader>
               <CardBlock className="card-body">
                 <Table responsive>
@@ -71,7 +62,7 @@ class Hospitals extends React.Component {
                       return (
                         <tr key={hospital.id}>
                           <td>
-                            <Link to={`/hospitals/${hospital.id}`}>
+                            <Link to={`/hospital/${hospital.id}`}>
                               {hospital.name}
                             </Link>
                           </td>

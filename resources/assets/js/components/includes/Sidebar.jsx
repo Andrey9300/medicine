@@ -13,15 +13,14 @@ class Sidebar extends Component {
   }
 
   render() {
-    const {user} = this.props;
-    const {location} = this.props;
-    const organizationsClass = location.pathname.match(/^\/organizations/) ? 'active' : '';
-    const employeesClass = location.pathname.match(/^\/employees/) ? 'active' : '';
-    const hospitalsClass = location.pathname.match(/^\/hospitals/) ? 'active' : '';
-    const researchesClass = location.pathname.match(/^\/researches/) ? 'active' : '';
+    const {user, location: {pathname}} = this.props;
+    const organizationsClass = pathname.match(/^\/organizations/) ? 'active' : '';
+    const employeesClass = pathname.match(/^\/employees/) ? 'active' : '';
+    const hospitalsClass = pathname.match(/^\/hospitals/) ? 'active' : '';
+    const researchesClass = pathname.match(/^\/researches/) ? 'active' : '';
     let navItems = null;
 
-    if (user.isAuthenticated) {
+    if (user && user.isAuthenticated) {
       navItems =
         <Nav>
           <NavItem>
@@ -56,6 +55,11 @@ class Sidebar extends Component {
           <NavItem>
             <Link to={'/login'}>
               <i className="fa fa-lock" aria-hidden="true"/>Вход
+            </Link>
+          </NavItem>
+          <NavItem>
+            <Link to={'/registration'}>
+              <i className="fa fa-lock" aria-hidden="true"/>Регистрация
             </Link>
           </NavItem>
         </Nav>;

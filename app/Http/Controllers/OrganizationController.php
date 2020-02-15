@@ -21,39 +21,44 @@ class OrganizationController extends Controller
      */
     public function store(StoreOrganization $request)
     {
+        $currentUser = Auth::user();
         $organization = new Organization;
         $organization->name = $request->name;
         $organization->category_id = $request->category_id;
+        $organization->head_email = $currentUser->email;
+        $organization->save();
+
+        $currentUser->organizations()->attach($organization);
 
         // привязка руководителя к организации: по умолчанию текущий user,
         // иначе создаем user с role = head или ищем в системе
-        if (User::where('email', $request->head_email)->exists()) {
-            $user = User::where('email', $request->head_email)->first();
-            $organization->head_email = $user->email;
-            $organization->save();
-            $user->organizations()->attach($organization);
-            $user->notify(new YouHead($organization->name));
-
-            $currentUser = Auth::user();
-            if ($currentUser->email != $user->email) {
-                $currentUser->organizations()->attach($organization);
-            }
-        } else {
-            $passwordNewUser = str_random(8);
-            $newUser = User::create([
-                'fio' => $request->head_fio,
-                'email' => $request->head_email,
-                'password' => bcrypt($passwordNewUser),
-                'role' => 'head',
-                'active' => true
-            ]);
-            $organization->head_email = $newUser->email;
-            $organization->save();
-            $newUser->organizations()->attach($organization);
-            $newUser->notify(new SendPassword($newUser->email, $passwordNewUser, $organization->name));
-            $userAdmin = Auth::user();
-            $userAdmin->organizations()->attach($organization);
-        }
+//        if (User::where('email', $request->head_email)->exists()) {
+//            $user = User::where('email', $request->head_email)->first();
+//            $organization->head_email = $user->email;
+//            $organization->save();
+//            $user->organizations()->attach($organization);
+//            $user->notify(new YouHead($organization->name));
+//
+//            $currentUser = Auth::user();
+//            if ($currentUser->email != $user->email) {
+//                $currentUser->organizations()->attach($organization);
+//            }
+//        } else {
+//            $passwordNewUser = str_random(8);
+//            $newUser = User::create([
+//                'fio' => $request->head_fio,
+//                'email' => $request->head_email,
+//                'password' => bcrypt($passwordNewUser),
+//                'role' => 'head',
+//                'active' => true
+//            ]);
+//            $organization->head_email = $newUser->email;
+//            $organization->save();
+//            $newUser->organizations()->attach($organization);
+//            $newUser->notify(new SendPassword($newUser->email, $passwordNewUser, $organization->name));
+//            $userAdmin = Auth::user();
+//            $userAdmin->organizations()->attach($organization);
+//        }
 
         return response('Ок', 200);
     }

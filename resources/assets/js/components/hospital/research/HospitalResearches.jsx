@@ -4,7 +4,7 @@ import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
 import {Row, Col, Card, CardHeader, CardBlock, CardFooter, Table, Form, Button, Input} from 'reactstrap';
 
-class HospitalResearches extends React.Component {
+class HospitalResearches extends React.PureComponent {
   constructor(props) {
     super(props);
     this.state = {

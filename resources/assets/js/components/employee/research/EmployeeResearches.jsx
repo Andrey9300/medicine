@@ -4,7 +4,7 @@ import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
 import {Table, Row, Col, Card, CardHeader, CardBlock, Button, Form, Input, CardFooter} from 'reactstrap';
 
-class EmployeeResearches extends React.Component {
+class EmployeeResearches extends React.PureComponent {
   constructor(props) {
     super(props);
     this.state = {
@@ -43,15 +43,15 @@ class EmployeeResearches extends React.Component {
     const {employeeResearches, errors} = this.props;
     let errorsMessage = '';
 
-    if (employeeResearches === null) {
+    if (!employeeResearches) {
       return null;
     }
 
     if (errors) {
       errorsMessage =
-                <div className="alert alert-danger" role="alert">
-                  <div dangerouslySetInnerHTML={this.createMarkup()} />
-                </div>;
+        <div className="alert alert-danger" role="alert">
+          <div dangerouslySetInnerHTML={this.createMarkup()} />
+        </div>;
     }
 
     return (
@@ -61,8 +61,7 @@ class EmployeeResearches extends React.Component {
           <Col xs="12" md="12" lg="8">
             <Card>
               <CardHeader>
-                <i className="fa fa-heartbeat" aria-hidden="true"/>Даты исследований
-                                ({employeeResearches.length})
+                <i className="fa fa-heartbeat" aria-hidden="true"/>Даты исследований ({employeeResearches.length})
                 <Button type="submit" size="sm"
                   color="success pull-right"
                   onClick={this.handleClick}

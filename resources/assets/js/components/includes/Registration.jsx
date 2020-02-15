@@ -5,8 +5,9 @@ import PropTypes from 'prop-types';
 import {Container, Row, Col, Card, Form, CardBlock, Button, Input, InputGroup, InputGroupAddon, CardGroup} from 'reactstrap';
 
 class Registration extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
+
     this.state = {
       doubleClick: false
     };
@@ -33,6 +34,7 @@ class Registration extends Component {
       null,
       '/#/login'
     );
+    window.location.reload();
   }
 
   createMarkup() {
@@ -51,6 +53,7 @@ class Registration extends Component {
 
   render() {
     const {errors} = this.props;
+    const {doubleClick} = this.state;
     let errorsMessage = '';
 
     if (errors) {
@@ -88,9 +91,7 @@ class Registration extends Component {
                         <Input type="password" name="password_confirmation"
                           placeholder="Повторите пароль" required/>
                       </InputGroup>
-                      <Button color="success" block disabled={this.state.doubleClick}>
-                                                Создать аккаунт
-                      </Button>
+                      <Button color="success" block disabled={doubleClick}>Создать аккаунт</Button>
                       <Button color="primary" block onClick={this.handleLogin}>Уже есть аккаунт</Button>
                     </Form>
                   </CardBlock>

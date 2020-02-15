@@ -1,7 +1,7 @@
 import React from 'react';
 import {connect} from 'react-redux';
 
-class MainComponent extends React.Component {
+class MainComponent extends React.PureComponent {
   render() {
     return (
       <div>123</div>

@@ -3,7 +3,7 @@ import React from 'react';
 import {Card, CardHeader, CardBlock, CardFooter, Table} from 'reactstrap';
 import PropTypes from 'prop-types';
 
-export class EmployeesList extends React.Component {
+export class EmployeesList extends React.PureComponent {
   render() {
     const {employees, title} = this.props;
 
@@ -12,6 +12,9 @@ export class EmployeesList extends React.Component {
         <Card>
           <CardHeader>
             <i className="fa fa-users" aria-hidden="true"/>Cотрудников нет
+            <Link to="/employees/create" className="btn btn-primary btn-sm pull-right">
+              Добавить <i className="icon-plus"/>
+            </Link>
           </CardHeader>
           <CardBlock className="card-body">
             <Link to={'/employees'}>Перейти ко всем сотрудникам</Link>
@@ -43,7 +46,7 @@ export class EmployeesList extends React.Component {
                 return (
                   <tr key={employee.id}>
                     <td>
-                      <Link to={`/employees/${employee.id}`}>
+                      <Link to={`/employee/${employee.id}`}>
                         {employee.fio}
                       </Link>
                     </td>

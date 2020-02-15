@@ -5,7 +5,7 @@ import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
 import {Row, Col} from 'reactstrap';
 
-class OrganizationEmployee extends React.Component {
+class OrganizationEmployee extends React.PureComponent {
   constructor(props) {
     super(props);
 

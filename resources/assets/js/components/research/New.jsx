@@ -5,7 +5,7 @@ import {connect} from 'react-redux';
 import {fetchPeriods} from '../../actions/researchPeriodActions';
 import {Row, Col, Button, Card, CardHeader, CardFooter, CardBlock, Form, FormGroup, FormText, Label, Input} from 'reactstrap';
 
-class NewResearch extends React.Component {
+class NewResearch extends React.PureComponent {
   constructor() {
     super();
     this.state = {
@@ -31,8 +31,9 @@ class NewResearch extends React.Component {
         history.pushState(
           null,
           null,
-          'researches'
+          '/#/researches'
         );
+        window.location.reload();
       })
       .catch((errors) => {
         this.setState({
@@ -56,23 +57,23 @@ class NewResearch extends React.Component {
   }
 
   render() {
-    let errors = '';
+    const {researchPeriods} = this.props;
+    const {errors} = this.state;
+    let errorsMessage = '';
 
-    if (this.state.errors) {
-      errors = <div className="alert alert-danger" role="alert">
+    if (errors) {
+      errorsMessage = <div className="alert alert-danger" role="alert">
         <div dangerouslySetInnerHTML={this.createMarkup()} />
       </div>;
     }
 
     return (
       <div className="animated fadeIn">
-        {errors}
+        {errorsMessage}
         <Row>
           <Col xs="12" md="6">
             <Card>
-              <CardHeader>
-                                Добавить исследование
-              </CardHeader>
+              <CardHeader>Добавить исследование</CardHeader>
               <CardBlock className="card-body">
                 <Form className="form-horizontal">
                   <FormGroup row>
@@ -89,7 +90,7 @@ class NewResearch extends React.Component {
                     </Col>
                     <Col xs="12" md="9">
                       <Input type="select" name="period_id" id="period_id">
-                        { this.props.researchPeriods.map((period) => {
+                        {researchPeriods.map((period) => {
                           return (
                             <option key={period.id} value={period.id}>
                               {period.name}

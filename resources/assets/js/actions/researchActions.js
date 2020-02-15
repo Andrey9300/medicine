@@ -42,8 +42,9 @@ export function fetchUserResearches() {
         history.replaceState(
           null,
           null,
-          'login'
+          '/#/login'
         );
+        window.location.reload();
         dispatch({
           payload: error,
           type: 'USER_RESEARCHES_REJECTED'

@@ -14,8 +14,9 @@ export function addEmployee(formElement = null) {
         history.pushState(
           null,
           null,
-          '/employees'
+          '/#/employees/'
         );
+        window.location.reload();
       })
       .catch((errors) => {
         dispatch({
@@ -40,8 +41,9 @@ export function editEmployee(formElement = null, employeeId) {
         history.pushState(
           null,
           null,
-          `/employees/${employeeId}`
+          `/#/employee/${employeeId}`
         );
+        window.location.reload();
       })
       .catch((errors) => {
         dispatch({
@@ -72,7 +74,6 @@ export function fetchEmployees(legalEntityId = null) {
         });
       })
       .catch((error) => {
-        // History.replaceState(null, null, 'login');
         dispatch({
           payload: error,
           type: 'EMPLOYEES_REJECTED'
@@ -120,8 +121,9 @@ export function deleteEmployee(id, organizationId) {
         history.pushState(
           null,
           null,
-          `/organizations/${organizationId}`
+          `/#/organizations/${organizationId}`
         );
+        window.location.reload();
       })
       .catch((error) => {
         return error;
