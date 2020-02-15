@@ -11,7 +11,7 @@ class EditResearch extends React.Component {
         super(props);
         this.state = {
             errors: '',
-            researchId: props.params.id
+            researchId: props.match.params.id
         };
         this.handleSubmit = this.handleSubmit.bind(this);
     }
@@ -119,7 +119,7 @@ class EditResearch extends React.Component {
 
 EditResearch.propTypes = {
     dispatch: PropTypes.func.isRequired,
-    params: PropTypes.object.isRequired,
+    match: PropTypes.object.isRequired,
     periods: PropTypes.array.isRequired
 };
 

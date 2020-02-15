@@ -1,8 +1,10 @@
 import React, {Component} from 'react';
-import {logoutUser} from '../../actions/userActions';
 import {connect} from 'react-redux';
+import {Link} from 'react-router-dom';
 import PropTypes from 'prop-types';
-import {Nav, NavItem, NavLink} from 'reactstrap';
+
+import {logoutUser} from '../../actions/userActions';
+import {Nav, NavItem} from 'reactstrap';
 
 class Sidebar extends Component {
     logout(event) {
@@ -23,38 +25,38 @@ class Sidebar extends Component {
             navItems =
                 <Nav>
                     <NavItem>
-                        <NavLink href="#/organizations" className={organizationsClass}>
+                        <Link to={'/organizations'} className={organizationsClass}>
                             <i className="fa fa-building-o" aria-hidden="true"/>Объекты
-                        </NavLink>
+                        </Link>
                     </NavItem>
                     <NavItem>
-                        <NavLink href="#/employees" className={employeesClass}>
+                        <Link to={'/employees'} className={employeesClass}>
                             <i className="fa fa-users" aria-hidden="true"/>Сотрудники
-                        </NavLink>
+                        </Link>
                     </NavItem>
                     <NavItem>
-                        <NavLink href="#/hospitals" className={hospitalsClass}>
+                        <Link to={'/hospitals'} className={hospitalsClass}>
                             <i className="fa fa-stethoscope" aria-hidden="true"/>Медицинские центры
-                        </NavLink>
+                        </Link>
                     </NavItem>
                     <NavItem>
-                        <NavLink href="#/researches" className={researchesClass}>
+                        <Link to={'/researches'} className={researchesClass}>
                             <i className="fa fa-heartbeat" aria-hidden="true"/>Исследования
-                        </NavLink>
+                        </Link>
                     </NavItem>
                     <NavItem>
-                        <NavLink href="#" onClick={this.logout.bind(this)}>
+                        <Link to={'#'} onClick={this.logout.bind(this)}>
                             <i className="fa fa-lock" aria-hidden="true"/>Выход
-                        </NavLink>
+                        </Link>
                     </NavItem>
                 </Nav>;
         } else {
             navItems =
                 <Nav>
                     <NavItem>
-                        <NavLink href="/#/login">
+                        <Link to={'/login'}>
                             <i className="fa fa-lock" aria-hidden="true"/>Вход
-                        </NavLink>
+                        </Link>
                     </NavItem>
                 </Nav>;
         }

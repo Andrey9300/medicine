@@ -16,7 +16,7 @@ export class EmployeesList extends React.Component {
                         Cотрудников нет
                     </CardHeader>
                     <CardBlock className="card-body">
-                        <Link to={'employees'}>
+                        <Link to={'/employees'}>
                             Перейти ко всем сотрудникам
                         </Link>
                     </CardBlock>
@@ -53,7 +53,7 @@ export class EmployeesList extends React.Component {
                                 return (
                                     <tr key={employee.id}>
                                         <td>
-                                            <Link to={`employees/${employee.id}`}>
+                                            <Link to={`/employees/${employee.id}`}>
                                                 {employee.fio}
                                             </Link>
                                         </td>
@@ -83,7 +83,7 @@ export class EmployeesList extends React.Component {
                                             {(() => {
                                                 if (employee.researches_ends.length || employee.researches_expired.length) {
                                                     return (
-                                                        <Link to={`employees/print/${employee.id}`}
+                                                        <Link to={`/employees/print/${employee.id}`}
                                                             className="btn btn-secondary btn-sm pull-left">
                                                         Направление
                                                         </Link>

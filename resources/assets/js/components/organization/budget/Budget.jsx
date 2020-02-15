@@ -11,7 +11,7 @@ class Budget extends React.Component {
         super(props);
         this.state = {
             errors: '',
-            organizationId: props.params.id
+            organizationId: props.match.params.id
         };
     }
 
@@ -68,7 +68,7 @@ class Budget extends React.Component {
                                         </tr>
                                         <tr>
                                             <td>
-                                                <Link to={`organizations/edit/${organization.id}`}
+                                                <Link to={`/organizations/edit/${organization.id}`}
                                                       className="btn btn-success btn-xs pull-left">Редактировать
                                                 </Link>
                                             </td>
@@ -106,7 +106,7 @@ class Budget extends React.Component {
 
 Budget.propTypes = {
     dispatch: PropTypes.func.isRequired,
-    params: PropTypes.object.isRequired,
+    match: PropTypes.object.isRequired,
     router: PropTypes.object.isRequired
 };
 

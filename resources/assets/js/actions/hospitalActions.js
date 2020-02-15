@@ -57,7 +57,7 @@ export function fetchHospitals() {
                 });
             })
             .catch((error) => {
-                history.replace(null, null, 'login');
+                history.replaceState(null, null, 'login');
                 dispatch({
                     payload: error,
                     type: 'HOSPITALS_REJECTED'
@@ -82,7 +82,7 @@ export function fetchHospital(id) {
                 });
             })
             .catch((error) => {
-                history.replace(null, null, 'login');
+                history.replaceState(null, null, 'login');
                 dispatch({
                     payload: error,
                     type: 'HOSPITAL_REJECTED'

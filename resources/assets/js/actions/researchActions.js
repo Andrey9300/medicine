@@ -39,7 +39,7 @@ export function fetchUserResearches() {
                 });
             })
             .catch((error) => {
-                history.replace(null, null, 'login');
+                history.replaceState(null, null, 'login');
                 dispatch({
                     payload: error,
                     type: 'USER_RESEARCHES_REJECTED'

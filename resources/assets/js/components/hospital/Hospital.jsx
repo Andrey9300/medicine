@@ -11,7 +11,7 @@ class Hospital extends React.Component {
         super(props);
         this.state = {
             errors: '',
-            hospitalId: props.params.id
+            hospitalId: props.match.params.id
         };
         this.handleBtnDelete = this.handleBtnDelete.bind(this);
     }
@@ -50,7 +50,7 @@ class Hospital extends React.Component {
 
         if (user && user.role === 'admin') {
             linkEdit =
-                <Link to={`hospitals/edit/${hospital.id}`} style={{marginLeft: '18px'}}>
+                <Link to={`/hospitals/edit/${hospital.id}`} style={{marginLeft: '18px'}}>
                     <i className="fa fa-pencil"/>
                 </Link>;
             buttonDelete =
@@ -108,7 +108,7 @@ class Hospital extends React.Component {
 
 Hospital.propTypes = {
     dispatch: PropTypes.func.isRequired,
-    params: PropTypes.object.isRequired
+    match: PropTypes.object.isRequired
 };
 
 const mapStateToProps = (state) => {

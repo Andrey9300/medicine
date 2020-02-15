@@ -47,7 +47,7 @@ class Researches extends React.Component {
                                     Исследований нет
                                 </CardHeader>
                                 <CardBlock>
-                                    <Link to={'organizations/create'}>
+                                    <Link to={'/organizations/create'}>
                                         Добавьте организацию
                                     </Link>
                                     <p>На основе категорий организаций будут сформированы необходимые исследования</p>

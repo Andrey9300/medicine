@@ -39,7 +39,6 @@ import {Main} from './components/main/Main';
 
 import EmployeeResearches from './components/employee/research/EmployeeResearches';
 
-import {Layout} from './components/Layout';
 import {Provider} from 'react-redux';
 import store from './store';
 import Header from './components/includes/Header';
@@ -56,37 +55,37 @@ ReactDOM.render(
                 <div className="app-body">
                     <Sidebar location={location}/>
                     <main className="main">
-                        <Route path="/main" component = { Main }/>
-                        <Route path="/login" component = { Login }/>
-                        <Route path="/registration" component = { Registration }/>
-                        <Route path="/restorePassword" component = { RestorePassword }/>
-                        <Route path="/resetPassword" component = { ResetPassword }/>
-                        <Route path="/activateAccount" component = { ActivateAccount }/>
+                        <Route exact path="/main" component={(props) => <Main {...props} />}/>
+                        <Route exact path="/login" component={(props) => <Login {...props} />}/>
+                        <Route exact path="/registration" component={(props) => <Registration {...props} />}/>
+                        <Route exact path="/restorePassword" component={(props) => <RestorePassword {...props} />}/>
+                        <Route exact path="/resetPassword" component={(props) => <ResetPassword {...props} />}/>
+                        <Route exact path="/activateAccount" component={(props) => <ActivateAccount {...props} />}/>
 
-                        <Route path="/hospitals" component={Hospitals}/>
-                        <Route path="/hospitals/create" component = { NewHospital }/>
-                        <Route path="/hospitals/:id" component = { Hospital }/>
-                        <Route path="/hospitals/edit/:id" component = { EditHospital }/>
-                        <Route path="/hospitals/researches/:idHospital" component = { HospitalResearches }/>
+                        <Route exact path="/hospitals" component={(props) => <Hospitals {...props} />}/>
+                        <Route exact path="/hospitals/create" component={(props) => <NewHospital {...props} />}/>
+                        <Route exact path="/hospitals/:id" component={(props) => <Hospital {...props} />}/>
+                        <Route exact path="/hospitals/edit/:id" component={(props) => <EditHospital {...props} />}/>
+                        <Route exact path="/hospitals/researches/:idHospital" component={(props) => <HospitalResearches {...props} />}/>
 
-                        <Route path="/organizations" component = { Organizations }/>
-                        <Route path="/organizations/create" component = { NewOrganization }/>
-                        <Route path="/organizations/employees/:idOrganization" component = { OrganizationEmployees }/>
-                        <Route path="/organizations/budget/:idOrganization" component = { OrganizationBudget }/>
-                        <Route path="/organizations/edit/:id" component = { EditOrganization }/>
-                        <Route path="/organizations/:id" component = { Organization }/>
+                        <Route exact path="/organizations" component={(props) => <Organizations {...props} />}/>
+                        <Route exact path="/organizations/create" component={(props) => <NewOrganization {...props} />}/>
+                        <Route exact path="/organizations/employees/:idOrganization" component={(props) => <OrganizationEmployees {...props} />}/>
+                        <Route exact path="/organizations/budget/:idOrganization" component={(props) => <OrganizationBudget {...props} />}/>
+                        <Route exact path="/organizations/edit/:id" component={(props) => <EditOrganization {...props} />}/>
+                        <Route exact path="/organizations/:id" component={(props) => <Organization {...props} />}/>
 
-                        <Route path="/researches" component = { Researches }/>
-                        <Route path="/researches/create" component = { NewResearch }/>
-                        <Route path="/researches/edit/:id" component = { EditResearch }/>
+                        <Route exact path="/researches" component={(props) => <Researches {...props} />}/>
+                        <Route exact path="/researches/create" component={(props) => <NewResearch {...props} />}/>
+                        <Route exact path="/researches/edit/:id" component={(props) => <EditResearch {...props} />}/>
 
-                        <Route path="/employees" component = { Employees }/>
-                        <Route path="/employeesDeleted" component = { EmployeesDeleted }/>
-                        <Route path="/employees/create" component = { NewEmployee }/>
-                        <Route path="/employees/:id" component = { Employee }/>
-                        <Route path="/employees/edit/:id" component = { EditEmployee }/>
-                        <Route path="/employees/print/:id" component = { PrintEmployee }/>
-                        <Route path="/employees/researches/:idEmployee" component = { EmployeeResearches }/>
+                        <Route exact path="/employees" component={(props) => <Employees {...props} />}/>
+                        <Route exact path="/employeesDeleted" component={(props) => <EmployeesDeleted {...props} />}/>
+                        <Route exact path="/employees/create" component={(props) => <NewEmployee {...props} />}/>
+                        <Route exact path="/employees/:id" component={(props) => <Employee {...props} />}/>
+                        <Route exact path="/employees/edit/:id" component={(props) => <EditEmployee {...props} />}/>
+                        <Route exact path="/employees/print/:id" component={(props) => <PrintEmployee {...props} />}/>
+                        <Route exact path="/employees/researches/:idEmployee" component={(props) => <EmployeeResearches {...props} />}/>
                     </main>
                 </div>
                 <Footer />

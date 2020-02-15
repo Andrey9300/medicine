@@ -10,7 +10,7 @@ class EditHospital extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            hospitalId: props.params.id
+            hospitalId: props.match.params.id
         };
         this.handleSubmit = this.handleSubmit.bind(this);
     }
@@ -135,7 +135,7 @@ class EditHospital extends React.Component {
 
 EditHospital.propTypes = {
     dispatch: PropTypes.func.isRequired,
-    params: PropTypes.object.isRequired,
+    match: PropTypes.object.isRequired,
     router: PropTypes.object.isRequired
 };
 

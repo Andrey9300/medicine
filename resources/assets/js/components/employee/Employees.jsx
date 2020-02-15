@@ -34,7 +34,7 @@ class Employees extends React.Component {
                         <Col xs="12" lg="12">
                             <Card>
                                 <CardHeader>
-                                    <Link to={'employeesDeleted'}>
+                                    <Link to={'/employeesDeleted'}>
                                         Уволенные сотрудники
                                     </Link>
                                 </CardHeader>

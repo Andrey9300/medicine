@@ -11,7 +11,7 @@ class PrintEmployee extends React.Component {
         super(props);
         this.state = {
             errors: '',
-            employeeId: props.params.id
+            employeeId: props.match.params.id
         };
     }
 
@@ -72,7 +72,7 @@ class PrintEmployee extends React.Component {
                         <Col xs="12" sm="12" md="12">
                             <Card>
                                 <CardHeader className="d-print-none" onClick={window.print}>
-                                    <Link className="btn btn-primary btn-sm pull-left" style={{color: "#fff"}}>
+                                    <Link to="#" className="btn btn-primary btn-sm pull-left" style={{color: "#fff"}}>
                                         Печать <i className="icon-printer"/>
                                     </Link>
                                 </CardHeader>

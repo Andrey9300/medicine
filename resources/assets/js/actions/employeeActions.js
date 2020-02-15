@@ -55,7 +55,7 @@ export function fetchEmployees(legalEntityId = null) {
                 });
             })
             .catch((error) => {
-                // history.replace(null, null, 'login');
+                // history.replaceState(null, null, 'login');
                 dispatch({
                     payload: error,
                     type: 'EMPLOYEES_REJECTED'

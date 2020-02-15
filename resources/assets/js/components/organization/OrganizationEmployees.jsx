@@ -10,7 +10,7 @@ class OrganizationEmployee extends React.Component {
         super(props);
 
         this.state = {
-            organizationId: props.params.idOrganization
+            organizationId: props.match.params.idOrganization
         };
     }
 
@@ -48,9 +48,9 @@ class OrganizationEmployee extends React.Component {
 }
 
 OrganizationEmployee.propTypes = {
-    dispatch: PropTypes.func.isRequired,
-    params: PropTypes.object.isRequired,
-    router: PropTypes.object.isRequired
+    dispatch: PropTypes.func,
+    match: PropTypes.object,
+    router: PropTypes.object
 };
 
 const mapStateToProps = (state) => {

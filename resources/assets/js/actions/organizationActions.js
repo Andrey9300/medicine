@@ -45,7 +45,7 @@ export function fetchOrganizations() {
                 });
             })
             .catch((error) => {
-                history.replace(null, null, 'login');
+                history.replaceState(null, null, 'login');
 
                 dispatch({
                     payload: error,
@@ -72,7 +72,7 @@ export function fetchExpiredOrganizations(legalEntityId = null) {
                 });
             })
             .catch((error) => {
-                history.replace(null, null, 'login');
+                history.replaceState(null, null, 'login');
 
                 dispatch({
                     payload: error,

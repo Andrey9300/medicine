@@ -11,7 +11,7 @@ class EditOrganization extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            organizationId: props.params.id
+            organizationId: props.match.params.id
         };
         this.handleSubmit = this.handleSubmit.bind(this);
     }
@@ -100,7 +100,7 @@ class EditOrganization extends React.Component {
 
 EditOrganization.propTypes = {
     dispatch: PropTypes.func.isRequired,
-    params: PropTypes.object.isRequired,
+    match: PropTypes.object.isRequired,
     router: PropTypes.object.isRequired,
     errors: PropTypes.array,
     categories: PropTypes.array,

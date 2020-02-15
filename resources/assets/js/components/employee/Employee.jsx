@@ -10,7 +10,7 @@ class Employee extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            employeeId: props.params.id,
+            employeeId: props.match.params.id,
             errors: ''
         };
         this.handleBtnDelete = this.handleBtnDelete.bind(this);
@@ -49,7 +49,7 @@ class Employee extends React.Component {
 
         if (user && user.role === 'admin') {
             linkEdit =
-                <Link to={`employees/edit/${employee.id}`} style={{marginLeft: '18px'}}>
+                <Link to={`/employees/edit/${employee.id}`} style={{marginLeft: '18px'}}>
                     <i className="fa fa-pencil"/>
                 </Link>;
             buttonDelete =
@@ -128,7 +128,7 @@ class Employee extends React.Component {
 
 Employee.propTypes = {
     dispatch: PropTypes.func.isRequired,
-    params: PropTypes.object.isRequired,
+    match: PropTypes.object.isRequired,
     user: PropTypes.object,
     employee: PropTypes.object
 };

@@ -11,7 +11,7 @@ class EditEmployee extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            employeeId: props.params.id
+            employeeId: props.match.params.id
         };
         this.handleSubmit = this.handleSubmit.bind(this);
     }
@@ -138,7 +138,7 @@ class EditEmployee extends React.Component {
 
 EditEmployee.propTypes = {
     dispatch: PropTypes.func.isRequired,
-    params: PropTypes.object.isRequired,
+    match: PropTypes.object.isRequired,
     router: PropTypes.object.isRequired
 };
 

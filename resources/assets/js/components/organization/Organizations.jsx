@@ -24,7 +24,7 @@ class Organizations extends React.Component {
                                     Организаций нет
                                 </CardHeader>
                                 <CardBlock>
-                                    <Link to={'organizations/create'}>
+                                    <Link to={'/organizations/create'}>
                                         Добавить организацию
                                     </Link>
                                 </CardBlock>
@@ -37,7 +37,7 @@ class Organizations extends React.Component {
 
         if (user && user.role === 'admin') {
             linkAdd =
-                <Link to="organizations/create" className="btn btn-primary btn-sm pull-right">
+                <Link to={'/organizations/create'} className="btn btn-primary btn-sm pull-right">
                     Добавить <i className="icon-plus"/>
                 </Link>;
         }
@@ -67,14 +67,14 @@ class Organizations extends React.Component {
                                         return (
                                             <tr key={organization.id}>
                                                 <td>
-                                                    <Link to={`organizations/${organization.id}`}>
+                                                    <Link to={`/organizations/${organization.id}`}>
                                                         {organization.name}
                                                     </Link>
                                                 </td>
                                                 <td>{organization.head_fio}</td>
                                                 <td>{organization.head_email}</td>
                                                 <td>
-                                                    <Link to={`organizations/employees/${organization.id}`}
+                                                    <Link to={`/organizations/employees/${organization.id}`}
                                                           className="btn btn-info btn-xs pull-left">Сотрудники
                                                         <i className="glyphicon glyphicon-pencil"/>
                                                     </Link>

@@ -10,8 +10,14 @@ export function loginUser(formElement = null) {
     return (dispatch) => {
         axios.post('/login', new FormData(formElement))
             .then(() => {
-                history.pushState(null, null, '/organizations');
-                window.location.reload();
+                dispatch({
+                    payload: {
+                        isAuthenticated: true
+                    },
+                    type: 'LOGIN_USER_FULFILLED'
+                });
+                history.pushState(null, null, '/#/organizations');
+                // window.location.reload();
             })
             .catch((errors) => {
                 dispatch({
@@ -37,7 +43,7 @@ export function logoutUser() {
                     },
                     type: 'LOGOUT_USER_FULFILLED'
                 });
-                history.replace(null, null, '/login');
+                history.replaceState(null, null, '/#/login');
                 window.location.reload();
             })
             .catch((error) => {
@@ -60,7 +66,7 @@ export function registrationUser(formElement = null) {
         axios.post('/register', new FormData(formElement))
             .then(() => {
                 alert('Вам отправлен email для активации аккаунта');
-                history.replace(null, null, '/login');
+                history.replaceState(null, null, '/#/login');
             })
             .catch((errors) => {
                 dispatch({
@@ -128,7 +134,7 @@ export function deleteUser(id) {
     return () => {
         axios.post(`/users/destroy/${id}`)
             .then(() => {
-                history.pushState(null, null, '/users');
+                history.pushState(null, null, '/#/users');
             })
             .catch((error) => {
                 return error;

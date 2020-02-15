@@ -11,7 +11,7 @@ class Organization extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            organizationId: props.params.id
+            organizationId: props.match.params.id
         };
     }
 
@@ -36,7 +36,7 @@ class Organization extends React.Component {
 
         if (user && user.role === 'admin') {
             linkEdit =
-                <Link to={`organizations/edit/${organization.id}`} style={{marginLeft: '18px'}}>
+                <Link to={`/organizations/edit/${organization.id}`} style={{marginLeft: '18px'}}>
                     <i className="fa fa-pencil"/>
                 </Link>;
             buttonDelete =
@@ -110,7 +110,7 @@ class Organization extends React.Component {
                                     <tr>
                                         <td>Вы контролируете медицинские осмотры:</td>
                                         <td>
-                                            <Link to={`organizations/employees/${organization.id}`}>
+                                            <Link to={`/organizations/employees/${organization.id}`}>
                                                 {organization.employees.length} чел.
                                             </Link>
                                         </td>
@@ -118,7 +118,7 @@ class Organization extends React.Component {
                                     <tr>
                                         <td>Просрочен медицинский осмотр:</td>
                                         <td>
-                                            <Link to={`organizations/expiredEmployees/${organization.id}`}>
+                                            <Link to={`/organizations/expiredEmployees/${organization.id}`}>
                                                 {researchesExpired} чел.
                                             </Link>
                                         </td>
@@ -127,7 +127,7 @@ class Organization extends React.Component {
                                         <td>В следующем месяца нужно направить на
                                             медицинский осмотр:</td>
                                         <td>
-                                            <Link to={`organizations/endsEmployees/${organization.id}`}>
+                                            <Link to={`/organizations/endsEmployees/${organization.id}`}>
                                                 {researchesEnds} чел.
                                             </Link>
                                         </td>
@@ -150,7 +150,7 @@ class Organization extends React.Component {
                                             составляет (с учетом указанных цен в мед учреждении)
                                         </td>
                                         <td>
-                                            <Link>
+                                            <Link to="#">
                                                 {organization.totalSumForResearches}&nbsp;
                                                 <i className="fa fa-rub" aria-hidden="true"/>
                                             </Link>
@@ -159,7 +159,7 @@ class Organization extends React.Component {
                                     <tr>
                                         <td>В прошлом месяце израсходовано</td>
                                         <td>
-                                            <Link>
+                                            <Link to="#">
                                                 {organization.totalSumForCompletedResearches}&nbsp;
                                                 <i className="fa fa-rub" aria-hidden="true"/>
                                             </Link>
@@ -181,7 +181,7 @@ class Organization extends React.Component {
                                         return (
                                             <tr key={hospital.id}>
                                                 <td>
-                                                    <Link to={`hospitals/${hospital.id}`}>
+                                                    <Link to={`/hospitals/${hospital.id}`}>
                                                         {hospital.name}
                                                     </Link>
                                                 </td>
@@ -212,8 +212,7 @@ class Organization extends React.Component {
 
 Organization.propTypes = {
     dispatch: PropTypes.func.isRequired,
-    params: PropTypes.object.isRequired,
-    router: PropTypes.object.isRequired
+    match: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = (state) => {

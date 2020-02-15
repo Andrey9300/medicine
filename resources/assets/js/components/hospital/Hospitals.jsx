@@ -33,7 +33,7 @@ class Hospitals extends React.Component {
                                     Медицинских центров нет
                                 </CardHeader>
                                 <CardBlock>
-                                    <Link to={'hospitals/create'}>
+                                    <Link to={'/hospitals/create'}>
                                         Добавить медицинский центр
                                     </Link>
                                 </CardBlock>
@@ -77,7 +77,7 @@ class Hospitals extends React.Component {
                                         return (
                                             <tr key={hospital.id}>
                                                 <td>
-                                                    <Link to={`hospitals/${hospital.id}`}>
+                                                    <Link to={`/hospitals/${hospital.id}`}>
                                                         {hospital.name}
                                                     </Link>
                                                 </td>
