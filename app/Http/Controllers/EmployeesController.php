@@ -215,9 +215,11 @@ class EmployeesController extends Controller
         $employeeResearches = $request->employeeResearch;
 
         foreach ($employeeResearches as $key => $date) {
-            if ($date) {
-                $date = Carbon::createFromFormat('d-m-Y', $date)->format('Y-m-d');
+            if (!$date) {
+                return null;
             }
+
+            $date = Carbon::createFromFormat('d-m-Y', $date)->format('Y-m-d');
 
             EmployeeResearch::updateOrCreate(
                 ['user_researches_id' => $key, 'employee_id' => $id],

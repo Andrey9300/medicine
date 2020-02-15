@@ -11,8 +11,7 @@ class Organizations extends React.Component {
   }
 
   render() {
-    const {user, organizations} = this.props;
-    let linkAdd = null;
+    const {organizations} = this.props;
 
     if (!organizations) {
       return (
@@ -20,26 +19,15 @@ class Organizations extends React.Component {
           <Row>
             <Col xs="12" sm="6" md="4">
               <Card className="text-center">
-                <CardHeader>
-                                    Организаций нет
-                </CardHeader>
+                <CardHeader>Организаций нет</CardHeader>
                 <CardBlock>
-                  <Link to={'/organizations/create'}>
-                                        Добавить организацию
-                  </Link>
+                  <Link to={'/organizations/create'}>Добавить организацию</Link>
                 </CardBlock>
               </Card>
             </Col>
           </Row>
         </div>
       );
-    }
-
-    if (user && user.role === 'admin') {
-      linkAdd =
-                <Link to={'/organizations/create'} className="btn btn-primary btn-sm pull-right">
-                    Добавить <i className="icon-plus"/>
-                </Link>;
     }
 
     return (
@@ -50,7 +38,9 @@ class Organizations extends React.Component {
               <CardHeader>
                 <i className="fa fa-building-o" aria-hidden="true"/>Объекты
                                 ({organizations.length})
-                {linkAdd}
+                <Link to={'/organizations/create'} className="btn btn-primary btn-sm pull-right">
+                  Добавить <i className="icon-plus"/>
+                </Link>
               </CardHeader>
               <CardBlock className="card-body">
                 <Table responsive>
@@ -101,7 +91,6 @@ Organizations.propTypes = {
 
 const mapStateToProps = (state) => {
   return {
-    user: state.users.user,
     organizations: state.organizations.organizations
   };
 };

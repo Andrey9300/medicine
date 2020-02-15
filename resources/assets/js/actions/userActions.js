@@ -24,7 +24,7 @@ export function loginUser(formElement = null) {
           null,
           '/#/organizations'
         );
-        // Window.location.reload();
+        window.location.reload();
       })
       .catch((errors) => {
         dispatch({
@@ -50,7 +50,7 @@ export function logoutUser() {
           },
           type: 'LOGOUT_USER_FULFILLED'
         });
-        history.replaceState(
+        history.pushState(
           null,
           null,
           '/#/login'
@@ -85,6 +85,7 @@ export function registrationUser(formElement = null) {
           null,
           '/#/login'
         );
+        window.location.reload();
       })
       .catch((errors) => {
         dispatch({

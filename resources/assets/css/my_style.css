@@ -15,3 +15,9 @@ ul#main_nav li{
 .pull-right{
     cursor: pointer;
 }
+.sidebar > .nav-item {
+    margin: 10px 20px;
+}
+.sidebar > .nav-item > a {
+    color: white;
+}

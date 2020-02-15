@@ -1,42 +1,32 @@
 import {Link} from 'react-router-dom';
 import React from 'react';
-import {Row, Col, Card, CardHeader, CardBlock, CardFooter, Table} from 'reactstrap';
+import {Card, CardHeader, CardBlock, CardFooter, Table} from 'reactstrap';
 import PropTypes from 'prop-types';
 
 export class EmployeesList extends React.Component {
   render() {
-    const {employees, user, title} = this.props;
-    let addButton = null;
+    const {employees, title} = this.props;
 
     if (!employees || !employees.length) {
       return (
         <Card>
           <CardHeader>
-            <i className="fa fa-users" aria-hidden="true"/>
-                        Cотрудников нет
+            <i className="fa fa-users" aria-hidden="true"/>Cотрудников нет
           </CardHeader>
           <CardBlock className="card-body">
-            <Link to={'/employees'}>
-                            Перейти ко всем сотрудникам
-            </Link>
+            <Link to={'/employees'}>Перейти ко всем сотрудникам</Link>
           </CardBlock>
         </Card>
       );
     }
 
-    if (user && user.role === 'admin') {
-      addButton =
-                <Link to="employees/create" className="btn btn-primary btn-sm pull-right">
-                    Добавить <i className="icon-plus"/>
-                </Link>;
-    }
-
     return (
       <Card>
         <CardHeader>
-          <i className="fa fa-users" aria-hidden="true"/>{title}
-                    ({employees.length})
-          {addButton}
+          <i className="fa fa-users" aria-hidden="true"/>{title} ({employees.length})
+          <Link to="/employees/create" className="btn btn-primary btn-sm pull-right">
+            Добавить <i className="icon-plus"/>
+          </Link>
         </CardHeader>
         <CardBlock className="card-body">
           <Table responsive>
@@ -101,7 +91,9 @@ export class EmployeesList extends React.Component {
           </Table>
         </CardBlock>
         <CardFooter>
-          {addButton}
+          <Link to="/employees/create" className="btn btn-primary btn-sm pull-right">
+            Добавить <i className="icon-plus"/>
+          </Link>
         </CardFooter>
       </Card>
     );

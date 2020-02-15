@@ -10,7 +10,7 @@ export function addHospital(formElement = null) {
         history.pushState(
           null,
           null,
-          'hospitals'
+          '/#/hospitals'
         );
       })
       .catch((error) => {

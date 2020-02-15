@@ -31,7 +31,7 @@ class Registration extends Component {
     history.pushState(
       null,
       null,
-      'login'
+      '/#/login'
     );
   }
 
@@ -91,9 +91,7 @@ class Registration extends Component {
                       <Button color="success" block disabled={this.state.doubleClick}>
                                                 Создать аккаунт
                       </Button>
-                      <Button color="primary" block onClick={this.handleLogin}>
-                                                Уже есть аккаунт
-                      </Button>
+                      <Button color="primary" block onClick={this.handleLogin}>Уже есть аккаунт</Button>
                     </Form>
                   </CardBlock>
                 </Card>
@@ -107,7 +105,8 @@ class Registration extends Component {
 }
 
 Registration.propTypes = {
-  dispatch: PropTypes.func.isRequired
+  dispatch: PropTypes.func.isRequired,
+  errors: PropTypes.func
 };
 
 const mapStateToProps = (state) => {

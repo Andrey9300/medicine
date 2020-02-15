@@ -5,9 +5,13 @@ import promise from 'redux-promise';
 import reducer from './reducers';
 import thunk from 'redux-thunk';
 import {redirect} from './middlewares/redirect';
+import {loadState, saveState} from './utils/localstorage';
 
-export default createStore(
+const persistedState = loadState();
+
+export const store = createStore(
   reducer,
+  persistedState,
   composeWithDevTools(applyMiddleware(
     thunk,
     promise,
@@ -15,3 +19,9 @@ export default createStore(
     redirect
   ))
 );
+
+store.subscribe(() => {
+  saveState({
+    users: store.getState().users
+  });
+});

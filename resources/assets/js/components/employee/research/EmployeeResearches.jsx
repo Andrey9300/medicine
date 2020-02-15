@@ -18,6 +18,7 @@ class EmployeeResearches extends React.Component {
   }
 
   handleClick() {
+    // TODO: валидация на клиенте
     this.props.dispatch(addEmployeeResearches(
       document.querySelector('form'),
       this.state.employeeId

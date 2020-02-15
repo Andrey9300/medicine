@@ -33,8 +33,7 @@ class Researches extends React.Component {
   }
 
   render() {
-    const {user, userResearches, errors} = this.props;
-    let buttonSave = '';
+    const {errors, userResearches} = this.props;
     let errorsMessage = '';
 
     if (userResearches === null) {
@@ -43,13 +42,9 @@ class Researches extends React.Component {
           <Row>
             <Col xs="12" sm="6" md="4">
               <Card className="text-center">
-                <CardHeader>
-                                    Исследований нет
-                </CardHeader>
+                <CardHeader>Исследований нет</CardHeader>
                 <CardBlock>
-                  <Link to={'/organizations/create'}>
-                                        Добавьте организацию
-                  </Link>
+                  <Link to={'/organizations/create'}>Добавьте организацию</Link>
                   <p>На основе категорий организаций будут сформированы необходимые исследования</p>
                 </CardBlock>
               </Card>
@@ -59,18 +54,11 @@ class Researches extends React.Component {
       );
     }
 
-    if (user && user.role === 'admin') {
-      buttonSave =
-                <Button type="submit" size="sm" color="success pull-right" onClick={this.handleClick}>
-                  <i className="fa fa-dot-circle-o"/> Сохранить
-                </Button>;
-    }
-
     if (errors) {
       errorsMessage =
-                <div className="alert alert-danger" role="alert">
-                  <div dangerouslySetInnerHTML={this.createMarkup()} />
-                </div>;
+        <div className="alert alert-danger" role="alert">
+          <div dangerouslySetInnerHTML={this.createMarkup()} />
+        </div>;
     }
 
     return (
@@ -80,9 +68,10 @@ class Researches extends React.Component {
           <Col xs="12" md="12" lg="8">
             <Card>
               <CardHeader>
-                <i className="fa fa-heartbeat" aria-hidden="true"/>Исследования
-                                ({userResearches.length})
-                {buttonSave}
+                <i className="fa fa-heartbeat" aria-hidden="true"/>Исследования ({userResearches.length})
+                <Button type="submit" size="sm" color="success pull-right" onClick={this.handleClick}>
+                  <i className="fa fa-dot-circle-o"/> Сохранить
+                </Button>
               </CardHeader>
               <CardBlock className="card-body">
                 <Form>
@@ -96,21 +85,10 @@ class Researches extends React.Component {
                     </thead>
                     <tbody>
                       {userResearches.map((research) => {
-                        let researchCheckBox = '';
+                        let check = '';
 
-                        if (user && user.role === 'admin') {
-                          let check = '';
-
-                          if (research.check) {
-                            check = 'checked';
-                          }
-
-                          researchCheckBox =
-                                                        <Input type="checkbox"
-                                                          name={`research[${research.id}]`}
-                                                          defaultChecked={check}
-                                                          value={research.id}
-                                                        />;
+                        if (research.check) {
+                          check = 'checked';
                         }
 
                         return (
@@ -118,7 +96,12 @@ class Researches extends React.Component {
                             <td>{research.category.name}</td>
                             <td>{research.research.name}</td>
                             <td>
-                              {researchCheckBox}
+                              <Input
+                                type="checkbox"
+                                name={`research[${research.id}]`}
+                                defaultChecked={check}
+                                value={research.id}
+                              />
                             </td>
                           </tr>
                         );
@@ -129,7 +112,9 @@ class Researches extends React.Component {
                 </Form>
               </CardBlock>
               <CardFooter>
-                {buttonSave}
+                <Button type="submit" size="sm" color="success pull-right" onClick={this.handleClick}>
+                  <i className="fa fa-dot-circle-o"/> Сохранить
+                </Button>
               </CardFooter>
             </Card>
           </Col>
@@ -142,14 +127,13 @@ class Researches extends React.Component {
 Researches.propTypes = {
   dispatch: PropTypes.func.isRequired,
   userResearches: PropTypes.array.isRequired,
-  user: PropTypes.object
+  errors: PropTypes.array,
 };
 
 const mapStateToProps = (state) => {
   return {
     errors: state.researches.errors,
     userResearches: state.researches.userResearches,
-    user: state.users.user
   };
 };
 

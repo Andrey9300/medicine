@@ -25,18 +25,7 @@ class HospitalResearches extends React.Component {
   }
 
   render() {
-    const {user, hospitalResearches} = this.props;
-    let buttonSave = null;
-    let readOnly = null;
-
-    if (user && user.role === 'admin') {
-      buttonSave =
-                <Button type="submit" size="sm" color="success pull-right" onClick={this.handleClick}>
-                  <i className="fa fa-dot-circle-o"/> Сохранить
-                </Button>;
-    } else {
-      readOnly = 'readOnly';
-    }
+    const {hospitalResearches} = this.props;
 
     return (
       <div className="animated fadeIn">
@@ -44,9 +33,10 @@ class HospitalResearches extends React.Component {
           <Col xs="12" md="12" lg="8">
             <Card>
               <CardHeader>
-                <i className="fa fa-heartbeat" aria-hidden="true"/>Цены на исследования
-                                ({hospitalResearches.length})
-                {buttonSave}
+                <i className="fa fa-heartbeat" aria-hidden="true"/>Цены на исследования ({hospitalResearches.length})
+                <Button type="submit" size="sm" color="success pull-right" onClick={this.handleClick}>
+                  <i className="fa fa-dot-circle-o"/> Сохранить
+                </Button>
               </CardHeader>
               <CardBlock className="card-body">
                 <Form id="hospitalResearch">
@@ -66,7 +56,6 @@ class HospitalResearches extends React.Component {
                               <Input type="text"
                                 name={`hospitalResearch[${research.pivot.id}]`}
                                 defaultValue={research.price}
-                                readOnly={readOnly}
                               />
                             </td>
                           </tr>
@@ -78,7 +67,9 @@ class HospitalResearches extends React.Component {
                 </Form>
               </CardBlock>
               <CardFooter>
-                {buttonSave}
+                <Button type="submit" size="sm" color="success pull-right" onClick={this.handleClick}>
+                  <i className="fa fa-dot-circle-o"/> Сохранить
+                </Button>
               </CardFooter>
             </Card>
           </Col>
@@ -95,7 +86,6 @@ HospitalResearches.propTypes = {
 const mapStateToProps = (state) => {
   return {
     hospitalResearches: state.hospitals.hospitalResearches,
-    user: state.users.user
   };
 };
 

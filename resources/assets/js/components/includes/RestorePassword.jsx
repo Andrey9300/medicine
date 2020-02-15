@@ -29,7 +29,7 @@ class RestorePassword extends Component {
     )
       .then(() => {
         alert('Вам отправлено письмо');
-        // History.pushState(null, null, '/login');
+        window.history.pushState(null, null, '/#/login');
       })
       .catch((error) => {
         if (!error.response.data.errors) {

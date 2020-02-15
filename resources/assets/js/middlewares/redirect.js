@@ -1,10 +1,11 @@
 export const redirect = (store) => (next) => (action) => {
   if (action.payload.response && action.payload.response.status === 401) {
-    history.replaceState(
+    history.pushState(
       null,
       null,
       '/#/login'
     );
+    window.location.reload();
   }
 
   if (action.type === 'ROUTING') {

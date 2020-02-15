@@ -31,6 +31,15 @@ export default function reducer(state = initialState, action) {
         }
       };
     }
+    case 'LOGOUT_USER_FULFILLED': {
+      return {
+        ...state,
+        fetched: false,
+        user: {
+          isAuthenticated: action.payload.isAuthenticated
+        }
+      };
+    }
     case 'LOGOUT_USER_REJECTED': {
       return {
         ...state,

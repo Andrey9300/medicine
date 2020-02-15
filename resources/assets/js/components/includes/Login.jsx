@@ -47,7 +47,7 @@ class Login extends Component {
     let errorsMessage = '';
 
     if (user) {
-      // History.pushState(null, null, 'organizations');
+      window.history.pushState(null, null, '/#/organizations');
     }
 
     if (errors) {
@@ -80,19 +80,14 @@ class Login extends Component {
                         <Col xs="4">
                           <Button disabled={this.state.doubleClick}
                             color="primary"
-                            className="px-4 btn-sm">
-                                                        Войти
+                            className="px-4 btn-sm">Войти
                           </Button>
                         </Col>
                         <Col xs="4" className="text-right">
-                          <Link to="registration" className="btn btn-success btn-sm">
-                                                        Регистрация
-                          </Link>
+                          <Link to="registration" className="btn btn-success btn-sm">Регистрация</Link>
                         </Col>
                         <Col xs="4" className="text-right">
-                          <Link to="restorePassword" className="btn btn-warning btn-sm">
-                                                        Забыли пароль?
-                          </Link>
+                          <Link to="restorePassword" className="btn btn-warning btn-sm">Забыли пароль?</Link>
                         </Col>
                       </Row>
                     </Form>

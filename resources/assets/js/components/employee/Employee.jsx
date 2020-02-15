@@ -35,37 +35,14 @@ class Employee extends React.Component {
   }
 
   render() {
-    const {user, employee} = this.props;
+    const {employee} = this.props;
     let errors = '';
-    let linkEdit = null;
-    let buttonDelete = null;
 
     if (this.state.errors !== '') {
       errors = <div className="alert alert-danger" role="alert">
         <div dangerouslySetInnerHTML={this.createMarkup()} />
       </div>;
     }
-
-    if (!employee) {
-      return null;
-    }
-
-    if (user && user.role === 'admin') {
-      linkEdit =
-                <Link to={`/employees/edit/${employee.id}`} style={{
-                  marginLeft: '18px'
-                }}>
-                  <i className="fa fa-pencil"/>
-                </Link>;
-      buttonDelete =
-                <span className="pull-right" onClick={(event) => this.handleBtnDelete(
-                  employee.id,
-                  event
-                )}>
-                  <i className="fa fa-trash"/> Уволить
-                </span>;
-    }
-
 
     return (
       <div>
@@ -77,8 +54,17 @@ class Employee extends React.Component {
                 <CardHeader>
                   <i className="fa fa-users" aria-hidden="true"/>
                   {employee.fio}
-                  {linkEdit}
-                  {buttonDelete}
+                  <Link to={`/employees/edit/${employee.id}`} style={{
+                    marginLeft: '18px'
+                  }}>
+                    <i className="fa fa-pencil"/>
+                  </Link>
+                  <span className="pull-right" onClick={(event) => this.handleBtnDelete(
+                    employee.id,
+                    event
+                  )}>
+                    <i className="fa fa-trash"/> Уволить
+                  </span>
                 </CardHeader>
                 <CardBlock className="card-body">
                   <Table responsive>

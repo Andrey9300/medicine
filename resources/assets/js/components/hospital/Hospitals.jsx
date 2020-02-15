@@ -20,7 +20,7 @@ class Hospitals extends React.Component {
   }
 
   render() {
-    const {user, hospitals} = this.props;
+    const {hospitals} = this.props;
     let linkAdd = null;
 
     if (!hospitals) {
@@ -29,13 +29,9 @@ class Hospitals extends React.Component {
           <Row>
             <Col xs="12" sm="6" md="4">
               <Card className="text-center">
-                <CardHeader>
-                                    Медицинских центров нет
-                </CardHeader>
+                <CardHeader>Медицинских центров нет</CardHeader>
                 <CardBlock>
-                  <Link to={'/hospitals/create'}>
-                                        Добавить медицинский центр
-                  </Link>
+                  <Link to={'/hospitals/create'}>Добавить медицинский центр</Link>
                 </CardBlock>
               </Card>
             </Col>
@@ -44,11 +40,11 @@ class Hospitals extends React.Component {
       );
     }
     // Пока ограничиваемся одним мед центром
-    if (user && user.role === 'admin' && hospitals.length < 1) {
+    if (hospitals.length < 1) {
       linkAdd =
-                <Link to="hospitals/create" className="btn btn-primary btn-sm pull-right">
-                    Добавить <i className="icon-plus"/>
-                </Link>;
+        <Link to="hospitals/create" className="btn btn-primary btn-sm pull-right">
+            Добавить <i className="icon-plus"/>
+        </Link>;
     }
 
     return (
@@ -57,9 +53,7 @@ class Hospitals extends React.Component {
           <Col xs="12" lg="12">
             <Card>
               <CardHeader>
-                <i className="fa fa-stethoscope" aria-hidden="true"/>
-                                Медицинские центры
-                                ({hospitals.length})
+                <i className="fa fa-stethoscope" aria-hidden="true"/>Медицинские центры ({hospitals.length})
                 {linkAdd}
               </CardHeader>
               <CardBlock className="card-body">
@@ -102,7 +96,6 @@ class Hospitals extends React.Component {
 const mapStateToProps = (state) => {
   return {
     hospitals: state.hospitals.hospitals,
-    user: state.users.user
   };
 };
 
