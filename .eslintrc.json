@@ -37,7 +37,7 @@
     "object-shorthand": [0],
     "no-magic-numbers": [0],
     "sort-keys": [0],
-    "indent": ["error",4,{"SwitchCase":1}],
+    "indent": ["error",2,{"SwitchCase":1}],
     "linebreak-style": ["error", "windows"]
   },
   "plugins": [
@@ -49,7 +49,7 @@
       // Regex for Component Factory to use, default to "createReactClass"
       "pragma": "React",
       // Pragma to use, default to "React"
-      "version": "15.0",
+      "version": "16.0",
       // React version, default to the latest React stable release
       "flowVersion": "0.53"
       // Flow version

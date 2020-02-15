@@ -1,10 +1,10 @@
 const initialState = {
-    errors: null,
-    fetched: false,
-    organization: null,
-    organizations: [],
-    expired: [],
-    organizationEmployees: []
+  errors: null,
+  fetched: false,
+  organization: null,
+  organizations: [],
+  expired: [],
+  organizationEmployees: []
 };
 
 /**
@@ -14,65 +14,65 @@ const initialState = {
  * @returns {*}
  */
 export default function reducer(state = initialState, action) {
-    switch (action.type) {
-        case 'ORGANIZATION_ADD_REJECTED': {
-            return {
-                ...state,
-                errors: action.payload,
-                fetched: false
-            };
-        }
-        case 'ORGANIZATION_EDIT_REJECTED': {
-            return {
-                ...state,
-                errors: action.payload,
-                fetched: false
-            };
-        }
-        case 'ORGANIZATIONS_REJECTED': {
-            return {
-                ...state,
-                errors: action.payload,
-                fetched: false
-            };
-        }
-        case 'ORGANIZATIONS_FULFILLED': {
-            return {
-                ...state,
-                fetched: true,
-                organizations: action.payload.data.organizations
-            };
-        }
-        case 'EXPIRED_ORGANIZATIONS_REJECTED': {
-            return {
-                ...state,
-                errors: action.payload,
-                fetched: false
-            };
-        }
-        case 'EXPIRED_ORGANIZATIONS_FULFILLED': {
-            return {
-                ...state,
-                fetched: true,
-                expired: action.payload.data.expired
-            };
-        }
-        case 'ORGANIZATION_REJECTED': {
-            return {
-                ...state,
-                errors: action.payload,
-                fetched: false
-            };
-        }
-        case 'ORGANIZATION_FULFILLED': {
-            return {
-                ...state,
-                fetched: true,
-                organization: action.payload.data.organization
-            };
-        }
-        default: return {
-            ...state
-        };
+  switch (action.type) {
+    case 'ORGANIZATION_ADD_REJECTED': {
+      return {
+        ...state,
+        errors: action.payload,
+        fetched: false
+      };
     }
+    case 'ORGANIZATION_EDIT_REJECTED': {
+      return {
+        ...state,
+        errors: action.payload,
+        fetched: false
+      };
+    }
+    case 'ORGANIZATIONS_REJECTED': {
+      return {
+        ...state,
+        errors: action.payload,
+        fetched: false
+      };
+    }
+    case 'ORGANIZATIONS_FULFILLED': {
+      return {
+        ...state,
+        fetched: true,
+        organizations: action.payload.data.organizations
+      };
+    }
+    case 'EXPIRED_ORGANIZATIONS_REJECTED': {
+      return {
+        ...state,
+        errors: action.payload,
+        fetched: false
+      };
+    }
+    case 'EXPIRED_ORGANIZATIONS_FULFILLED': {
+      return {
+        ...state,
+        fetched: true,
+        expired: action.payload.data.expired
+      };
+    }
+    case 'ORGANIZATION_REJECTED': {
+      return {
+        ...state,
+        errors: action.payload,
+        fetched: false
+      };
+    }
+    case 'ORGANIZATION_FULFILLED': {
+      return {
+        ...state,
+        fetched: true,
+        organization: action.payload.data.organization
+      };
+    }
+    default: return {
+      ...state
+    };
+  }
 }

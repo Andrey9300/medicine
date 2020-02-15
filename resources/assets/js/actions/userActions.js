@@ -7,25 +7,32 @@ import axios from 'axios';
  * @returns {function(*)}
  */
 export function loginUser(formElement = null) {
-    return (dispatch) => {
-        axios.post('/login', new FormData(formElement))
-            .then(() => {
-                dispatch({
-                    payload: {
-                        isAuthenticated: true
-                    },
-                    type: 'LOGIN_USER_FULFILLED'
-                });
-                history.pushState(null, null, '/#/organizations');
-                // window.location.reload();
-            })
-            .catch((errors) => {
-                dispatch({
-                    payload: errors.response.data.errors,
-                    type: 'LOGIN_USER_REJECTED'
-                });
-            });
-    };
+  return (dispatch) => {
+    axios.post(
+      '/login',
+      new FormData(formElement)
+    )
+      .then(() => {
+        dispatch({
+          payload: {
+            isAuthenticated: true
+          },
+          type: 'LOGIN_USER_FULFILLED'
+        });
+        history.pushState(
+          null,
+          null,
+          '/#/organizations'
+        );
+        // Window.location.reload();
+      })
+      .catch((errors) => {
+        dispatch({
+          payload: errors.response.data.errors,
+          type: 'LOGIN_USER_REJECTED'
+        });
+      });
+  };
 }
 
 /**
@@ -34,25 +41,29 @@ export function loginUser(formElement = null) {
  * @returns {function(*)}
  */
 export function logoutUser() {
-    return (dispatch) => {
-        axios.post('/logout')
-            .then(() => {
-                dispatch({
-                    payload: {
-                        isAuthenticated: false
-                    },
-                    type: 'LOGOUT_USER_FULFILLED'
-                });
-                history.replaceState(null, null, '/#/login');
-                window.location.reload();
-            })
-            .catch((error) => {
-                dispatch({
-                    payload: error,
-                    type: 'LOGOUT_USER_REJECTED'
-                });
-            });
-    };
+  return (dispatch) => {
+    axios.post('/logout')
+      .then(() => {
+        dispatch({
+          payload: {
+            isAuthenticated: false
+          },
+          type: 'LOGOUT_USER_FULFILLED'
+        });
+        history.replaceState(
+          null,
+          null,
+          '/#/login'
+        );
+        window.location.reload();
+      })
+      .catch((error) => {
+        dispatch({
+          payload: error,
+          type: 'LOGOUT_USER_REJECTED'
+        });
+      });
+  };
 }
 
 /**
@@ -62,19 +73,26 @@ export function logoutUser() {
  * @returns {function(*)}
  */
 export function registrationUser(formElement = null) {
-    return (dispatch) => {
-        axios.post('/register', new FormData(formElement))
-            .then(() => {
-                alert('Вам отправлен email для активации аккаунта');
-                history.replaceState(null, null, '/#/login');
-            })
-            .catch((errors) => {
-                dispatch({
-                    payload: errors.response.data.errors,
-                    type: 'REGISTRATION_USER_REJECTED'
-                });
-            });
-    };
+  return (dispatch) => {
+    axios.post(
+      '/register',
+      new FormData(formElement)
+    )
+      .then(() => {
+        alert('Вам отправлен email для активации аккаунта');
+        history.replaceState(
+          null,
+          null,
+          '/#/login'
+        );
+      })
+      .catch((errors) => {
+        dispatch({
+          payload: errors.response.data.errors,
+          type: 'REGISTRATION_USER_REJECTED'
+        });
+      });
+  };
 }
 
 /**
@@ -84,21 +102,21 @@ export function registrationUser(formElement = null) {
  * @returns {function(*)}
  */
 export function fetchUsers() {
-    return (dispatch) => {
-        axios.post('/users')
-            .then((response) => {
-                dispatch({
-                    payload: response,
-                    type: 'USERS_FULFILLED'
-                });
-            })
-            .catch((error) => {
-                dispatch({
-                    payload: error,
-                    type: 'USERS_REJECTED'
-                });
-            });
-    };
+  return (dispatch) => {
+    axios.post('/users')
+      .then((response) => {
+        dispatch({
+          payload: response,
+          type: 'USERS_FULFILLED'
+        });
+      })
+      .catch((error) => {
+        dispatch({
+          payload: error,
+          type: 'USERS_REJECTED'
+        });
+      });
+  };
 }
 
 /**
@@ -107,21 +125,21 @@ export function fetchUsers() {
  * @returns {function(*)}
  */
 export function fetchUser() {
-    return (dispatch) => {
-        axios.post('/users/current')
-            .then((response) => {
-                dispatch({
-                    payload: response,
-                    type: 'USER_FULFILLED'
-                });
-            })
-            .catch((error) => {
-                dispatch({
-                    payload: error,
-                    type: 'USER_REJECTED'
-                });
-            });
-    };
+  return (dispatch) => {
+    axios.post('/users/current')
+      .then((response) => {
+        dispatch({
+          payload: response,
+          type: 'USER_FULFILLED'
+        });
+      })
+      .catch((error) => {
+        dispatch({
+          payload: error,
+          type: 'USER_REJECTED'
+        });
+      });
+  };
 }
 
 /**
@@ -131,13 +149,17 @@ export function fetchUser() {
  * @returns {Function}
  */
 export function deleteUser(id) {
-    return () => {
-        axios.post(`/users/destroy/${id}`)
-            .then(() => {
-                history.pushState(null, null, '/#/users');
-            })
-            .catch((error) => {
-                return error;
-            });
-    };
+  return () => {
+    axios.post(`/users/destroy/${id}`)
+      .then(() => {
+        history.pushState(
+          null,
+          null,
+          '/#/users'
+        );
+      })
+      .catch((error) => {
+        return error;
+      });
+  };
 }

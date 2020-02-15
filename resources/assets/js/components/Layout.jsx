@@ -12,36 +12,36 @@ import {connect} from 'react-redux';
 import {fetchUser} from '../actions/userActions';
 
 class LayoutComponent extends React.Component {
-    componentDidMount() {
-        this.props.dispatch(fetchUser());
-    }
+  componentDidMount() {
+    this.props.dispatch(fetchUser());
+  }
 
-    render() {
-        const {location, children} = this.props;
+  render() {
+    const {location, children} = this.props;
 
-        return (
-            <div className="app">
-                <Header />
-                <div className="app-body">
-                    <Sidebar location={location}/>
-                    <main className="main">
-                        {children}
-                    </main>
-                </div>
-                <Footer />
-            </div>
-        );
-    }
+    return (
+      <div className="app">
+        <Header />
+        <div className="app-body">
+          <Sidebar location={location}/>
+          <main className="main">
+            {children}
+          </main>
+        </div>
+        <Footer />
+      </div>
+    );
+  }
 }
 
 LayoutComponent.propTypes = {
-    children: PropTypes.element
+  children: PropTypes.element
 };
 
 const mapStateToProps = (state) => {
-    return {
-        user: state.users.user
-    };
+  return {
+    user: state.users.user
+  };
 };
 
 export const Layout = connect(mapStateToProps)(LayoutComponent);

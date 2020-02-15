@@ -6,6 +6,12 @@ import reducer from './reducers';
 import thunk from 'redux-thunk';
 import {redirect} from './middlewares/redirect';
 
-export default createStore(reducer, composeWithDevTools(
-    applyMiddleware(thunk, promise, logger, redirect),
-));
+export default createStore(
+  reducer,
+  composeWithDevTools(applyMiddleware(
+    thunk,
+    promise,
+    logger,
+    redirect
+  ))
+);

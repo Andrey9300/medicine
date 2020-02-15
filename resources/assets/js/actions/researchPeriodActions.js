@@ -6,19 +6,19 @@ import axios from 'axios';
  * @returns {function(*)}
  */
 export function fetchPeriods() {
-    return (dispatch) => {
-        axios.post('/researchPeriods')
-            .then((response) => {
-                dispatch({
-                    payload: response,
-                    type: 'RESEARCH_PERIODS_FULFILLED'
-                });
-            })
-            .catch((error) => {
-                dispatch({
-                    payload: error,
-                    type: 'RESEARCH_PERIODS_REJECTED'
-                });
-            });
-    };
+  return (dispatch) => {
+    axios.post('/researchPeriods')
+      .then((response) => {
+        dispatch({
+          payload: response,
+          type: 'RESEARCH_PERIODS_FULFILLED'
+        });
+      })
+      .catch((error) => {
+        dispatch({
+          payload: error,
+          type: 'RESEARCH_PERIODS_REJECTED'
+        });
+      });
+  };
 }

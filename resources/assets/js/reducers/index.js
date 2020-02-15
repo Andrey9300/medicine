@@ -8,11 +8,11 @@ import categories from './CategoriesReducer';
 import researchPeriods from './ResearchPeriodsReducer';
 
 export default combineReducers({
-    hospitals,
-    organizations,
-    researches,
-    employees,
-    users,
-    categories,
-    researchPeriods
+  hospitals,
+  organizations,
+  researches,
+  employees,
+  users,
+  categories,
+  researchPeriods
 });
