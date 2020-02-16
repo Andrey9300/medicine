@@ -10,7 +10,7 @@ class PrintEmployee extends React.PureComponent {
   constructor(props) {
     super(props);
     this.state = {
-      errors: '',
+      errors: null,
       employeeId: props.match.params.id
     };
   }
@@ -21,9 +21,13 @@ class PrintEmployee extends React.PureComponent {
   }
 
   createMarkup() {
-    return {
-      __html: this.state.errors
-    };
+    const {errors} = this.state;
+
+    return Object.keys(errors).map((item) => {
+      return errors[item].map((value, index) => {
+        return <p key={index}>{value}</p>;
+      });
+    });
   }
 
   researches() {
@@ -54,11 +58,8 @@ class PrintEmployee extends React.PureComponent {
     const hospitalOrg = hospital[0]; // Пока одна мед организация
     let errorsMessage = '';
 
-    if (errors !== '') {
-      errorsMessage =
-        <div className="alert alert-danger" role="alert">
-          <div dangerouslySetInnerHTML={this.createMarkup()} />
-        </div>;
+    if (errors) {
+      errorsMessage = <div className="alert alert-danger" role="alert">{this.createMarkup()}</div>;
     }
 
     if (!employee || !hospitalOrg) {

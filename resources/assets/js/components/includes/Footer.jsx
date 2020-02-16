@@ -6,7 +6,7 @@ class Footer extends React.PureComponent {
       <footer className="app-footer d-print-none">
         <span style={{
           marginRight: '10px'
-        }}>&copy; 2017</span>
+        }}>&copy; 2017 - {new Date().getFullYear()}</span>
         <span className="float-right">
           <span style={{
             color: '#1b8eb7'

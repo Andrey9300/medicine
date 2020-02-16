@@ -39,6 +39,7 @@ export default function reducer(state = initialState, action) {
     case 'ORGANIZATIONS_FULFILLED': {
       return {
         ...state,
+        errors: null,
         fetched: true,
         organizations: action.payload.data.organizations
       };
@@ -53,6 +54,7 @@ export default function reducer(state = initialState, action) {
     case 'EXPIRED_ORGANIZATIONS_FULFILLED': {
       return {
         ...state,
+        errors: null,
         fetched: true,
         expired: action.payload.data.expired
       };
@@ -67,6 +69,7 @@ export default function reducer(state = initialState, action) {
     case 'ORGANIZATION_FULFILLED': {
       return {
         ...state,
+        errors: null,
         fetched: true,
         organization: action.payload.data.organization
       };

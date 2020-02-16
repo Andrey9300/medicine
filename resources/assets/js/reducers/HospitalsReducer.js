@@ -38,6 +38,7 @@ export default function reducer(state = initialState, action) {
     case 'HOSPITALS_FULFILLED': {
       return {
         ...state,
+        error: null,
         fetched: true,
         hospitals: action.payload.data.hospitals
       };
@@ -52,6 +53,7 @@ export default function reducer(state = initialState, action) {
     case 'HOSPITAL_FULFILLED': {
       return {
         ...state,
+        error: null,
         fetched: true,
         hospital: action.payload.data.hospital
       };
@@ -79,6 +81,7 @@ export default function reducer(state = initialState, action) {
     case 'HOSPITAL_RESEARCHES_FULFILLED': {
       return {
         ...state,
+        error: null,
         fetched: true,
         hospitalResearches: action.payload.data.hospitalResearches
       };

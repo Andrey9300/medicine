@@ -22,6 +22,7 @@ export default function reducer(state = initialState, action) {
     case 'CATEGORIES_FULFILLED': {
       return {
         ...state,
+        error: null,
         fetched: true,
         categories: action.payload.data.categories
       };

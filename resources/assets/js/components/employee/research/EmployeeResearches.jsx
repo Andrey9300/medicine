@@ -1,12 +1,13 @@
+import React from 'react';
+import {connect} from 'react-redux';
+import PropTypes from 'prop-types';
+import {Link} from 'react-router-dom';
+import {Table, Row, Col, Card, CardHeader, CardBlock, Button, Form, Input, CardFooter} from 'reactstrap';
 import {
   addEmployeeResearches,
   clearEmployeeResearches,
   fetchEmployeeResearches
 } from '../../../actions/employeeActions';
-import React from 'react';
-import {connect} from 'react-redux';
-import PropTypes from 'prop-types';
-import {Table, Row, Col, Card, CardHeader, CardBlock, Button, Form, Input, CardFooter} from 'reactstrap';
 
 class EmployeeResearches extends React.PureComponent {
   constructor(props) {
@@ -31,17 +32,13 @@ class EmployeeResearches extends React.PureComponent {
   }
 
   createMarkup() {
-    let html = '';
+    const {errors} = this.props;
 
-    Object.keys(this.props.errors).forEach((item) => {
-      this.props.errors[item].forEach((value) => {
-        html += `<p>${value}</p>`;
+    return Object.keys(errors).map((item) => {
+      return errors[item].map((value, index) => {
+        return <p key={index}>{value}</p>;
       });
     });
-
-    return {
-      __html: html
-    };
   }
 
   render() {
@@ -55,7 +52,7 @@ class EmployeeResearches extends React.PureComponent {
     if (errors) {
       errorsMessage =
         <div className="alert alert-danger" role="alert">
-          <div dangerouslySetInnerHTML={this.createMarkup()} />
+          {this.createMarkup()}
         </div>;
     }
 
@@ -65,8 +62,16 @@ class EmployeeResearches extends React.PureComponent {
         <Row>
           <Col xs="12" md="12" lg="8">
             <Card>
-              <CardHeader>
-                <i className="fa fa-heartbeat" aria-hidden="true"/>Даты исследований ({employeeResearches.length})
+              <CardHeader style={{display: 'flex', justifyContent: 'space-between'}}>
+                <div>
+                  <div>
+                    <i className="fa fa-heartbeat" aria-hidden="true"/>
+                    &nbsp;Даты исследований ({employeeResearches.length})
+                  </div>
+                  <div>
+                    Список всех доступных <Link to={'/researches'}>исследований.</Link>
+                  </div>
+                </div>
                 <Button type="submit" size="sm"
                   color="success pull-right"
                   onClick={this.handleClick}

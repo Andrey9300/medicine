@@ -22,17 +22,13 @@ class NewEmployee extends React.PureComponent {
   }
 
   createMarkup() {
-    let html = '';
+    const {errors} = this.props;
 
-    Object.keys(this.props.errors).forEach((item) => {
-      this.props.errors[item].forEach((value) => {
-        html += `<p>${value}</p>`;
+    return Object.keys(errors).map((item) => {
+      return errors[item].map((value, index) => {
+        return <p key={index}>{value}</p>;
       });
     });
-
-    return {
-      __html: html
-    };
   }
 
   render() {
@@ -40,10 +36,7 @@ class NewEmployee extends React.PureComponent {
     let errorsMessage = '';
 
     if (errors) {
-      errorsMessage =
-        <div className="alert alert-danger" role="alert">
-          <div dangerouslySetInnerHTML={this.createMarkup()} />
-        </div>;
+      errorsMessage = <div className="alert alert-danger" role="alert">{this.createMarkup()}</div>;
     }
 
     return (

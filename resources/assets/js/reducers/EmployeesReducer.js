@@ -27,6 +27,7 @@ export default function reducer(state = initialState, action) {
     case 'EMPLOYEES_FULFILLED': {
       return {
         ...state,
+        errors: null,
         fetched: true,
         employees: action.payload.data.employees,
         deleted: action.payload.data.deleted,
@@ -43,6 +44,7 @@ export default function reducer(state = initialState, action) {
     case 'EMPLOYEE_FULFILLED': {
       return {
         ...state,
+        errors: null,
         fetched: true,
         employee: action.payload.data.employee
       };
@@ -57,6 +59,7 @@ export default function reducer(state = initialState, action) {
     case 'EMPLOYEE_RESEARCHES_FULFILLED': {
       return {
         ...state,
+        errors: null,
         fetched: true,
         employeeResearches: action.payload.data.employeeResearches
       };
@@ -64,6 +67,7 @@ export default function reducer(state = initialState, action) {
     case 'EMPLOYEE_RESEARCHES_CLEAR': {
       return {
         ...state,
+        errors: null,
         fetched: false,
         employeeResearches: []
       };
@@ -78,6 +82,7 @@ export default function reducer(state = initialState, action) {
     case 'EMPLOYEE_RESEARCH_FULFILLED': {
       return {
         ...state,
+        errors: null,
         fetched: true,
         employeeResearch: action.payload
       };

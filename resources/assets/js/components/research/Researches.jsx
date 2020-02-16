@@ -55,10 +55,7 @@ class Researches extends React.PureComponent {
     }
 
     if (errors) {
-      errorsMessage =
-        <div className="alert alert-danger" role="alert">
-          <div dangerouslySetInnerHTML={this.createMarkup()} />
-        </div>;
+      errorsMessage = <div className="alert alert-danger" role="alert">Ошибка</div>;
     }
 
     return (
@@ -69,6 +66,7 @@ class Researches extends React.PureComponent {
             <Card>
               <CardHeader>
                 <i className="fa fa-heartbeat" aria-hidden="true"/>Исследования ({userResearches.length})
+                Выберите нужные исследования.
                 <Button type="submit" size="sm" color="success pull-right" onClick={this.handleClick}>
                   <i className="fa fa-dot-circle-o"/> Сохранить
                 </Button>

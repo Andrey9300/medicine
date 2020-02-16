@@ -25,15 +25,24 @@ export default function reducer(state = initialState, action) {
     case 'LOGIN_USER_FULFILLED': {
       return {
         ...state,
+        errors: null,
         fetched: true,
         user: {
           isAuthenticated: action.payload.isAuthenticated
         }
       };
     }
+    case 'LOGIN_USER_CLEAR_ERRORS': {
+      return {
+        ...state,
+        errors: null,
+        fetched: false
+      };
+    }
     case 'LOGOUT_USER_FULFILLED': {
       return {
         ...state,
+        errors: null,
         fetched: false,
         user: {
           isAuthenticated: action.payload.isAuthenticated
@@ -65,6 +74,7 @@ export default function reducer(state = initialState, action) {
     case 'USERS_FULFILLED': {
       return {
         ...state,
+        errors: null,
         fetched: true,
         users: action.payload.data.users
       };
@@ -79,6 +89,7 @@ export default function reducer(state = initialState, action) {
     case 'USER_FULFILLED': {
       return {
         ...state,
+        errors: null,
         fetched: true,
         user: action.payload.data.user
       };

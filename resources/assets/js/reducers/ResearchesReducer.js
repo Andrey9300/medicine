@@ -25,6 +25,7 @@ export default function reducer(state = initialState, action) {
     case 'RESEARCHES_FULFILLED': {
       return {
         ...state,
+        error: null,
         fetched: true,
         researches: action.payload.data.researches
       };
@@ -39,6 +40,7 @@ export default function reducer(state = initialState, action) {
     case 'RESEARCH_FULFILLED': {
       return {
         ...state,
+        error: null,
         fetched: true,
         research: action.payload.data.research,
         periods: action.payload.data.periods
@@ -54,6 +56,7 @@ export default function reducer(state = initialState, action) {
     case 'USER_RESEARCHES_FULFILLED': {
       return {
         ...state,
+        error: null,
         fetched: true,
         userResearches: action.payload.data.userResearches
       };

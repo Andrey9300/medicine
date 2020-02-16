@@ -9,7 +9,7 @@ class Hospital extends React.PureComponent {
   constructor(props) {
     super(props);
     this.state = {
-      errors: '',
+      errors: null,
       hospitalId: props.match.params.id
     };
     this.handleBtnDelete = this.handleBtnDelete.bind(this);
@@ -25,9 +25,13 @@ class Hospital extends React.PureComponent {
   }
 
   createMarkup() {
-    return {
-      __html: this.state.errors
-    };
+    const {errors} = this.state;
+
+    return Object.keys(errors).map((item) => {
+      return errors[item].map((value, index) => {
+        return <p key={index}>{value}</p>;
+      });
+    });
   }
 
   render() {
@@ -39,11 +43,8 @@ class Hospital extends React.PureComponent {
       return null;
     }
 
-    if (this.state.errors !== '') {
-      errorsMessage =
-        <div className="alert alert-danger" role="alert">
-          <div dangerouslySetInnerHTML={this.createMarkup()}/>
-        </div>;
+    if (errors) {
+      errorsMessage = <div className="alert alert-danger" role="alert">{this.createMarkup()}</div>;
     }
 
     return (

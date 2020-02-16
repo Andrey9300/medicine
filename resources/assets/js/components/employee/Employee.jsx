@@ -12,7 +12,7 @@ class Employee extends React.PureComponent {
 
     this.state = {
       employeeId: props.match.params.id,
-      errors: ''
+      errors: null
     };
     this.handleBtnDelete = this.handleBtnDelete.bind(this);
   }
@@ -30,9 +30,13 @@ class Employee extends React.PureComponent {
   }
 
   createMarkup() {
-    return {
-      __html: this.state.errors
-    };
+    const {errors} = this.state;
+
+    return Object.keys(errors).map((item) => {
+      return errors[item].map((value, index) => {
+        return <p key={index}>{value}</p>;
+      });
+    });
   }
 
   render() {
@@ -40,10 +44,8 @@ class Employee extends React.PureComponent {
     const {errors, employeeId} = this.state;
     let errorsMessage = '';
 
-    if (errors !== '') {
-      errorsMessage = <div className="alert alert-danger" role="alert">
-        <div dangerouslySetInnerHTML={this.createMarkup()}/>
-      </div>;
+    if (errors) {
+      errorsMessage = <div className="alert alert-danger" role="alert">{this.createMarkup()}</div>;
     }
 
     if (!employee) {

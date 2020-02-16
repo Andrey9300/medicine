@@ -9,7 +9,7 @@ class EditResearch extends React.PureComponent {
   constructor(props) {
     super(props);
     this.state = {
-      errors: '',
+      errors: null,
       researchId: props.match.params.id
     };
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -45,9 +45,13 @@ class EditResearch extends React.PureComponent {
   }
 
   createMarkup() {
-    return {
-      __html: this.state.errors
-    };
+    const {errors} = this.state;
+
+    return Object.keys(errors).map((item) => {
+      return errors[item].map((value, index) => {
+        return <p key={index}>{value}</p>;
+      });
+    });
   }
 
   componentWillReceiveProps(nextProps) {
@@ -61,10 +65,8 @@ class EditResearch extends React.PureComponent {
     const {errors} = this.state;
     let errorsMessage = '';
 
-    if (errors !== '') {
-      errorsMessage = <div className="alert alert-danger" role="alert">
-        <div dangerouslySetInnerHTML={this.createMarkup()} />
-      </div>;
+    if (errors) {
+      errorsMessage = <div className="alert alert-danger" role="alert">{this.createMarkup()}</div>;
     }
 
     if (!research) {

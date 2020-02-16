@@ -10,7 +10,7 @@ class RestorePassword extends React.PureComponent {
     super(props);
 
     this.state = {
-      errors: '',
+      errors: null,
       doubleClick: false
     };
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -46,27 +46,21 @@ class RestorePassword extends React.PureComponent {
   }
 
   createMarkup() {
-    let html = '';
+    const {errors} = this.state;
 
-    Object.keys(this.state.errors).forEach((item) => {
-      this.state.errors[item].forEach((value) => {
-        html += `<p>${value}</p>`;
+    return Object.keys(errors).map((item) => {
+      return errors[item].map((value, index) => {
+        return <p key={index}>{value}</p>;
       });
     });
-
-    return {
-      __html: html
-    };
   }
 
   render() {
     const {errors, doubleClick} = this.state;
     let errorsMessage = '';
 
-    if (errors !== '') {
-      errorsMessage = <div className="alert alert-danger" role="alert">
-        <div dangerouslySetInnerHTML={this.createMarkup()} />
-      </div>;
+    if (errors) {
+      errorsMessage = <div className="alert alert-danger" role="alert">{this.createMarkup()}</div>;
     }
 
     return (

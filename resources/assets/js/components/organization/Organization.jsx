@@ -192,17 +192,15 @@ class Organization extends React.PureComponent {
               <CardBlock className="card-body">
                 <Table responsive>
                   <tbody>
-                    {hospitals.map((hospital) => {
-                      return (
-                        <tr key={hospital.id}>
-                          <td>
-                            <Link to={`/hospitals/${hospital.id}`}>
-                              {hospital.name}
-                            </Link>
-                          </td>
-                        </tr>
-                      );
-                    })
+                    {hospitals.map((hospital) => (
+                      <tr key={hospital.id}>
+                        <td>
+                          <Link to={`/hospital/${hospital.id}`}>
+                            {hospital.name}
+                          </Link>
+                        </td>
+                      </tr>
+                    ))
                     }
                   </tbody>
                 </Table>
