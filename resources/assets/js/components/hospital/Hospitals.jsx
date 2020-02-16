@@ -5,8 +5,9 @@ import {connect} from 'react-redux';
 import {Row, Col, Card, CardHeader, CardBlock, Table} from 'reactstrap';
 
 class Hospitals extends React.PureComponent {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
+
     this.handleBtnDelete = this.handleBtnDelete.bind(this);
   }
 

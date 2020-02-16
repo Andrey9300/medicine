@@ -6,8 +6,9 @@ import axios from 'axios';
 import {Container, Row, Col, CardGroup, Card, CardBlock, Form, Button, Input, InputGroup, InputGroupAddon} from 'reactstrap';
 
 class RestorePassword extends React.PureComponent {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
+
     this.state = {
       errors: '',
       doubleClick: false

@@ -6,8 +6,9 @@ import {fetchPeriods} from '../../actions/researchPeriodActions';
 import {Row, Col, Button, Card, CardHeader, CardFooter, CardBlock, Form, FormGroup, FormText, Label, Input} from 'reactstrap';
 
 class NewResearch extends React.PureComponent {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
+
     this.state = {
       errors: ''
     };

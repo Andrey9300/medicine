@@ -6,8 +6,9 @@ import {Container, Row, Col, CardGroup, Card, CardBlock, Form, Button, Input, In
 import {loginUser} from '../../actions/userActions';
 
 class Login extends React.PureComponent {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
+
     this.state = {
       doubleClick: false
     };

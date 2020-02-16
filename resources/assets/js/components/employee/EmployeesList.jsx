@@ -73,18 +73,12 @@ export class EmployeesList extends React.PureComponent {
                       })()}
                     </td>
                     <td>
-                      {(() => {
-                        if (employee.researches_ends.length || employee.researches_expired.length) {
-                          return (
-                            <Link to={`/employees/print/${employee.id}`}
-                              className="btn btn-secondary btn-sm pull-left">
-                                                        Направление
-                            </Link>
-                          );
-                        }
-
-                        return '';
-                      })()}
+                      {(employee.researches_ends.length > 0 || employee.researches_expired.length > 0) &&
+                        <Link to={`/employees/print/${employee.id}`}
+                          className="btn btn-secondary btn-sm pull-left">
+                          Направление
+                        </Link>
+                      }
                     </td>
                   </tr>
                 );

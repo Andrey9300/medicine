@@ -6,8 +6,9 @@ import {connect} from 'react-redux';
 import {Row, Col, Button, Card, CardHeader, CardFooter, CardBlock, Form, FormGroup, Label, Input} from 'reactstrap';
 
 class NewEmployee extends React.PureComponent {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
+
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
@@ -40,9 +41,9 @@ class NewEmployee extends React.PureComponent {
 
     if (errors) {
       errorsMessage =
-                <div className="alert alert-danger" role="alert">
-                  <div dangerouslySetInnerHTML={this.createMarkup()} />
-                </div>;
+        <div className="alert alert-danger" role="alert">
+          <div dangerouslySetInnerHTML={this.createMarkup()} />
+        </div>;
     }
 
     return (
@@ -52,9 +53,7 @@ class NewEmployee extends React.PureComponent {
           <Col xs="12" md="6">
             <Card>
               <Form className="form-horizontal" onSubmit={this.handleSubmit}>
-                <CardHeader>
-                                    Добавить сотрудника
-                </CardHeader>
+                <CardHeader>Добавить сотрудника</CardHeader>
                 <CardBlock className="card-body">
                   <FormGroup row>
                     <Col md="3">
@@ -96,15 +95,13 @@ class NewEmployee extends React.PureComponent {
                       <Label htmlFor="text-input">Название организации</Label>
                     </Col>
                     <Col xs="12" md="9">
-                      <Input type="select" name="organization_name" id="organization_name">
-                        {organizations.map((organization) => {
-                          return (
-                            <option key={organization.id} value={organization.name}>
-                              {organization.name}
-                            </option>
-                          );
-                        })
-                        }
+                      <Input type="select" name="organization_name" id="organization_name" required>
+                        <option />
+                        {organizations.map((organization) => (
+                          <option key={organization.id} value={organization.name}>
+                            {organization.name}
+                          </option>
+                        ))}
                       </Input>
                     </Col>
                   </FormGroup>

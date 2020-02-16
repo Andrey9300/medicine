@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Http\Models\HospitalResearch;
+use App\Http\Models\ResearchCategory;
+use App\Http\Models\UserResearches;
 use App\Http\Requests\StoreOrganization;
 use App\Http\Requests\UpdateOrganization;
 use App\Notifications\SendPassword;
@@ -29,6 +31,15 @@ class OrganizationController extends Controller
         $organization->save();
 
         $currentUser->organizations()->attach($organization);
+
+        $researchCategories = ResearchCategory::where('category_id', $request->category_id)->get();
+
+        foreach ($researchCategories as $researchCategory) {
+            UserResearches::firstOrCreate([
+                'research_categories_id' => $researchCategory->id,
+                'user_id' => $currentUser->id
+            ]);
+        }
 
         // привязка руководителя к организации: по умолчанию текущий user,
         // иначе создаем user с role = head или ищем в системе
@@ -60,7 +71,8 @@ class OrganizationController extends Controller
 //            $userAdmin->organizations()->attach($organization);
 //        }
 
-        return response('Ок', 200);
+
+        return response('Ok', 200);
     }
 
     /**

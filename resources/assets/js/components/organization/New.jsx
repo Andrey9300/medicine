@@ -5,8 +5,9 @@ import {Row, Col, Button, Card, CardHeader, CardBlock, CardFooter, Form, FormGro
 import {addOrganization} from '../../actions/organizationActions';
 
 class NewOrganization extends React.PureComponent {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
+
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 

@@ -96,16 +96,7 @@ class PrintEmployee extends React.PureComponent {
                       <tr style={{
                         fontWeight: 'bold'
                       }}>
-                        <td colSpan="2">
-                          {(() => {
-                            if (employee.pay) {
-                              return 'ОПЛАТА: НАЛИЧНЫМИ';
-                            }
-
-                            return 'ОПЛАТА: БЕЗНАЛИЧНЫЙ РАСЧЕТ';
-                          })()}
-
-                        </td>
+                        <td colSpan="2">{employee.pay ? 'ОПЛАТА: НАЛИЧНЫМИ' : 'ОПЛАТА: БЕЗНАЛИЧНЫЙ РАСЧЕТ'}</td>
                       </tr>
                       <tr>
                         <td colSpan="2">

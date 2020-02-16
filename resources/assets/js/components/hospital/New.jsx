@@ -4,8 +4,9 @@ import {Row, Col, Button, Card, CardHeader, CardFooter, CardBlock, Form, FormGro
 import {addHospital} from '../../actions/hospitalActions';
 
 class NewHospital extends React.PureComponent {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
+
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 

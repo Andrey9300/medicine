@@ -9,6 +9,7 @@ import {Row, Col, Card, CardHeader, CardBlock, Table, Button} from 'reactstrap';
 class Employee extends React.PureComponent {
   constructor(props) {
     super(props);
+
     this.state = {
       employeeId: props.match.params.id,
       errors: ''
@@ -41,7 +42,7 @@ class Employee extends React.PureComponent {
 
     if (errors !== '') {
       errorsMessage = <div className="alert alert-danger" role="alert">
-        <div dangerouslySetInnerHTML={this.createMarkup()} />
+        <div dangerouslySetInnerHTML={this.createMarkup()}/>
       </div>;
     }
 
@@ -59,59 +60,45 @@ class Employee extends React.PureComponent {
                 <CardHeader>
                   <i className="fa fa-users" aria-hidden="true"/>
                   {employee.fio}
-                  <Link to={`/employees/edit/${employee.id}`} style={{
-                    marginLeft: '18px'
-                  }}>
-                    <i className="fa fa-pencil"/>
-                  </Link>
-                  <span className="pull-right" onClick={(event) => this.handleBtnDelete(
-                    employee.id,
-                    event
-                  )}>
-                    <i className="fa fa-trash" style={{marginRight: '16px'}}/>
-                    <Button type="submit" size="sm" color="danger">
-                      <i className="fa fa-dot-circle-o"/> Уволить
-                    </Button>
-                  </span>
+                  {!employee.deleted_at &&
+                    <>
+                      <Link to={`/employees/edit/${employee.id}`} style={{
+                        marginLeft: '12px'
+                      }}>
+                        <i className="fa fa-pencil"/>
+                      </Link>
+
+                      <span className="pull-right" onClick={(event) => this.handleBtnDelete(
+                        employee.id,
+                        event
+                      )}>
+                        <Button type="submit" size="sm" color="danger">Уволить</Button>
+                      </span>
+                    </>
+                  }
                 </CardHeader>
                 <CardBlock className="card-body">
                   <Table responsive>
                     <tbody>
                       <tr>
-                        <td>Объект: </td>
-                        <td>
-                          {(() => {
-                            if (employee.organization_name) {
-                              return employee.organization_name;
-                            }
-
-                            return 'Не привязан';
-                          })()}
-                        </td>
+                        <td>Объект:</td>
+                        <td>{employee.organization_name ? employee.organization_name : 'Не привязан'}</td>
                       </tr>
                       <tr>
-                        <td>Дата рождения: </td>
+                        <td>Дата рождения:</td>
                         <td>{employee.date_birthday}</td>
                       </tr>
                       <tr>
-                        <td>Дата устройства на работу: </td>
+                        <td>Дата устройства на работу:</td>
                         <td>{employee.date_employment}</td>
                       </tr>
                       <tr>
-                        <td>Номер мед книжки: </td>
+                        <td>Номер мед книжки:</td>
                         <td>{employee.medical_book}</td>
                       </tr>
                       <tr>
-                        <td>Уволен: </td>
-                        <td>
-                          {(() => {
-                            if (employee.deleted_at) {
-                              return employee.deleted_at;
-                            }
-
-                            return 'Нет';
-                          })()}
-                        </td>
+                        <td>Уволен:</td>
+                        <td>{employee.deleted_at ? employee.deleted_at : 'Нет'}</td>
                       </tr>
                     </tbody>
                   </Table>

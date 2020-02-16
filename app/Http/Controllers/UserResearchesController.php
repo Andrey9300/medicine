@@ -52,10 +52,10 @@ class UserResearchesController extends Controller
 
         $categoriesId = array_unique($categoriesId);
         $researches = ResearchCategory::whereIn('category_id', $categoriesId)->get();
-        $userReseaches = $userAdmin->researches;
+        $userResearches = $userAdmin->researches;
 
         foreach ($researches as $research) {
-            foreach ($userReseaches as $userReseach) {
+            foreach ($userResearches as $userReseach) {
                 if ($userReseach->pivot->research_categories_id === $research->id) {
                     $research->check = true;
                 }

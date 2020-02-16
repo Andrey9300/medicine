@@ -84,28 +84,20 @@ class Researches extends React.PureComponent {
                       </tr>
                     </thead>
                     <tbody>
-                      {userResearches.map((research) => {
-                        let check = '';
-
-                        if (research.check) {
-                          check = 'checked';
-                        }
-
-                        return (
-                          <tr key={research.id}>
-                            <td>{research.category.name}</td>
-                            <td>{research.research.name}</td>
-                            <td>
-                              <Input
-                                type="checkbox"
-                                name={`research[${research.id}]`}
-                                defaultChecked={check}
-                                value={research.id}
-                              />
-                            </td>
-                          </tr>
-                        );
-                      })
+                      {userResearches.map((research) => (
+                        <tr key={research.id}>
+                          <td>{research.category.name}</td>
+                          <td>{research.research.name}</td>
+                          <td>
+                            <Input
+                              type="checkbox"
+                              name={`research[${research.id}]`}
+                              defaultChecked={research.check ? 'checked' : ''}
+                              value={research.id}
+                            />
+                          </td>
+                        </tr>
+                      ))
                       }
                     </tbody>
                   </Table>
