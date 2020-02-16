@@ -1,10 +1,10 @@
-import React, {Component} from 'react';
+import React from 'react';
 import {connect} from 'react-redux';
 import {registrationUser} from '../../actions/userActions';
 import PropTypes from 'prop-types';
 import {Container, Row, Col, Card, Form, CardBlock, Button, Input, InputGroup, InputGroupAddon, CardGroup} from 'reactstrap';
 
-class Registration extends Component {
+class Registration extends React.PureComponent {
   constructor(props) {
     super(props);
 
@@ -107,7 +107,7 @@ class Registration extends Component {
 
 Registration.propTypes = {
   dispatch: PropTypes.func.isRequired,
-  errors: PropTypes.func
+  errors: PropTypes.object
 };
 
 const mapStateToProps = (state) => {

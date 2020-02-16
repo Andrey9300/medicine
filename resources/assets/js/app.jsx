@@ -18,7 +18,7 @@ ReactDOM.render(
       <div className="app">
         <Header/>
         <div className="app-body">
-          <Sidebar location={location}/>
+          <Sidebar history={history}/>
           <main className="main">
             <Routes/>
           </main>

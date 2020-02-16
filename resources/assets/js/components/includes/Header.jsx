@@ -1,7 +1,7 @@
-import React, {Component} from 'react';
+import React from 'react';
 import {Nav, NavbarToggler, NavbarBrand} from 'reactstrap';
 
-class Header extends Component {
+class Header extends React.PureComponent {
   constructor(props) {
     super(props);
 

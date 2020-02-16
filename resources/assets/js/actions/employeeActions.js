@@ -195,3 +195,12 @@ export function fetchEmployeeResearches(id) {
       });
   };
 }
+
+export function clearEmployeeResearches() {
+  return (dispatch) => {
+    dispatch({
+      payload: [],
+      type: 'EMPLOYEE_RESEARCHES_CLEAR'
+    });
+  };
+}

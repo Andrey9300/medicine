@@ -4,7 +4,7 @@ import {fetchEmployee, deleteEmployee} from './../../actions/employeeActions';
 import EmployeeResearches from './research/EmployeeResearches';
 import {Link} from 'react-router-dom';
 import PropTypes from 'prop-types';
-import {Row, Col, Card, CardHeader, CardBlock, Table} from 'reactstrap';
+import {Row, Col, Card, CardHeader, CardBlock, Table, Button} from 'reactstrap';
 
 class Employee extends React.PureComponent {
   constructor(props) {
@@ -17,7 +17,6 @@ class Employee extends React.PureComponent {
   }
 
   componentWillMount() {
-    console.log('mmm');
     this.props.dispatch(fetchEmployee(this.state.employeeId));
   }
 
@@ -37,7 +36,7 @@ class Employee extends React.PureComponent {
 
   render() {
     const {employee} = this.props;
-    const {errors} = this.state;
+    const {errors, employeeId} = this.state;
     let errorsMessage = '';
 
     if (errors !== '') {
@@ -69,7 +68,10 @@ class Employee extends React.PureComponent {
                     employee.id,
                     event
                   )}>
-                    <i className="fa fa-trash"/> Уволить
+                    <i className="fa fa-trash" style={{marginRight: '16px'}}/>
+                    <Button type="submit" size="sm" color="danger">
+                      <i className="fa fa-dot-circle-o"/> Уволить
+                    </Button>
                   </span>
                 </CardHeader>
                 <CardBlock className="card-body">
@@ -119,7 +121,7 @@ class Employee extends React.PureComponent {
           </Row>
         </div>
         <EmployeeResearches
-          idEmployee={this.state.employeeId}
+          idEmployee={employeeId}
         />
       </>
     );

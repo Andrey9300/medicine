@@ -1,8 +1,8 @@
-import React, {Component} from 'react';
+import React from 'react';
 import {Link} from 'react-router-dom';
 import {Row, Col, Card, CardBlock, CardHeader} from 'reactstrap';
 
-class ActivateAccount extends Component {
+class ActivateAccount extends React.PureComponent {
   render() {
     return (
       <div className="animated fadeIn">

@@ -213,39 +213,39 @@ class OrganizationController extends Controller
 
         // админов может быть несколько
         // руководитель 1 или 0
-        if ($organization->head_email !== $organization_new['head_email']) {
-            $oldUser = User::where('email', $organization->head_email)->first();
-            if ($oldUser->role !== 'admin' && $organization->users->contains($oldUser)) {
-                $oldUser->organizations()->detach($organization);
-            }
-
-            if (User::where('email', $organization_new['head_email'])->exists()) {
-                $user = User::where('email', $organization_new['head_email'])->first();
-                $user->fio = $organization_new['head_fio'];
-                $user->save();
-                if (!$organization->users->contains($user)) { // если руководителем снова стал admin
-                    $user->organizations()->attach($organization);
-                    $user->notify(new YouHead($organization->name));
-                }
-            } else {
-                $passwordNewUser = str_random(8);
-                $newUser = User::create([
-                    'fio' => $organization_new['head_fio'],
-                    'email' => $organization_new['head_email'],
-                    'password' => bcrypt($passwordNewUser),
-                    'role' => 'head',
-                    'active' => 1
-                ]);
-                $newUser->organizations()->attach($organization);
-                $newUser->notify(new SendPassword($newUser->email, $passwordNewUser, $organization->name));
-            }
-
-            $organization->head_email = $organization_new['head_email'];
-        } else {
-            $currentUser = User::where('email', $organization->head_email)->first();
-            $currentUser->fio = $organization_new['head_fio'];
-            $currentUser->save();
-        }
+//        if ($organization->head_email !== $organization_new['head_email']) {
+//            $oldUser = User::where('email', $organization->head_email)->first();
+//            if ($oldUser->role !== 'admin' && $organization->users->contains($oldUser)) {
+//                $oldUser->organizations()->detach($organization);
+//            }
+//
+//            if (User::where('email', $organization_new['head_email'])->exists()) {
+//                $user = User::where('email', $organization_new['head_email'])->first();
+//                $user->fio = $organization_new['head_fio'];
+//                $user->save();
+//                if (!$organization->users->contains($user)) { // если руководителем снова стал admin
+//                    $user->organizations()->attach($organization);
+//                    $user->notify(new YouHead($organization->name));
+//                }
+//            } else {
+//                $passwordNewUser = str_random(8);
+//                $newUser = User::create([
+//                    'fio' => $organization_new['head_fio'],
+//                    'email' => $organization_new['head_email'],
+//                    'password' => bcrypt($passwordNewUser),
+//                    'role' => 'head',
+//                    'active' => 1
+//                ]);
+//                $newUser->organizations()->attach($organization);
+//                $newUser->notify(new SendPassword($newUser->email, $passwordNewUser, $organization->name));
+//            }
+//
+//            $organization->head_email = $organization_new['head_email'];
+//        } else {
+//            $currentUser = User::where('email', $organization->head_email)->first();
+//            $currentUser->fio = $organization_new['head_fio'];
+//            $currentUser->save();
+//        }
 
         $organization->save();
 

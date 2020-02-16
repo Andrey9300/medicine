@@ -1,4 +1,8 @@
-import {addEmployeeResearches, fetchEmployeeResearches} from '../../../actions/employeeActions';
+import {
+  addEmployeeResearches,
+  clearEmployeeResearches,
+  fetchEmployeeResearches
+} from '../../../actions/employeeActions';
 import React from 'react';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
@@ -14,6 +18,7 @@ class EmployeeResearches extends React.PureComponent {
   }
 
   componentWillMount() {
+    this.props.dispatch(clearEmployeeResearches());
     this.props.dispatch(fetchEmployeeResearches(this.state.employeeId));
   }
 

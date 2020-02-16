@@ -61,6 +61,13 @@ export default function reducer(state = initialState, action) {
         employeeResearches: action.payload.data.employeeResearches
       };
     }
+    case 'EMPLOYEE_RESEARCHES_CLEAR': {
+      return {
+        ...state,
+        fetched: false,
+        employeeResearches: []
+      };
+    }
     case 'EMPLOYEE_RESEARCH_REJECTED': {
       return {
         ...state,

@@ -1,10 +1,10 @@
-import React, {Component} from 'react';
+import React from 'react';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
 import axios from 'axios';
 import {Container, Row, Col, CardGroup, Card, CardBlock, Form, Button, Input, InputGroup, InputGroupAddon} from 'reactstrap';
 
-class ResetPassword extends Component {
+class ResetPassword extends React.PureComponent {
   constructor(props) {
     super(props);
 
@@ -60,6 +60,7 @@ class ResetPassword extends Component {
   render() {
     const {location} = this.props;
     const {errors, doubleClick} = this.state;
+    const urlSearchParams = new URLSearchParams(location.search);
     let errorsMessage = '';
 
     if (errors !== '') {
@@ -83,7 +84,7 @@ class ResetPassword extends Component {
                       <InputGroup className="mb-3">
                         <InputGroupAddon><i className="icon-envelope"/></InputGroupAddon>
                         <Input type="email" name="email"
-                          defaultValue={location.query.email} readOnly/>
+                          defaultValue={urlSearchParams.get('email')} readOnly/>
                       </InputGroup>
                       <InputGroup className="mb-3">
                         <InputGroupAddon><i className="icon-lock"/></InputGroupAddon>
@@ -95,7 +96,7 @@ class ResetPassword extends Component {
                           placeholder="Подтвердите пароль" required/>
                       </InputGroup>
                       <Input type="hidden" name="token"
-                        defaultValue={location.query.token}/>
+                        defaultValue={urlSearchParams.get('token')}/>
                       <Row>
                         <Col xs="6">
                           <Button color="primary"

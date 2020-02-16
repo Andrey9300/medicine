@@ -15,9 +15,10 @@ ul#main_nav li{
 .pull-right{
     cursor: pointer;
 }
-.sidebar > .nav-item {
+.sidebar .nav-item {
     margin: 10px 20px;
 }
-.sidebar > .nav-item > a {
-    color: white;
+.sidebar .nav-item a {
+    color: #fff;
+    text-decoration: none;
 }

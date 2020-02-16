@@ -1,11 +1,11 @@
-import React, {Component} from 'react';
+import React from 'react';
 import {connect} from 'react-redux';
 import {Link} from 'react-router-dom';
 import PropTypes from 'prop-types';
 import {Container, Row, Col, CardGroup, Card, CardBlock, Form, Button, Input, InputGroup, InputGroupAddon} from 'reactstrap';
 import {loginUser} from '../../actions/userActions';
 
-class Login extends Component {
+class Login extends React.PureComponent {
   constructor() {
     super();
     this.state = {

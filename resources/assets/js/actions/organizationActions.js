@@ -61,16 +61,16 @@ export function fetchOrganizations() {
         });
       })
       .catch((error) => {
+        dispatch({
+          payload: error,
+          type: 'ORGANIZATIONS_REJECTED'
+        });
         history.replaceState(
           null,
           null,
           '/#/login'
         );
         window.location.reload();
-        dispatch({
-          payload: error,
-          type: 'ORGANIZATIONS_REJECTED'
-        });
       });
   };
 }

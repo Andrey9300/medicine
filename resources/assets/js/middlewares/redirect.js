@@ -1,5 +1,11 @@
 export const redirect = (store) => (next) => (action) => {
   if (action.payload.response && action.payload.response.status === 401) {
+    store.dispatch({
+      payload: {
+        isAuthenticated: false
+      },
+      type: 'LOGOUT_USER_FULFILLED'
+    });
     history.pushState(
       null,
       null,
