@@ -18,7 +18,10 @@ class EmployeesTableSeeder extends Seeder
             'date_employment' => '2017-10-05',
             'medical_book' => '10000',
             'user_id' => 1,
-            'organization_name' => 'ООО Мясокомбинат'
+            'organization_name' => 'ООО Мясокомбинат',
+            'position' => 'Шеф повар',
+            'comments' => '',
+            'category_id' => '1'
         ]);
         DB::table('employees')->insert([
             'id' => 2,
@@ -27,7 +30,10 @@ class EmployeesTableSeeder extends Seeder
             'date_employment' => '2015-09-05',
             'medical_book' => '10001',
             'user_id' => 1,
-            'organization_name' => 'ООО Мясокомбинат'
+            'organization_name' => 'ООО Мясокомбинат',
+            'position' => 'Шеф повар',
+            'comments' => '',
+            'category_id' => '2'
         ]);
         DB::table('employees')->insert([
             'id' => 3,
@@ -36,7 +42,10 @@ class EmployeesTableSeeder extends Seeder
             'date_employment' => '2017-01-05',
             'medical_book' => '10002',
             'user_id' => 1,
-            'organization_name' => 'ООО Мясокомбинат'
+            'organization_name' => 'ООО Мясокомбинат',
+            'position' => 'Шеф повар',
+            'comments' => '',
+            'category_id' => '3'
         ]);
         DB::table('employees')->insert([
             'id' => 4,
@@ -45,7 +54,10 @@ class EmployeesTableSeeder extends Seeder
             'date_employment' => '2016-12-05',
             'medical_book' => '10003',
             'user_id' => 1,
-            'organization_name' => 'ООО Мясокомбинат'
+            'organization_name' => 'ООО Мясокомбинат',
+            'position' => 'Шеф повар',
+            'comments' => '',
+            'category_id' => '1'
         ]);
         DB::table('employees')->insert([
             'id' => 5,
@@ -54,7 +66,10 @@ class EmployeesTableSeeder extends Seeder
             'date_employment' => '2015-04-10',
             'medical_book' => '10004',
             'user_id' => 1,
-            'organization_name' => 'ООО Мясокомбинат'
+            'organization_name' => 'ООО Мясокомбинат',
+            'position' => 'Шеф повар',
+            'comments' => '',
+            'category_id' => '2'
         ]);
         DB::table('employees')->insert([
             'id' => 6,
@@ -63,7 +78,10 @@ class EmployeesTableSeeder extends Seeder
             'date_employment' => '2013-10-10',
             'medical_book' => '10005',
             'user_id' => 2,
-            'organization_name' => 'ОАО Рыбокомбинат'
+            'organization_name' => 'ОАО Рыбокомбинат',
+            'position' => 'Шеф повар',
+            'comments' => '',
+            'category_id' => '3'
         ]);
         DB::table('employees')->insert([
             'id' => 7,
@@ -72,7 +90,10 @@ class EmployeesTableSeeder extends Seeder
             'date_employment' => '2016-10-10',
             'medical_book' => '10006',
             'user_id' => 2,
-            'organization_name' => 'ОАО Рыбокомбинат'
+            'organization_name' => 'ОАО Рыбокомбинат',
+            'position' => 'Шеф повар',
+            'comments' => '',
+            'category_id' => '1'
         ]);
         DB::table('employees')->insert([
             'id' => 8,
@@ -81,7 +102,10 @@ class EmployeesTableSeeder extends Seeder
             'date_employment' => '2017-05-01',
             'medical_book' => '10007',
             'user_id' => 2,
-            'organization_name' => 'ОАО Рыбокомбинат'
+            'organization_name' => 'ОАО Рыбокомбинат',
+            'position' => 'Шеф повар',
+            'comments' => '',
+            'category_id' => '2'
         ]);
         DB::table('employees')->insert([
             'id' => 9,
@@ -90,7 +114,10 @@ class EmployeesTableSeeder extends Seeder
             'date_employment' => '2015-10-10',
             'medical_book' => '10008',
             'user_id' => 2,
-            'organization_name' => 'ОАО Рыбокомбинат'
+            'organization_name' => 'ОАО Рыбокомбинат',
+            'position' => 'Шеф повар',
+            'comments' => '',
+            'category_id' => '3'
         ]);
         DB::table('employees')->insert([
             'id' => 10,
@@ -99,7 +126,10 @@ class EmployeesTableSeeder extends Seeder
             'date_employment' => '2017-04-04',
             'medical_book' => '10009',
             'user_id' => 2,
-            'organization_name' => 'ОАО Рыбокомбинат'
+            'organization_name' => 'ОАО Рыбокомбинат',
+            'position' => 'Шеф повар',
+            'comments' => '',
+            'category_id' => '1'
         ]);
         DB::table('employees')->insert([
             'id' => 11,
@@ -108,7 +138,10 @@ class EmployeesTableSeeder extends Seeder
             'date_employment' => '2012-07-04',
             'medical_book' => '10010',
             'user_id' => 3,
-            'organization_name' => 'ЗАО Хлебокобинат'
+            'organization_name' => 'ЗАО Хлебокобинат',
+            'position' => 'Шеф повар',
+            'comments' => '',
+            'category_id' => '2'
         ]);
         DB::table('employees')->insert([
             'id' => 12,
@@ -117,7 +150,10 @@ class EmployeesTableSeeder extends Seeder
             'date_employment' => '2017-04-04',
             'medical_book' => '10011',
             'user_id' => 3,
-            'organization_name' => 'ЗАО Хлебокобинат'
+            'organization_name' => 'ЗАО Хлебокобинат',
+            'position' => 'Шеф повар',
+            'comments' => '',
+            'category_id' => '3'
         ]);
         DB::table('employees')->insert([
             'id' => 13,
@@ -126,7 +162,10 @@ class EmployeesTableSeeder extends Seeder
             'date_employment' => '2016-05-14',
             'medical_book' => '10012',
             'user_id' => 3,
-            'organization_name' => 'ЗАО Хлебокобинат'
+            'organization_name' => 'ЗАО Хлебокобинат',
+            'position' => 'Шеф повар',
+            'comments' => '',
+            'category_id' => '1'
         ]);
         DB::table('employees')->insert([
             'id' => 14,
@@ -135,7 +174,10 @@ class EmployeesTableSeeder extends Seeder
             'date_employment' => '2014-10-04',
             'medical_book' => '10013',
             'user_id' => 3,
-            'organization_name' => 'ЗАО Хлебокобинат'
+            'organization_name' => 'ЗАО Хлебокобинат',
+            'position' => 'Шеф повар',
+            'comments' => '',
+            'category_id' => '2'
         ]);
         DB::table('employees')->insert([
             'id' => 15,
@@ -144,7 +186,10 @@ class EmployeesTableSeeder extends Seeder
             'date_employment' => '2016-08-25',
             'medical_book' => '10014',
             'user_id' => 3,
-            'organization_name' => 'ЗАО Хлебокобинат'
+            'organization_name' => 'ЗАО Хлебокобинат',
+            'position' => 'Шеф повар',
+            'comments' => '',
+            'category_id' => '3'
         ]);
 
         DB::table('employees')->insert([
@@ -154,7 +199,10 @@ class EmployeesTableSeeder extends Seeder
             'date_employment' => '2016-04-10',
             'medical_book' => '10015',
             'user_id' => 1,
-            'organization_name' => 'ОАО Сырокомбинат'
+            'organization_name' => 'ОАО Сырокомбинат',
+            'position' => 'Шеф повар',
+            'comments' => '',
+            'category_id' => '1'
         ]);
 
         DB::table('employees')->insert([
@@ -164,7 +212,10 @@ class EmployeesTableSeeder extends Seeder
             'date_employment' => '2016-01-01',
             'medical_book' => '10016',
             'user_id' => 1,
-            'organization_name' => 'ОАО Сырокомбинат'
+            'organization_name' => 'ОАО Сырокомбинат',
+            'position' => 'Шеф повар',
+            'comments' => '',
+            'category_id' => '2'
         ]);
 
         DB::table('employees')->insert([
@@ -174,7 +225,10 @@ class EmployeesTableSeeder extends Seeder
             'date_employment' => '2016-01-25',
             'medical_book' => '10017',
             'user_id' => 1,
-            'organization_name' => 'ОАО Сырокомбинат'
+            'organization_name' => 'ОАО Сырокомбинат',
+            'position' => 'Шеф повар',
+            'comments' => '',
+            'category_id' => '3'
         ]);
 
         DB::table('employees')->insert([
@@ -184,7 +238,10 @@ class EmployeesTableSeeder extends Seeder
             'date_employment' => '2017-08-20',
             'medical_book' => '10018',
             'user_id' => 1,
-            'organization_name' => 'АО Колбасный цех'
+            'organization_name' => 'АО Колбасный цех',
+            'position' => 'Шеф повар',
+            'comments' => '',
+            'category_id' => '1'
         ]);
 
         DB::table('employees')->insert([
@@ -194,7 +251,10 @@ class EmployeesTableSeeder extends Seeder
             'date_employment' => '2015-03-20',
             'medical_book' => '10019',
             'user_id' => 1,
-            'organization_name' => 'АО Колбасный цех'
+            'organization_name' => 'АО Колбасный цех',
+            'position' => 'Шеф повар',
+            'comments' => '',
+            'category_id' => '2'
         ]);
 
         DB::table('employees')->insert([
@@ -204,7 +264,10 @@ class EmployeesTableSeeder extends Seeder
             'date_employment' => '2014-01-10',
             'medical_book' => '10020',
             'user_id' => 1,
-            'organization_name' => 'АО Колбасный цех'
+            'organization_name' => 'АО Колбасный цех',
+            'position' => 'Шеф повар',
+            'comments' => '',
+            'category_id' => '3'
         ]);
 
     }

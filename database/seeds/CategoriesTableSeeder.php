@@ -17,7 +17,7 @@ class CategoriesTableSeeder extends Seeder
         ]);
         DB::table('categories')->insert([
             'id' => 2,
-            'name' => 'п.15 Общественное питание',
+            'name' => 'п. 15. Общественное питание',
         ]);
         DB::table('categories')->insert([
             'id' => 3,

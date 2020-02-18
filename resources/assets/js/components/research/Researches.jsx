@@ -36,7 +36,7 @@ class Researches extends React.PureComponent {
     const {errors, userResearches} = this.props;
     let errorsMessage = '';
 
-    if (userResearches === null) {
+    if (userResearches.length === 0 || userResearches === null) {
       return (
         <div className="animated fadeIn">
           <Row>
@@ -44,8 +44,8 @@ class Researches extends React.PureComponent {
               <Card className="text-center">
                 <CardHeader>Исследований нет</CardHeader>
                 <CardBlock>
-                  <Link to={'/organizations/create'}>Добавьте организацию</Link>
-                  <p>На основе категорий организаций будут сформированы необходимые исследования</p>
+                  <Link to={'/employees/create'}>Добавьте сотрудника</Link>
+                  <p>На основе категорий сотрудника будут сформированы необходимые исследования</p>
                 </CardBlock>
               </Card>
             </Col>

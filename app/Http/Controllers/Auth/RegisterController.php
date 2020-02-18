@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Http\Models\ResearchCategory;
+use App\Http\Models\UserResearches;
 use App\Notifications\ActivateAccount;
 use App\User;
 use App\Http\Controllers\Controller;
@@ -70,6 +72,15 @@ class RegisterController extends Controller
             'password' => bcrypt($data['password']),
         ]);
         $newUser->notify(new ActivateAccount($newUser));
+
+        $researchCategories = ResearchCategory::all();
+
+        foreach ($researchCategories as $researchCategory) {
+            UserResearches::firstOrCreate([
+                'research_categories_id' => $researchCategory->id,
+                'user_id' => $newUser->id
+            ]);
+        }
 
         return $newUser;
     }

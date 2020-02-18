@@ -57,9 +57,7 @@ class EditOrganization extends React.PureComponent {
           <Col xs="12" md="6">
             <Card>
               <Form className="form-horizontal" onSubmit={this.handleSubmit}>
-                <CardHeader>
-                                    Редактировать организацию
-                </CardHeader>
+                <CardHeader>Редактировать организацию</CardHeader>
                 <CardBlock className="card-body">
                   <FormGroup row>
                     <Col md="3">

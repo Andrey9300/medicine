@@ -4,6 +4,7 @@ import {fetchOrganizations} from './../../actions/organizationActions';
 import {addEmployee} from './../../actions/employeeActions';
 import {connect} from 'react-redux';
 import {Row, Col, Button, Card, CardHeader, CardFooter, CardBlock, Form, FormGroup, Label, Input} from 'reactstrap';
+import {fetchCategories} from '../../actions/categoryActions';
 
 class NewEmployee extends React.PureComponent {
   constructor(props) {
@@ -13,6 +14,7 @@ class NewEmployee extends React.PureComponent {
   }
 
   componentWillMount() {
+    this.props.dispatch(fetchCategories());
     this.props.dispatch(fetchOrganizations());
   }
 
@@ -32,7 +34,7 @@ class NewEmployee extends React.PureComponent {
   }
 
   render() {
-    const {organizations, errors} = this.props;
+    const {organizations, categories, errors} = this.props;
     let errorsMessage = '';
 
     if (errors) {
@@ -61,9 +63,14 @@ class NewEmployee extends React.PureComponent {
                       <Label htmlFor="text-input">Дата рождения</Label>
                     </Col>
                     <Col xs="12" md="9">
-                      <Input type="text" id="date_birthday" name="date_birthday"
+                      <Input
+                        type="text"
+                        id="date_birthday"
+                        name="date_birthday"
+                        pattern="[0-9]{2}-[0-9]{2}-[0-9]{4}"
                         placeholder="дд-мм-гггг"
-                        required/>
+                        required
+                      />
                     </Col>
                   </FormGroup>
                   <FormGroup row>
@@ -71,8 +78,14 @@ class NewEmployee extends React.PureComponent {
                       <Label htmlFor="text-input">Дата приема на работу</Label>
                     </Col>
                     <Col xs="12" md="9">
-                      <Input type="text" id="date_employment" name="date_employment"
-                        placeholder="дд-мм-гггг" required/>
+                      <Input
+                        type="text"
+                        id="date_employment"
+                        name="date_employment"
+                        pattern="[0-9]{2}-[0-9]{2}-[0-9]{4}"
+                        placeholder="дд-мм-гггг"
+                        required
+                      />
                     </Col>
                   </FormGroup>
                   <FormGroup row>
@@ -81,6 +94,32 @@ class NewEmployee extends React.PureComponent {
                     </Col>
                     <Col xs="12" md="9">
                       <Input type="text" id="medical_book" name="medical_book"/>
+                    </Col>
+                  </FormGroup>
+                  <FormGroup row>
+                    <Col md="3">
+                      <Label htmlFor="text-input">Должность</Label>
+                    </Col>
+                    <Col xs="12" md="9">
+                      <Input type="text" id="position" name="position"/>
+                    </Col>
+                  </FormGroup>
+                  <FormGroup row>
+                    <Col md="3">
+                      <Label htmlFor="text-input">Категория</Label>
+                    </Col>
+                    <Col xs="12" md="9">
+                      <Input type="select" name="category_id" id="category_id" required>
+                        <option />
+                        {categories.map((category) => {
+                          return (
+                            <option key={category.id} value={category.id}>
+                              {category.name}
+                            </option>
+                          );
+                        })
+                        }
+                      </Input>
                     </Col>
                   </FormGroup>
                   <FormGroup row>
@@ -96,6 +135,14 @@ class NewEmployee extends React.PureComponent {
                           </option>
                         ))}
                       </Input>
+                    </Col>
+                  </FormGroup>
+                  <FormGroup row>
+                    <Col md="3">
+                      <Label htmlFor="text-input">Комментарий</Label>
+                    </Col>
+                    <Col xs="12" md="9">
+                      <Input type="textarea" id="comments" name="comments"/>
                     </Col>
                   </FormGroup>
                 </CardBlock>
@@ -114,13 +161,15 @@ class NewEmployee extends React.PureComponent {
 }
 
 NewEmployee.propTypes = {
-  router: PropTypes.object
+  router: PropTypes.object,
+  categories: PropTypes.array
 };
 
 const mapStateToProps = (state) => {
   return {
     errors: state.employees.errors,
-    organizations: state.organizations.organizations
+    organizations: state.organizations.organizations,
+    categories: state.categories.categories
   };
 };
 

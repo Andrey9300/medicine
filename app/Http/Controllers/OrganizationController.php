@@ -32,15 +32,6 @@ class OrganizationController extends Controller
 
         $currentUser->organizations()->attach($organization);
 
-        $researchCategories = ResearchCategory::where('category_id', $request->category_id)->get();
-
-        foreach ($researchCategories as $researchCategory) {
-            UserResearches::firstOrCreate([
-                'research_categories_id' => $researchCategory->id,
-                'user_id' => $currentUser->id
-            ]);
-        }
-
         // привязка руководителя к организации: по умолчанию текущий user,
         // иначе создаем user с role = head или ищем в системе
 //        if (User::where('email', $request->head_email)->exists()) {

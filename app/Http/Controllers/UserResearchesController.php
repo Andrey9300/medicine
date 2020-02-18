@@ -46,12 +46,12 @@ class UserResearchesController extends Controller
         $userAdmin = IndexController::findAdmin();
         $categoriesId = [];
 
-        foreach ($userAdmin->organizations as $organization) {
-            array_push($categoriesId, $organization->category_id);
+        foreach ($userAdmin->employees as $employee) {
+            array_push($categoriesId, $employee->category_id);
         }
 
         $categoriesId = array_unique($categoriesId);
-        $researches = ResearchCategory::whereIn('category_id', $categoriesId)->get();
+        $researches = ResearchCategory::all();
         $userResearches = $userAdmin->researches;
 
         foreach ($researches as $research) {

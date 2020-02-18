@@ -98,9 +98,23 @@ class Employee extends React.PureComponent {
                         <td>Номер мед книжки:</td>
                         <td>{employee.medical_book}</td>
                       </tr>
+                      {employee.deleted_at &&
+                        <tr>
+                          <td>Уволен:</td>
+                          <td>{employee.deleted_at}</td>
+                        </tr>
+                      }
                       <tr>
-                        <td>Уволен:</td>
-                        <td>{employee.deleted_at ? employee.deleted_at : 'Нет'}</td>
+                        <td>Должность:</td>
+                        <td>{employee.position}</td>
+                      </tr>
+                      <tr>
+                        <td>Категория:</td>
+                        <td>{employee.category.name}</td>
+                      </tr>
+                      <tr>
+                        <td>Комментарий:</td>
+                        <td>{employee.comments}</td>
                       </tr>
                     </tbody>
                   </Table>

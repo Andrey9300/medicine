@@ -22,6 +22,10 @@ class CreateEmployeesTable extends Migration
             $table->integer('user_id')->unsigned();
             $table->foreign('user_id')->references('id')->on('users');
             $table->string('organization_name');
+            $table->string('position');
+            $table->string('comments')->nullable();
+            $table->integer('category_id')->unsigned();
+            $table->foreign('category_id')->references('id')->on('categories');
             $table->foreign('organization_name')->references('name')->on('organizations');
             $table->unique(array('user_id', 'fio', 'date_birthday', 'date_employment'));
             $table->softDeletes();

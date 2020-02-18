@@ -33,6 +33,9 @@ class EmployeesController extends Controller
         $employee->medical_book = $request->medical_book;
         $employee->user_id = $userAdmin->id;
         $employee->organization_name = $request->organization_name;
+        $employee->position = $request->position;
+        $employee->category_id = $request->category_id;
+        $employee->comments = $request->comments;
         $employee->save();
     }
 
@@ -105,6 +108,7 @@ class EmployeesController extends Controller
 
         $employee->date_birthday = Carbon::createFromFormat('Y-m-d', $employee->date_birthday)->format('d-m-Y');
         $employee->date_employment = Carbon::createFromFormat('Y-m-d', $employee->date_employment)->format('d-m-Y');
+        $employee->category;
 
         $employment_date =  Carbon::parse($employee->date_employment);
         $diffDatesResearch = $employment_date->diffInMonths(Carbon::now());
@@ -138,6 +142,9 @@ class EmployeesController extends Controller
         $employee->date_employment = $date_employment;
         $employee->medical_book = $request->medical_book;
         $employee->organization_name = $request->organization_name;
+        $employee->position = $request->position;
+        $employee->category_id = $request->category_id;
+        $employee->comments = $request->comments;
         $employee->save();
     }
 
@@ -176,7 +183,7 @@ class EmployeesController extends Controller
      */
     public function researches($id) {
         $employee = Employee::withTrashed()->where('id', $id)->first();
-        $employeeCategoryId = $employee->organization->category_id;
+        $employeeCategoryId = $employee->category_id;
         $userAdmin = IndexController::findAdmin();
         $userResearches = $userAdmin->researches;
         $employeeResearches = [];
@@ -240,7 +247,7 @@ class EmployeesController extends Controller
         $options_ends = $employee->researches_ends = []; // просрочено
         $options_expired = $employee->researches_expired = []; // подходит к концу
         $employee->sumForReseaches = 0;
-        $employeeCategoryId = $employee->organization->category_id;
+        $employeeCategoryId = $employee->category_id;
 
         foreach ($userResearches as $userResearch) {
             if ($userResearch->category_id !== $employeeCategoryId) {
@@ -320,14 +327,14 @@ class EmployeesController extends Controller
                         break;
                 }
 
-                if (Carbon::parse($employeeResearch->date)->year === Carbon::now()->year &&
-                    Carbon::parse($employeeResearch->date)->month === Carbon::now()->subMonth()->month
-                ) {
-                    $researchPrice = HospitalResearch::where('user_researches_id', '=', $employeeResearch->user_researches_id)->first()->price;
-                    if (!is_null($researchPrice)){
-                        $employee->sumForReseaches += $researchPrice;
-                    }
-                }
+//                if (Carbon::parse($employeeResearch->date)->year === Carbon::now()->year &&
+//                    Carbon::parse($employeeResearch->date)->month === Carbon::now()->subMonth()->month
+//                ) {
+//                    $researchPrice = HospitalResearch::where('user_researches_id', '=', $employeeResearch->user_researches_id)->first()->price;
+//                    if (!is_null($researchPrice)){
+//                        $employee->sumForReseaches += $researchPrice;
+//                    }
+//                }
             }
         }
 

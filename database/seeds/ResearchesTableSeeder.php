@@ -73,7 +73,7 @@ class ResearchesTableSeeder extends Seeder
         ]);
         DB::table('researches')->insert([
             'id' => 13,
-            'name' => 'Вакцинация притив шегеллезов (дизентерия Зонне)',
+            'name' => 'Вакцинация против шегеллезов (дизентерия Зонне)',
             'period_id' => 3
         ]);
         DB::table('researches')->insert([
@@ -83,12 +83,12 @@ class ResearchesTableSeeder extends Seeder
         ]);
         DB::table('researches')->insert([
             'id' => 15,
-            'name' => 'Вакцинация против Кори',
+            'name' => 'Исследование крови / Вакцинация против Кори',
             'period_id' => 6
         ]);
         DB::table('researches')->insert([
             'id' => 16,
-            'name' => 'Вакцинация против Дифтерии',
+            'name' => 'Исследование крови / Вакцинация против Дифтерии',
             'period_id' => 6
         ]);
         DB::table('researches')->insert([

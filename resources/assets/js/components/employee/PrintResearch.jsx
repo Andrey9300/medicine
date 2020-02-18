@@ -63,7 +63,16 @@ class PrintEmployee extends React.PureComponent {
     }
 
     if (!employee || !hospitalOrg) {
-      return null;
+      return (
+        <Card>
+          <CardHeader>
+            <i className="fa fa-dot-circle-o" aria-hidden="true"/>Что-то пошло не так
+          </CardHeader>
+          <CardBlock className="card-body">
+            Возможно нужно добавить <Link to={'/hospitals'}>медицинское учреждение.</Link>
+          </CardBlock>
+        </Card>
+      );
     }
 
     return (

@@ -21,4 +21,9 @@ class Employee extends Model
     {
         return $this->belongsTo('App\Http\Models\Organization', 'organization_name', 'name');
     }
+
+    public function category()
+    {
+        return $this->belongsTo('App\Http\Models\Category');
+    }
 }
