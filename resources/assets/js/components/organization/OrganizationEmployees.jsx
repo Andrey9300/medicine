@@ -1,4 +1,7 @@
-import {fetchOrganization, deleteOrganizationEmployee} from '../../actions/organizationActions';
+import {
+  fetchOrganization,
+  deleteOrganizationEmployee,
+} from '../../actions/organizationActions';
 import {EmployeesList} from '../employee/EmployeesList';
 import React from 'react';
 import {connect} from 'react-redux';
@@ -10,7 +13,7 @@ class OrganizationEmployee extends React.PureComponent {
     super(props);
 
     this.state = {
-      organizationId: props.match.params.idOrganization
+      organizationId: props.match.params.idOrganization,
     };
   }
 
@@ -20,10 +23,9 @@ class OrganizationEmployee extends React.PureComponent {
 
   handleBtnDelete(idEmployee, event) {
     event.preventDefault();
-    this.props.dispatch(deleteOrganizationEmployee(
-      this.state.organizationId,
-      idEmployee
-    ));
+    this.props.dispatch(
+      deleteOrganizationEmployee(this.state.organizationId, idEmployee),
+    );
   }
 
   render() {
@@ -53,13 +55,13 @@ class OrganizationEmployee extends React.PureComponent {
 OrganizationEmployee.propTypes = {
   dispatch: PropTypes.func,
   match: PropTypes.object,
-  router: PropTypes.object
+  router: PropTypes.object,
 };
 
 const mapStateToProps = (state) => {
   return {
     user: state.users.user,
-    organization: state.organizations
+    organization: state.organizations,
   };
 };
 

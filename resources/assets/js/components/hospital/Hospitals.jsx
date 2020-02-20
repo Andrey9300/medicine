@@ -31,7 +31,9 @@ class Hospitals extends React.PureComponent {
               <Card className="text-center">
                 <CardHeader>Медицинских центров нет</CardHeader>
                 <CardBlock>
-                  <Link to={'/hospitals/create'}>Добавить медицинский центр</Link>
+                  <Link to={'/hospitals/create'}>
+                    Добавить медицинский центр
+                  </Link>
                 </CardBlock>
               </Card>
             </Col>
@@ -46,7 +48,8 @@ class Hospitals extends React.PureComponent {
           <Col xs="12" lg="12">
             <Card>
               <CardHeader>
-                <i className="fa fa-stethoscope" aria-hidden="true"/>Медицинские центры ({hospitals.length})
+                <i className="fa fa-stethoscope" aria-hidden="true" />
+                Медицинские центры ({hospitals.length})
               </CardHeader>
               <CardBlock className="card-body">
                 <Table responsive>
@@ -72,8 +75,7 @@ class Hospitals extends React.PureComponent {
                           <td>{hospital.phone}</td>
                         </tr>
                       );
-                    })
-                    }
+                    })}
                   </tbody>
                 </Table>
               </CardBlock>

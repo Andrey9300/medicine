@@ -2,24 +2,16 @@ export const redirect = (store) => (next) => (action) => {
   if (action.payload.response && action.payload.response.status === 401) {
     store.dispatch({
       payload: {
-        isAuthenticated: false
+        isAuthenticated: false,
       },
-      type: 'LOGOUT_USER_FULFILLED'
+      type: 'LOGOUT_USER_FULFILLED',
     });
-    history.pushState(
-      null,
-      null,
-      '/#/login'
-    );
+    history.pushState(null, null, '/#/login');
     window.location.reload();
   }
 
   if (action.type === 'ROUTING') {
-    history.replaceState(
-      null,
-      null,
-      action.payload.nextUrl
-    );
+    history.replaceState(null, null, action.payload.nextUrl);
   }
 
   return next(action);

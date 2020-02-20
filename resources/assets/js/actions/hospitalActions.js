@@ -2,16 +2,10 @@ import axios from 'axios';
 
 export function addHospital(formElement = null) {
   return (dispatch) => {
-    axios.post(
-      '/hospitals/store',
-      new FormData(formElement)
-    )
+    axios
+      .post('/hospitals/store', new FormData(formElement))
       .then(() => {
-        history.pushState(
-          null,
-          null,
-          '/#/hospitals'
-        );
+        history.pushState(null, null, '/#/hospitals');
         window.location.reload();
       })
       .catch((error) => {
@@ -28,7 +22,7 @@ export function addHospital(formElement = null) {
 
         dispatch({
           payload: errors.response.data.errors,
-          type: 'ADD_REJECTED'
+          type: 'ADD_REJECTED',
         });
       });
   };
@@ -36,23 +30,17 @@ export function addHospital(formElement = null) {
 
 export function editHospital(formElement = null, hospitalId) {
   return (dispatch) => {
-    axios.post(
-      `/hospitals/update/${hospitalId}`,
-      new FormData(formElement)
-    )
+    axios
+      .post(`/hospitals/update/${hospitalId}`, new FormData(formElement))
       .then(() => {
         alert('Медицинское учреждение успешно отредактировано');
-        history.pushState(
-          null,
-          null,
-          `/#/hospital/${hospitalId}`
-        );
+        history.pushState(null, null, `/#/hospital/${hospitalId}`);
         window.location.reload();
       })
       .catch((errors) => {
         dispatch({
           payload: errors.response.data.errors,
-          type: 'EDIT_REJECTED'
+          type: 'EDIT_REJECTED',
         });
       });
   };
@@ -65,23 +53,20 @@ export function editHospital(formElement = null, hospitalId) {
  */
 export function fetchHospitals() {
   return (dispatch) => {
-    axios.post('/hospitals')
+    axios
+      .post('/hospitals')
       .then((response) => {
         dispatch({
           payload: response,
-          type: 'HOSPITALS_FULFILLED'
+          type: 'HOSPITALS_FULFILLED',
         });
       })
       .catch((error) => {
-        history.replaceState(
-          null,
-          null,
-          '/#/login'
-        );
+        history.replaceState(null, null, '/#/login');
         window.location.reload();
         dispatch({
           payload: error,
-          type: 'HOSPITALS_REJECTED'
+          type: 'HOSPITALS_REJECTED',
         });
       });
   };
@@ -95,23 +80,20 @@ export function fetchHospitals() {
  */
 export function fetchHospital(id) {
   return (dispatch) => {
-    axios.post(`/hospitals/${id}`)
+    axios
+      .post(`/hospitals/${id}`)
       .then((response) => {
         dispatch({
           payload: response,
-          type: 'HOSPITAL_FULFILLED'
+          type: 'HOSPITAL_FULFILLED',
         });
       })
       .catch((error) => {
-        history.replaceState(
-          null,
-          null,
-          '/#/login'
-        );
+        history.replaceState(null, null, '/#/login');
         window.location.reload();
         dispatch({
           payload: error,
-          type: 'HOSPITAL_REJECTED'
+          type: 'HOSPITAL_REJECTED',
         });
       });
   };
@@ -125,13 +107,10 @@ export function fetchHospital(id) {
  */
 export function deleteHospital(id) {
   return () => {
-    axios.post(`/hospitals/destroy/${id}`)
+    axios
+      .post(`/hospitals/destroy/${id}`)
       .then(() => {
-        history.pushState(
-          null,
-          null,
-          '/#/hospitals'
-        );
+        history.pushState(null, null, '/#/hospitals');
         window.location.reload();
       })
       .catch((error) => {
@@ -147,17 +126,18 @@ export function deleteHospital(id) {
 
 export function fetchHospitalResearches(id) {
   return (dispatch) => {
-    axios.post(`/hospitals/researches/${id}`)
+    axios
+      .post(`/hospitals/researches/${id}`)
       .then((response) => {
         dispatch({
           payload: response,
-          type: 'HOSPITAL_RESEARCHES_FULFILLED'
+          type: 'HOSPITAL_RESEARCHES_FULFILLED',
         });
       })
       .catch((error) => {
         dispatch({
           payload: error,
-          type: 'HOSPITAL_RESEARCHES_REJECTED'
+          type: 'HOSPITAL_RESEARCHES_REJECTED',
         });
       });
   };
@@ -165,10 +145,11 @@ export function fetchHospitalResearches(id) {
 
 export function addHospitalResearches(formElement = null, hospitalId) {
   return (dispatch) => {
-    axios.post(
-      `/hospitals/researches/store/${hospitalId}`,
-      new FormData(formElement)
-    )
+    axios
+      .post(
+        `/hospitals/researches/store/${hospitalId}`,
+        new FormData(formElement),
+      )
       .then(() => {
         alert('Изменения сохранены');
         window.location.reload();
@@ -176,9 +157,8 @@ export function addHospitalResearches(formElement = null, hospitalId) {
       .catch((errors) => {
         dispatch({
           payload: errors,
-          type: 'STORE_RESEARCHES_REJECTED'
+          type: 'STORE_RESEARCHES_REJECTED',
         });
       });
   };
 }
-

@@ -3,7 +3,7 @@ const initialState = {
   fetched: false,
   hospital: null,
   hospitalResearches: [],
-  hospitals: []
+  hospitals: [],
 };
 
 /**
@@ -18,21 +18,21 @@ export default function reducer(state = initialState, action) {
       return {
         ...state,
         error: action.payload,
-        fetched: false
+        fetched: false,
       };
     }
     case 'EDIT_REJECTED': {
       return {
         ...state,
         error: action.payload,
-        fetched: false
+        fetched: false,
       };
     }
     case 'HOSPITALS_REJECTED': {
       return {
         ...state,
         error: action.payload,
-        fetched: false
+        fetched: false,
       };
     }
     case 'HOSPITALS_FULFILLED': {
@@ -40,14 +40,14 @@ export default function reducer(state = initialState, action) {
         ...state,
         error: null,
         fetched: true,
-        hospitals: action.payload.data.hospitals
+        hospitals: action.payload.data.hospitals,
       };
     }
     case 'HOSPITAL_REJECTED': {
       return {
         ...state,
         error: action.payload,
-        fetched: false
+        fetched: false,
       };
     }
     case 'HOSPITAL_FULFILLED': {
@@ -55,7 +55,7 @@ export default function reducer(state = initialState, action) {
         ...state,
         error: null,
         fetched: true,
-        hospital: action.payload.data.hospital
+        hospital: action.payload.data.hospital,
       };
     }
 
@@ -68,14 +68,14 @@ export default function reducer(state = initialState, action) {
       return {
         ...state,
         error: action.payload,
-        fetched: false
+        fetched: false,
       };
     }
     case 'HOSPITAL_RESEARCHES_REJECTED': {
       return {
         ...state,
         error: action.payload,
-        fetched: false
+        fetched: false,
       };
     }
     case 'HOSPITAL_RESEARCHES_FULFILLED': {
@@ -83,11 +83,12 @@ export default function reducer(state = initialState, action) {
         ...state,
         error: null,
         fetched: true,
-        hospitalResearches: action.payload.data.hospitalResearches
+        hospitalResearches: action.payload.data.hospitalResearches,
       };
     }
-    default: return {
-      ...state
-    };
+    default:
+      return {
+        ...state,
+      };
   }
 }

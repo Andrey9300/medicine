@@ -12,7 +12,7 @@ class Employee extends React.PureComponent {
 
     this.state = {
       employeeId: props.match.params.id,
-      errors: null
+      errors: null,
     };
     this.handleBtnDelete = this.handleBtnDelete.bind(this);
   }
@@ -23,10 +23,9 @@ class Employee extends React.PureComponent {
 
   handleBtnDelete(id, event) {
     event.preventDefault();
-    this.props.dispatch(deleteEmployee(
-      id,
-      this.props.employee.organization.id
-    ));
+    this.props.dispatch(
+      deleteEmployee(id, this.props.employee.organization.id),
+    );
   }
 
   createMarkup() {
@@ -45,7 +44,11 @@ class Employee extends React.PureComponent {
     let errorsMessage = '';
 
     if (errors) {
-      errorsMessage = <div className="alert alert-danger" role="alert">{this.createMarkup()}</div>;
+      errorsMessage = (
+        <div className="alert alert-danger" role="alert">
+          {this.createMarkup()}
+        </div>
+      );
     }
 
     if (!employee) {
@@ -60,31 +63,42 @@ class Employee extends React.PureComponent {
             <Col xs="6" sm="6" md="6">
               <Card>
                 <CardHeader>
-                  <i className="fa fa-users" aria-hidden="true"/>
+                  <i className="fa fa-users" aria-hidden="true" />
                   {employee.fio}
-                  {!employee.deleted_at &&
+                  {!employee.deleted_at && (
                     <>
-                      <Link to={`/employees/edit/${employee.id}`} style={{
-                        marginLeft: '12px'
-                      }}>
-                        <i className="fa fa-pencil"/>
+                      <Link
+                        to={`/employees/edit/${employee.id}`}
+                        style={{
+                          marginLeft: '12px',
+                        }}
+                      >
+                        <i className="fa fa-pencil" />
                       </Link>
 
-                      <span className="pull-right" onClick={(event) => this.handleBtnDelete(
-                        employee.id,
-                        event
-                      )}>
-                        <Button type="submit" size="sm" color="danger">Уволить</Button>
+                      <span
+                        className="pull-right"
+                        onClick={(event) =>
+                          this.handleBtnDelete(employee.id, event)
+                        }
+                      >
+                        <Button type="submit" size="sm" color="danger">
+                          Уволить
+                        </Button>
                       </span>
                     </>
-                  }
+                  )}
                 </CardHeader>
                 <CardBlock className="card-body">
                   <Table responsive>
                     <tbody>
                       <tr>
                         <td>Объект:</td>
-                        <td>{employee.organization_name ? employee.organization_name : 'Не привязан'}</td>
+                        <td>
+                          {employee.organization_name
+                            ? employee.organization_name
+                            : 'Не привязан'}
+                        </td>
                       </tr>
                       <tr>
                         <td>Дата рождения:</td>
@@ -98,12 +112,12 @@ class Employee extends React.PureComponent {
                         <td>Номер мед книжки:</td>
                         <td>{employee.medical_book}</td>
                       </tr>
-                      {employee.deleted_at &&
+                      {employee.deleted_at && (
                         <tr>
                           <td>Уволен:</td>
                           <td>{employee.deleted_at}</td>
                         </tr>
-                      }
+                      )}
                       <tr>
                         <td>Должность:</td>
                         <td>{employee.position}</td>
@@ -123,9 +137,7 @@ class Employee extends React.PureComponent {
             </Col>
           </Row>
         </div>
-        <EmployeeResearches
-          idEmployee={employeeId}
-        />
+        <EmployeeResearches idEmployee={employeeId} />
       </>
     );
   }
@@ -135,13 +147,13 @@ Employee.propTypes = {
   dispatch: PropTypes.func.isRequired,
   match: PropTypes.object.isRequired,
   user: PropTypes.object,
-  employee: PropTypes.object
+  employee: PropTypes.object,
 };
 
 const mapStateToProps = (state) => {
   return {
     employee: state.employees.employee,
-    user: state.users.user
+    user: state.users.user,
   };
 };
 

@@ -1,6 +1,9 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import {fetchOrganization, deleteOrganization} from './../../actions/organizationActions';
+import {
+  fetchOrganization,
+  deleteOrganization,
+} from './../../actions/organizationActions';
 import {fetchHospitals} from '../../actions/hospitalActions';
 import {EmployeesList} from '../employee/EmployeesList';
 import {Link} from 'react-router-dom';
@@ -14,7 +17,7 @@ class Organization extends React.PureComponent {
       organizationId: props.match.params.id,
       employees: [],
       researchesEnds: [],
-      researchesExpired: []
+      researchesExpired: [],
     };
   }
 
@@ -26,9 +29,14 @@ class Organization extends React.PureComponent {
   componentDidUpdate(prevProps) {
     const {organization} = this.props;
 
-    if (prevProps.organization !== organization && organization.employees.length > 0) {
+    if (
+      prevProps.organization !== organization &&
+      organization.employees.length > 0
+    ) {
       const employees = organization.employees.filter((item) => {
-        return item.researches_ends.length > 0 || item.researches_expired.length > 0;
+        return (
+          item.researches_ends.length > 0 || item.researches_expired.length > 0
+        );
       });
 
       const researchesEnds = organization.employees.reduce(
@@ -39,7 +47,7 @@ class Organization extends React.PureComponent {
 
           return parseInt(previousValue, 10);
         },
-        0
+        0,
       );
 
       const researchesExpired = organization.employees.reduce(
@@ -50,13 +58,13 @@ class Organization extends React.PureComponent {
 
           return parseInt(previousValue, 10);
         },
-        0
+        0,
       );
 
       this.setState({
         employees,
         researchesEnds,
-        researchesExpired
+        researchesExpired,
       });
     }
   }
@@ -80,15 +88,23 @@ class Organization extends React.PureComponent {
           <Col xs="6" sm="6" md="6">
             <Card>
               <CardHeader>
-                <i className="fa fa-building-o" aria-hidden="true"/>
-                «{organization.name}»
-                <Link to={`/organizations/edit/${organization.id}`} style={{
-                  marginLeft: '18px'
-                }}>
-                  <i className="fa fa-pencil"/>
+                <i className="fa fa-building-o" aria-hidden="true" />«
+                {organization.name}»
+                <Link
+                  to={`/organizations/edit/${organization.id}`}
+                  style={{
+                    marginLeft: '18px',
+                  }}
+                >
+                  <i className="fa fa-pencil" />
                 </Link>
-                <span className="pull-right" onClick={(event) => this.handleBtnDelete(organization.id, event)}>
-                  <i className="fa fa-trash"/>
+                <span
+                  className="pull-right"
+                  onClick={(event) =>
+                    this.handleBtnDelete(organization.id, event)
+                  }
+                >
+                  <i className="fa fa-trash" />
                 </span>
               </CardHeader>
               <CardBlock className="card-body">
@@ -104,9 +120,7 @@ class Organization extends React.PureComponent {
                     </tr>
                     <tr>
                       <td>Категория:</td>
-                      <td>
-                        {organization.category.name}
-                      </td>
+                      <td>{organization.category.name}</td>
                     </tr>
                   </tbody>
                 </Table>
@@ -120,7 +134,7 @@ class Organization extends React.PureComponent {
           <Col xs="6" sm="6" md="6">
             <Card>
               <CardHeader>
-                <i className="fa fa-users" aria-hidden="true"/>
+                <i className="fa fa-users" aria-hidden="true" />
                 Сотрудники
               </CardHeader>
               <CardBlock className="card-body">
@@ -129,7 +143,9 @@ class Organization extends React.PureComponent {
                     <tr>
                       <td>Вы контролируете медицинские осмотры:</td>
                       <td>
-                        <Link to={`/organizations/employees/${organization.id}`}>
+                        <Link
+                          to={`/organizations/employees/${organization.id}`}
+                        >
                           {organization.employees.length} чел.
                         </Link>
                       </td>
@@ -137,17 +153,22 @@ class Organization extends React.PureComponent {
                     <tr>
                       <td>Просрочен медицинский осмотр:</td>
                       <td>
-                        <Link to={`/organizations/expiredEmployees/${organization.id}`}>
+                        <Link
+                          to={`/organizations/expiredEmployees/${organization.id}`}
+                        >
                           {researchesExpired} чел.
                         </Link>
                       </td>
                     </tr>
                     <tr>
-                      <td>В следующем месяца нужно направить на
-                        медицинский осмотр:
+                      <td>
+                        В следующем месяца нужно направить на медицинский
+                        осмотр:
                       </td>
                       <td>
-                        <Link to={`/organizations/endsEmployees/${organization.id}`}>
+                        <Link
+                          to={`/organizations/endsEmployees/${organization.id}`}
+                        >
                           {researchesEnds} чел.
                         </Link>
                       </td>
@@ -158,7 +179,7 @@ class Organization extends React.PureComponent {
             </Card>
             <Card>
               <CardHeader>
-                <i className="fa fa-money" aria-hidden="true"/>
+                <i className="fa fa-money" aria-hidden="true" />
                 Бюджет
               </CardHeader>
               <CardBlock className="card-body">
@@ -172,7 +193,7 @@ class Organization extends React.PureComponent {
                       <td>
                         <Link to="#">
                           {organization.totalSumForResearches}&nbsp;
-                          <i className="fa fa-rub" aria-hidden="true"/>
+                          <i className="fa fa-rub" aria-hidden="true" />
                         </Link>
                       </td>
                     </tr>
@@ -181,7 +202,7 @@ class Organization extends React.PureComponent {
                       <td>
                         <Link to="#">
                           {organization.totalSumForCompletedResearches}&nbsp;
-                          <i className="fa fa-rub" aria-hidden="true"/>
+                          <i className="fa fa-rub" aria-hidden="true" />
                         </Link>
                       </td>
                     </tr>
@@ -191,7 +212,7 @@ class Organization extends React.PureComponent {
             </Card>
             <Card>
               <CardHeader>
-                <i className="fa fa-stethoscope" aria-hidden="true"/>
+                <i className="fa fa-stethoscope" aria-hidden="true" />
                 Медицинские центры
               </CardHeader>
               <CardBlock className="card-body">
@@ -205,20 +226,19 @@ class Organization extends React.PureComponent {
                           </Link>
                         </td>
                       </tr>
-                    ))
-                    }
+                    ))}
                   </tbody>
                 </Table>
               </CardBlock>
             </Card>
             <Card>
               <CardHeader>
-                <i className="fa fa-info" aria-hidden="true"/>
+                <i className="fa fa-info" aria-hidden="true" />
                 Информация
               </CardHeader>
               <CardBlock className="card-body">
-                Справочная информация о медицинском осмотре и правилах оформления личной медицинской
-                книжки
+                Справочная информация о медицинском осмотре и правилах
+                оформления личной медицинской книжки
               </CardBlock>
             </Card>
           </Col>
@@ -230,13 +250,13 @@ class Organization extends React.PureComponent {
 
 Organization.propTypes = {
   dispatch: PropTypes.func.isRequired,
-  match: PropTypes.object.isRequired
+  match: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = (state) => {
   return {
     organization: state.organizations.organization,
-    hospitals: state.hospitals.hospitals
+    hospitals: state.hospitals.hospitals,
   };
 };
 

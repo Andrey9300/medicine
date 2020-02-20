@@ -1,7 +1,19 @@
 import React from 'react';
 import {fetchCategories} from './../../actions/categoryActions';
 import {connect} from 'react-redux';
-import {Row, Col, Button, Card, CardHeader, CardBlock, CardFooter, Form, FormGroup, Label, Input} from 'reactstrap';
+import {
+  Row,
+  Col,
+  Button,
+  Card,
+  CardHeader,
+  CardBlock,
+  CardFooter,
+  Form,
+  FormGroup,
+  Label,
+  Input,
+} from 'reactstrap';
 import {addOrganization} from '../../actions/organizationActions';
 
 class NewOrganization extends React.PureComponent {
@@ -35,7 +47,11 @@ class NewOrganization extends React.PureComponent {
     let errorsMessage = '';
 
     if (errors) {
-      errorsMessage = <div className="alert alert-danger" role="alert">{this.createMarkup()}</div>;
+      errorsMessage = (
+        <div className="alert alert-danger" role="alert">
+          {this.createMarkup()}
+        </div>
+      );
     }
 
     return (
@@ -52,7 +68,7 @@ class NewOrganization extends React.PureComponent {
                       <Label htmlFor="text-input">Наименование</Label>
                     </Col>
                     <Col xs="12" md="9">
-                      <Input type="text" id="name" name="name" required/>
+                      <Input type="text" id="name" name="name" required />
                     </Col>
                   </FormGroup>
                   <FormGroup row>
@@ -67,15 +83,14 @@ class NewOrganization extends React.PureComponent {
                               {category.name}
                             </option>
                           );
-                        })
-                        }
+                        })}
                       </Input>
                     </Col>
                   </FormGroup>
                 </CardBlock>
                 <CardFooter>
                   <Button type="submit" size="sm" color="success">
-                    <i className="fa fa-dot-circle-o"/> Сохранить
+                    <i className="fa fa-dot-circle-o" /> Сохранить
                   </Button>
                 </CardFooter>
               </Form>
@@ -91,8 +106,10 @@ const mapStateToProps = (state) => {
   return {
     errors: state.organizations.errors,
     categories: state.categories.categories,
-    users: state.users.user
+    users: state.users.user,
   };
 };
 
-export const NewOrganizationContainer = connect(mapStateToProps)(NewOrganization);
+export const NewOrganizationContainer = connect(mapStateToProps)(
+  NewOrganization,
+);

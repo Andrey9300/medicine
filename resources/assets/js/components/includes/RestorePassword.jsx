@@ -3,7 +3,19 @@ import {connect} from 'react-redux';
 import {Link} from 'react-router-dom';
 import PropTypes from 'prop-types';
 import axios from 'axios';
-import {Container, Row, Col, CardGroup, Card, CardBlock, Form, Button, Input, InputGroup, InputGroupAddon} from 'reactstrap';
+import {
+  Container,
+  Row,
+  Col,
+  CardGroup,
+  Card,
+  CardBlock,
+  Form,
+  Button,
+  Input,
+  InputGroup,
+  InputGroupAddon,
+} from 'reactstrap';
 
 class RestorePassword extends React.PureComponent {
   constructor(props) {
@@ -11,7 +23,7 @@ class RestorePassword extends React.PureComponent {
 
     this.state = {
       errors: null,
-      doubleClick: false
+      doubleClick: false,
     };
     this.handleSubmit = this.handleSubmit.bind(this);
   }
@@ -21,13 +33,11 @@ class RestorePassword extends React.PureComponent {
     const formElement = document.querySelector('form');
 
     this.setState({
-      doubleClick: true
+      doubleClick: true,
     });
 
-    axios.post(
-      '/password/email',
-      new FormData(formElement)
-    )
+    axios
+      .post('/password/email', new FormData(formElement))
       .then(() => {
         alert('Вам отправлено письмо');
         window.history.pushState(null, null, '/#/login');
@@ -40,7 +50,7 @@ class RestorePassword extends React.PureComponent {
 
         this.setState({
           errors: error.response.data.errors,
-          doubleClick: false
+          doubleClick: false,
         });
       });
   }
@@ -60,7 +70,11 @@ class RestorePassword extends React.PureComponent {
     let errorsMessage = '';
 
     if (errors) {
-      errorsMessage = <div className="alert alert-danger" role="alert">{this.createMarkup()}</div>;
+      errorsMessage = (
+        <div className="alert alert-danger" role="alert">
+          {this.createMarkup()}
+        </div>
+      );
     }
 
     return (
@@ -76,12 +90,20 @@ class RestorePassword extends React.PureComponent {
                       <h1>Восстановить пароль</h1>
                       <p className="text-muted">Восстановление пароля</p>
                       <InputGroup className="mb-3">
-                        <InputGroupAddon><i className="icon-envelope"/></InputGroupAddon>
-                        <Input type="email" name="email" placeholder="E-mail" required/>
+                        <InputGroupAddon>
+                          <i className="icon-envelope" />
+                        </InputGroupAddon>
+                        <Input
+                          type="email"
+                          name="email"
+                          placeholder="E-mail"
+                          required
+                        />
                       </InputGroup>
                       <Row>
                         <Col xs="6">
-                          <Button color="primary"
+                          <Button
+                            color="primary"
                             className="px-4 btn-sm"
                             disabled={doubleClick}
                           >
@@ -107,12 +129,12 @@ class RestorePassword extends React.PureComponent {
 }
 
 RestorePassword.propTypes = {
-  dispatch: PropTypes.func.isRequired
+  dispatch: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => {
   return {
-    users: state.users.users
+    users: state.users.users,
   };
 };
 

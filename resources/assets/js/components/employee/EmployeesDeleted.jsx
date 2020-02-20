@@ -38,14 +38,14 @@ class EmployeesDeleted extends React.PureComponent {
 EmployeesDeleted.propTypes = {
   dispatch: PropTypes.func.isRequired,
   deleted: PropTypes.array.isRequired,
-  user: PropTypes.object
+  user: PropTypes.object,
 };
 
 const mapStateToProps = (state) => {
   return {
     user: state.users.user,
     organization: state.organizations.organization,
-    deleted: state.employees.deleted
+    deleted: state.employees.deleted,
   };
 };
 

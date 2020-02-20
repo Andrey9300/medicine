@@ -7,17 +7,18 @@ import axios from 'axios';
  */
 export function fetchCategories() {
   return (dispatch) => {
-    axios.post('/categories')
+    axios
+      .post('/categories')
       .then((response) => {
         dispatch({
           payload: response,
-          type: 'CATEGORIES_FULFILLED'
+          type: 'CATEGORIES_FULFILLED',
         });
       })
       .catch((error) => {
         dispatch({
           payload: error,
-          type: 'CATEGORIES_REJECTED'
+          type: 'CATEGORIES_REJECTED',
         });
       });
   };

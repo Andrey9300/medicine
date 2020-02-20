@@ -2,7 +2,19 @@ import React from 'react';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
 import axios from 'axios';
-import {Container, Row, Col, CardGroup, Card, CardBlock, Form, Button, Input, InputGroup, InputGroupAddon} from 'reactstrap';
+import {
+  Container,
+  Row,
+  Col,
+  CardGroup,
+  Card,
+  CardBlock,
+  Form,
+  Button,
+  Input,
+  InputGroup,
+  InputGroupAddon,
+} from 'reactstrap';
 
 class ResetPassword extends React.PureComponent {
   constructor(props) {
@@ -10,7 +22,7 @@ class ResetPassword extends React.PureComponent {
 
     this.state = {
       errors: null,
-      doubleClick: false
+      doubleClick: false,
     };
     this.handleSubmit = this.handleSubmit.bind(this);
   }
@@ -20,25 +32,19 @@ class ResetPassword extends React.PureComponent {
     const formElement = document.querySelector('form');
 
     this.setState({
-      doubleClick: true
+      doubleClick: true,
     });
 
-    axios.post(
-      '/password/reset',
-      new FormData(formElement)
-    )
+    axios
+      .post('/password/reset', new FormData(formElement))
       .then(() => {
-        history.pushState(
-          null,
-          null,
-          '/#/login'
-        );
+        history.pushState(null, null, '/#/login');
         window.location.reload();
       })
       .catch((error) => {
         this.setState({
           errors: error.response.data.errors,
-          doubleClick: false
+          doubleClick: false,
         });
       });
   }
@@ -60,7 +66,11 @@ class ResetPassword extends React.PureComponent {
     let errorsMessage = '';
 
     if (errors) {
-      errorsMessage = <div className="alert alert-danger" role="alert">{this.createMarkup()}</div>;
+      errorsMessage = (
+        <div className="alert alert-danger" role="alert">
+          {this.createMarkup()}
+        </div>
+      );
     }
 
     return (
@@ -76,24 +86,47 @@ class ResetPassword extends React.PureComponent {
                       <h1>Сбросить пароль</h1>
                       <p className="text-muted">Сброс пароля</p>
                       <InputGroup className="mb-3">
-                        <InputGroupAddon><i className="icon-envelope"/></InputGroupAddon>
-                        <Input type="email" name="email"
-                          defaultValue={urlSearchParams.get('email')} readOnly/>
+                        <InputGroupAddon>
+                          <i className="icon-envelope" />
+                        </InputGroupAddon>
+                        <Input
+                          type="email"
+                          name="email"
+                          defaultValue={urlSearchParams.get('email')}
+                          readOnly
+                        />
                       </InputGroup>
                       <InputGroup className="mb-3">
-                        <InputGroupAddon><i className="icon-lock"/></InputGroupAddon>
-                        <Input type="password" name="password" placeholder="Пароль" required/>
+                        <InputGroupAddon>
+                          <i className="icon-lock" />
+                        </InputGroupAddon>
+                        <Input
+                          type="password"
+                          name="password"
+                          placeholder="Пароль"
+                          required
+                        />
                       </InputGroup>
                       <InputGroup className="mb-3">
-                        <InputGroupAddon><i className="icon-lock"/></InputGroupAddon>
-                        <Input type="password" name="password_confirmation"
-                          placeholder="Подтвердите пароль" required/>
+                        <InputGroupAddon>
+                          <i className="icon-lock" />
+                        </InputGroupAddon>
+                        <Input
+                          type="password"
+                          name="password_confirmation"
+                          placeholder="Подтвердите пароль"
+                          required
+                        />
                       </InputGroup>
-                      <Input type="hidden" name="token"
-                        defaultValue={urlSearchParams.get('token')}/>
+                      <Input
+                        type="hidden"
+                        name="token"
+                        defaultValue={urlSearchParams.get('token')}
+                      />
                       <Row>
                         <Col xs="6">
-                          <Button color="primary"
+                          <Button
+                            color="primary"
                             className="px-4 btn-sm"
                             disabled={doubleClick}
                           >
@@ -114,12 +147,12 @@ class ResetPassword extends React.PureComponent {
 }
 
 ResetPassword.propTypes = {
-  dispatch: PropTypes.func.isRequired
+  dispatch: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => {
   return {
-    users: state.users.users
+    users: state.users.users,
   };
 };
 

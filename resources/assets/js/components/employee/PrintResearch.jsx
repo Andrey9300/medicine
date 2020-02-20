@@ -11,7 +11,7 @@ class PrintEmployee extends React.PureComponent {
     super(props);
     this.state = {
       errors: null,
-      employeeId: props.match.params.id
+      employeeId: props.match.params.id,
     };
   }
 
@@ -34,23 +34,37 @@ class PrintEmployee extends React.PureComponent {
     const {employee} = this.props;
     const bufferTr = [];
     let bufferTd = [];
-    const researches = employee.researches_expired.concat(employee.researches_ends);
+    const researches = employee.researches_expired.concat(
+      employee.researches_ends,
+    );
 
     researches.map((research, index) => {
       if (index % 2) {
-        bufferTr.push(<tr key={research.id}>{bufferTd}<td>{research.name}</td></tr>);
+        bufferTr.push(
+          <tr key={research.id}>
+            {bufferTd}
+            <td>{research.name}</td>
+          </tr>,
+        );
         bufferTd = [];
       } else {
         bufferTd.push(<td key={research.id}>{research.name}</td>);
       }
     });
 
-    if (bufferTr.length % 2 === 1 && bufferTd.length || bufferTr.length === 0 && bufferTd.length) {
+    if (
+      (bufferTr.length % 2 === 1 && bufferTd.length) ||
+      (bufferTr.length === 0 && bufferTd.length)
+    ) {
       bufferTr.push(<tr key={1}>{bufferTd}</tr>);
     }
 
     // пока выводим безусловно
-    bufferTr.push(<tr key={999}><td>Предварительный / периодический медицинский осмотр</td></tr>);
+    bufferTr.push(
+      <tr key={999}>
+        <td>Предварительный / периодический медицинский осмотр</td>
+      </tr>,
+    );
 
     return bufferTr;
   }
@@ -62,17 +76,23 @@ class PrintEmployee extends React.PureComponent {
     let errorsMessage = '';
 
     if (errors) {
-      errorsMessage = <div className="alert alert-danger" role="alert">{this.createMarkup()}</div>;
+      errorsMessage = (
+        <div className="alert alert-danger" role="alert">
+          {this.createMarkup()}
+        </div>
+      );
     }
 
     if (!employee || !hospitalOrg) {
       return (
         <Card>
           <CardHeader>
-            <i className="fa fa-dot-circle-o" aria-hidden="true"/>Что-то пошло не так
+            <i className="fa fa-dot-circle-o" aria-hidden="true" />
+            Что-то пошло не так
           </CardHeader>
           <CardBlock className="card-body">
-            Возможно нужно добавить <Link to={'/hospitals'}>медицинское учреждение.</Link>
+            Возможно нужно добавить{' '}
+            <Link to={'/hospitals'}>медицинское учреждение.</Link>
           </CardBlock>
         </Card>
       );
@@ -86,110 +106,146 @@ class PrintEmployee extends React.PureComponent {
             <Col xs="12" sm="12" md="12">
               <Card>
                 <CardHeader className="d-print-none" onClick={window.print}>
-                  <Link to="#" className="btn btn-primary btn-sm pull-left" style={{
-                    color: '#fff'
-                  }}>
-                                        Печать <i className="icon-printer"/>
+                  <Link
+                    to="#"
+                    className="btn btn-primary btn-sm pull-left"
+                    style={{
+                      color: '#fff',
+                    }}
+                  >
+                    Печать <i className="icon-printer" />
                   </Link>
                 </CardHeader>
                 <CardBlock className="card-body">
                   <Table responsive id="printResearches">
                     <tbody>
-                      <tr style={{
-                        borderTop: '1px solid',
-                        borderBottom: '1px solid'
-                      }}>
-                        <td style={{
-                          textAlign: 'center',
-                          fontWeight: 'bold'
-                        }} colSpan="2">
-                                                НАПРАВЛЕНИЕ НА МЕДИЦИНСКИЙ ОСМОТР
+                      <tr
+                        style={{
+                          borderTop: '1px solid',
+                          borderBottom: '1px solid',
+                        }}
+                      >
+                        <td
+                          style={{
+                            textAlign: 'center',
+                            fontWeight: 'bold',
+                          }}
+                          colSpan="2"
+                        >
+                          НАПРАВЛЕНИЕ НА МЕДИЦИНСКИЙ ОСМОТР
                         </td>
                       </tr>
-                      <tr style={{
-                        fontWeight: 'bold'
-                      }}>
-                        <td colSpan="2">{employee.pay ? 'ОПЛАТА: НАЛИЧНЫМИ' : 'ОПЛАТА: БЕЗНАЛИЧНЫЙ РАСЧЕТ'}</td>
+                      <tr
+                        style={{
+                          fontWeight: 'bold',
+                        }}
+                      >
+                        <td colSpan="2">
+                          {employee.pay
+                            ? 'ОПЛАТА: НАЛИЧНЫМИ'
+                            : 'ОПЛАТА: БЕЗНАЛИЧНЫЙ РАСЧЕТ'}
+                        </td>
                       </tr>
                       <tr>
                         <td colSpan="2">
-                                                Структурное подразделение / наименование объекта:&nbsp;
+                          Структурное подразделение / наименование
+                          объекта:&nbsp;
                           {employee.organization_name}
                         </td>
                       </tr>
                       <tr>
                         <td colSpan="2">
-                                                Фамилия Имя Отчество сотрудника: {employee.fio}
+                          Фамилия Имя Отчество сотрудника: {employee.fio}
                         </td>
                       </tr>
                       <tr>
                         <td colSpan="2">
-                                                Профессия / должность: {employee.role}
+                          Профессия / должность: {employee.role}
                         </td>
                       </tr>
                       <tr>
                         <td colSpan="2">
-                                                Кто направил (ФИО. Должность): {employee.organization.head_fio}
+                          Кто направил (ФИО. Должность):{' '}
+                          {employee.organization.head_fio}
                         </td>
                       </tr>
                       <tr>
-                        <td>
-                                                Подпись _______________________________
-                        </td>
-                        <td style={{
-                          textAlign: 'left'
-                        }}>
-                          {new Date(Date.now()).toLocaleDateString(
-                            'ru-RU',
-                            {
-                              year: 'numeric',
-                              month: 'long',
-                              day: 'numeric'
-                            }
-                          )}
+                        <td>Подпись _______________________________</td>
+                        <td
+                          style={{
+                            textAlign: 'left',
+                          }}
+                        >
+                          {new Date(Date.now()).toLocaleDateString('ru-RU', {
+                            year: 'numeric',
+                            month: 'long',
+                            day: 'numeric',
+                          })}
                         </td>
                       </tr>
-                      <tr style={{
-                        borderBottom: '1px solid'
-                      }}>
-                        <td style={{
-                          textAlign: 'right',
-                          fontWeight: 'italic'
-                        }} colSpan="2">
-                                                * При себе иметь документ удостоверяющий личность
+                      <tr
+                        style={{
+                          borderBottom: '1px solid',
+                        }}
+                      >
+                        <td
+                          style={{
+                            textAlign: 'right',
+                            fontWeight: 'italic',
+                          }}
+                          colSpan="2"
+                        >
+                          * При себе иметь документ удостоверяющий личность
                         </td>
                       </tr>
-                      <tr style={{
-                        borderTop: '1px solid',
-                        borderBottom: '1px solid'
-                      }}>
-                        <td style={{
-                          textAlign: 'center',
-                          fontWeight: 'bold'
-                        }} colSpan="2">
-                                                ПРОВЕСТИ МЕДИЦИНСКОЕ ОБСЛЕДОВАНИЕ В ОБЪЕМЕ:
+                      <tr
+                        style={{
+                          borderTop: '1px solid',
+                          borderBottom: '1px solid',
+                        }}
+                      >
+                        <td
+                          style={{
+                            textAlign: 'center',
+                            fontWeight: 'bold',
+                          }}
+                          colSpan="2"
+                        >
+                          ПРОВЕСТИ МЕДИЦИНСКОЕ ОБСЛЕДОВАНИЕ В ОБЪЕМЕ:
                         </td>
                       </tr>
 
                       {this.researches()}
 
-                      <tr style={{
-                        borderTop: '1px solid',
-                        borderBottom: '1px solid'
-                      }}>
-                        <td style={{
-                          textAlign: 'center',
-                          fontWeight: 'bold'
-                        }} colSpan="2">
-                                                ИНФОРМАЦИЯ О МЕДИЦИНСКОЙ ОРГАНИЗАЦИИ «{hospitalOrg.name}»
+                      <tr
+                        style={{
+                          borderTop: '1px solid',
+                          borderBottom: '1px solid',
+                        }}
+                      >
+                        <td
+                          style={{
+                            textAlign: 'center',
+                            fontWeight: 'bold',
+                          }}
+                          colSpan="2"
+                        >
+                          ИНФОРМАЦИЯ О МЕДИЦИНСКОЙ ОРГАНИЗАЦИИ «
+                          {hospitalOrg.name}»
                         </td>
                       </tr>
                       <tr>
                         <td colSpan="2">
-                                                Адрес: {hospitalOrg.address}<br/>
-                                                Режим работы: {hospitalOrg.shedule}<br/>
-                                                Телефон: {hospitalOrg.phone}
-                          <img width="670" height="300" src={hospitalOrg.photo_map}/>
+                          Адрес: {hospitalOrg.address}
+                          <br />
+                          Режим работы: {hospitalOrg.shedule}
+                          <br />
+                          Телефон: {hospitalOrg.phone}
+                          <img
+                            width="670"
+                            height="300"
+                            src={hospitalOrg.photo_map}
+                          />
                         </td>
                       </tr>
                     </tbody>
@@ -205,13 +261,13 @@ class PrintEmployee extends React.PureComponent {
 }
 
 PrintEmployee.propTypes = {
-  dispatch: PropTypes.func.isRequired
+  dispatch: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => {
   return {
     employee: state.employees.employee,
-    hospital: state.hospitals.hospitals
+    hospital: state.hospitals.hospitals,
   };
 };
 

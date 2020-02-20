@@ -4,7 +4,7 @@ const initialState = {
   user: null,
   userResearch: null,
   userResearches: [],
-  users: []
+  users: [],
 };
 
 /**
@@ -19,7 +19,7 @@ export default function reducer(state = initialState, action) {
       return {
         ...state,
         errors: action.payload,
-        fetched: false
+        fetched: false,
       };
     }
     case 'LOGIN_USER_FULFILLED': {
@@ -28,15 +28,15 @@ export default function reducer(state = initialState, action) {
         errors: null,
         fetched: true,
         user: {
-          isAuthenticated: action.payload.isAuthenticated
-        }
+          isAuthenticated: action.payload.isAuthenticated,
+        },
       };
     }
     case 'LOGIN_USER_CLEAR_ERRORS': {
       return {
         ...state,
         errors: null,
-        fetched: false
+        fetched: false,
       };
     }
     case 'LOGOUT_USER_FULFILLED': {
@@ -45,15 +45,15 @@ export default function reducer(state = initialState, action) {
         errors: null,
         fetched: false,
         user: {
-          isAuthenticated: action.payload.isAuthenticated
-        }
+          isAuthenticated: action.payload.isAuthenticated,
+        },
       };
     }
     case 'LOGOUT_USER_REJECTED': {
       return {
         ...state,
         errors: action.payload,
-        fetched: false
+        fetched: false,
       };
     }
     case 'REGISTRATION_USER_REJECTED': {
@@ -61,14 +61,14 @@ export default function reducer(state = initialState, action) {
         ...state,
         errors: action.payload,
         doubleClick: false,
-        fetched: false
+        fetched: false,
       };
     }
     case 'USERS_REJECTED': {
       return {
         ...state,
         errors: action.payload,
-        fetched: false
+        fetched: false,
       };
     }
     case 'USERS_FULFILLED': {
@@ -76,14 +76,14 @@ export default function reducer(state = initialState, action) {
         ...state,
         errors: null,
         fetched: true,
-        users: action.payload.data.users
+        users: action.payload.data.users,
       };
     }
     case 'USER_REJECTED': {
       return {
         ...state,
         errors: action.payload,
-        fetched: false
+        fetched: false,
       };
     }
     case 'USER_FULFILLED': {
@@ -91,12 +91,12 @@ export default function reducer(state = initialState, action) {
         ...state,
         errors: null,
         fetched: true,
-        user: action.payload.data.user
+        user: action.payload.data.user,
       };
     }
     default:
       return {
-        ...state
+        ...state,
       };
   }
 }

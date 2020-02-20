@@ -3,15 +3,13 @@ import {connect} from 'react-redux';
 
 class MainComponent extends React.PureComponent {
   render() {
-    return (
-      <div>123</div>
-    );
+    return <div>123</div>;
   }
 }
 
 const mapStateToProps = (state) => {
   return {
-    user: state.users.user
+    user: state.users.user,
   };
 };
 

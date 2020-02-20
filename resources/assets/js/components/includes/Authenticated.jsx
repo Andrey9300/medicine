@@ -17,9 +17,9 @@ export default function requireAuthentication(Component) {
         this.props.dispatch({
           payload: {
             method: 'replace',
-            nextUrl: '/login'
+            nextUrl: '/login',
           },
-          type: 'ROUTING'
+          type: 'ROUTING',
         });
       }
     }
@@ -27,10 +27,9 @@ export default function requireAuthentication(Component) {
     render() {
       return (
         <div>
-          {this.props.users.isAuthenticated === true
-            ? <Component {...this.props} />
-            : null
-          }
+          {this.props.users.isAuthenticated === true ? (
+            <Component {...this.props} />
+          ) : null}
         </div>
       );
     }
@@ -38,13 +37,13 @@ export default function requireAuthentication(Component) {
 
   const mapStateToProps = (state) => {
     return {
-      users: state.users
+      users: state.users,
     };
   };
 
   AuthenticatedComponent.propTypes = {
     dispatch: PropTypes.func.isRequired,
-    users: PropTypes.object.isRequired
+    users: PropTypes.object.isRequired,
   };
 
   return connect(mapStateToProps)(AuthenticatedComponent);

@@ -1,6 +1,18 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import {Row, Col, Button, Card, CardHeader, CardFooter, CardBlock, Form, FormGroup, Label, Input} from 'reactstrap';
+import {
+  Row,
+  Col,
+  Button,
+  Card,
+  CardHeader,
+  CardFooter,
+  CardBlock,
+  Form,
+  FormGroup,
+  Label,
+  Input,
+} from 'reactstrap';
 import {addHospital} from '../../actions/hospitalActions';
 
 class NewHospital extends React.PureComponent {
@@ -30,7 +42,11 @@ class NewHospital extends React.PureComponent {
     let errorsMessage = '';
 
     if (errors) {
-      errorsMessage = <div className="alert alert-danger" role="alert">{this.createMarkup()}</div>;
+      errorsMessage = (
+        <div className="alert alert-danger" role="alert">
+          {this.createMarkup()}
+        </div>
+      );
     }
 
     return (
@@ -47,7 +63,7 @@ class NewHospital extends React.PureComponent {
                       <Label htmlFor="text-input">Наименование</Label>
                     </Col>
                     <Col xs="12" md="9">
-                      <Input type="text" id="name" name="name" required/>
+                      <Input type="text" id="name" name="name" required />
                     </Col>
                   </FormGroup>
                   <FormGroup row>
@@ -55,7 +71,7 @@ class NewHospital extends React.PureComponent {
                       <Label htmlFor="text-input">Фактический адрес</Label>
                     </Col>
                     <Col xs="12" md="9">
-                      <Input type="text" id="address" name="address" required/>
+                      <Input type="text" id="address" name="address" required />
                     </Col>
                   </FormGroup>
                   <FormGroup row>
@@ -63,7 +79,12 @@ class NewHospital extends React.PureComponent {
                       <Label htmlFor="text-input">Контактное лицо</Label>
                     </Col>
                     <Col xs="12" md="9">
-                      <Input type="text" id="head_fio" name="head_fio" required/>
+                      <Input
+                        type="text"
+                        id="head_fio"
+                        name="head_fio"
+                        required
+                      />
                     </Col>
                   </FormGroup>
                   <FormGroup row>
@@ -71,7 +92,7 @@ class NewHospital extends React.PureComponent {
                       <Label htmlFor="text-input">Расписание</Label>
                     </Col>
                     <Col xs="12" md="9">
-                      <Input type="text" id="shedule" name="shedule"/>
+                      <Input type="text" id="shedule" name="shedule" />
                     </Col>
                   </FormGroup>
                   {/* <FormGroup row>*/}
@@ -87,13 +108,13 @@ class NewHospital extends React.PureComponent {
                       <Label htmlFor="text-input">Телефон</Label>
                     </Col>
                     <Col xs="12" md="9">
-                      <Input type="text" id="phone" name="phone"/>
+                      <Input type="text" id="phone" name="phone" />
                     </Col>
                   </FormGroup>
                 </CardBlock>
                 <CardFooter>
                   <Button type="submit" size="sm" color="success">
-                    <i className="fa fa-dot-circle-o"/> Сохранить
+                    <i className="fa fa-dot-circle-o" /> Сохранить
                   </Button>
                 </CardFooter>
               </Form>
@@ -106,8 +127,7 @@ class NewHospital extends React.PureComponent {
 }
 
 const mapStateToProps = (state) => {
-  return {
-  };
+  return {};
 };
 
 export default connect(mapStateToProps)(NewHospital);

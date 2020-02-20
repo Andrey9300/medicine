@@ -2,24 +2,36 @@ import React from 'react';
 import {connect} from 'react-redux';
 import {fetchHospital} from './../../actions/hospitalActions';
 import PropTypes from 'prop-types';
-import {Row, Col, Button, Card, CardHeader, CardFooter, CardBlock, Form, FormGroup, FormText, Label, Input} from 'reactstrap';
+import {
+  Row,
+  Col,
+  Button,
+  Card,
+  CardHeader,
+  CardFooter,
+  CardBlock,
+  Form,
+  FormGroup,
+  FormText,
+  Label,
+  Input,
+} from 'reactstrap';
 import {editHospital} from '../../actions/hospitalActions';
 
 class EditHospital extends React.PureComponent {
   constructor(props) {
     super(props);
     this.state = {
-      hospitalId: props.match.params.id
+      hospitalId: props.match.params.id,
     };
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   handleSubmit(event) {
     event.preventDefault();
-    this.props.dispatch(editHospital(
-      document.querySelector('form'),
-      this.state.hospitalId
-    ));
+    this.props.dispatch(
+      editHospital(document.querySelector('form'), this.state.hospitalId),
+    );
   }
 
   componentWillMount() {
@@ -41,7 +53,11 @@ class EditHospital extends React.PureComponent {
     let errorsMessage = '';
 
     if (errors) {
-      errorsMessage = <div className="alert alert-danger" role="alert">this.createMarkup()}</div>;
+      errorsMessage = (
+        <div className="alert alert-danger" role="alert">
+          this.createMarkup()}
+        </div>
+      );
     }
 
     if (!hospital) {
@@ -62,8 +78,13 @@ class EditHospital extends React.PureComponent {
                       <Label htmlFor="text-input">Наименование</Label>
                     </Col>
                     <Col xs="12" md="9">
-                      <Input type="text" id="name" name="name"
-                        defaultValue={hospital.name} required/>
+                      <Input
+                        type="text"
+                        id="name"
+                        name="name"
+                        defaultValue={hospital.name}
+                        required
+                      />
                     </Col>
                   </FormGroup>
                   <FormGroup row>
@@ -71,8 +92,13 @@ class EditHospital extends React.PureComponent {
                       <Label htmlFor="text-input">Адрес</Label>
                     </Col>
                     <Col xs="12" md="9">
-                      <Input type="text" id="address" name="address"
-                        defaultValue={hospital.address} required/>
+                      <Input
+                        type="text"
+                        id="address"
+                        name="address"
+                        defaultValue={hospital.address}
+                        required
+                      />
                     </Col>
                   </FormGroup>
                   <FormGroup row>
@@ -80,8 +106,13 @@ class EditHospital extends React.PureComponent {
                       <Label htmlFor="text-input">Контактное лицо</Label>
                     </Col>
                     <Col xs="12" md="9">
-                      <Input type="text" id="head_fio" name="head_fio"
-                        defaultValue={hospital.head_fio} required/>
+                      <Input
+                        type="text"
+                        id="head_fio"
+                        name="head_fio"
+                        defaultValue={hospital.head_fio}
+                        required
+                      />
                     </Col>
                   </FormGroup>
                   <FormGroup row>
@@ -89,8 +120,12 @@ class EditHospital extends React.PureComponent {
                       <Label htmlFor="text-input">Расписание</Label>
                     </Col>
                     <Col xs="12" md="9">
-                      <Input type="text" id="shedule" name="shedule"
-                        defaultValue={hospital.shedule}/>
+                      <Input
+                        type="text"
+                        id="shedule"
+                        name="shedule"
+                        defaultValue={hospital.shedule}
+                      />
                     </Col>
                   </FormGroup>
                   <FormGroup row>
@@ -98,8 +133,12 @@ class EditHospital extends React.PureComponent {
                       <Label htmlFor="text-input">Фото карты</Label>
                     </Col>
                     <Col xs="12" md="9">
-                      <Input type="text" id="photo_map" name="photo_map"
-                        defaultValue={hospital.photo_map}/>
+                      <Input
+                        type="text"
+                        id="photo_map"
+                        name="photo_map"
+                        defaultValue={hospital.photo_map}
+                      />
                       <FormText color="muted">Загрузите фото карты</FormText>
                     </Col>
                   </FormGroup>
@@ -108,14 +147,18 @@ class EditHospital extends React.PureComponent {
                       <Label htmlFor="text-input">Телефон</Label>
                     </Col>
                     <Col xs="12" md="9">
-                      <Input type="text" id="phone" name="phone"
-                        defaultValue={hospital.phone}/>
+                      <Input
+                        type="text"
+                        id="phone"
+                        name="phone"
+                        defaultValue={hospital.phone}
+                      />
                     </Col>
                   </FormGroup>
                 </CardBlock>
                 <CardFooter>
                   <Button type="submit" size="sm" color="success">
-                    <i className="fa fa-dot-circle-o"/> Сохранить
+                    <i className="fa fa-dot-circle-o" /> Сохранить
                   </Button>
                 </CardFooter>
               </Form>
@@ -130,13 +173,13 @@ class EditHospital extends React.PureComponent {
 EditHospital.propTypes = {
   dispatch: PropTypes.func.isRequired,
   match: PropTypes.object.isRequired,
-  router: PropTypes.object.isRequired
+  router: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = (state) => {
   return {
     errors: state.hospitals.errors,
-    hospital: state.hospitals.hospital
+    hospital: state.hospitals.hospital,
   };
 };
 

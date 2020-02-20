@@ -1,6 +1,9 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import {fetchOrganization, deleteOrganization} from './../../../actions/organizationActions';
+import {
+  fetchOrganization,
+  deleteOrganization,
+} from './../../../actions/organizationActions';
 import {Link} from 'react-router-dom';
 import PropTypes from 'prop-types';
 import {fetchHospitals} from '../../../actions/hospitalActions';
@@ -11,7 +14,7 @@ class Budget extends React.PureComponent {
     super(props);
     this.state = {
       errors: null,
-      organizationId: props.match.params.id
+      organizationId: props.match.params.id,
     };
   }
 
@@ -41,7 +44,11 @@ class Budget extends React.PureComponent {
     let errorsMessage = '';
 
     if (errors) {
-      errorsMessage = <div className="alert alert-danger" role="alert">{this.createMarkup()}</div>;
+      errorsMessage = (
+        <div className="alert alert-danger" role="alert">
+          {this.createMarkup()}
+        </div>
+      );
     }
 
     if (!organization) {
@@ -56,7 +63,8 @@ class Budget extends React.PureComponent {
             <Col xs="6" sm="6" md="6">
               <Card>
                 <CardHeader>
-                  <i className="fa fa-building-o" aria-hidden="true"/>«{organization.name}»
+                  <i className="fa fa-building-o" aria-hidden="true" />«
+                  {organization.name}»
                 </CardHeader>
                 <CardBlock className="card-body">
                   <Table responsive>
@@ -77,27 +85,31 @@ class Budget extends React.PureComponent {
                         <td>
                           <Link
                             to={`/organizations/edit/${organization.id}`}
-                            className="btn btn-success btn-xs pull-left">Редактировать
+                            className="btn btn-success btn-xs pull-left"
+                          >
+                            Редактировать
                           </Link>
                         </td>
                         <td>
                           <form
                             id={`form_${organization.id}`}
                             className="pull-left"
-                            method="post">
+                            method="post"
+                          >
                             <input
                               type="hidden"
                               name="organization_id"
-                              value={organization.id} />
+                              value={organization.id}
+                            />
                             <a
                               className="btn btn-danger btn-xs"
-                              onClick={(event) => this.handleBtnDelete(
-                                organization.id,
-                                event
-                              )}
+                              onClick={(event) =>
+                                this.handleBtnDelete(organization.id, event)
+                              }
                               href="#"
-                              id={organization.id}>
-                                Удалить
+                              id={organization.id}
+                            >
+                              Удалить
                             </a>
                           </form>
                         </td>
@@ -117,13 +129,13 @@ class Budget extends React.PureComponent {
 Budget.propTypes = {
   dispatch: PropTypes.func.isRequired,
   match: PropTypes.object.isRequired,
-  router: PropTypes.object.isRequired
+  router: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = (state) => {
   return {
     organization: state.organizations.organization,
-    hospitals: state.hospitals.hospitals
+    hospitals: state.hospitals.hospitals,
   };
 };
 

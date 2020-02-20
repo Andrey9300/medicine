@@ -34,9 +34,7 @@ class Employees extends React.PureComponent {
             <Col xs="12" lg="12">
               <Card>
                 <CardHeader>
-                  <Link to={'/employeesDeleted'}>
-                    Уволенные сотрудники
-                  </Link>
+                  <Link to={'/employeesDeleted'}>Уволенные сотрудники</Link>
                 </CardHeader>
               </Card>
             </Col>
@@ -50,14 +48,14 @@ class Employees extends React.PureComponent {
 Employees.propTypes = {
   dispatch: PropTypes.func.isRequired,
   employees: PropTypes.array.isRequired,
-  user: PropTypes.object
+  user: PropTypes.object,
 };
 
 const mapStateToProps = (state) => {
   return {
     user: state.users.user,
     employees: state.employees.employees,
-    organization: state.organizations.organization
+    organization: state.organizations.organization,
   };
 };
 

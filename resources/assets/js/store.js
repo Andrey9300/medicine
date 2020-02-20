@@ -12,16 +12,11 @@ const persistedState = loadState();
 export const store = createStore(
   reducer,
   persistedState,
-  composeWithDevTools(applyMiddleware(
-    thunk,
-    promise,
-    logger,
-    redirect
-  ))
+  composeWithDevTools(applyMiddleware(thunk, promise, logger, redirect)),
 );
 
 store.subscribe(() => {
   saveState({
-    users: store.getState().users
+    users: store.getState().users,
   });
 });

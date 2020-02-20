@@ -1,9 +1,23 @@
-import {addUserResearches, fetchUserResearches} from '../../actions/researchActions';
+import {
+  addUserResearches,
+  fetchUserResearches,
+} from '../../actions/researchActions';
 import React from 'react';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
 import {Link} from 'react-router-dom';
-import {Row, Col, Card, CardHeader, CardBlock, CardFooter, Table, Form, Button, Input} from 'reactstrap';
+import {
+  Row,
+  Col,
+  Card,
+  CardHeader,
+  CardBlock,
+  CardFooter,
+  Table,
+  Form,
+  Button,
+  Input,
+} from 'reactstrap';
 
 class Researches extends React.PureComponent {
   constructor(props) {
@@ -11,7 +25,7 @@ class Researches extends React.PureComponent {
 
     this.toggle = this.toggle.bind(this);
     this.state = {
-      activeTab: '1'
+      activeTab: '1',
     };
     this.handleClick = this.handleClick.bind(this);
   }
@@ -23,7 +37,7 @@ class Researches extends React.PureComponent {
   toggle(tab) {
     if (this.state.activeTab !== tab) {
       this.setState({
-        activeTab: tab
+        activeTab: tab,
       });
     }
   }
@@ -45,7 +59,10 @@ class Researches extends React.PureComponent {
                 <CardHeader>Исследований нет</CardHeader>
                 <CardBlock>
                   <Link to={'/employees/create'}>Добавьте сотрудника</Link>
-                  <p>На основе категорий сотрудника будут сформированы необходимые исследования</p>
+                  <p>
+                    На основе категорий сотрудника будут сформированы
+                    необходимые исследования
+                  </p>
                 </CardBlock>
               </Card>
             </Col>
@@ -55,7 +72,11 @@ class Researches extends React.PureComponent {
     }
 
     if (errors) {
-      errorsMessage = <div className="alert alert-danger" role="alert">Ошибка</div>;
+      errorsMessage = (
+        <div className="alert alert-danger" role="alert">
+          Ошибка
+        </div>
+      );
     }
 
     return (
@@ -65,10 +86,16 @@ class Researches extends React.PureComponent {
           <Col xs="12" md="12" lg="8">
             <Card>
               <CardHeader>
-                <i className="fa fa-heartbeat" aria-hidden="true"/>Исследования ({userResearches.length})
-                Выберите нужные исследования.
-                <Button type="submit" size="sm" color="success pull-right" onClick={this.handleClick}>
-                  <i className="fa fa-dot-circle-o"/> Сохранить
+                <i className="fa fa-heartbeat" aria-hidden="true" />
+                Исследования ({userResearches.length}) Выберите нужные
+                исследования.
+                <Button
+                  type="submit"
+                  size="sm"
+                  color="success pull-right"
+                  onClick={this.handleClick}
+                >
+                  <i className="fa fa-dot-circle-o" /> Сохранить
                 </Button>
               </CardHeader>
               <CardBlock className="card-body">
@@ -78,7 +105,7 @@ class Researches extends React.PureComponent {
                       <tr>
                         <th>Категория</th>
                         <th>Исследование</th>
-                        <th/>
+                        <th />
                       </tr>
                     </thead>
                     <tbody>
@@ -95,15 +122,19 @@ class Researches extends React.PureComponent {
                             />
                           </td>
                         </tr>
-                      ))
-                      }
+                      ))}
                     </tbody>
                   </Table>
                 </Form>
               </CardBlock>
               <CardFooter>
-                <Button type="submit" size="sm" color="success pull-right" onClick={this.handleClick}>
-                  <i className="fa fa-dot-circle-o"/> Сохранить
+                <Button
+                  type="submit"
+                  size="sm"
+                  color="success pull-right"
+                  onClick={this.handleClick}
+                >
+                  <i className="fa fa-dot-circle-o" /> Сохранить
                 </Button>
               </CardFooter>
             </Card>

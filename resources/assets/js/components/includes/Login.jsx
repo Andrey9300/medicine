@@ -2,7 +2,19 @@ import React from 'react';
 import {connect} from 'react-redux';
 import {Link} from 'react-router-dom';
 import PropTypes from 'prop-types';
-import {Container, Row, Col, CardGroup, Card, CardBlock, Form, Button, Input, InputGroup, InputGroupAddon} from 'reactstrap';
+import {
+  Container,
+  Row,
+  Col,
+  CardGroup,
+  Card,
+  CardBlock,
+  Form,
+  Button,
+  Input,
+  InputGroup,
+  InputGroupAddon,
+} from 'reactstrap';
 import {loginUser} from '../../actions/userActions';
 
 class Login extends React.PureComponent {
@@ -10,12 +22,12 @@ class Login extends React.PureComponent {
     super(props);
 
     this.state = {
-      doubleClick: false
+      doubleClick: false,
     };
 
     this.props.dispatch({
       payload: [],
-      type: 'LOGIN_USER_CLEAR_ERRORS'
+      type: 'LOGIN_USER_CLEAR_ERRORS',
     });
 
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -23,14 +35,14 @@ class Login extends React.PureComponent {
 
   componentWillReceiveProps() {
     this.setState({
-      doubleClick: false
+      doubleClick: false,
     });
   }
 
   handleSubmit(event) {
     event.preventDefault();
     this.setState({
-      doubleClick: true
+      doubleClick: true,
     });
     this.props.dispatch(loginUser(document.querySelector('form')));
   }
@@ -55,7 +67,11 @@ class Login extends React.PureComponent {
     }
 
     if (errors) {
-      errorsMessage = <div className="alert alert-danger" role="alert">{this.createMarkup()}</div>;
+      errorsMessage = (
+        <div className="alert alert-danger" role="alert">
+          {this.createMarkup()}
+        </div>
+      );
     }
 
     return (
@@ -71,25 +87,52 @@ class Login extends React.PureComponent {
                       <h1>Вход</h1>
                       <p className="text-muted">Войдите в свой аккаунт</p>
                       <InputGroup className="mb-3">
-                        <InputGroupAddon><i className="icon-envelope"/></InputGroupAddon>
-                        <Input type="email" name="email" placeholder="E-mail" required/>
+                        <InputGroupAddon>
+                          <i className="icon-envelope" />
+                        </InputGroupAddon>
+                        <Input
+                          type="email"
+                          name="email"
+                          placeholder="E-mail"
+                          required
+                        />
                       </InputGroup>
                       <InputGroup className="mb-4">
-                        <InputGroupAddon><i className="icon-lock"/></InputGroupAddon>
-                        <Input type="password" name="password" placeholder="Пароль" required/>
+                        <InputGroupAddon>
+                          <i className="icon-lock" />
+                        </InputGroupAddon>
+                        <Input
+                          type="password"
+                          name="password"
+                          placeholder="Пароль"
+                          required
+                        />
                       </InputGroup>
                       <Row>
                         <Col xs="4">
-                          <Button disabled={doubleClick}
+                          <Button
+                            disabled={doubleClick}
                             color="primary"
-                            className="px-4 btn-sm">Войти
+                            className="px-4 btn-sm"
+                          >
+                            Войти
                           </Button>
                         </Col>
                         <Col xs="4" className="text-right">
-                          <Link to="registration" className="btn btn-success btn-sm">Регистрация</Link>
+                          <Link
+                            to="registration"
+                            className="btn btn-success btn-sm"
+                          >
+                            Регистрация
+                          </Link>
                         </Col>
                         <Col xs="4" className="text-right">
-                          <Link to="restorePassword" className="btn btn-warning btn-sm">Забыли пароль?</Link>
+                          <Link
+                            to="restorePassword"
+                            className="btn btn-warning btn-sm"
+                          >
+                            Забыли пароль?
+                          </Link>
                         </Col>
                       </Row>
                     </Form>
@@ -105,13 +148,13 @@ class Login extends React.PureComponent {
 }
 
 Login.propTypes = {
-  dispatch: PropTypes.func.isRequired
+  dispatch: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => {
   return {
     errors: state.users.errors,
-    user: state.users.user
+    user: state.users.user,
   };
 };
 

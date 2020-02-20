@@ -3,14 +3,27 @@ import axios from 'axios';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import {fetchPeriods} from '../../actions/researchPeriodActions';
-import {Row, Col, Button, Card, CardHeader, CardFooter, CardBlock, Form, FormGroup, FormText, Label, Input} from 'reactstrap';
+import {
+  Row,
+  Col,
+  Button,
+  Card,
+  CardHeader,
+  CardFooter,
+  CardBlock,
+  Form,
+  FormGroup,
+  FormText,
+  Label,
+  Input,
+} from 'reactstrap';
 
 class NewResearch extends React.PureComponent {
   constructor(props) {
     super(props);
 
     this.state = {
-      errors: null
+      errors: null,
     };
     this.handleSubmit = this.handleSubmit.bind(this);
   }
@@ -24,21 +37,15 @@ class NewResearch extends React.PureComponent {
     const formElement = document.querySelector('form');
     const formData = new FormData(formElement);
 
-    axios.post(
-      '/researches/store',
-      formData
-    )
+    axios
+      .post('/researches/store', formData)
       .then(() => {
-        history.pushState(
-          null,
-          null,
-          '/#/researches'
-        );
+        history.pushState(null, null, '/#/researches');
         window.location.reload();
       })
       .catch((errors) => {
         this.setState({
-          errors: errors.response.data.errors
+          errors: errors.response.data.errors,
         });
       });
   }
@@ -59,7 +66,11 @@ class NewResearch extends React.PureComponent {
     let errorsMessage = '';
 
     if (errors) {
-      errorsMessage = <div className="alert alert-danger" role="alert">{this.createMarkup()}</div>;
+      errorsMessage = (
+        <div className="alert alert-danger" role="alert">
+          {this.createMarkup()}
+        </div>
+      );
     }
 
     return (
@@ -76,7 +87,7 @@ class NewResearch extends React.PureComponent {
                       <Label htmlFor="text-input">Наименование</Label>
                     </Col>
                     <Col xs="12" md="9">
-                      <Input type="text" id="name" name="name"/>
+                      <Input type="text" id="name" name="name" />
                     </Col>
                   </FormGroup>
                   <FormGroup row>
@@ -91,8 +102,7 @@ class NewResearch extends React.PureComponent {
                               {period.name}
                             </option>
                           );
-                        })
-                        }
+                        })}
                       </Input>
                       <FormText color="muted">Выберите периодичность</FormText>
                     </Col>
@@ -100,8 +110,13 @@ class NewResearch extends React.PureComponent {
                 </Form>
               </CardBlock>
               <CardFooter>
-                <Button type="submit" size="sm" color="success" onClick={this.handleSubmit}>
-                  <i className="fa fa-dot-circle-o"/> Сохранить
+                <Button
+                  type="submit"
+                  size="sm"
+                  color="success"
+                  onClick={this.handleSubmit}
+                >
+                  <i className="fa fa-dot-circle-o" /> Сохранить
                 </Button>
               </CardFooter>
             </Card>
@@ -113,12 +128,12 @@ class NewResearch extends React.PureComponent {
 }
 
 NewResearch.propTypes = {
-  router: PropTypes.object.isRequired
+  router: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = (state) => {
   return {
-    researchPeriods: state.researchPeriods.researchPeriods
+    researchPeriods: state.researchPeriods.researchPeriods,
   };
 };
 

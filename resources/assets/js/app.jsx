@@ -16,16 +16,16 @@ ReactDOM.render(
   <Provider store={store}>
     <Router history={history}>
       <div className="app">
-        <Header/>
+        <Header />
         <div className="app-body">
-          <Sidebar history={history}/>
+          <Sidebar history={history} />
           <main className="main">
-            <Routes/>
+            <Routes />
           </main>
         </div>
-        <Footer/>
+        <Footer />
       </div>
     </Router>
   </Provider>,
-  document.getElementById('app')
+  document.getElementById('app'),
 );

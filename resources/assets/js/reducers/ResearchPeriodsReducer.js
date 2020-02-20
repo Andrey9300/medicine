@@ -1,7 +1,7 @@
 const initialState = {
   error: null,
   fetched: false,
-  researchPeriods: []
+  researchPeriods: [],
 };
 
 /**
@@ -16,7 +16,7 @@ export default function reducer(state = initialState, action) {
       return {
         ...state,
         error: action.payload,
-        fetched: false
+        fetched: false,
       };
     }
     case 'RESEARCH_PERIODS_FULFILLED': {
@@ -24,11 +24,12 @@ export default function reducer(state = initialState, action) {
         ...state,
         error: null,
         fetched: true,
-        researchPeriods: action.payload.data.research_periods
+        researchPeriods: action.payload.data.research_periods,
       };
     }
-    default: return {
-      ...state
-    };
+    default:
+      return {
+        ...state,
+      };
   }
 }

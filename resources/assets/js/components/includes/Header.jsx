@@ -7,13 +7,13 @@ class Header extends React.PureComponent {
 
     this.toggle = this.toggle.bind(this);
     this.state = {
-      dropdownOpen: false
+      dropdownOpen: false,
     };
   }
 
   toggle() {
     this.setState({
-      dropdownOpen: !this.state.dropdownOpen
+      dropdownOpen: !this.state.dropdownOpen,
     });
   }
 
@@ -40,11 +40,15 @@ class Header extends React.PureComponent {
   render() {
     return (
       <header className="app-header navbar d-print-none">
-        <NavbarToggler className="d-lg-none" onClick={this.mobileSidebarToggle}>&#9776;</NavbarToggler>
-        <NavbarBrand href="/welcome"/>
-        <NavbarToggler className="d-md-down-none" onClick={this.sidebarToggle}>&#9776;</NavbarToggler>
-        <Nav className="d-md-down-none" navbar/>
-        <Nav className="ml-auto" navbar/>
+        <NavbarToggler className="d-lg-none" onClick={this.mobileSidebarToggle}>
+          &#9776;
+        </NavbarToggler>
+        <NavbarBrand href="/welcome" />
+        <NavbarToggler className="d-md-down-none" onClick={this.sidebarToggle}>
+          &#9776;
+        </NavbarToggler>
+        <Nav className="d-md-down-none" navbar />
+        <Nav className="ml-auto" navbar />
       </header>
     );
   }

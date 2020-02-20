@@ -40,39 +40,141 @@ export class Routes extends React.PureComponent {
   render() {
     return (
       <>
-        <Route exact path="/main" component={(props) => <Main {...props} />}/>
-        <Route exact path="/login" component={(props) => <Login {...props} />}/>
-        <Route exact path="/registration" component={(props) => <Registration {...props} />}/>
-        <Route exact path="/restorePassword" component={(props) => <RestorePassword {...props} />}/>
-        <Route exact path="/resetPassword" component={(props) => <ResetPassword {...props} />}/>
-        <Route exact path="/activateAccount" component={(props) => <ActivateAccount {...props} />}/>
+        <Route exact path="/main" component={(props) => <Main {...props} />} />
+        <Route
+          exact
+          path="/login"
+          component={(props) => <Login {...props} />}
+        />
+        <Route
+          exact
+          path="/registration"
+          component={(props) => <Registration {...props} />}
+        />
+        <Route
+          exact
+          path="/restorePassword"
+          component={(props) => <RestorePassword {...props} />}
+        />
+        <Route
+          exact
+          path="/resetPassword"
+          component={(props) => <ResetPassword {...props} />}
+        />
+        <Route
+          exact
+          path="/activateAccount"
+          component={(props) => <ActivateAccount {...props} />}
+        />
 
-        <Route exact path="/hospital/:id" component={(props) => <Hospital {...props} />}/>
-        <Route exact path="/hospitals" component={(props) => <Hospitals {...props} />}/>
-        <Route exact path="/hospitals/create" component={(props) => <NewHospital {...props} />}/>
-        <Route exact path="/hospitals/edit/:id" component={(props) => <EditHospital {...props} />}/>
-        <Route exact path="/hospitals/researches/:idHospital" component={(props) => <HospitalResearches {...props} />}/>
+        <Route
+          exact
+          path="/hospital/:id"
+          component={(props) => <Hospital {...props} />}
+        />
+        <Route
+          exact
+          path="/hospitals"
+          component={(props) => <Hospitals {...props} />}
+        />
+        <Route
+          exact
+          path="/hospitals/create"
+          component={(props) => <NewHospital {...props} />}
+        />
+        <Route
+          exact
+          path="/hospitals/edit/:id"
+          component={(props) => <EditHospital {...props} />}
+        />
+        <Route
+          exact
+          path="/hospitals/researches/:idHospital"
+          component={(props) => <HospitalResearches {...props} />}
+        />
 
-        <Route exact path="/organization/:id" component={(props) => <OrganizationContainer {...props} />}/>
-        <Route exact path="/organizations" component={(props) => <OrganizationsContainer {...props} />}/>
-        <Route exact path="/organizations/create" component={(props) => <NewOrganizationContainer {...props} />}/>
-        <Route exact path="/organizations/edit/:id" component={(props) => <EditOrganization {...props} />}/>
-        <Route exact path="/organizations/employees/:idOrganization"
-          component={(props) => <OrganizationEmployees {...props} />}/>
-        <Route exact path="/organizations/budget/:idOrganization"
-          component={(props) => <OrganizationBudget {...props} />}/>
+        <Route
+          exact
+          path="/organization/:id"
+          component={(props) => <OrganizationContainer {...props} />}
+        />
+        <Route
+          exact
+          path="/organizations"
+          component={(props) => <OrganizationsContainer {...props} />}
+        />
+        <Route
+          exact
+          path="/organizations/create"
+          component={(props) => <NewOrganizationContainer {...props} />}
+        />
+        <Route
+          exact
+          path="/organizations/edit/:id"
+          component={(props) => <EditOrganization {...props} />}
+        />
+        <Route
+          exact
+          path="/organizations/employees/:idOrganization"
+          component={(props) => <OrganizationEmployees {...props} />}
+        />
+        <Route
+          exact
+          path="/organizations/budget/:idOrganization"
+          component={(props) => <OrganizationBudget {...props} />}
+        />
 
-        <Route exact path="/researches" component={(props) => <Researches {...props} />}/>
-        <Route exact path="/researches/create" component={(props) => <NewResearch {...props} />}/>
-        <Route exact path="/researches/edit/:id" component={(props) => <EditResearch {...props} />}/>
+        <Route
+          exact
+          path="/researches"
+          component={(props) => <Researches {...props} />}
+        />
+        <Route
+          exact
+          path="/researches/create"
+          component={(props) => <NewResearch {...props} />}
+        />
+        <Route
+          exact
+          path="/researches/edit/:id"
+          component={(props) => <EditResearch {...props} />}
+        />
 
-        <Route exact path="/employee/:id" component={(props) => <Employee {...props} />}/>
-        <Route exact path="/employees" component={(props) => <Employees {...props} />}/>
-        <Route exact path="/employeesDeleted" component={(props) => <EmployeesDeleted {...props} />}/>
-        <Route exact path="/employees/create" component={(props) => <NewEmployee {...props} />}/>
-        <Route exact path="/employees/edit/:id" component={(props) => <EditEmployee {...props} />}/>
-        <Route exact path="/employees/print/:id" component={(props) => <PrintEmployee {...props} />}/>
-        <Route exact path="/employees/researches/:idEmployee" component={(props) => <EmployeeResearches {...props} />}/>
+        <Route
+          exact
+          path="/employee/:id"
+          component={(props) => <Employee {...props} />}
+        />
+        <Route
+          exact
+          path="/employees"
+          component={(props) => <Employees {...props} />}
+        />
+        <Route
+          exact
+          path="/employeesDeleted"
+          component={(props) => <EmployeesDeleted {...props} />}
+        />
+        <Route
+          exact
+          path="/employees/create"
+          component={(props) => <NewEmployee {...props} />}
+        />
+        <Route
+          exact
+          path="/employees/edit/:id"
+          component={(props) => <EditEmployee {...props} />}
+        />
+        <Route
+          exact
+          path="/employees/print/:id"
+          component={(props) => <PrintEmployee {...props} />}
+        />
+        <Route
+          exact
+          path="/employees/researches/:idEmployee"
+          component={(props) => <EmployeeResearches {...props} />}
+        />
       </>
     );
   }

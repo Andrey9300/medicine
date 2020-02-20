@@ -36,9 +36,13 @@ class Organizations extends React.PureComponent {
           <Col xs="12" lg="12">
             <Card>
               <CardHeader>
-                <i className="fa fa-building-o" aria-hidden="true"/>Объекты ({organizations.length})
-                <Link to={'/organizations/create'} className="btn btn-primary btn-sm pull-right">
-                  Добавить <i className="icon-plus"/>
+                <i className="fa fa-building-o" aria-hidden="true" />
+                Объекты ({organizations.length})
+                <Link
+                  to={'/organizations/create'}
+                  className="btn btn-primary btn-sm pull-right"
+                >
+                  Добавить <i className="icon-plus" />
                 </Link>
               </CardHeader>
               <CardBlock className="card-body">
@@ -63,15 +67,17 @@ class Organizations extends React.PureComponent {
                           <td>{organization.head_fio}</td>
                           <td>{organization.head_email}</td>
                           <td>
-                            <Link to={`/organizations/employees/${organization.id}`}
-                              className="btn btn-info btn-xs pull-left">Сотрудники
-                              <i className="glyphicon glyphicon-pencil"/>
+                            <Link
+                              to={`/organizations/employees/${organization.id}`}
+                              className="btn btn-info btn-xs pull-left"
+                            >
+                              Сотрудники
+                              <i className="glyphicon glyphicon-pencil" />
                             </Link>
                           </td>
                         </tr>
                       );
-                    })
-                    }
+                    })}
                   </tbody>
                 </Table>
               </CardBlock>
@@ -85,12 +91,12 @@ class Organizations extends React.PureComponent {
 
 Organizations.propTypes = {
   dispatch: PropTypes.func.isRequired,
-  organizations: PropTypes.array.isRequired
+  organizations: PropTypes.array.isRequired,
 };
 
 const mapStateToProps = (state) => {
   return {
-    organizations: state.organizations.organizations
+    organizations: state.organizations.organizations,
   };
 };
 

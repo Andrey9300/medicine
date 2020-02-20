@@ -11,9 +11,13 @@ export class EmployeesList extends React.PureComponent {
       return (
         <Card>
           <CardHeader>
-            <i className="fa fa-users" aria-hidden="true"/>Cотрудников нет
-            <Link to="/employees/create" className="btn btn-primary btn-sm pull-right">
-              Добавить <i className="icon-plus"/>
+            <i className="fa fa-users" aria-hidden="true" />
+            Cотрудников нет
+            <Link
+              to="/employees/create"
+              className="btn btn-primary btn-sm pull-right"
+            >
+              Добавить <i className="icon-plus" />
             </Link>
           </CardHeader>
           <CardBlock className="card-body">
@@ -26,9 +30,13 @@ export class EmployeesList extends React.PureComponent {
     return (
       <Card>
         <CardHeader>
-          <i className="fa fa-users" aria-hidden="true"/>{title} ({employees.length})
-          <Link to="/employees/create" className="btn btn-primary btn-sm pull-right">
-            Добавить <i className="icon-plus"/>
+          <i className="fa fa-users" aria-hidden="true" />
+          {title} ({employees.length})
+          <Link
+            to="/employees/create"
+            className="btn btn-primary btn-sm pull-right"
+          >
+            Добавить <i className="icon-plus" />
           </Link>
         </CardHeader>
         <CardBlock className="card-body">
@@ -67,29 +75,32 @@ export class EmployeesList extends React.PureComponent {
                           classSpan = 'btn btn-success btn-sm';
                         }
 
-                        return (
-                          <div className={classSpan}>{text}</div>
-                        );
+                        return <div className={classSpan}>{text}</div>;
                       })()}
                     </td>
                     <td>
-                      {(employee.researches_ends.length > 0 || employee.researches_expired.length > 0) &&
-                        <Link to={`/employees/print/${employee.id}`}
-                          className="btn btn-secondary btn-sm pull-left">
+                      {(employee.researches_ends.length > 0 ||
+                        employee.researches_expired.length > 0) && (
+                        <Link
+                          to={`/employees/print/${employee.id}`}
+                          className="btn btn-secondary btn-sm pull-left"
+                        >
                           Направление
                         </Link>
-                      }
+                      )}
                     </td>
                   </tr>
                 );
-              })
-              }
+              })}
             </tbody>
           </Table>
         </CardBlock>
         <CardFooter>
-          <Link to="/employees/create" className="btn btn-primary btn-sm pull-right">
-            Добавить <i className="icon-plus"/>
+          <Link
+            to="/employees/create"
+            className="btn btn-primary btn-sm pull-right"
+          >
+            Добавить <i className="icon-plus" />
           </Link>
         </CardFooter>
       </Card>
@@ -100,5 +111,5 @@ export class EmployeesList extends React.PureComponent {
 EmployeesList.propTypes = {
   employees: PropTypes.array.isRequired,
   user: PropTypes.object,
-  title: PropTypes.string
+  title: PropTypes.string,
 };

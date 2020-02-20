@@ -3,7 +3,19 @@ import {connect} from 'react-redux';
 import {fetchEmployee} from './../../actions/employeeActions';
 import {fetchOrganizations} from './../../actions/organizationActions';
 import PropTypes from 'prop-types';
-import {Row, Col, Button, Card, CardHeader, CardFooter, CardBlock, Form, FormGroup, Label, Input} from 'reactstrap';
+import {
+  Row,
+  Col,
+  Button,
+  Card,
+  CardHeader,
+  CardFooter,
+  CardBlock,
+  Form,
+  FormGroup,
+  Label,
+  Input,
+} from 'reactstrap';
 import {editEmployee} from '../../actions/employeeActions';
 import {fetchCategories} from '../../actions/categoryActions';
 
@@ -11,17 +23,16 @@ class EditEmployee extends React.PureComponent {
   constructor(props) {
     super(props);
     this.state = {
-      employeeId: props.match.params.id
+      employeeId: props.match.params.id,
     };
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   handleSubmit(event) {
     event.preventDefault();
-    this.props.dispatch(editEmployee(
-      document.querySelector('form'),
-      this.state.employeeId
-    ));
+    this.props.dispatch(
+      editEmployee(document.querySelector('form'), this.state.employeeId),
+    );
   }
 
   componentWillMount() {
@@ -45,7 +56,11 @@ class EditEmployee extends React.PureComponent {
     let errorsMessage = '';
 
     if (errors) {
-      errorsMessage = <div className="alert alert-danger" role="alert">{this.createMarkup()}</div>;
+      errorsMessage = (
+        <div className="alert alert-danger" role="alert">
+          {this.createMarkup()}
+        </div>
+      );
     }
 
     if (!employee || !organizations) {
@@ -66,7 +81,12 @@ class EditEmployee extends React.PureComponent {
                       <Label htmlFor="text-input">ФИО</Label>
                     </Col>
                     <Col xs="12" md="9">
-                      <Input type="text" id="fio" name="fio" defaultValue={employee.fio}/>
+                      <Input
+                        type="text"
+                        id="fio"
+                        name="fio"
+                        defaultValue={employee.fio}
+                      />
                     </Col>
                   </FormGroup>
                   <FormGroup row>
@@ -101,10 +121,17 @@ class EditEmployee extends React.PureComponent {
                   </FormGroup>
                   <FormGroup row>
                     <Col md="3">
-                      <Label htmlFor="text-input">Номер медицинской книжки</Label>
+                      <Label htmlFor="text-input">
+                        Номер медицинской книжки
+                      </Label>
                     </Col>
                     <Col xs="12" md="9">
-                      <Input type="text" id="medical_book" name="medical_book" defaultValue={employee.medical_book}/>
+                      <Input
+                        type="text"
+                        id="medical_book"
+                        name="medical_book"
+                        defaultValue={employee.medical_book}
+                      />
                     </Col>
                   </FormGroup>
                   <FormGroup row>
@@ -112,7 +139,12 @@ class EditEmployee extends React.PureComponent {
                       <Label htmlFor="text-input">Должность</Label>
                     </Col>
                     <Col xs="12" md="9">
-                      <Input type="text" id="position" name="position" defaultValue={employee.position}/>
+                      <Input
+                        type="text"
+                        id="position"
+                        name="position"
+                        defaultValue={employee.position}
+                      />
                     </Col>
                   </FormGroup>
                   <FormGroup row>
@@ -120,15 +152,19 @@ class EditEmployee extends React.PureComponent {
                       <Label htmlFor="text-input">Категория</Label>
                     </Col>
                     <Col xs="12" md="9">
-                      <Input type="select" name="category_id" id="category_id" defaultValue={employee.category.id}>
+                      <Input
+                        type="select"
+                        name="category_id"
+                        id="category_id"
+                        defaultValue={employee.category.id}
+                      >
                         {categories.map((category) => {
                           return (
                             <option key={category.id} value={category.id}>
                               {category.name}
                             </option>
                           );
-                        })
-                        }
+                        })}
                       </Input>
                     </Col>
                   </FormGroup>
@@ -137,16 +173,22 @@ class EditEmployee extends React.PureComponent {
                       <Label htmlFor="text-input">Название организации</Label>
                     </Col>
                     <Col xs="12" md="9">
-                      <Input type="select" name="organization_name" id="organization_name"
-                        defaultValue={employee.organization.name}>
+                      <Input
+                        type="select"
+                        name="organization_name"
+                        id="organization_name"
+                        defaultValue={employee.organization.name}
+                      >
                         {organizations.map((organization) => {
                           return (
-                            <option key={organization.id} value={organization.name}>
+                            <option
+                              key={organization.id}
+                              value={organization.name}
+                            >
                               {organization.name}
                             </option>
                           );
-                        })
-                        }
+                        })}
                       </Input>
                     </Col>
                   </FormGroup>
@@ -155,13 +197,18 @@ class EditEmployee extends React.PureComponent {
                       <Label htmlFor="text-input">Комментарий</Label>
                     </Col>
                     <Col xs="12" md="9">
-                      <Input type="textarea" id="comments" name="comments" defaultValue={employee.comments}/>
+                      <Input
+                        type="textarea"
+                        id="comments"
+                        name="comments"
+                        defaultValue={employee.comments}
+                      />
                     </Col>
                   </FormGroup>
                 </CardBlock>
                 <CardFooter>
                   <Button type="submit" size="sm" color="success">
-                    <i className="fa fa-dot-circle-o"/> Сохранить
+                    <i className="fa fa-dot-circle-o" /> Сохранить
                   </Button>
                 </CardFooter>
               </Form>
@@ -176,7 +223,7 @@ class EditEmployee extends React.PureComponent {
 EditEmployee.propTypes = {
   dispatch: PropTypes.func.isRequired,
   match: PropTypes.object.isRequired,
-  categories: PropTypes.array
+  categories: PropTypes.array,
 };
 
 const mapStateToProps = (state) => {
@@ -184,7 +231,7 @@ const mapStateToProps = (state) => {
     errors: state.employees.errors,
     employee: state.employees.employee,
     categories: state.categories.categories,
-    organizations: state.organizations.organizations
+    organizations: state.organizations.organizations,
   };
 };
 

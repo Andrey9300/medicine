@@ -10,7 +10,7 @@ class Hospital extends React.PureComponent {
     super(props);
     this.state = {
       errors: null,
-      hospitalId: props.match.params.id
+      hospitalId: props.match.params.id,
     };
     this.handleBtnDelete = this.handleBtnDelete.bind(this);
   }
@@ -44,7 +44,11 @@ class Hospital extends React.PureComponent {
     }
 
     if (errors) {
-      errorsMessage = <div className="alert alert-danger" role="alert">{this.createMarkup()}</div>;
+      errorsMessage = (
+        <div className="alert alert-danger" role="alert">
+          {this.createMarkup()}
+        </div>
+      );
     }
 
     return (
@@ -55,18 +59,23 @@ class Hospital extends React.PureComponent {
             <Col xs="6" sm="6" md="6">
               <Card>
                 <CardHeader>
-                  <i className="fa fa-stethoscope" aria-hidden="true"/>
-                  «{hospital.name}»
-                  <Link to={`/hospitals/edit/${hospital.id}`} style={{
-                    marginLeft: '18px'
-                  }}>
-                    <i className="fa fa-pencil"/>
+                  <i className="fa fa-stethoscope" aria-hidden="true" />«
+                  {hospital.name}»
+                  <Link
+                    to={`/hospitals/edit/${hospital.id}`}
+                    style={{
+                      marginLeft: '18px',
+                    }}
+                  >
+                    <i className="fa fa-pencil" />
                   </Link>
-                  <span className="pull-right" onClick={(event) => this.handleBtnDelete(
-                    hospital.id,
-                    event
-                  )}>
-                    <i className="fa fa-trash"/>
+                  <span
+                    className="pull-right"
+                    onClick={(event) =>
+                      this.handleBtnDelete(hospital.id, event)
+                    }
+                  >
+                    <i className="fa fa-trash" />
                   </span>
                 </CardHeader>
                 <CardBlock className="card-body">
@@ -102,7 +111,7 @@ class Hospital extends React.PureComponent {
 
 Hospital.propTypes = {
   dispatch: PropTypes.func.isRequired,
-  match: PropTypes.object.isRequired
+  match: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = (state) => {

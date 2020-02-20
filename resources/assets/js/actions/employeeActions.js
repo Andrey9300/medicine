@@ -5,23 +5,17 @@ import axios from 'axios';
  */
 export function addEmployee(formElement = null) {
   return (dispatch) => {
-    axios.post(
-      '/employees/store',
-      new FormData(formElement)
-    )
+    axios
+      .post('/employees/store', new FormData(formElement))
       .then(() => {
         alert('Сотрудник успешно создан');
-        history.pushState(
-          null,
-          null,
-          '/#/employees/'
-        );
+        history.pushState(null, null, '/#/employees/');
         window.location.reload();
       })
       .catch((errors) => {
         dispatch({
           payload: errors.response.data.errors,
-          type: 'EMPLOYEE_ADD_REJECTED'
+          type: 'EMPLOYEE_ADD_REJECTED',
         });
       });
   };
@@ -32,23 +26,17 @@ export function addEmployee(formElement = null) {
  */
 export function editEmployee(formElement = null, employeeId) {
   return (dispatch) => {
-    axios.post(
-      `/employees/update/${employeeId}`,
-      new FormData(formElement)
-    )
+    axios
+      .post(`/employees/update/${employeeId}`, new FormData(formElement))
       .then(() => {
         alert('Сотрудник успешно отредактирован');
-        history.pushState(
-          null,
-          null,
-          `/#/employee/${employeeId}`
-        );
+        history.pushState(null, null, `/#/employee/${employeeId}`);
         window.location.reload();
       })
       .catch((errors) => {
         dispatch({
           payload: errors.response.data.errors,
-          type: 'EMPLOYEE_ADD_REJECTED'
+          type: 'EMPLOYEE_ADD_REJECTED',
         });
       });
   };
@@ -61,22 +49,20 @@ export function editEmployee(formElement = null, employeeId) {
  */
 export function fetchEmployees(legalEntityId = null) {
   return (dispatch) => {
-    axios.post(
-      '/employees',
-      {
-        legalEntityId: legalEntityId
-      }
-    )
+    axios
+      .post('/employees', {
+        legalEntityId: legalEntityId,
+      })
       .then((response) => {
         dispatch({
           payload: response,
-          type: 'EMPLOYEES_FULFILLED'
+          type: 'EMPLOYEES_FULFILLED',
         });
       })
       .catch((error) => {
         dispatch({
           payload: error,
-          type: 'EMPLOYEES_REJECTED'
+          type: 'EMPLOYEES_REJECTED',
         });
       });
   };
@@ -90,17 +76,18 @@ export function fetchEmployees(legalEntityId = null) {
  */
 export function fetchEmployee(id) {
   return (dispatch) => {
-    axios.post(`/employees/${id}`)
+    axios
+      .post(`/employees/${id}`)
       .then((response) => {
         dispatch({
           payload: response,
-          type: 'EMPLOYEE_FULFILLED'
+          type: 'EMPLOYEE_FULFILLED',
         });
       })
       .catch((error) => {
         dispatch({
           payload: error,
-          type: 'EMPLOYEE_REJECTED'
+          type: 'EMPLOYEE_REJECTED',
         });
       });
   };
@@ -115,14 +102,11 @@ export function fetchEmployee(id) {
  */
 export function deleteEmployee(id, organizationId) {
   return () => {
-    axios.post(`/employees/softDelete/${id}`)
+    axios
+      .post(`/employees/softDelete/${id}`)
       .then(() => {
         alert('Сотрудник уволен');
-        history.pushState(
-          null,
-          null,
-          `/#/organizations/${organizationId}`
-        );
+        history.pushState(null, null, `/#/organizations/${organizationId}`);
         window.location.reload();
       })
       .catch((error) => {
@@ -139,7 +123,8 @@ export function deleteEmployee(id, organizationId) {
  */
 export function forceDeleteEmployee(id) {
   return () => {
-    axios.post(`/employees/forceDelete/${id}`)
+    axios
+      .post(`/employees/forceDelete/${id}`)
       .then(() => {
         window.location.reload();
       })
@@ -156,10 +141,11 @@ export function forceDeleteEmployee(id) {
  */
 export function addEmployeeResearches(formElement = null, employeeId) {
   return (dispatch) => {
-    axios.post(
-      `/employees/researches/store/${employeeId}`,
-      new FormData(formElement)
-    )
+    axios
+      .post(
+        `/employees/researches/store/${employeeId}`,
+        new FormData(formElement),
+      )
       .then(() => {
         alert('Даты исследования успешно сохранены');
         window.location.reload();
@@ -167,7 +153,7 @@ export function addEmployeeResearches(formElement = null, employeeId) {
       .catch((errors) => {
         dispatch({
           payload: errors.response.data.errors,
-          type: 'EMPLOYEE_RESEARCHES_ADD_REJECTED'
+          type: 'EMPLOYEE_RESEARCHES_ADD_REJECTED',
         });
       });
   };
@@ -180,17 +166,18 @@ export function addEmployeeResearches(formElement = null, employeeId) {
  */
 export function fetchEmployeeResearches(id) {
   return (dispatch) => {
-    axios.post(`/employees/researches/${id}`)
+    axios
+      .post(`/employees/researches/${id}`)
       .then((response) => {
         dispatch({
           payload: response,
-          type: 'EMPLOYEE_RESEARCHES_FULFILLED'
+          type: 'EMPLOYEE_RESEARCHES_FULFILLED',
         });
       })
       .catch((error) => {
         dispatch({
           payload: error,
-          type: 'EMPLOYEE_RESEARCHES_REJECTED'
+          type: 'EMPLOYEE_RESEARCHES_REJECTED',
         });
       });
   };
@@ -200,7 +187,7 @@ export function clearEmployeeResearches() {
   return (dispatch) => {
     dispatch({
       payload: [],
-      type: 'EMPLOYEE_RESEARCHES_CLEAR'
+      type: 'EMPLOYEE_RESEARCHES_CLEAR',
     });
   };
 }

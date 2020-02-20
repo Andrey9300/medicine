@@ -1,7 +1,7 @@
 const initialState = {
   error: null,
   fetched: false,
-  categories: []
+  categories: [],
 };
 
 /**
@@ -16,7 +16,7 @@ export default function reducer(state = initialState, action) {
       return {
         ...state,
         error: action.payload,
-        fetched: false
+        fetched: false,
       };
     }
     case 'CATEGORIES_FULFILLED': {
@@ -24,11 +24,12 @@ export default function reducer(state = initialState, action) {
         ...state,
         error: null,
         fetched: true,
-        categories: action.payload.data.categories
+        categories: action.payload.data.categories,
       };
     }
-    default: return {
-      ...state
-    };
+    default:
+      return {
+        ...state,
+      };
   }
 }

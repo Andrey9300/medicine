@@ -2,38 +2,46 @@ import React from 'react';
 import {connect} from 'react-redux';
 import {registrationUser} from '../../actions/userActions';
 import PropTypes from 'prop-types';
-import {Container, Row, Col, Card, Form, CardBlock, Button, Input, InputGroup, InputGroupAddon, CardGroup} from 'reactstrap';
+import {
+  Container,
+  Row,
+  Col,
+  Card,
+  Form,
+  CardBlock,
+  Button,
+  Input,
+  InputGroup,
+  InputGroupAddon,
+  CardGroup,
+} from 'reactstrap';
 
 class Registration extends React.PureComponent {
   constructor(props) {
     super(props);
 
     this.state = {
-      doubleClick: false
+      doubleClick: false,
     };
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   componentWillReceiveProps() {
     this.setState({
-      doubleClick: false
+      doubleClick: false,
     });
   }
 
   handleSubmit(event) {
     event.preventDefault();
     this.setState({
-      doubleClick: true
+      doubleClick: true,
     });
     this.props.dispatch(registrationUser(document.querySelector('form')));
   }
 
   handleLogin() {
-    history.pushState(
-      null,
-      null,
-      '/#/login'
-    );
+    history.pushState(null, null, '/#/login');
     window.location.reload();
   }
 
@@ -47,14 +55,17 @@ class Registration extends React.PureComponent {
     });
   }
 
-
   render() {
     const {errors} = this.props;
     const {doubleClick} = this.state;
     let errorsMessage = '';
 
     if (errors) {
-      errorsMessage = <div className="alert alert-danger" role="alert">{this.createMarkup()}</div>;
+      errorsMessage = (
+        <div className="alert alert-danger" role="alert">
+          {this.createMarkup()}
+        </div>
+      );
     }
 
     return (
@@ -70,24 +81,53 @@ class Registration extends React.PureComponent {
                       <h1>Регистрация</h1>
                       <p className="text-muted">Создайте свой аккаунт</p>
                       <InputGroup className="mb-3">
-                        <InputGroupAddon><i className="icon-user"/></InputGroupAddon>
-                        <Input type="text" name="fio" placeholder="ФИО" required/>
+                        <InputGroupAddon>
+                          <i className="icon-user" />
+                        </InputGroupAddon>
+                        <Input
+                          type="text"
+                          name="fio"
+                          placeholder="ФИО"
+                          required
+                        />
                       </InputGroup>
                       <InputGroup className="mb-3">
                         <InputGroupAddon>@</InputGroupAddon>
-                        <Input type="email" name="email" placeholder="E-mail" required/>
+                        <Input
+                          type="email"
+                          name="email"
+                          placeholder="E-mail"
+                          required
+                        />
                       </InputGroup>
                       <InputGroup className="mb-3">
-                        <InputGroupAddon><i className="icon-lock"/></InputGroupAddon>
-                        <Input type="password" name="password" placeholder="Пароль" required/>
+                        <InputGroupAddon>
+                          <i className="icon-lock" />
+                        </InputGroupAddon>
+                        <Input
+                          type="password"
+                          name="password"
+                          placeholder="Пароль"
+                          required
+                        />
                       </InputGroup>
                       <InputGroup className="mb-3">
-                        <InputGroupAddon><i className="icon-lock"/></InputGroupAddon>
-                        <Input type="password" name="password_confirmation"
-                          placeholder="Повторите пароль" required/>
+                        <InputGroupAddon>
+                          <i className="icon-lock" />
+                        </InputGroupAddon>
+                        <Input
+                          type="password"
+                          name="password_confirmation"
+                          placeholder="Повторите пароль"
+                          required
+                        />
                       </InputGroup>
-                      <Button color="success" block disabled={doubleClick}>Создать аккаунт</Button>
-                      <Button color="primary" block onClick={this.handleLogin}>Уже есть аккаунт</Button>
+                      <Button color="success" block disabled={doubleClick}>
+                        Создать аккаунт
+                      </Button>
+                      <Button color="primary" block onClick={this.handleLogin}>
+                        Уже есть аккаунт
+                      </Button>
                     </Form>
                   </CardBlock>
                 </Card>
@@ -102,13 +142,13 @@ class Registration extends React.PureComponent {
 
 Registration.propTypes = {
   dispatch: PropTypes.func.isRequired,
-  errors: PropTypes.object
+  errors: PropTypes.object,
 };
 
 const mapStateToProps = (state) => {
   return {
     errors: state.users.errors,
-    users: state.users.users
+    users: state.users.users,
   };
 };
 

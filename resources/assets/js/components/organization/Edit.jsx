@@ -3,24 +3,38 @@ import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
 import {fetchOrganization} from './../../actions/organizationActions';
 import {fetchCategories} from '../../actions/categoryActions';
-import {Row, Col, Button, Card, CardHeader, CardFooter, CardBlock, Form, FormGroup, Label, Input} from 'reactstrap';
+import {
+  Row,
+  Col,
+  Button,
+  Card,
+  CardHeader,
+  CardFooter,
+  CardBlock,
+  Form,
+  FormGroup,
+  Label,
+  Input,
+} from 'reactstrap';
 import {editOrganization} from '../../actions/organizationActions';
 
 class EditOrganization extends React.PureComponent {
   constructor(props) {
     super(props);
     this.state = {
-      organizationId: props.match.params.id
+      organizationId: props.match.params.id,
     };
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   handleSubmit(event) {
     event.preventDefault();
-    this.props.dispatch(editOrganization(
-      document.querySelector('form'),
-      this.state.organizationId
-    ));
+    this.props.dispatch(
+      editOrganization(
+        document.querySelector('form'),
+        this.state.organizationId,
+      ),
+    );
   }
 
   componentWillMount() {
@@ -43,7 +57,11 @@ class EditOrganization extends React.PureComponent {
     let errorsMessage = '';
 
     if (errors) {
-      errorsMessage = <div className="alert alert-danger" role="alert">{this.createMarkup()}</div>;
+      errorsMessage = (
+        <div className="alert alert-danger" role="alert">
+          {this.createMarkup()}
+        </div>
+      );
     }
 
     if (!organization) {
@@ -64,23 +82,26 @@ class EditOrganization extends React.PureComponent {
                       <Label htmlFor="text-input">Категория</Label>
                     </Col>
                     <Col xs="12" md="9">
-                      <Input type="select" name="category_id" id="select"
-                        defaultValue={organization.category.id}>
+                      <Input
+                        type="select"
+                        name="category_id"
+                        id="select"
+                        defaultValue={organization.category.id}
+                      >
                         {categories.map((category) => {
                           return (
                             <option key={category.id} value={category.id}>
                               {category.name}
                             </option>
                           );
-                        })
-                        }
+                        })}
                       </Input>
                     </Col>
                   </FormGroup>
                 </CardBlock>
                 <CardFooter>
                   <Button type="submit" size="sm" color="success">
-                    <i className="fa fa-dot-circle-o"/> Сохранить
+                    <i className="fa fa-dot-circle-o" /> Сохранить
                   </Button>
                 </CardFooter>
               </Form>
@@ -98,14 +119,14 @@ EditOrganization.propTypes = {
   router: PropTypes.object.isRequired,
   errors: PropTypes.array,
   categories: PropTypes.array,
-  organization: PropTypes.object
+  organization: PropTypes.object,
 };
 
 const mapStateToProps = (state) => {
   return {
     errors: state.organizations.errors,
     categories: state.categories.categories,
-    organization: state.organizations.organization
+    organization: state.organizations.organization,
   };
 };
 
