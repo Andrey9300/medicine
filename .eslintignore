@@ -1,3 +1,5 @@
 node_modules/*
 vendor/*.js
 webpack.mix.js
+package.json
+package-lock.json

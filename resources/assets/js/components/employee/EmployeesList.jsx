@@ -17,7 +17,7 @@ export class EmployeesList extends React.PureComponent {
             </Link>
           </CardHeader>
           <CardBlock className="card-body">
-            <Link to={'/employees'}>Перейти ко всем сотрудникам</Link>
+            <Link to="/employees">Перейти ко всем сотрудникам</Link>
           </CardBlock>
         </Card>
       );

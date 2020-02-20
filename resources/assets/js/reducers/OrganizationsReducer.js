@@ -67,6 +67,9 @@ export default function reducer(state = initialState, action) {
       };
     }
     case 'ORGANIZATION_FULFILLED': {
+      const {organization: {employees}} = action.payload.data;
+      employees.sort((a, b) => b.researches_ends.length - a.researches_ends.length);
+
       return {
         ...state,
         errors: null,

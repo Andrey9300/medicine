@@ -49,6 +49,9 @@ class PrintEmployee extends React.PureComponent {
       bufferTr.push(<tr key={1}>{bufferTd}</tr>);
     }
 
+    // пока выводим безусловно
+    bufferTr.push(<tr key={999}><td>Предварительный / периодический медицинский осмотр</td></tr>);
+
     return bufferTr;
   }
 

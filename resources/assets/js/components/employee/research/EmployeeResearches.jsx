@@ -2,18 +2,29 @@ import React from 'react';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
 import {Link} from 'react-router-dom';
-import {Table, Row, Col, Card, CardHeader, CardBlock, Button, Form, Input, CardFooter} from 'reactstrap';
+import {
+  Table,
+  Row,
+  Col,
+  Card,
+  CardHeader,
+  CardBlock,
+  Button,
+  Form,
+  Input,
+  CardFooter,
+} from 'reactstrap';
 import {
   addEmployeeResearches,
   clearEmployeeResearches,
-  fetchEmployeeResearches
+  fetchEmployeeResearches,
 } from '../../../actions/employeeActions';
 
 class EmployeeResearches extends React.PureComponent {
   constructor(props) {
     super(props);
     this.state = {
-      employeeId: props.idEmployee
+      employeeId: props.idEmployee,
     };
     this.handleClick = this.handleClick.bind(this);
   }
@@ -25,10 +36,12 @@ class EmployeeResearches extends React.PureComponent {
 
   handleClick() {
     // TODO: валидация на клиенте
-    this.props.dispatch(addEmployeeResearches(
-      document.querySelector('form'),
-      this.state.employeeId
-    ));
+    this.props.dispatch(
+      addEmployeeResearches(
+        document.querySelector('form'),
+        this.state.employeeId,
+      ),
+    );
   }
 
   createMarkup() {
@@ -42,7 +55,8 @@ class EmployeeResearches extends React.PureComponent {
   }
 
   render() {
-    const {employeeResearches, errors} = this.props;
+    const {employeeId} = this.state;
+    const {employeeResearches, errors, employee} = this.props;
     let errorsMessage = '';
 
     if (!employeeResearches) {
@@ -50,10 +64,11 @@ class EmployeeResearches extends React.PureComponent {
     }
 
     if (errors) {
-      errorsMessage =
+      errorsMessage = (
         <div className="alert alert-danger" role="alert">
           {this.createMarkup()}
-        </div>;
+        </div>
+      );
     }
 
     return (
@@ -62,22 +77,36 @@ class EmployeeResearches extends React.PureComponent {
         <Row>
           <Col xs="12" md="12" lg="8">
             <Card>
-              <CardHeader style={{display: 'flex', justifyContent: 'space-between'}}>
+              <CardHeader
+                style={{display: 'flex', justifyContent: 'space-between'}}
+              >
                 <div>
                   <div>
-                    <i className="fa fa-heartbeat" aria-hidden="true"/>
+                    <i className="fa fa-heartbeat" aria-hidden="true" />
                     &nbsp;Даты исследований ({employeeResearches.length})
                   </div>
                   <div>
-                    Список всех доступных <Link to={'/researches'}>исследований.</Link>
+                    Список всех доступных{' '}
+                    <Link to={'/researches'}>исследований.</Link>
                   </div>
                 </div>
-                <Button type="submit" size="sm"
-                  color="success pull-right"
-                  onClick={this.handleClick}
-                >
-                  <i className="fa fa-dot-circle-o"/> Сохранить
-                </Button>
+                <div style={{display: 'flex', alignItems: 'center'}}>
+                  <Link
+                    to={`/employees/print/${employeeId}`}
+                    className="btn btn-secondary btn-sm pull-left"
+                    style={{marginRight: '16px'}}
+                  >
+                    <i className="fa fa-dot-circle-o" /> Направление
+                  </Link>
+                  <Button
+                    type="submit"
+                    size="sm"
+                    color="success pull-right"
+                    onClick={this.handleClick}
+                  >
+                    <i className="fa fa-dot-circle-o" /> Сохранить
+                  </Button>
+                </div>
               </CardHeader>
               <CardBlock className="card-body">
                 <Form id="employeeResearch">
@@ -90,31 +119,68 @@ class EmployeeResearches extends React.PureComponent {
                     </thead>
                     <tbody>
                       {employeeResearches.map((employeeResearch) => {
+                        const isResearchesEnds = employee.researches_ends.find(
+                          (item) => {
+                            return (
+                              item.period_id ===
+                              employeeResearch.research.period_id
+                            );
+                          },
+                        );
+                        const isResearchesExpired = employee.researches_expired.find(
+                          (item) => {
+                            return (
+                              item.period_id ===
+                              employeeResearch.research.period_id
+                            );
+                          },
+                        );
+                        const color =
+                          isResearchesEnds || isResearchesExpired ? 'red' : '';
+
                         return (
                           <tr key={employeeResearch.id}>
                             <td>{employeeResearch.research.name}</td>
                             <td>
-                              <Input type="text"
+                              <Input
+                                type="text"
                                 placeholder="дд-мм-гггг"
                                 name={`employeeResearch[${employeeResearch.pivot.id}]`}
                                 defaultValue={employeeResearch.date}
+                                style={{color}}
                               />
                             </td>
                           </tr>
                         );
-                      })
-                      }
+                      })}
                     </tbody>
                   </Table>
                 </Form>
               </CardBlock>
               <CardFooter>
-                <Button type="submit" size="sm"
-                  color="success pull-right"
-                  onClick={this.handleClick}
+                <div
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'flex-end',
+                  }}
                 >
-                  <i className="fa fa-dot-circle-o"/> Сохранить
-                </Button>
+                  <Link
+                    to={`/employees/print/${employeeId}`}
+                    className="btn btn-secondary btn-sm pull-left"
+                    style={{marginRight: '16px'}}
+                  >
+                    <i className="fa fa-dot-circle-o" /> Направление
+                  </Link>
+                  <Button
+                    type="submit"
+                    size="sm"
+                    color="success pull-right"
+                    onClick={this.handleClick}
+                  >
+                    <i className="fa fa-dot-circle-o" /> Сохранить
+                  </Button>
+                </div>
               </CardFooter>
             </Card>
           </Col>
@@ -125,14 +191,15 @@ class EmployeeResearches extends React.PureComponent {
 }
 
 EmployeeResearches.propTypes = {
-  dispatch: PropTypes.func.isRequired
+  dispatch: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => {
   return {
     errors: state.employees.errors,
+    employee: state.employees.employee,
     employeeResearches: state.employees.employeeResearches,
-    user: state.users.user
+    user: state.users.user,
   };
 };
 

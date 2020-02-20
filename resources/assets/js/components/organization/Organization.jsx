@@ -11,7 +11,10 @@ class Organization extends React.PureComponent {
   constructor(props) {
     super(props);
     this.state = {
-      organizationId: props.match.params.id
+      organizationId: props.match.params.id,
+      employees: [],
+      researchesEnds: [],
+      researchesExpired: []
     };
   }
 
@@ -20,51 +23,56 @@ class Organization extends React.PureComponent {
     this.props.dispatch(fetchHospitals());
   }
 
+  componentDidUpdate(prevProps) {
+    const {organization} = this.props;
+
+    if (prevProps.organization !== organization && organization.employees.length > 0) {
+      const employees = organization.employees.filter((item) => {
+        return item.researches_ends.length > 0 || item.researches_expired.length > 0;
+      });
+
+      const researchesEnds = organization.employees.reduce(
+        (previousValue, employee) => {
+          if (employee.researches_ends.length) {
+            return parseInt(previousValue, 10) + 1;
+          }
+
+          return parseInt(previousValue, 10);
+        },
+        0
+      );
+
+      const researchesExpired = organization.employees.reduce(
+        (previousValue, employee) => {
+          if (employee.researches_expired.length) {
+            return parseInt(previousValue, 10) + 1;
+          }
+
+          return parseInt(previousValue, 10);
+        },
+        0
+      );
+
+      this.setState({
+        employees,
+        researchesEnds,
+        researchesExpired
+      });
+    }
+  }
+
   handleBtnDelete(id, event) {
     event.preventDefault();
     this.props.dispatch(deleteOrganization(id));
   }
 
   render() {
+    const {employees, researchesEnds, researchesExpired} = this.state;
     const {organization, hospitals} = this.props;
 
     if (!organization || !hospitals) {
       return null;
     }
-
-    const researchesEnds = organization.employees.reduce(
-      (previousValue, employee) => {
-        if (employee.researches_ends.length) {
-          return parseInt(
-            previousValue,
-            10
-          ) + 1;
-        }
-
-        return parseInt(
-          previousValue,
-          10
-        );
-      },
-      0
-    );
-
-    const researchesExpired = organization.employees.reduce(
-      (previousValue, employee) => {
-        if (employee.researches_expired.length) {
-          return parseInt(
-            previousValue,
-            10
-          ) + 1;
-        }
-
-        return parseInt(
-          previousValue,
-          10
-        );
-      },
-      0
-    );
 
     return (
       <div className="animated fadeIn">
@@ -79,10 +87,7 @@ class Organization extends React.PureComponent {
                 }}>
                   <i className="fa fa-pencil"/>
                 </Link>
-                <span className="pull-right" onClick={(event) => this.handleBtnDelete(
-                  organization.id,
-                  event
-                )}>
+                <span className="pull-right" onClick={(event) => this.handleBtnDelete(organization.id, event)}>
                   <i className="fa fa-trash"/>
                 </span>
               </CardHeader>
@@ -108,8 +113,8 @@ class Organization extends React.PureComponent {
               </CardBlock>
             </Card>
             <EmployeesList
-              employees={organization.employees}
-              title={`Сотрудники «${organization.name}» `}
+              employees={employees}
+              title={'Сотрудники c кончающимися МО'}
             />
           </Col>
           <Col xs="6" sm="6" md="6">

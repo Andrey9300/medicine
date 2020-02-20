@@ -84,7 +84,7 @@ class ResearchesTableSeeder extends Seeder
         DB::table('researches')->insert([
             'id' => 15,
             'name' => 'Исследование крови / Вакцинация против Кори',
-            'period_id' => 6
+            'period_id' => 1
         ]);
         DB::table('researches')->insert([
             'id' => 16,
@@ -104,7 +104,7 @@ class ResearchesTableSeeder extends Seeder
         DB::table('researches')->insert([
             'id' => 19,
             'name' => 'Предварительный / периодический медицинский осмотр',
-            'period_id' => 3
+            'period_id' => 4
         ]);
     }
 }
