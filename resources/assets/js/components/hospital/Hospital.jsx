@@ -97,6 +97,19 @@ class Hospital extends React.PureComponent {
                         <td>Контактное лицо:</td>
                         <td>{hospital.head_fio}</td>
                       </tr>
+                      <tr>
+                        <td>Проезд (отображение в направлении может отличаться):</td>
+                        <td>
+                          {hospital.photo_map ? (
+                            <img
+                              src={hospital.photo_map}
+                              style={{width: '300px', height: '300px'}}
+                            />
+                          ) : (
+                            'Ссылка на карту не добавлена'
+                          )}
+                        </td>
+                      </tr>
                     </tbody>
                   </Table>
                 </CardBlock>

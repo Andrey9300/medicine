@@ -49,6 +49,7 @@
   },
   "dependencies": {
     "eslint-config-prettier": "^6.10.0",
+    "eslint-plugin-import": "^2.20.1",
     "font-awesome": "^4.7.0",
     "popper.js": "^1.16.1",
     "prettier": "^1.19.1",

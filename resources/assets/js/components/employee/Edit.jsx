@@ -1,6 +1,6 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import {fetchEmployee} from './../../actions/employeeActions';
+import {clearEmployee, fetchEmployee} from './../../actions/employeeActions';
 import {fetchOrganizations} from './../../actions/organizationActions';
 import PropTypes from 'prop-types';
 import {
@@ -36,6 +36,7 @@ class EditEmployee extends React.PureComponent {
   }
 
   componentWillMount() {
+    this.props.dispatch(clearEmployee());
     this.props.dispatch(fetchCategories());
     this.props.dispatch(fetchEmployee(this.state.employeeId));
     this.props.dispatch(fetchOrganizations());
@@ -131,6 +132,19 @@ class EditEmployee extends React.PureComponent {
                         id="medical_book"
                         name="medical_book"
                         defaultValue={employee.medical_book}
+                      />
+                    </Col>
+                  </FormGroup>
+                  <FormGroup row>
+                    <Col md="3">
+                      <Label htmlFor="text-input">Отдел</Label>
+                    </Col>
+                    <Col xs="12" md="9">
+                      <Input
+                        type="text"
+                        id="department"
+                        name="department"
+                        defaultValue={employee.department}
                       />
                     </Col>
                   </FormGroup>

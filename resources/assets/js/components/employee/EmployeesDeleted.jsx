@@ -25,7 +25,7 @@ class EmployeesDeleted extends React.PureComponent {
               <EmployeesList
                 employees={deleted}
                 user={user}
-                title={'Уволенные сотрудники '}
+                title={'Сотрудники в архиве '}
               />
             </Col>
           </Row>

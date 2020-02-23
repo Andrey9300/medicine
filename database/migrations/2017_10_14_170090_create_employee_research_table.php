@@ -15,6 +15,7 @@ class CreateEmployeeResearchTable extends Migration
     {
         Schema::create('employee_researches', function (Blueprint $table) {
             $table->increments('id');
+            $table->boolean('is_exception')->nullable();
             $table->date('date')->nullable();
             $table->integer('employee_id')->unsigned();
             $table->foreign('employee_id')->references('id')->on('employees');

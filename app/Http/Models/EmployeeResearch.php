@@ -9,6 +9,6 @@ class EmployeeResearch extends Model
     public $timestamps = false;
 
     protected $fillable = [
-        'user_researches_id', 'employee_id', 'date'
+        'user_researches_id', 'employee_id', 'date', 'is_exception'
     ];
 }

@@ -120,6 +120,14 @@ class NewEmployee extends React.PureComponent {
                   </FormGroup>
                   <FormGroup row>
                     <Col md="3">
+                      <Label htmlFor="text-input">Отдел</Label>
+                    </Col>
+                    <Col xs="12" md="9">
+                      <Input type="text" id="department" name="department" />
+                    </Col>
+                  </FormGroup>
+                  <FormGroup row>
+                    <Col md="3">
                       <Label htmlFor="text-input">Должность</Label>
                     </Col>
                     <Col xs="12" md="9">

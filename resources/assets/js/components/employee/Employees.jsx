@@ -34,7 +34,7 @@ class Employees extends React.PureComponent {
             <Col xs="12" lg="12">
               <Card>
                 <CardHeader>
-                  <Link to={'/employeesDeleted'}>Уволенные сотрудники</Link>
+                  <Link to={'/employeesDeleted'}>Сотрудники в архиве</Link>
                 </CardHeader>
               </Card>
             </Col>

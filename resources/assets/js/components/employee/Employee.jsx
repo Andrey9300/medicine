@@ -1,6 +1,6 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import {fetchEmployee, deleteEmployee} from './../../actions/employeeActions';
+import {fetchEmployee, deleteEmployee, restoreEmployee} from './../../actions/employeeActions';
 import EmployeeResearches from './research/EmployeeResearches';
 import {Link} from 'react-router-dom';
 import PropTypes from 'prop-types';
@@ -25,6 +25,13 @@ class Employee extends React.PureComponent {
     event.preventDefault();
     this.props.dispatch(
       deleteEmployee(id, this.props.employee.organization.id),
+    );
+  }
+
+  restoreEmployee(id, event) {
+    event.preventDefault();
+    this.props.dispatch(
+      restoreEmployee(id),
     );
   }
 
@@ -65,6 +72,19 @@ class Employee extends React.PureComponent {
                 <CardHeader>
                   <i className="fa fa-users" aria-hidden="true" />
                   {employee.fio}
+                  {employee.deleted_at &&
+                    <Button
+                      className="pull-right"
+                      type="submit"
+                      size="sm"
+                      color="secondary"
+                      onClick={(event) =>
+                        this.restoreEmployee(employee.id, event)
+                      }
+                    >
+                      Восстановить
+                    </Button>
+                  }
                   {!employee.deleted_at && (
                     <>
                       <Link
@@ -76,16 +96,17 @@ class Employee extends React.PureComponent {
                         <i className="fa fa-pencil" />
                       </Link>
 
-                      <span
+                      <Button
                         className="pull-right"
+                        type="submit"
+                        size="sm"
+                        color="danger"
                         onClick={(event) =>
                           this.handleBtnDelete(employee.id, event)
                         }
                       >
-                        <Button type="submit" size="sm" color="danger">
-                          Уволить
-                        </Button>
-                      </span>
+                        В архив
+                      </Button>
                     </>
                   )}
                 </CardHeader>
@@ -114,10 +135,14 @@ class Employee extends React.PureComponent {
                       </tr>
                       {employee.deleted_at && (
                         <tr>
-                          <td>Уволен:</td>
+                          <td>В архиве с:</td>
                           <td>{employee.deleted_at}</td>
                         </tr>
                       )}
+                      <tr>
+                        <td>Отдел:</td>
+                        <td>{employee.department}</td>
+                      </tr>
                       <tr>
                         <td>Должность:</td>
                         <td>{employee.position}</td>

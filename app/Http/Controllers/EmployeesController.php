@@ -36,6 +36,7 @@ class EmployeesController extends Controller
         $employee->position = $request->position;
         $employee->category_id = $request->category_id;
         $employee->comments = $request->comments;
+        $employee->department = $request->department;
         $employee->save();
     }
 
@@ -145,6 +146,7 @@ class EmployeesController extends Controller
         $employee->position = $request->position;
         $employee->category_id = $request->category_id;
         $employee->comments = $request->comments;
+        $employee->department = $request->department;
         $employee->save();
     }
 
@@ -159,6 +161,15 @@ class EmployeesController extends Controller
         $userAdmin = IndexController::findAdmin();
         $employee = $userAdmin->employees->find($id);
         $employee->delete();
+    }
+
+    public function restore($id)
+    {
+        $employee = Employee::onlyTrashed()->find($id);
+
+        if (!is_null($employee)) {
+            $employee->restore();
+        }
     }
 
     /**
@@ -200,6 +211,7 @@ class EmployeesController extends Controller
                 $research->category;
                 $research->research;
                 $research->date = $employeeResearch->date;
+                $research->is_exception = $employeeResearch->is_exception;
                 $employeeResearches[] = $research;
             }
         }
@@ -220,17 +232,23 @@ class EmployeesController extends Controller
         $user = Auth::user();
         $this->authorize('isAdmin', $user);
         $employeeResearches = $request->employeeResearch;
+        $isExceptions = $request->is_exception;
 
         foreach ($employeeResearches as $key => $date) {
-            if (!$date) {
-                return null;
+            $isException = false;
+            $dateSave = null;
+
+            if ($date) {
+                $dateSave = Carbon::createFromFormat('d-m-Y', $date)->format('Y-m-d');
             }
 
-            $date = Carbon::createFromFormat('d-m-Y', $date)->format('Y-m-d');
+            if (!is_null($isExceptions) && array_key_exists($key, $isExceptions)) {
+                $isException = $isExceptions[$key] === 'on' ? 1 : 0;
+            }
 
             EmployeeResearch::updateOrCreate(
                 ['user_researches_id' => $key, 'employee_id' => $id],
-                ['date' => $date]
+                ['date' => $dateSave, 'is_exception' => $isException]
             );
         }
     }
@@ -248,6 +266,10 @@ class EmployeesController extends Controller
         $options_expired = $employee->researches_expired = []; // подходит к концу
         $employee->sumForReseaches = 0;
         $employeeCategoryId = $employee->category_id;
+        $gepatitDate1 = null;
+        $gepatitDate2 = null;
+        $gepatitResearch1 = null;
+        $gepatitResearch2 = null;
 
         foreach ($userResearches as $userResearch) {
             if ($userResearch->category_id !== $employeeCategoryId) {
@@ -256,16 +278,41 @@ class EmployeesController extends Controller
 
             $research = Research::find($userResearch->research_id);
             $research->researchPeriod->period; // периодичность конкретного исследования
-
-            //$userResearch->pivot->id; //user_researches.id
-
             $employeeResearch = EmployeeResearch::where('employee_id', '=', $employee->id)
                 ->where('user_researches_id', '=', $userResearch->pivot->id)
                 ->first();
 
             if (is_null($employeeResearch) || is_null($employeeResearch->date)) {
+                // если отвод по медицинским показаниям
+                if (!is_null($employeeResearch) && $employeeResearch->is_exception === 1) {
+                    continue;
+                }
+
+                $date_birthday = Carbon::createFromDate($employee->date_birthday);
+                $diffDatesResearch = $date_birthday->diffInYears(Carbon::now());
+
+                // против Кори старше 55 лет не нужно
+                if ($research->id === 15 && $diffDatesResearch >= 55) {
+                    continue;
+                }
+
                 $options_ends[] = $research;
             } else {
+                // если отвод по медицинским показаниям
+                if ($employeeResearch->is_exception === 1) {
+                    continue;
+                }
+
+                if ($userResearch->research_id === 14) {
+                    $gepatitDate1 = Carbon::parse($employeeResearch->date);
+                    $gepatitResearch1 = $research;
+                }
+
+                if ($userResearch->research_id === 20) {
+                    $gepatitDate2 = Carbon::parse($employeeResearch->date);
+                    $gepatitResearch2 = $research;
+                }
+
                 switch ($research->researchPeriod->period) {
                     case -1:
                         $employment_date = Carbon::parse($employee->date_employment);
@@ -335,6 +382,32 @@ class EmployeesController extends Controller
 //                        $employee->sumForReseaches += $researchPrice;
 //                    }
 //                }
+            }
+        }
+
+        // для гепатита А разница между дата №1 и дата №2 должна быть не больше 12 месяцев
+        $diffMonthGepatit = 12;
+        if (!is_null($gepatitDate1) && !is_null($gepatitDate2)) {
+            $diffGepatit = $gepatitDate1->diffInMonths($gepatitDate2);
+
+            if ($diffGepatit >= $diffMonthGepatit) {
+                array_push($options_ends, $gepatitResearch1);
+                array_push($options_ends, $gepatitResearch2);
+            }
+        } else if (!is_null($gepatitDate1)) {
+            $diffGepatit = $gepatitDate1->diffInMonths(Carbon::now());
+
+            if ($diffGepatit < $diffMonthGepatit) {
+                foreach ($options_ends as $key => $value) {
+                    if ($value->id === 20 || $value->id === 14) {
+                        unset($options_ends[$key]);
+                    }
+                }
+                foreach ($options_expired as $key => $value) {
+                    if ($value->id === 20 || $value->id === 14) {
+                        unset($options_expired[$key]);
+                    }
+                }
             }
         }
 

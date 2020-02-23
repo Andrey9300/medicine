@@ -94,7 +94,7 @@ export function fetchEmployee(id) {
 }
 
 /**
- * Уволить сотрудника
+ * Сотрудника в архиве
  *
  * @param id number
  * @param organizationId number
@@ -105,8 +105,22 @@ export function deleteEmployee(id, organizationId) {
     axios
       .post(`/employees/softDelete/${id}`)
       .then(() => {
-        alert('Сотрудник уволен');
-        history.pushState(null, null, `/#/organizations/${organizationId}`);
+        alert('Сотрудник в архиве');
+        history.pushState(null, null, `/#/organization/${organizationId}`);
+        window.location.reload();
+      })
+      .catch((error) => {
+        return error;
+      });
+  };
+}
+
+export function restoreEmployee(id) {
+  return () => {
+    axios
+      .post(`/employees/restore/${id}`)
+      .then(() => {
+        alert('Сотрудник восстановлен');
         window.location.reload();
       })
       .catch((error) => {
@@ -188,6 +202,15 @@ export function clearEmployeeResearches() {
     dispatch({
       payload: [],
       type: 'EMPLOYEE_RESEARCHES_CLEAR',
+    });
+  };
+}
+
+export function clearEmployee() {
+  return (dispatch) => {
+    dispatch({
+      payload: [],
+      type: 'EMPLOYEE_CLEAR',
     });
   };
 }

@@ -3,6 +3,7 @@ Auth::routes();
 Route::view('/welcome', 'layouts.main');
 Route::get('/', 'IndexController@index');
 Route::get('activateAccount/{id}/{token}', 'Auth\RegisterController@activation')->name('activation');
+Route::get('/checkResearches', 'CronController@checkResearches');
 
 Route::middleware(['auth'])->group(function () {
     Route::post('users/current', 'UsersController@show');
@@ -46,6 +47,7 @@ Route::middleware(['auth'])->group(function () {
         Route::post('/store', 'EmployeesController@store');
         Route::post('/softDelete/{id}', 'EmployeesController@softDelete');
         Route::post('/forceDelete/{id}', 'EmployeesController@forceDelete');
+        Route::post('/restore/{id}', 'EmployeesController@restore');
         Route::post('/update/{id}', 'EmployeesController@update');
         Route::post('/{id}', 'EmployeesController@show');
         Route::post('/', 'EmployeesController@showAll');

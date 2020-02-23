@@ -16,6 +16,7 @@ class CreateResearchesTable extends Migration
         Schema::create('researches', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
+            $table->string('description')->nullable();
             $table->integer('period_id')->unsigned();
             $table->foreign('period_id')->references('id')->on('research_periods');
             $table->unique(array('name', 'period_id'));

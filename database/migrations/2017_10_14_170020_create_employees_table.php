@@ -18,6 +18,7 @@ class CreateEmployeesTable extends Migration
             $table->string('fio');
             $table->date('date_birthday');
             $table->date('date_employment');
+            $table->string('department')->nullable();
             $table->string('medical_book')->nullable();
             $table->integer('user_id')->unsigned();
             $table->foreign('user_id')->references('id')->on('users');

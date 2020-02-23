@@ -86,5 +86,15 @@ class UsersResearchesTableSeeder extends Seeder
             'user_id' => 1,
             'research_categories_id' => 15
         ]);
+        DB::table('user_researches')->insert([
+            'id' => 16,
+            'user_id' => 1,
+            'research_categories_id' => 48
+        ]);
+        DB::table('user_researches')->insert([
+            'id' => 17,
+            'user_id' => 1,
+            'research_categories_id' => 26
+        ]);
     }
 }

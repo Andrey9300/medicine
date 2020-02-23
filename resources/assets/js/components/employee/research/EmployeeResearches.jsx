@@ -115,39 +115,66 @@ class EmployeeResearches extends React.PureComponent {
                       <tr>
                         <th>Исследование</th>
                         <th>Дата</th>
+                        <th>Отвод</th>
                       </tr>
                     </thead>
                     <tbody>
                       {employeeResearches.map((employeeResearch) => {
-                        const isResearchesEnds = employee.researches_ends.find(
+                        const isResearchesEnds = Object.values(employee.researches_ends).find(
                           (item) => {
                             return (
                               item.period_id ===
-                              employeeResearch.research.period_id
+                                employeeResearch.research.period_id &&
+                              !employeeResearch.is_exception
                             );
                           },
                         );
-                        const isResearchesExpired = employee.researches_expired.find(
+                        const isResearchesExpired = Object.values(employee.researches_expired).find(
                           (item) => {
                             return (
                               item.period_id ===
-                              employeeResearch.research.period_id
+                                employeeResearch.research.period_id &&
+                              !employeeResearch.is_exception
                             );
                           },
                         );
-                        const color =
-                          isResearchesEnds || isResearchesExpired ? 'red' : '';
-
+                        const border =
+                          isResearchesEnds || isResearchesExpired
+                            ? '1px solid red'
+                            : {};
                         return (
                           <tr key={employeeResearch.id}>
-                            <td>{employeeResearch.research.name}</td>
+                            <td>
+                              <div
+                                style={{fontSize: '16px', fontWeight: '600'}}
+                              >
+                                {employeeResearch.research.name}
+                              </div>
+                              <div
+                                style={{
+                                  fontSize: '12px',
+                                  fontStyle: 'italic',
+                                  lineHeight: '24px',
+                                  fontWeight: '300',
+                                }}
+                              >
+                                {employeeResearch.research.description}
+                              </div>
+                            </td>
                             <td>
                               <Input
                                 type="text"
                                 placeholder="дд-мм-гггг"
                                 name={`employeeResearch[${employeeResearch.pivot.id}]`}
                                 defaultValue={employeeResearch.date}
-                                style={{color}}
+                                style={{border}}
+                              />
+                            </td>
+                            <td style={{textAlign: 'center'}}>
+                              <Input
+                                type="checkbox"
+                                name={`is_exception[${employeeResearch.pivot.id}]`}
+                                defaultChecked={employeeResearch.is_exception}
                               />
                             </td>
                           </tr>

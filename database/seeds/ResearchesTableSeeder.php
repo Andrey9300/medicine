@@ -14,6 +14,7 @@ class ResearchesTableSeeder extends Seeder
         DB::table('researches')->insert([
             'id' => 1,
             'name' => 'Терапевт',
+            'description' => '1 раз в год',
             'period_id' => 3
         ]);
         DB::table('researches')->insert([
@@ -78,12 +79,14 @@ class ResearchesTableSeeder extends Seeder
         ]);
         DB::table('researches')->insert([
             'id' => 14,
-            'name' => 'Вакцинация Вирусный Гепатит А',
+            'name' => 'Вакцинация Вирусный Гепатит А (Дата №1)',
+            'description' => 'Между Дата №1 и дата №2 должно быть не больше 12 месяцев',
             'period_id' => 1
         ]);
         DB::table('researches')->insert([
             'id' => 15,
             'name' => 'Исследование крови / Вакцинация против Кори',
+            'description' => 'Для лиц до 55 лет',
             'period_id' => 1
         ]);
         DB::table('researches')->insert([
@@ -105,6 +108,12 @@ class ResearchesTableSeeder extends Seeder
             'id' => 19,
             'name' => 'Предварительный / периодический медицинский осмотр',
             'period_id' => 4
+        ]);
+        DB::table('researches')->insert([
+            'id' => 20,
+            'name' => 'Вакцинация Вирусный Гепатит А (Дата №2)',
+            'description' => 'Между Дата №1 и дата №2 должно быть не больше 12 месяцев',
+            'period_id' => 1
         ]);
     }
 }

@@ -246,5 +246,10 @@ class ResearchesCategoryTableSeeder extends Seeder
             'category_id' => 3,
             'research_id' => 19,
         ]);
+        DB::table('research_categories')->insert([
+            'id' => 48,
+            'category_id' => 2,
+            'research_id' => 20,
+        ]);
     }
 }
