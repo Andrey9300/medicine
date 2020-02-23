@@ -106,7 +106,7 @@ class Hospital extends React.PureComponent {
                               style={{width: '300px', height: '300px'}}
                             />
                           ) : (
-                            'Ссылка на карту не добавлена'
+                            'Загрузите фото карты'
                           )}
                         </td>
                       </tr>

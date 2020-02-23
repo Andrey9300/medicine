@@ -130,20 +130,6 @@ class EditHospital extends React.PureComponent {
                   </FormGroup>
                   <FormGroup row>
                     <Col md="3">
-                      <Label htmlFor="text-input">Фото карты</Label>
-                    </Col>
-                    <Col xs="12" md="9">
-                      <Input
-                        type="text"
-                        id="photo_map"
-                        name="photo_map"
-                        defaultValue={hospital.photo_map}
-                      />
-                      <FormText color="muted">Загрузите фото карты</FormText>
-                    </Col>
-                  </FormGroup>
-                  <FormGroup row>
-                    <Col md="3">
                       <Label htmlFor="text-input">Телефон</Label>
                     </Col>
                     <Col xs="12" md="9">
@@ -153,6 +139,34 @@ class EditHospital extends React.PureComponent {
                         name="phone"
                         defaultValue={hospital.phone}
                       />
+                    </Col>
+                  </FormGroup>
+                  <FormGroup row>
+                    <Col md="3">
+                      <Label htmlFor="text-input">Фото карты</Label>
+                    </Col>
+                    <Col xs="12" md="9">
+                      <Input
+                        type="file"
+                        id="photo_map"
+                        name="photo_map"
+                      />
+                      <FormText color="muted">Загрузите фото карты</FormText>
+                    </Col>
+                  </FormGroup>
+                  <FormGroup row>
+                    <Col md="3">
+                      <Label htmlFor="text-input">Текущая карта</Label>
+                    </Col>
+                    <Col xs="12" md="9">
+                      {hospital.photo_map ? (
+                        <img
+                          src={hospital.photo_map}
+                          style={{width: '300px', height: '300px'}}
+                        />
+                      ) : (
+                        'Загрузите фото карты'
+                      )}
                     </Col>
                   </FormGroup>
                 </CardBlock>
@@ -173,7 +187,6 @@ class EditHospital extends React.PureComponent {
 EditHospital.propTypes = {
   dispatch: PropTypes.func.isRequired,
   match: PropTypes.object.isRequired,
-  router: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = (state) => {

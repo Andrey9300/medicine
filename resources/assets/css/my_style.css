@@ -22,3 +22,8 @@ ul#main_nav li{
     color: #fff;
     text-decoration: none;
 }
+@media print {
+    textarea {
+        border: 0px;
+    }
+}

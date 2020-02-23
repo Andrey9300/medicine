@@ -9,6 +9,7 @@ import {fetchHospitals} from '../../actions/hospitalActions';
 class PrintEmployee extends React.PureComponent {
   constructor(props) {
     super(props);
+
     this.state = {
       errors: null,
       employeeId: props.match.params.id,
@@ -37,18 +38,33 @@ class PrintEmployee extends React.PureComponent {
     const researches = employee.researches_expired.concat(
       employee.researches_ends,
     );
+    // в отдельный раздел псих. осв., предварительный / периодический МО
+    const filterResearches = researches.filter((research) => {
+      return research.id !== 19 || research.id !== 18;
+    });
 
-    researches.map((research, index) => {
+    filterResearches.forEach((research, index) => {
+      let note = false;
+      if (research.id === 13 || research.id === 14 || research.id === 20) {
+        note = true;
+      }
+
       if (index % 2) {
         bufferTr.push(
           <tr key={research.id}>
             {bufferTd}
-            <td>{research.name}</td>
+            <td style={{fontWeight: note ? '600' : null}}>
+              {research.name} {note && '*'}
+            </td>
           </tr>,
         );
         bufferTd = [];
       } else {
-        bufferTd.push(<td key={research.id}>{research.name}</td>);
+        bufferTd.push(
+          <td key={research.id} style={{fontWeight: note ? '600' : null}}>
+            {research.name} {note && <span>*</span>}
+          </td>,
+        );
       }
     });
 
@@ -58,13 +74,6 @@ class PrintEmployee extends React.PureComponent {
     ) {
       bufferTr.push(<tr key={1}>{bufferTd}</tr>);
     }
-
-    // пока выводим безусловно
-    bufferTr.push(
-      <tr key={999}>
-        <td>Предварительный / периодический медицинский осмотр</td>
-      </tr>,
-    );
 
     return bufferTr;
   }
@@ -98,6 +107,14 @@ class PrintEmployee extends React.PureComponent {
       );
     }
 
+    let decree = null;
+
+    if (employee.category.id === 1) {
+      decree = 'п.23 приложение 2, п. 3.2.2.4 Приложение 1.';
+    } else if (employee.category.id === 2) {
+      decree = 'п.15, п.23 Приложение 2';
+    }
+
     return (
       <div>
         {errorsMessage}
@@ -117,7 +134,11 @@ class PrintEmployee extends React.PureComponent {
                   </Link>
                 </CardHeader>
                 <CardBlock className="card-body">
-                  <Table responsive id="printResearches">
+                  <Table
+                    responsive
+                    id="printResearches"
+                    style={{fontSize: '12px'}}
+                  >
                     <tbody>
                       <tr
                         style={{
@@ -128,54 +149,232 @@ class PrintEmployee extends React.PureComponent {
                         <td
                           style={{
                             textAlign: 'center',
-                            fontWeight: 'bold',
+                            fontWeight: '600',
                           }}
                           colSpan="2"
                         >
-                          НАПРАВЛЕНИЕ НА МЕДИЦИНСКИЙ ОСМОТР
-                        </td>
-                      </tr>
-                      <tr
-                        style={{
-                          fontWeight: 'bold',
-                        }}
-                      >
-                        <td colSpan="2">
-                          {employee.pay
-                            ? 'ОПЛАТА: НАЛИЧНЫМИ'
-                            : 'ОПЛАТА: БЕЗНАЛИЧНЫЙ РАСЧЕТ'}
+                          Направление на медицинский осмотр
                         </td>
                       </tr>
                       <tr>
-                        <td colSpan="2">
+                        <td colSpan="1" style={{width: '50%'}}>
                           Структурное подразделение / наименование
                           объекта:&nbsp;
                           {employee.organization_name}
                         </td>
-                      </tr>
-                      <tr>
-                        <td colSpan="2">
-                          Фамилия Имя Отчество сотрудника: {employee.fio}
+                        <td colSpan="1">
+                          Информация о медицинской организации «
+                          {hospitalOrg.name}»:
                         </td>
                       </tr>
                       <tr>
-                        <td colSpan="2">
-                          Профессия / должность: {employee.role}
+                        <td colSpan="1" style={{width: '50%'}}>
+                          ФИО, дата рождения: {employee.fio},{' '}
+                          {employee.date_birthday}
+                        </td>
+                        <td colSpan="1" rowSpan="4">
+                          <img
+                            width="300"
+                            height="150"
+                            src={hospitalOrg.photo_map}
+                          />
                         </td>
                       </tr>
                       <tr>
-                        <td colSpan="2">
+                        <td colSpan="1" style={{width: '50%'}}>
+                          Отдел: {employee.department}
+                        </td>
+                      </tr>
+                      <tr>
+                        <td colSpan="1" style={{width: '50%'}}>
+                          Профессия / должность: {employee.position}
+                        </td>
+                      </tr>
+                      <tr>
+                        <td colSpan="1" style={{width: '50%'}}>
                           Кто направил (ФИО. Должность):{' '}
                           {employee.organization.head_fio}
                         </td>
                       </tr>
-                      <tr>
-                        <td>Подпись _______________________________</td>
+                      <tr
+                        style={{
+                          borderBottom: '1px solid',
+                          width: '50%',
+                        }}
+                      >
                         <td
                           style={{
-                            textAlign: 'left',
+                            fontWeight: 'italic',
                           }}
+                          colSpan="1"
                         >
+                          * При себе иметь документ удостоверяющий личность и
+                          для новой ЛМК фото 3х4
+                        </td>
+
+                        <td colSpan="1">
+                          Адрес: {hospitalOrg.address} Режим работы:{' '}
+                          {hospitalOrg.shedule} Телефон: {hospitalOrg.phone}
+                        </td>
+                      </tr>
+                      <tr
+                        style={{
+                          borderTop: '1px solid',
+                        }}
+                      >
+                        <td colSpan="1">
+                          <select>
+                            <option />
+                            <option>Новая</option>
+                            <option>Продление</option>
+                          </select>
+                          ЛМК
+                        </td>
+                        <td colSpan="1">
+                          Форма оплаты:
+                          <select>
+                            <option />
+                            <option>За счет сотрудника</option>
+                            <option>За счет организации</option>
+                          </select>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td colSpan="2">Категория: {employee.category.name}</td>
+                      </tr>
+                      <tr>
+                        <td
+                          style={{
+                            textAlign: 'center',
+                            fontWeight: '600',
+                          }}
+                          colSpan="2"
+                        >
+                          Провести медицинское обследования в объеме:
+                        </td>
+                      </tr>
+                      {this.researches()}
+                      {employee.category.id === 2 && (
+                        <>
+                          <tr
+                            style={{
+                              borderTop: '1px solid',
+                              fontWeight: '600',
+                            }}
+                          >
+                            <td>Вакцинация</td>
+                            <td>
+                              Форма оплаты:
+                              <select>
+                                <option />
+                                <option>За счет сотрудника</option>
+                                <option>За счет организации</option>
+                              </select>
+                            </td>
+                          </tr>
+                          <tr style={{fontWeight: '600'}}>
+                            <td colSpan="2">
+                              * Вы можете провести вакцинацию БЕСПЛАТНО по месту
+                              жительства по полису ОМС, с предоставлением
+                              справки или прививочного сертификата.
+                              <br />
+                              Прививка против гепатита, проводится двукратно с
+                              интервалом 6-12 мес.
+                              <br />
+                              Прививка против дизентерии проводится ежегодно.
+                            </td>
+                          </tr>
+                        </>
+                      )}
+                      <tr
+                        style={{
+                          borderTop: '1px solid',
+                        }}
+                      >
+                        <td>
+                          <select>
+                            <option />
+                            <option>Предварительный</option>
+                            <option>Периодический</option>
+                          </select>
+                          медицинский осмотр
+                        </td>
+                        <td>
+                          Форма оплаты:
+                          <select>
+                            <option />
+                            <option>За счет сотрудника</option>
+                            <option>За счет организации</option>
+                          </select>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td colSpan="2">
+                          <span style={{marginRight: '12px'}}>
+                            <span style={{fontWeight: '600'}}>2. Отдел:</span>{' '}
+                            {employee.department}
+                            <br />
+                          </span>
+                          <span style={{marginRight: '12px'}}>
+                            <span style={{fontWeight: '600'}}>
+                              3. Должность:
+                            </span>{' '}
+                            {employee.position}
+                            <br />
+                          </span>
+                          <span style={{marginRight: '12px'}}>
+                            <span style={{fontWeight: '600'}}>
+                              4. Пункты приказа:
+                            </span>{' '}
+                            {decree}
+                          </span>
+                        </td>
+                      </tr>
+                      <tr
+                        style={{
+                          borderTop: '1px solid',
+                        }}
+                      >
+                        <td>
+                          Психиатрическое освидетельствование
+                          <select>
+                            <option />
+                            <option>Да</option>
+                            <option>Нет</option>
+                          </select>
+                        </td>
+                        <td>
+                          Форма оплаты:
+                          <select>
+                            <option />
+                            <option>За счет сотрудника</option>
+                            <option>За счет организации</option>
+                          </select>
+                        </td>
+                      </tr>
+                      <tr
+                        style={{
+                          borderTop: '1px solid',
+                        }}
+                      >
+                        <td rowSpan="5">
+                          <textarea
+                            style={{width: '100%'}}
+                            rows="5"
+                            defaultValue="Дополнительная информация"
+                          />
+                        </td>
+                        <td />
+                      </tr>
+                      <tr>
+                        <td>Контактное лицо:</td>
+                      </tr>
+                      <tr>
+                        <td>Телефон:</td>
+                      </tr>
+                      <tr>
+                        <td colSpan="1" style={{width: '50%'}}>
+                          Подпись ______________________
                           {new Date(Date.now()).toLocaleDateString('ru-RU', {
                             year: 'numeric',
                             month: 'long',
@@ -183,70 +382,8 @@ class PrintEmployee extends React.PureComponent {
                           })}
                         </td>
                       </tr>
-                      <tr
-                        style={{
-                          borderBottom: '1px solid',
-                        }}
-                      >
-                        <td
-                          style={{
-                            textAlign: 'right',
-                            fontWeight: 'italic',
-                          }}
-                          colSpan="2"
-                        >
-                          * При себе иметь документ удостоверяющий личность
-                        </td>
-                      </tr>
-                      <tr
-                        style={{
-                          borderTop: '1px solid',
-                          borderBottom: '1px solid',
-                        }}
-                      >
-                        <td
-                          style={{
-                            textAlign: 'center',
-                            fontWeight: 'bold',
-                          }}
-                          colSpan="2"
-                        >
-                          ПРОВЕСТИ МЕДИЦИНСКОЕ ОБСЛЕДОВАНИЕ В ОБЪЕМЕ:
-                        </td>
-                      </tr>
-
-                      {this.researches()}
-
-                      <tr
-                        style={{
-                          borderTop: '1px solid',
-                          borderBottom: '1px solid',
-                        }}
-                      >
-                        <td
-                          style={{
-                            textAlign: 'center',
-                            fontWeight: 'bold',
-                          }}
-                          colSpan="2"
-                        >
-                          ИНФОРМАЦИЯ О МЕДИЦИНСКОЙ ОРГАНИЗАЦИИ «
-                          {hospitalOrg.name}»
-                        </td>
-                      </tr>
                       <tr>
-                        <td colSpan="2">
-                          Адрес: {hospitalOrg.address}
-                          <br />
-                          Режим работы: {hospitalOrg.shedule}
-                          <br />
-                          Телефон: {hospitalOrg.phone}
-                          <img
-                            width="670"
-                            height="300"
-                            src={hospitalOrg.photo_map}
-                          />
-                        </td>
+                        <td>М.П.</td>
                       </tr>
                     </tbody>
                   </Table>

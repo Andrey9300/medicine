@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Storage;
 use App\Http\Models\Hospital;
 use App\Http\Models\HospitalResearch;
 use App\Http\Requests\StoreHospital;
@@ -25,7 +26,7 @@ class HospitalController extends Controller
         $hospital->address = $request->address;
         $hospital->head_fio = $request->head_fio;
         $hospital->shedule = $request->shedule;
-        $hospital->photo_map = $request->photo_map;
+        $hospital->photo_map = $request->file('photo_map')->store('/images');
         $hospital->phone = $request->phone;
         $hospital->user_id = $user->id;
         $hospital->save();
@@ -39,6 +40,14 @@ class HospitalController extends Controller
     public function showAll()
     {
         $userAdmin = IndexController::findAdmin();
+
+        $hospitals = $userAdmin->hospitals;
+
+        foreach ($hospitals as $hospital) {
+            if (Storage::disk('local')->exists($hospital->photo_map)) {
+                $hospital->photo_map = Storage::url($hospital->photo_map);
+            }
+        }
 
         return response()->json([
             'hospitals' => $userAdmin->hospitals
@@ -56,6 +65,10 @@ class HospitalController extends Controller
         $userAdmin = IndexController::findAdmin();
         $hospital = $userAdmin->hospitals->find($id);
 
+        if (Storage::disk('local')->exists($hospital->photo_map)) {
+            $hospital->photo_map = Storage::url($hospital->photo_map);
+        }
+
         return response()->json([
             'hospital' => $hospital
         ]);
@@ -71,11 +84,17 @@ class HospitalController extends Controller
     {
         $hospital_new = $request->all();
         $hospital = Hospital::find($id);
+        $path = $hospital->photo_map;
+
+        if (!is_null($request->file('photo_map'))) {
+            $path = $request->file('photo_map')->store('/images');
+        }
+
         $hospital->name = $hospital_new['name'];
         $hospital->address = $hospital_new['address'];
         $hospital->head_fio = $hospital_new['head_fio'];
         $hospital->shedule = $hospital_new['shedule'];
-        $hospital->photo_map = $hospital_new['photo_map'];
+        $hospital->photo_map = $path;
         $hospital->phone = $hospital_new['phone'];
         $hospital->save();
     }
