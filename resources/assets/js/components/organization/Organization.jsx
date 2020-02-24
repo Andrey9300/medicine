@@ -15,9 +15,9 @@ class Organization extends React.PureComponent {
     super(props);
     this.state = {
       organizationId: props.match.params.id,
-      employees: [],
-      researchesEnds: [],
-      researchesExpired: [],
+      employeesAttention: [],
+      researchesEnds: 0,
+      researchesExpired: 0,
     };
   }
 
@@ -33,38 +33,25 @@ class Organization extends React.PureComponent {
       prevProps.organization !== organization &&
       organization.employees.length > 0
     ) {
-      const employees = organization.employees.filter((item) => {
-        return (
-          item.researches_ends.length > 0 || item.researches_expired.length > 0
-        );
-      });
-
-      const researchesEnds = organization.employees.reduce(
-        (previousValue, employee) => {
-          if (employee.researches_ends.length) {
-            return parseInt(previousValue, 10) + 1;
-          }
-
-          return parseInt(previousValue, 10);
-        },
-        0,
+      const employeesAttention = organization.employees.filter(
+        (item) =>
+          item.researches_ends.length > 0 || item.researches_expired.length > 0,
       );
 
-      const researchesExpired = organization.employees.reduce(
-        (previousValue, employee) => {
-          if (employee.researches_expired.length) {
-            return parseInt(previousValue, 10) + 1;
-          }
+      const researchesEnds = organization.employees.filter(
+        (item) => item.researches_ends.length > 0,
+      );
 
-          return parseInt(previousValue, 10);
-        },
-        0,
+      const researchesExpired = organization.employees.filter(
+        (item) =>
+          item.researches_expired.length > 0 &&
+          item.researches_ends.length === 0,
       );
 
       this.setState({
-        employees,
-        researchesEnds,
-        researchesExpired,
+        employeesAttention,
+        researchesEnds: researchesEnds.length,
+        researchesExpired: researchesExpired.length,
       });
     }
   }
@@ -75,7 +62,7 @@ class Organization extends React.PureComponent {
   }
 
   render() {
-    const {employees, researchesEnds, researchesExpired} = this.state;
+    const {employeesAttention, researchesEnds, researchesExpired} = this.state;
     const {organization, hospitals} = this.props;
 
     if (!organization || !hospitals) {
@@ -111,11 +98,11 @@ class Organization extends React.PureComponent {
                 <Table responsive>
                   <tbody>
                     <tr>
-                      <td>Руководитель:</td>
+                      <td>Менеджер:</td>
                       <td>{organization.head_fio}</td>
                     </tr>
                     <tr>
-                      <td>E-mail руководителя:</td>
+                      <td>E-mail менеджера:</td>
                       <td>{organization.head_email}</td>
                     </tr>
                     <tr>
@@ -127,8 +114,8 @@ class Organization extends React.PureComponent {
               </CardBlock>
             </Card>
             <EmployeesList
-              employees={employees}
-              title={'Сотрудники c кончающимися МО'}
+              employees={employeesAttention}
+              title={'Сотрудники требующие внимания'}
             />
           </Col>
           <Col xs="6" sm="6" md="6">
@@ -143,21 +130,21 @@ class Organization extends React.PureComponent {
                     <tr>
                       <td>Вы контролируете медицинские осмотры:</td>
                       <td>
-                        <Link
-                          to={`/organizations/employees/${organization.id}`}
-                        >
+                        {/*<Link*/}
+                        {/*  to={`/organizations/employees/${organization.id}`}*/}
+                        {/*>*/}
                           {organization.employees.length} чел.
-                        </Link>
+                        {/*</Link>*/}
                       </td>
                     </tr>
                     <tr>
                       <td>Просрочен медицинский осмотр:</td>
                       <td>
-                        <Link
-                          to={`/organizations/expiredEmployees/${organization.id}`}
-                        >
+                        {/*<Link*/}
+                        {/*  to={`/organizations/expiredEmployees/${organization.id}`}*/}
+                        {/*>*/}
                           {researchesExpired} чел.
-                        </Link>
+                        {/*</Link>*/}
                       </td>
                     </tr>
                     <tr>
@@ -166,44 +153,11 @@ class Organization extends React.PureComponent {
                         осмотр:
                       </td>
                       <td>
-                        <Link
-                          to={`/organizations/endsEmployees/${organization.id}`}
-                        >
+                        {/*<Link*/}
+                        {/*  to={`/organizations/endsEmployees/${organization.id}`}*/}
+                        {/*>*/}
                           {researchesEnds} чел.
-                        </Link>
-                      </td>
-                    </tr>
-                  </tbody>
-                </Table>
-              </CardBlock>
-            </Card>
-            <Card>
-              <CardHeader>
-                <i className="fa fa-money" aria-hidden="true" />
-                Бюджет
-              </CardHeader>
-              <CardBlock className="card-body">
-                <Table responsive>
-                  <tbody>
-                    <tr>
-                      <td>
-                        Плановый бюджет МО в {new Date().getFullYear()} году
-                        составляет (с учетом указанных цен в мед учреждении)
-                      </td>
-                      <td>
-                        <Link to="#">
-                          {organization.totalSumForResearches}&nbsp;
-                          <i className="fa fa-rub" aria-hidden="true" />
-                        </Link>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>В прошлом месяце израсходовано</td>
-                      <td>
-                        <Link to="#">
-                          {organization.totalSumForCompletedResearches}&nbsp;
-                          <i className="fa fa-rub" aria-hidden="true" />
-                        </Link>
+                        {/*</Link>*/}
                       </td>
                     </tr>
                   </tbody>

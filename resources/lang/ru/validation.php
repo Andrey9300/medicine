@@ -139,7 +139,7 @@ return [
         'email' => '«E-mail»',
         'password' => '«Пароль»',
         'name' => '«Наименование»',
-        'head_email' => '«Email руководителя»',
+        'head_email' => '«Email менеджера»',
         'date_birthday' => '«Дата рождения»',
         'date_employment' => '«Дата устройства на работу»',
     ],

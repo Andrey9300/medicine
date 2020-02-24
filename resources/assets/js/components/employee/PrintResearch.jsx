@@ -3,7 +3,7 @@ import {connect} from 'react-redux';
 import {fetchEmployee} from './../../actions/employeeActions';
 import {Link} from 'react-router-dom';
 import PropTypes from 'prop-types';
-import {Row, Col, Card, CardHeader, CardBlock, Table} from 'reactstrap';
+import {Row, Col, Card, CardHeader, CardBlock, CardFooter, Table} from 'reactstrap';
 import {fetchHospitals} from '../../actions/hospitalActions';
 
 class PrintEmployee extends React.PureComponent {
@@ -40,7 +40,7 @@ class PrintEmployee extends React.PureComponent {
     );
     // в отдельный раздел псих. осв., предварительный / периодический МО
     const filterResearches = researches.filter((research) => {
-      return research.id !== 19 || research.id !== 18;
+      return research.id !== 19 && research.id !== 18;
     });
 
     filterResearches.forEach((research, index) => {
@@ -122,13 +122,14 @@ class PrintEmployee extends React.PureComponent {
           <Row>
             <Col xs="12" sm="12" md="12">
               <Card>
-                <CardHeader className="d-print-none" onClick={window.print}>
+                <CardHeader className="d-print-none not-print">
                   <Link
                     to="#"
                     className="btn btn-primary btn-sm pull-left"
                     style={{
                       color: '#fff',
                     }}
+                    onClick={window.print}
                   >
                     Печать <i className="icon-printer" />
                   </Link>
@@ -158,26 +159,28 @@ class PrintEmployee extends React.PureComponent {
                       </tr>
                       <tr>
                         <td colSpan="1" style={{width: '50%'}}>
-                          Структурное подразделение / наименование
-                          объекта:&nbsp;
+                          <span style={{fontWeight: '600'}}>Наименование объекта:</span>&nbsp;
                           {employee.organization_name}
                         </td>
-                        <td colSpan="1">
-                          Информация о медицинской организации «
-                          {hospitalOrg.name}»:
+                        <td colSpan="1" rowSpan="10">
+                          <img
+                            width="400"
+                            height="240"
+                            src={hospitalOrg.photo_map}
+                          />
+                        </td>
+                      </tr>
+                      <tr>
+                        <td><span style={{fontWeight: '600'}}>Сотрудник:</span></td>
+                      </tr>
+                      <tr>
+                        <td colSpan="1" style={{width: '50%'}}>
+                          ФИО: {employee.fio}
                         </td>
                       </tr>
                       <tr>
                         <td colSpan="1" style={{width: '50%'}}>
-                          ФИО, дата рождения: {employee.fio},{' '}
-                          {employee.date_birthday}
-                        </td>
-                        <td colSpan="1" rowSpan="4">
-                          <img
-                            width="300"
-                            height="150"
-                            src={hospitalOrg.photo_map}
-                          />
+                          Дата рождения: {employee.date_birthday}
                         </td>
                       </tr>
                       <tr>
@@ -186,14 +189,29 @@ class PrintEmployee extends React.PureComponent {
                         </td>
                       </tr>
                       <tr>
-                        <td colSpan="1" style={{width: '50%'}}>
-                          Профессия / должность: {employee.position}
+                        <td>
+                          Должность: {employee.position}
                         </td>
                       </tr>
                       <tr>
-                        <td colSpan="1" style={{width: '50%'}}>
-                          Кто направил (ФИО. Должность):{' '}
-                          {employee.organization.head_fio}
+                        <td>
+                          <span style={{fontWeight: '600'}}>Информация о медицинской организации «
+                          {hospitalOrg.name}»</span>:
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          Адрес: {hospitalOrg.address}
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          Режим работы: {hospitalOrg.shedule}
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          Телефон: {hospitalOrg.phone}
                         </td>
                       </tr>
                       <tr
@@ -206,15 +224,9 @@ class PrintEmployee extends React.PureComponent {
                           style={{
                             fontWeight: 'italic',
                           }}
-                          colSpan="1"
                         >
                           * При себе иметь документ удостоверяющий личность и
                           для новой ЛМК фото 3х4
-                        </td>
-
-                        <td colSpan="1">
-                          Адрес: {hospitalOrg.address} Режим работы:{' '}
-                          {hospitalOrg.shedule} Телефон: {hospitalOrg.phone}
                         </td>
                       </tr>
                       <tr
@@ -262,7 +274,7 @@ class PrintEmployee extends React.PureComponent {
                               fontWeight: '600',
                             }}
                           >
-                            <td>Вакцинация</td>
+                            <td>Вакцинация ВГА и дизентерия Зонне</td>
                             <td>
                               Форма оплаты:{' '}
                               <select>
@@ -278,10 +290,11 @@ class PrintEmployee extends React.PureComponent {
                               жительства по полису ОМС, с предоставлением
                               справки или прививочного сертификата.
                               <br />
-                              Прививка против гепатита, проводится двукратно с
-                              интервалом 6-12 мес.
+                              Прививка против гепатита А, проводится двукратно с
+                              интервалом 6-18 мес.
                               <br />
-                              Прививка против дизентерии проводится ежегодно.
+                              Прививка против дизентерии Зонне проводится
+                              ежегодно
                             </td>
                           </tr>
                         </>
@@ -357,10 +370,10 @@ class PrintEmployee extends React.PureComponent {
                           borderTop: '1px solid',
                         }}
                       >
-                        <td rowSpan="5">
+                        <td rowSpan="7">
                           <textarea
                             style={{width: '100%'}}
-                            rows="5"
+                            rows="7"
                             defaultValue="Дополнительная информация"
                           />
                         </td>
@@ -368,7 +381,18 @@ class PrintEmployee extends React.PureComponent {
                       </tr>
                       <tr>
                         <td>
-                          Контактное лицо:{' '}
+                          <span style={{fontWeight: '600'}}>Сотрудника направил:</span>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          Должность:{' '}
+                          <input type="text" style={{width: '200px'}} />
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          ФИО:{' '}
                           <input type="text" style={{width: '200px'}} />
                         </td>
                       </tr>
@@ -379,21 +403,34 @@ class PrintEmployee extends React.PureComponent {
                         </td>
                       </tr>
                       <tr>
-                        <td colSpan="1" style={{width: '50%'}}>
-                          Подпись ______________________
-                          {new Date(Date.now()).toLocaleDateString('ru-RU', {
-                            year: 'numeric',
-                            month: 'long',
-                            day: 'numeric',
-                          })}
+                        <td>
+                          Дата: {new Date(Date.now()).toLocaleDateString('ru-RU', {
+                          year: 'numeric',
+                          month: 'long',
+                          day: 'numeric',
+                        })}
                         </td>
                       </tr>
                       <tr>
-                        <td>М.П.</td>
+                        <td colSpan="1" style={{width: '50%'}}>
+                          Подпись ______________________М.П.
+                        </td>
                       </tr>
                     </tbody>
                   </Table>
                 </CardBlock>
+                <CardFooter className="not-print">
+                  <Link
+                    to="#"
+                    className="btn btn-primary btn-sm pull-left"
+                    style={{
+                      color: '#fff',
+                    }}
+                    onClick={window.print}
+                  >
+                    Печать <i className="icon-printer" />
+                  </Link>
+                </CardFooter>
               </Card>
             </Col>
           </Row>

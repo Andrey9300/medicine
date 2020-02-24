@@ -70,11 +70,11 @@ class Budget extends React.PureComponent {
                   <Table responsive>
                     <tbody>
                       <tr>
-                        <td>Руководитель:</td>
+                        <td>Менеджер:</td>
                         <td>{organization.head_fio}</td>
                       </tr>
                       <tr>
-                        <td>E-mail руководителя: </td>
+                        <td>E-mail менеджера: </td>
                         <td>{organization.head_email}</td>
                       </tr>
                       <tr>

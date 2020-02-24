@@ -32,7 +32,7 @@ class OrganizationController extends Controller
 
         $currentUser->organizations()->attach($organization);
 
-        // привязка руководителя к организации: по умолчанию текущий user,
+        // привязка менеджера к организации: по умолчанию текущий user,
         // иначе создаем user с role = head или ищем в системе
 //        if (User::where('email', $request->head_email)->exists()) {
 //            $user = User::where('email', $request->head_email)->first();
@@ -76,7 +76,7 @@ class OrganizationController extends Controller
         $head_exist = false;
 
         foreach ($organizations as $organization) {
-            // устанавливаем фио руководителя
+            // устанавливаем фио менеджера
             // если есть head берём его, если нет, то админа
             foreach ($organization->users as $user) {
                 if ($user->role === 'head') {
@@ -111,7 +111,7 @@ class OrganizationController extends Controller
         $expiredOrganizations = [];
 
         foreach ($organizations as $organization) {
-            // устанавливаем фио руководителя
+            // устанавливаем фио менеджера
             // если есть head берём его, если нет, то админа
             foreach ($organization->users as $user) {
                 if ($user->role === 'head'){
@@ -181,7 +181,7 @@ class OrganizationController extends Controller
             }
         }
 
-        // устанавливаем фио руководителя
+        // устанавливаем фио менеджера
         // если есть head берём его, если нет, то админа
         foreach ($organization->users as $user) {
             if ($user->role === 'head'){
@@ -215,7 +215,7 @@ class OrganizationController extends Controller
         $organization->category_id = $organization_new['category_id'];
 
         // админов может быть несколько
-        // руководитель 1 или 0
+        // менеджер 1 или 0
 //        if ($organization->head_email !== $organization_new['head_email']) {
 //            $oldUser = User::where('email', $organization->head_email)->first();
 //            if ($oldUser->role !== 'admin' && $organization->users->contains($oldUser)) {
@@ -226,7 +226,7 @@ class OrganizationController extends Controller
 //                $user = User::where('email', $organization_new['head_email'])->first();
 //                $user->fio = $organization_new['head_fio'];
 //                $user->save();
-//                if (!$organization->users->contains($user)) { // если руководителем снова стал admin
+//                if (!$organization->users->contains($user)) { // если менеджером снова стал admin
 //                    $user->organizations()->attach($organization);
 //                    $user->notify(new YouHead($organization->name));
 //                }

@@ -51,7 +51,7 @@ class SendPassword extends Notification
         return (new MailMessage)
             ->subject('Доступ к сервису медицинских книжек')
             ->greeting('Здравствуйте!')
-            ->line('Вас назначили руководителем объекта ' . $this->organization_name . ' в сервисе медицинских книжек')
+            ->line('Вас назначили менеджером объекта ' . $this->organization_name . ' в сервисе медицинских книжек')
             ->line('Логин для входа: ' . $this->email)
             ->line('Пароль для входа: ' . $this->password)
             ->action('Войти', url(env('APP_URL') . '/#/login'));

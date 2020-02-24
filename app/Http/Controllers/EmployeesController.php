@@ -92,7 +92,7 @@ class EmployeesController extends Controller
         $this->checkMedicalResearch($employee);
         $head_exist = false;
 
-        // устанавливаем фио руководителя
+        // устанавливаем фио менеджера
         // если есть head берём его, если нет, то админа
         foreach ($organization->users as $user) {
             if ($user->role === 'head') {

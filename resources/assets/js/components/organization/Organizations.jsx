@@ -50,7 +50,7 @@ class Organizations extends React.PureComponent {
                   <thead>
                     <tr>
                       <th>Наименование</th>
-                      <th>Руководитель</th>
+                      <th>Менеджер</th>
                       <th>E-mail</th>
                       <th>Сотрудники</th>
                     </tr>

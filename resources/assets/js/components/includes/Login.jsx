@@ -23,6 +23,7 @@ class Login extends React.PureComponent {
 
     this.state = {
       doubleClick: false,
+      showPassword: false,
     };
 
     this.props.dispatch({
@@ -59,7 +60,7 @@ class Login extends React.PureComponent {
 
   render() {
     const {user, errors} = this.props;
-    const {doubleClick} = this.state;
+    const {doubleClick, showPassword} = this.state;
     let errorsMessage = '';
 
     if (user && user.isAuthenticated) {
@@ -102,11 +103,23 @@ class Login extends React.PureComponent {
                           <i className="icon-lock" />
                         </InputGroupAddon>
                         <Input
-                          type="password"
+                          type={showPassword ? 'text' : 'password'}
                           name="password"
                           placeholder="Пароль"
                           required
                         />
+                        <InputGroupAddon>
+                          <i
+                            className={
+                              showPassword ? 'fa fa-eye' : 'fa fa-eye-slash'
+                            }
+                            aria-hidden="true"
+                            style={{cursor: 'pointer'}}
+                            onClick={() => {
+                              this.setState({showPassword: !showPassword});
+                            }}
+                          />
+                        </InputGroupAddon>
                       </InputGroup>
                       <Row>
                         <Col xs="4">

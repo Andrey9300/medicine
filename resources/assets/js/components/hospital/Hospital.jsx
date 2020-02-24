@@ -103,7 +103,7 @@ class Hospital extends React.PureComponent {
                           {hospital.photo_map ? (
                             <img
                               src={hospital.photo_map}
-                              style={{width: '300px', height: '300px'}}
+                              style={{width: '300px', height: '150px'}}
                             />
                           ) : (
                             'Загрузите фото карты'
