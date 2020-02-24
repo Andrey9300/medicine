@@ -120,28 +120,26 @@ class EmployeeResearches extends React.PureComponent {
                     </thead>
                     <tbody>
                       {employeeResearches.map((employeeResearch) => {
-                        const isResearchesEnds = Object.values(employee.researches_ends).find(
-                          (item) => {
-                            return (
-                              item.period_id ===
-                                employeeResearch.research.period_id &&
-                              !employeeResearch.is_exception
-                            );
-                          },
+                        const isResearchesEnds = Object.values(
+                          employee.researches_ends,
+                        ).find(
+                          (item) =>
+                            item.id === employeeResearch.research.id &&
+                            !employeeResearch.is_exception,
                         );
-                        const isResearchesExpired = Object.values(employee.researches_expired).find(
-                          (item) => {
-                            return (
-                              item.period_id ===
-                                employeeResearch.research.period_id &&
-                              !employeeResearch.is_exception
-                            );
-                          },
+                        const isResearchesExpired = Object.values(
+                          employee.researches_expired,
+                        ).find(
+                          (item) =>
+                            item.id === employeeResearch.research.id &&
+                            !employeeResearch.is_exception,
                         );
+
                         const border =
                           isResearchesEnds || isResearchesExpired
                             ? '1px solid red'
                             : {};
+//
                         return (
                           <tr key={employeeResearch.id}>
                             <td>

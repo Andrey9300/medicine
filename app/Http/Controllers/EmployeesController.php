@@ -385,8 +385,8 @@ class EmployeesController extends Controller
             }
         }
 
-        // для гепатита А разница между дата №1 и дата №2 должна быть не больше 12 месяцев
-        $diffMonthGepatit = 12;
+        // для гепатита А разница между дата №1 и дата №2 должна быть не больше 18 месяцев
+        $diffMonthGepatit = 18;
         if (!is_null($gepatitDate1) && !is_null($gepatitDate2)) {
             $diffGepatit = $gepatitDate1->diffInMonths($gepatitDate2);
 

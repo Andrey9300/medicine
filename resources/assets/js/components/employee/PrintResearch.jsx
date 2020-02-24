@@ -227,11 +227,11 @@ class PrintEmployee extends React.PureComponent {
                             <option />
                             <option>Новая</option>
                             <option>Продление</option>
-                          </select>
+                          </select>{' '}
                           ЛМК
                         </td>
                         <td colSpan="1">
-                          Форма оплаты:
+                          Форма оплаты:{' '}
                           <select>
                             <option />
                             <option>За счет сотрудника</option>
@@ -264,7 +264,7 @@ class PrintEmployee extends React.PureComponent {
                           >
                             <td>Вакцинация</td>
                             <td>
-                              Форма оплаты:
+                              Форма оплаты:{' '}
                               <select>
                                 <option />
                                 <option>За счет сотрудника</option>
@@ -296,11 +296,11 @@ class PrintEmployee extends React.PureComponent {
                             <option />
                             <option>Предварительный</option>
                             <option>Периодический</option>
-                          </select>
+                          </select>{' '}
                           медицинский осмотр
                         </td>
                         <td>
-                          Форма оплаты:
+                          Форма оплаты:{' '}
                           <select>
                             <option />
                             <option>За счет сотрудника</option>
@@ -336,7 +336,7 @@ class PrintEmployee extends React.PureComponent {
                         }}
                       >
                         <td>
-                          Психиатрическое освидетельствование
+                          Психиатрическое освидетельствование{' '}
                           <select>
                             <option />
                             <option>Да</option>
@@ -344,7 +344,7 @@ class PrintEmployee extends React.PureComponent {
                           </select>
                         </td>
                         <td>
-                          Форма оплаты:
+                          Форма оплаты:{' '}
                           <select>
                             <option />
                             <option>За счет сотрудника</option>
@@ -367,10 +367,16 @@ class PrintEmployee extends React.PureComponent {
                         <td />
                       </tr>
                       <tr>
-                        <td>Контактное лицо:</td>
+                        <td>
+                          Контактное лицо:{' '}
+                          <input type="text" style={{width: '200px'}} />
+                        </td>
                       </tr>
                       <tr>
-                        <td>Телефон:</td>
+                        <td>
+                          Телефон:{' '}
+                          <input type="text" style={{width: '200px'}} />
+                        </td>
                       </tr>
                       <tr>
                         <td colSpan="1" style={{width: '50%'}}>
