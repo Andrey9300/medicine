@@ -45,6 +45,7 @@ export default function reducer(state = initialState, action) {
         errors: null,
         fetched: false,
         user: {
+          ...state.user,
           isAuthenticated: action.payload.isAuthenticated,
         },
       };
@@ -91,7 +92,10 @@ export default function reducer(state = initialState, action) {
         ...state,
         errors: null,
         fetched: true,
-        user: action.payload.data.user,
+        user: {
+          ...state.user,
+          ...action.payload.data.user
+        },
       };
     }
     default:

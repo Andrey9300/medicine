@@ -25,6 +25,7 @@ class EmployeeResearches extends React.PureComponent {
     super(props);
     this.state = {
       employeeId: props.idEmployee,
+      needVga: false,
     };
     this.handleClick = this.handleClick.bind(this);
   }
@@ -54,8 +55,37 @@ class EmployeeResearches extends React.PureComponent {
     });
   }
 
+  getButtons() {
+    const {employeeId, needVga} = this.state;
+    const params = needVga ? '?needVga=1' : '';
+
+    return (
+      <>
+        <Link
+          to={`/employees/print/${employeeId}${params}`}
+          className="btn btn-secondary btn-sm pull-left"
+          style={{marginRight: '16px'}}
+        >
+          <i className="fa fa-dot-circle-o" /> Направление
+        </Link>
+        <Button
+          type="submit"
+          size="sm"
+          color="success pull-right"
+          onClick={this.handleClick}
+        >
+          <i className="fa fa-dot-circle-o" /> Сохранить
+        </Button>
+      </>
+    );
+  }
+
+  addToResearch() {
+    const {needVga} = this.state;
+    this.setState({needVga: !needVga});
+  }
+
   render() {
-    const {employeeId} = this.state;
     const {employeeResearches, errors, employee} = this.props;
     let errorsMessage = '';
 
@@ -70,6 +100,7 @@ class EmployeeResearches extends React.PureComponent {
         </div>
       );
     }
+    const addToResearch = this.addToResearch.bind(this);
 
     return (
       <div className="animated fadeIn">
@@ -91,21 +122,7 @@ class EmployeeResearches extends React.PureComponent {
                   </div>
                 </div>
                 <div style={{display: 'flex', alignItems: 'center'}}>
-                  <Link
-                    to={`/employees/print/${employeeId}`}
-                    className="btn btn-secondary btn-sm pull-left"
-                    style={{marginRight: '16px'}}
-                  >
-                    <i className="fa fa-dot-circle-o" /> Направление
-                  </Link>
-                  <Button
-                    type="submit"
-                    size="sm"
-                    color="success pull-right"
-                    onClick={this.handleClick}
-                  >
-                    <i className="fa fa-dot-circle-o" /> Сохранить
-                  </Button>
+                  {this.getButtons()}
                 </div>
               </CardHeader>
               <CardBlock className="card-body">
@@ -139,7 +156,22 @@ class EmployeeResearches extends React.PureComponent {
                           isResearchesEnds || isResearchesExpired
                             ? '1px solid red'
                             : {};
-//
+
+                        let needVga = null;
+
+                        if (employeeResearch.research.id === 20) {
+                          needVga = (
+                            <span>
+                              Включить в направление{' '}
+                              <input
+                                type="checkbox"
+                                name={`needVga`}
+                                onChange={addToResearch}
+                              />
+                            </span>
+                          );
+                        }
+
                         return (
                           <tr key={employeeResearch.id}>
                             <td>
@@ -148,6 +180,7 @@ class EmployeeResearches extends React.PureComponent {
                               >
                                 {employeeResearch.research.name}
                               </div>
+                              {needVga}
                               <div
                                 style={{
                                   fontSize: '12px',
@@ -165,7 +198,7 @@ class EmployeeResearches extends React.PureComponent {
                                 placeholder="дд-мм-гггг"
                                 name={`employeeResearch[${employeeResearch.pivot.id}]`}
                                 defaultValue={employeeResearch.date}
-                                style={{border}}
+                                style={{border, minWidth: '125px'}}
                               />
                             </td>
                             <td style={{textAlign: 'center'}}>
@@ -190,21 +223,7 @@ class EmployeeResearches extends React.PureComponent {
                     justifyContent: 'flex-end',
                   }}
                 >
-                  <Link
-                    to={`/employees/print/${employeeId}`}
-                    className="btn btn-secondary btn-sm pull-left"
-                    style={{marginRight: '16px'}}
-                  >
-                    <i className="fa fa-dot-circle-o" /> Направление
-                  </Link>
-                  <Button
-                    type="submit"
-                    size="sm"
-                    color="success pull-right"
-                    onClick={this.handleClick}
-                  >
-                    <i className="fa fa-dot-circle-o" /> Сохранить
-                  </Button>
+                  {this.getButtons()}
                 </div>
               </CardFooter>
             </Card>

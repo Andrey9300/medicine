@@ -155,6 +155,10 @@ class Employee extends React.PureComponent {
                         <td>Комментарий:</td>
                         <td>{employee.comments}</td>
                       </tr>
+                      <tr>
+                        <td>Отправлен на МО:</td>
+                        <td>{employee.send_to_research && 'Да'}</td>
+                      </tr>
                     </tbody>
                   </Table>
                 </CardBlock>

@@ -72,7 +72,7 @@ class Organization extends React.PureComponent {
     return (
       <div className="animated fadeIn">
         <Row>
-          <Col xs="6" sm="6" md="6">
+          <Col xs="8" sm="8" md="8" lg="8" xl="6">
             <Card>
               <CardHeader>
                 <i className="fa fa-building-o" aria-hidden="true" />«
@@ -98,8 +98,16 @@ class Organization extends React.PureComponent {
                 <Table responsive>
                   <tbody>
                     <tr>
-                      <td>Менеджер:</td>
+                      <td>ФИО:</td>
                       <td>{organization.head_fio}</td>
+                    </tr>
+                    <tr>
+                      <td>Должность:</td>
+                      <td>{organization.head_position}</td>
+                    </tr>
+                    <tr>
+                      <td>Телефон менеджера:</td>
+                      <td>{organization.head_phone}</td>
                     </tr>
                     <tr>
                       <td>E-mail менеджера:</td>
@@ -107,7 +115,7 @@ class Organization extends React.PureComponent {
                     </tr>
                     <tr>
                       <td>Категория:</td>
-                      <td>{organization.category.name}</td>
+                      <td style={{maxWidth: '300px'}}>{organization.category.name}</td>
                     </tr>
                   </tbody>
                 </Table>
@@ -118,7 +126,7 @@ class Organization extends React.PureComponent {
               title={'Сотрудники требующие внимания'}
             />
           </Col>
-          <Col xs="6" sm="6" md="6">
+          <Col xs="4" sm="4" md="4" lg="4" xl="6">
             <Card>
               <CardHeader>
                 <i className="fa fa-users" aria-hidden="true" />
@@ -129,36 +137,18 @@ class Organization extends React.PureComponent {
                   <tbody>
                     <tr>
                       <td>Вы контролируете медицинские осмотры:</td>
-                      <td>
-                        {/*<Link*/}
-                        {/*  to={`/organizations/employees/${organization.id}`}*/}
-                        {/*>*/}
-                          {organization.employees.length} чел.
-                        {/*</Link>*/}
-                      </td>
+                      <td>{organization.employees.length} чел.</td>
                     </tr>
                     <tr>
                       <td>Просрочен медицинский осмотр:</td>
-                      <td>
-                        {/*<Link*/}
-                        {/*  to={`/organizations/expiredEmployees/${organization.id}`}*/}
-                        {/*>*/}
-                          {researchesExpired} чел.
-                        {/*</Link>*/}
-                      </td>
+                      <td>{researchesExpired} чел.</td>
                     </tr>
                     <tr>
                       <td>
                         В следующем месяца нужно направить на медицинский
                         осмотр:
                       </td>
-                      <td>
-                        {/*<Link*/}
-                        {/*  to={`/organizations/endsEmployees/${organization.id}`}*/}
-                        {/*>*/}
-                          {researchesEnds} чел.
-                        {/*</Link>*/}
-                      </td>
+                      <td>{researchesEnds} чел.</td>
                     </tr>
                   </tbody>
                 </Table>

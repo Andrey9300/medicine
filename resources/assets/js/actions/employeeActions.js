@@ -41,6 +41,23 @@ export function editEmployee(formElement = null, employeeId) {
       });
   };
 }
+export function editEmployeeJson(formElement = null, employeeId) {
+  return (dispatch) => {
+    axios
+      .post(`/employees/update/${employeeId}`, formElement)
+      .then(() => {
+        alert('Сотрудник успешно отредактирован');
+        history.pushState(null, null, `/#/employee/${employeeId}`);
+        window.location.reload();
+      })
+      .catch((errors) => {
+        dispatch({
+          payload: errors.response.data.errors,
+          type: 'EMPLOYEE_ADD_REJECTED',
+        });
+      });
+  };
+}
 
 /**
  * Список сотрудников

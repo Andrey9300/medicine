@@ -136,6 +136,7 @@ class EmployeesController extends Controller
     {
         $date_birthday = Carbon::createFromFormat('d-m-Y', $request->date_birthday)->format('Y-m-d');
         $date_employment = Carbon::createFromFormat('d-m-Y', $request->date_employment)->format('Y-m-d');
+        $dateStartResearch = Carbon::createFromFormat('d.m.Y', $request->send_to_research)->format('Y-m-d');
 
         $employee = Employee::find($id);
         $employee->fio = $request->fio;
@@ -147,6 +148,7 @@ class EmployeesController extends Controller
         $employee->category_id = $request->category_id;
         $employee->comments = $request->comments;
         $employee->department = $request->department;
+        $employee->send_to_research = $dateStartResearch;
         $employee->save();
     }
 
@@ -233,6 +235,10 @@ class EmployeesController extends Controller
         $this->authorize('isAdmin', $user);
         $employeeResearches = $request->employeeResearch;
         $isExceptions = $request->is_exception;
+
+        $employee = Employee::find($id);
+        $employee->send_to_research = null;
+        $employee->save();
 
         foreach ($employeeResearches as $key => $date) {
             $isException = false;

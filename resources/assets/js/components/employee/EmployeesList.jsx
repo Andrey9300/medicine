@@ -44,7 +44,7 @@ export class EmployeesList extends React.PureComponent {
             <thead>
               <tr>
                 <th>ФИО</th>
-                <th>Объект</th>
+                <th>Отправлен на МО</th>
                 <th>Статус МО</th>
                 <th>Направление</th>
               </tr>
@@ -58,7 +58,7 @@ export class EmployeesList extends React.PureComponent {
                         {employee.fio}
                       </Link>
                     </td>
-                    <td>{employee.organization_name}</td>
+                    <td>{employee.send_to_research ? 'Отправлен на МО' : ''}</td>
                     <td>
                       {(() => {
                         let text = '';

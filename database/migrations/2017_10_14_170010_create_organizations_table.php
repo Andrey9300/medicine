@@ -16,6 +16,8 @@ class CreateOrganizationsTable extends Migration
         Schema::create('organizations', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name')->unique();
+            $table->string('head_position');
+            $table->string('head_phone');
             $table->string('head_email');
             $table->integer('category_id')->unsigned();
             $table->foreign('category_id')->references('id')->on('categories');

@@ -1,24 +1,49 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import {fetchEmployee} from './../../actions/employeeActions';
+import {
+  fetchEmployee,
+  fetchEmployeeResearches,
+  editEmployeeJson,
+} from './../../actions/employeeActions';
 import {Link} from 'react-router-dom';
 import PropTypes from 'prop-types';
-import {Row, Col, Card, CardHeader, CardBlock, CardFooter, Table} from 'reactstrap';
+import {
+  Row,
+  Col,
+  Card,
+  CardHeader,
+  CardBlock,
+  CardFooter,
+  Table,
+  Button,
+} from 'reactstrap';
 import {fetchHospitals} from '../../actions/hospitalActions';
+import {fetchOrganization} from '../../actions/organizationActions';
 
 class PrintEmployee extends React.PureComponent {
   constructor(props) {
     super(props);
+    const searchParams = new URLSearchParams(props.location.search);
 
     this.state = {
       errors: null,
       employeeId: props.match.params.id,
+      needVga: searchParams.get('needVga') ? true : false,
     };
   }
 
   componentWillMount() {
+    this.props.dispatch(fetchEmployeeResearches(this.state.employeeId));
     this.props.dispatch(fetchEmployee(this.state.employeeId));
     this.props.dispatch(fetchHospitals());
+  }
+
+  componentDidUpdate(prevProps) {
+    const {employee} = this.props;
+
+    if (prevProps.employee !== employee) {
+      this.props.dispatch(fetchOrganization(employee.organization.id));
+    }
   }
 
   createMarkup() {
@@ -31,6 +56,24 @@ class PrintEmployee extends React.PureComponent {
     });
   }
 
+  addNeedVga() {
+    const {needVga} = this.state;
+    const {employeeResearches} = this.props;
+    let vga2Research = null;
+
+    if (!needVga) {
+      return null;
+    }
+
+    employeeResearches.forEach((employeeResearch) => {
+      if (employeeResearch.research.id === 20) {
+        vga2Research = employeeResearch.research;
+      }
+    });
+
+    return vga2Research;
+  }
+
   researches() {
     const {employee} = this.props;
     const bufferTr = [];
@@ -38,33 +81,38 @@ class PrintEmployee extends React.PureComponent {
     const researches = employee.researches_expired.concat(
       employee.researches_ends,
     );
+
+    if (this.addNeedVga()) {
+      researches.push(this.addNeedVga());
+    }
+
+    // в отдельный раздел Гепатит и Зонне
+    const vaccines = researches.filter((research) => {
+      return research.id === 13 || research.id === 14 || research.id === 20;
+    });
+
     // в отдельный раздел псих. осв., предварительный / периодический МО
     const filterResearches = researches.filter((research) => {
-      return research.id !== 19 && research.id !== 18;
+      return (
+        research.id !== 19 &&
+        research.id !== 18 &&
+        research.id !== 13 &&
+        research.id !== 14 &&
+        research.id !== 20
+      );
     });
 
     filterResearches.forEach((research, index) => {
-      let note = false;
-      if (research.id === 13 || research.id === 14 || research.id === 20) {
-        note = true;
-      }
-
       if (index % 2) {
         bufferTr.push(
           <tr key={research.id}>
             {bufferTd}
-            <td style={{fontWeight: note ? '600' : null}}>
-              {research.name} {note && '*'}
-            </td>
+            <td>{research.name}</td>
           </tr>,
         );
         bufferTd = [];
       } else {
-        bufferTd.push(
-          <td key={research.id} style={{fontWeight: note ? '600' : null}}>
-            {research.name} {note && <span>*</span>}
-          </td>,
-        );
+        bufferTd.push(<td key={research.id}>{research.name}</td>);
       }
     });
 
@@ -72,14 +120,116 @@ class PrintEmployee extends React.PureComponent {
       (bufferTr.length % 2 === 1 && bufferTd.length) ||
       (bufferTr.length === 0 && bufferTd.length)
     ) {
-      bufferTr.push(<tr key={1}>{bufferTd}</tr>);
+      bufferTr.push(<tr key={999}>{bufferTd}</tr>);
     }
+
+    bufferTr.push(this.getVaccines(vaccines));
 
     return bufferTr;
   }
 
+  getVaccines(vaccines) {
+    const {employee} = this.props;
+
+    if (employee.category.id !== 2) {
+      return null;
+    }
+
+    const vaccinesBlock = vaccines.map((vaccine, index) => {
+      return (
+        <div key={index}>
+          {vaccine.name} -{' '}
+          <select>
+            <option>Да</option>
+          </select>
+        </div>
+      );
+    });
+
+    return (
+      <>
+        <tr
+          style={{
+            borderTop: '1px solid',
+            fontWeight: '600',
+          }}
+        >
+          <td>{vaccinesBlock}</td>
+          <td>
+            Форма оплаты:{' '}
+            <select>
+              <option />
+              <option>За счет сотрудника</option>
+              <option>За счет организации</option>
+            </select>
+          </td>
+        </tr>
+        <tr style={{fontWeight: '600'}}>
+          <td colSpan="2">
+            * Вы можете провести вакцинацию БЕСПЛАТНО по месту жительства по
+            полису ОМС, с предоставлением справки или прививочного сертификата.
+            <br />
+            Прививка против гепатита А, проводится двукратно с интервалом 6-18
+            мес.
+            <br />
+            Прививка против дизентерии Зонне проводится ежегодно
+          </td>
+        </tr>
+      </>
+    );
+  }
+
+  sendToResearch() {
+    const {employeeId} = this.state;
+    const {employee} = this.props;
+
+    employee.send_to_research = new Date(Date.now()).toLocaleDateString(
+      'ru-RU',
+      {
+        year: 'numeric',
+        month: 'numeric',
+        day: 'numeric',
+      },
+    );
+
+    this.props.dispatch(editEmployeeJson(employee, employeeId));
+  }
+
+  getButtons() {
+    const {employee} = this.props;
+    const sendToResearch = this.sendToResearch.bind(this);
+
+    return (
+      <div style={{display: 'flex'}}>
+        <Link
+          to="#"
+          className="btn btn-primary btn-sm pull-left"
+          style={{
+            color: '#fff',
+          }}
+          onClick={window.print}
+        >
+          Печать <i className="icon-printer" />
+        </Link>
+        <Button
+          type="submit"
+          size="sm"
+          color="success pull-right"
+          onClick={sendToResearch}
+          style={{marginLeft: '24px'}}
+          disabled={employee.send_to_research ? true : false}
+        >
+          <i className="fa fa-dot-circle-o" />{' '}
+          {employee.send_to_research
+            ? 'Отправлен на МО'
+            : 'Отправить на исследование'}
+        </Button>
+      </div>
+    );
+  }
+
   render() {
-    const {employee, hospital} = this.props;
+    const {organization, employee, hospital} = this.props;
     const {errors} = this.state;
     const hospitalOrg = hospital[0]; // Пока одна мед организация
     let errorsMessage = '';
@@ -123,16 +273,7 @@ class PrintEmployee extends React.PureComponent {
             <Col xs="12" sm="12" md="12">
               <Card>
                 <CardHeader className="d-print-none not-print">
-                  <Link
-                    to="#"
-                    className="btn btn-primary btn-sm pull-left"
-                    style={{
-                      color: '#fff',
-                    }}
-                    onClick={window.print}
-                  >
-                    Печать <i className="icon-printer" />
-                  </Link>
+                  {this.getButtons()}
                 </CardHeader>
                 <CardBlock className="card-body">
                   <Table
@@ -159,7 +300,10 @@ class PrintEmployee extends React.PureComponent {
                       </tr>
                       <tr>
                         <td colSpan="1" style={{width: '50%'}}>
-                          <span style={{fontWeight: '600'}}>Наименование объекта:</span>&nbsp;
+                          <span style={{fontWeight: '600'}}>
+                            Наименование объекта:
+                          </span>
+                          &nbsp;
                           {employee.organization_name}
                         </td>
                         <td colSpan="1" rowSpan="10">
@@ -171,7 +315,9 @@ class PrintEmployee extends React.PureComponent {
                         </td>
                       </tr>
                       <tr>
-                        <td><span style={{fontWeight: '600'}}>Сотрудник:</span></td>
+                        <td>
+                          <span style={{fontWeight: '600'}}>Сотрудник:</span>
+                        </td>
                       </tr>
                       <tr>
                         <td colSpan="1" style={{width: '50%'}}>
@@ -189,30 +335,25 @@ class PrintEmployee extends React.PureComponent {
                         </td>
                       </tr>
                       <tr>
-                        <td>
-                          Должность: {employee.position}
-                        </td>
+                        <td>Должность: {employee.position}</td>
                       </tr>
                       <tr>
                         <td>
-                          <span style={{fontWeight: '600'}}>Информация о медицинской организации «
-                          {hospitalOrg.name}»</span>:
+                          <span style={{fontWeight: '600'}}>
+                            Информация о медицинской организации «
+                            {hospitalOrg.name}»
+                          </span>
+                          :
                         </td>
                       </tr>
                       <tr>
-                        <td>
-                          Адрес: {hospitalOrg.address}
-                        </td>
+                        <td>Адрес: {hospitalOrg.address}</td>
                       </tr>
                       <tr>
-                        <td>
-                          Режим работы: {hospitalOrg.shedule}
-                        </td>
+                        <td>Режим работы: {hospitalOrg.shedule}</td>
                       </tr>
                       <tr>
-                        <td>
-                          Телефон: {hospitalOrg.phone}
-                        </td>
+                        <td>Телефон: {hospitalOrg.phone}</td>
                       </tr>
                       <tr
                         style={{
@@ -266,39 +407,6 @@ class PrintEmployee extends React.PureComponent {
                         </td>
                       </tr>
                       {this.researches()}
-                      {employee.category.id === 2 && (
-                        <>
-                          <tr
-                            style={{
-                              borderTop: '1px solid',
-                              fontWeight: '600',
-                            }}
-                          >
-                            <td>Вакцинация ВГА и дизентерия Зонне</td>
-                            <td>
-                              Форма оплаты:{' '}
-                              <select>
-                                <option />
-                                <option>За счет сотрудника</option>
-                                <option>За счет организации</option>
-                              </select>
-                            </td>
-                          </tr>
-                          <tr style={{fontWeight: '600'}}>
-                            <td colSpan="2">
-                              * Вы можете провести вакцинацию БЕСПЛАТНО по месту
-                              жительства по полису ОМС, с предоставлением
-                              справки или прививочного сертификата.
-                              <br />
-                              Прививка против гепатита А, проводится двукратно с
-                              интервалом 6-18 мес.
-                              <br />
-                              Прививка против дизентерии Зонне проводится
-                              ежегодно
-                            </td>
-                          </tr>
-                        </>
-                      )}
                       <tr
                         style={{
                           borderTop: '1px solid',
@@ -381,34 +489,35 @@ class PrintEmployee extends React.PureComponent {
                       </tr>
                       <tr>
                         <td>
-                          <span style={{fontWeight: '600'}}>Сотрудника направил:</span>
+                          <span style={{fontWeight: '600'}}>
+                            Сотрудника направил:
+                          </span>
                         </td>
                       </tr>
                       <tr>
                         <td>
                           Должность:{' '}
-                          <input type="text" style={{width: '200px'}} />
+                          {organization && organization.head_position}
                         </td>
                       </tr>
                       <tr>
                         <td>
-                          ФИО:{' '}
-                          <input type="text" style={{width: '200px'}} />
+                          ФИО: {organization && organization.users[0].fio}
                         </td>
                       </tr>
                       <tr>
                         <td>
-                          Телефон:{' '}
-                          <input type="text" style={{width: '200px'}} />
+                          Телефон: {organization && organization.head_phone}
                         </td>
                       </tr>
                       <tr>
                         <td>
-                          Дата: {new Date(Date.now()).toLocaleDateString('ru-RU', {
-                          year: 'numeric',
-                          month: 'long',
-                          day: 'numeric',
-                        })}
+                          Дата:{' '}
+                          {new Date(Date.now()).toLocaleDateString('ru-RU', {
+                            year: 'numeric',
+                            month: 'long',
+                            day: 'numeric',
+                          })}
                         </td>
                       </tr>
                       <tr>
@@ -420,16 +529,7 @@ class PrintEmployee extends React.PureComponent {
                   </Table>
                 </CardBlock>
                 <CardFooter className="not-print">
-                  <Link
-                    to="#"
-                    className="btn btn-primary btn-sm pull-left"
-                    style={{
-                      color: '#fff',
-                    }}
-                    onClick={window.print}
-                  >
-                    Печать <i className="icon-printer" />
-                  </Link>
+                  {this.getButtons()}
                 </CardFooter>
               </Card>
             </Col>
@@ -448,6 +548,8 @@ const mapStateToProps = (state) => {
   return {
     employee: state.employees.employee,
     hospital: state.hospitals.hospitals,
+    employeeResearches: state.employees.employeeResearches,
+    organization: state.organizations.organization,
   };
 };
 

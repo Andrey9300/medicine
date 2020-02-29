@@ -79,6 +79,45 @@ class EditOrganization extends React.PureComponent {
                 <CardBlock className="card-body">
                   <FormGroup row>
                     <Col md="3">
+                      <Label htmlFor="text-input">Должность</Label>
+                    </Col>
+                    <Col xs="12" md="9">
+                      <Input
+                        type="input"
+                        name="head_position"
+                        id="head_position"
+                        defaultValue={organization.head_position}
+                      />
+                    </Col>
+                  </FormGroup>
+                  <FormGroup row>
+                    <Col md="3">
+                      <Label htmlFor="text-input">Телефон</Label>
+                    </Col>
+                    <Col xs="12" md="9">
+                      <Input
+                        type="input"
+                        name="head_phone"
+                        id="head_phone"
+                        defaultValue={organization.head_phone}
+                      />
+                    </Col>
+                  </FormGroup>
+                  <FormGroup row>
+                    <Col md="3">
+                      <Label htmlFor="text-input">E-mail</Label>
+                    </Col>
+                    <Col xs="12" md="9">
+                      <Input
+                        type="input"
+                        name="head_email"
+                        id="head_email"
+                        defaultValue={organization.head_email}
+                      />
+                    </Col>
+                  </FormGroup>
+                  <FormGroup row>
+                    <Col md="3">
                       <Label htmlFor="text-input">Категория</Label>
                     </Col>
                     <Col xs="12" md="9">
@@ -116,7 +155,6 @@ class EditOrganization extends React.PureComponent {
 EditOrganization.propTypes = {
   dispatch: PropTypes.func.isRequired,
   match: PropTypes.object.isRequired,
-  router: PropTypes.object.isRequired,
   errors: PropTypes.array,
   categories: PropTypes.array,
   organization: PropTypes.object,
