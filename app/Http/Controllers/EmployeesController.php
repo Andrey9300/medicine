@@ -24,7 +24,7 @@ class EmployeesController extends Controller
     public function store(StoreEmployee $request)
     {
         $date_birthday = Carbon::createFromFormat('d-m-Y', $request->date_birthday)->format('Y-m-d');
-        $date_employment = Carbon::createFromFormat('d-m-Y', $request->date_birthday)->format('Y-m-d');
+        $date_employment = Carbon::createFromFormat('d-m-Y', $request->date_employment)->format('Y-m-d');
         $userAdmin = Auth::user(); // только админ
         $employee = new Employee;
         $employee->fio = $request->fio;
