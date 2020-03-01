@@ -12,6 +12,7 @@ import {
   FormGroup,
   Label,
   Input,
+  FormText,
 } from 'reactstrap';
 import {addHospital} from '../../actions/hospitalActions';
 
@@ -109,6 +110,19 @@ class NewHospital extends React.PureComponent {
                     </Col>
                     <Col xs="12" md="9">
                       <Input type="text" id="phone" name="phone" />
+                    </Col>
+                  </FormGroup>
+                  <FormGroup row>
+                    <Col md="3">
+                      <Label htmlFor="text-input">Фото карты</Label>
+                    </Col>
+                    <Col xs="12" md="9">
+                      <Input
+                        type="file"
+                        id="photo_map"
+                        name="photo_map"
+                      />
+                      <FormText color="muted">Загрузите фото карты</FormText>
                     </Col>
                   </FormGroup>
                 </CardBlock>

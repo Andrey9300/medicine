@@ -20,13 +20,19 @@ class HospitalController extends Controller
      */
     public function store(StoreHospital $request)
     {
+        $photo_map = null;
+
+        if ($request->file('photo_map')) {
+            $photo_map = $request->file('photo_map')->store('/images');
+        }
+
         $user = Auth::user();
         $hospital = new Hospital;
         $hospital->name = $request->name;
         $hospital->address = $request->address;
         $hospital->head_fio = $request->head_fio;
         $hospital->shedule = $request->shedule;
-        $hospital->photo_map = $request->file('photo_map')->store('/images');
+        $hospital->photo_map = $photo_map;
         $hospital->phone = $request->phone;
         $hospital->user_id = $user->id;
         $hospital->save();
