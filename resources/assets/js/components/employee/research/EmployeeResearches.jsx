@@ -8,7 +8,7 @@ import {
   Col,
   Card,
   CardHeader,
-  CardBlock,
+  CardBody,
   Button,
   Form,
   Input,
@@ -125,7 +125,7 @@ class EmployeeResearches extends React.PureComponent {
                   {this.getButtons()}
                 </div>
               </CardHeader>
-              <CardBlock className="card-body">
+              <CardBody className="card-body">
                 <Form id="employeeResearch">
                   <Table responsive>
                     <thead>
@@ -214,7 +214,7 @@ class EmployeeResearches extends React.PureComponent {
                     </tbody>
                   </Table>
                 </Form>
-              </CardBlock>
+              </CardBody>
               <CardFooter>
                 <div
                   style={{

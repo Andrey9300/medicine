@@ -8,11 +8,10 @@ import {
   Col,
   Card,
   Form,
-  CardBlock,
+  CardBody,
   Button,
   Input,
   InputGroup,
-  InputGroupAddon,
   CardGroup,
 } from 'reactstrap';
 
@@ -76,14 +75,12 @@ class Registration extends React.PureComponent {
               {errorsMessage}
               <CardGroup className="mb-0">
                 <Card className="p-4">
-                  <CardBlock className="card-body">
+                  <CardBody className="card-body">
                     <Form onSubmit={this.handleSubmit}>
                       <h1>Регистрация</h1>
                       <p className="text-muted">Создайте свой аккаунт</p>
                       <InputGroup className="mb-3">
-                        <InputGroupAddon>
-                          <i className="icon-user" />
-                        </InputGroupAddon>
+                        <i className="icon-user" />
                         <Input
                           type="text"
                           name="fio"
@@ -92,7 +89,6 @@ class Registration extends React.PureComponent {
                         />
                       </InputGroup>
                       <InputGroup className="mb-3">
-                        <InputGroupAddon>@</InputGroupAddon>
                         <Input
                           type="email"
                           name="email"
@@ -101,9 +97,6 @@ class Registration extends React.PureComponent {
                         />
                       </InputGroup>
                       <InputGroup className="mb-3">
-                        <InputGroupAddon>
-                          <i className="icon-lock" />
-                        </InputGroupAddon>
                         <Input
                           type="password"
                           name="password"
@@ -112,9 +105,6 @@ class Registration extends React.PureComponent {
                         />
                       </InputGroup>
                       <InputGroup className="mb-3">
-                        <InputGroupAddon>
-                          <i className="icon-lock" />
-                        </InputGroupAddon>
                         <Input
                           type="password"
                           name="password_confirmation"
@@ -129,7 +119,7 @@ class Registration extends React.PureComponent {
                         Уже есть аккаунт
                       </Button>
                     </Form>
-                  </CardBlock>
+                  </CardBody>
                 </Card>
               </CardGroup>
             </Col>

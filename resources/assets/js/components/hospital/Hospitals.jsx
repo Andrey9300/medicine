@@ -2,7 +2,7 @@ import {deleteHospital, fetchHospitals} from '../../actions/hospitalActions';
 import {Link} from 'react-router-dom';
 import React from 'react';
 import {connect} from 'react-redux';
-import {Row, Col, Card, CardHeader, CardBlock, Table} from 'reactstrap';
+import {Row, Col, Card, CardHeader, CardBody, Table} from 'reactstrap';
 
 class Hospitals extends React.PureComponent {
   constructor(props) {
@@ -30,11 +30,11 @@ class Hospitals extends React.PureComponent {
             <Col xs="12" sm="6" md="4">
               <Card className="text-center">
                 <CardHeader>Медицинских центров нет</CardHeader>
-                <CardBlock>
+                <CardBody>
                   <Link to={'/hospitals/create'}>
                     Добавить медицинский центр
                   </Link>
-                </CardBlock>
+                </CardBody>
               </Card>
             </Col>
           </Row>
@@ -51,7 +51,7 @@ class Hospitals extends React.PureComponent {
                 <i className="fa fa-stethoscope" aria-hidden="true" />
                 Медицинские центры ({hospitals.length})
               </CardHeader>
-              <CardBlock className="card-body">
+              <CardBody className="card-body">
                 <Table responsive>
                   <thead>
                     <tr>
@@ -78,7 +78,7 @@ class Hospitals extends React.PureComponent {
                     })}
                   </tbody>
                 </Table>
-              </CardBlock>
+              </CardBody>
             </Card>
           </Col>
         </Row>

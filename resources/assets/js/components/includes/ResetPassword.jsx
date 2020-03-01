@@ -8,12 +8,11 @@ import {
   Col,
   CardGroup,
   Card,
-  CardBlock,
+  CardBody,
   Form,
   Button,
   Input,
   InputGroup,
-  InputGroupAddon,
 } from 'reactstrap';
 
 class ResetPassword extends React.PureComponent {
@@ -81,14 +80,11 @@ class ResetPassword extends React.PureComponent {
               {errorsMessage}
               <CardGroup className="mb-0">
                 <Card className="p-4">
-                  <CardBlock className="card-body">
+                  <CardBody className="card-body">
                     <Form onSubmit={this.handleSubmit}>
                       <h1>Сбросить пароль</h1>
                       <p className="text-muted">Сброс пароля</p>
                       <InputGroup className="mb-3">
-                        <InputGroupAddon>
-                          <i className="icon-envelope" />
-                        </InputGroupAddon>
                         <Input
                           type="email"
                           name="email"
@@ -97,9 +93,6 @@ class ResetPassword extends React.PureComponent {
                         />
                       </InputGroup>
                       <InputGroup className="mb-3">
-                        <InputGroupAddon>
-                          <i className="icon-lock" />
-                        </InputGroupAddon>
                         <Input
                           type="password"
                           name="password"
@@ -108,9 +101,6 @@ class ResetPassword extends React.PureComponent {
                         />
                       </InputGroup>
                       <InputGroup className="mb-3">
-                        <InputGroupAddon>
-                          <i className="icon-lock" />
-                        </InputGroupAddon>
                         <Input
                           type="password"
                           name="password_confirmation"
@@ -135,7 +125,7 @@ class ResetPassword extends React.PureComponent {
                         </Col>
                       </Row>
                     </Form>
-                  </CardBlock>
+                  </CardBody>
                 </Card>
               </CardGroup>
             </Col>

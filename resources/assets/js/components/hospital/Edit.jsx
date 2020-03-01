@@ -9,7 +9,7 @@ import {
   Card,
   CardHeader,
   CardFooter,
-  CardBlock,
+  CardBody,
   Form,
   FormGroup,
   FormText,
@@ -72,7 +72,7 @@ class EditHospital extends React.PureComponent {
             <Card>
               <Form className="form-horizontal" onSubmit={this.handleSubmit}>
                 <CardHeader>Редактировать медицинское учреждение</CardHeader>
-                <CardBlock className="card-body">
+                <CardBody className="card-body">
                   <FormGroup row>
                     <Col md="3">
                       <Label htmlFor="text-input">Наименование</Label>
@@ -169,7 +169,7 @@ class EditHospital extends React.PureComponent {
                       )}
                     </Col>
                   </FormGroup>
-                </CardBlock>
+                </CardBody>
                 <CardFooter>
                   <Button type="submit" size="sm" color="success">
                     <i className="fa fa-dot-circle-o" /> Сохранить

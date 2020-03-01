@@ -11,7 +11,7 @@ import {
   Col,
   Card,
   CardHeader,
-  CardBlock,
+  CardBody,
   CardFooter,
   Table,
   Form,
@@ -57,13 +57,13 @@ class Researches extends React.PureComponent {
             <Col xs="12" sm="6" md="4">
               <Card className="text-center">
                 <CardHeader>Исследований нет</CardHeader>
-                <CardBlock>
+                <CardBody>
                   <Link to={'/employees/create'}>Добавьте сотрудника</Link>
                   <p>
                     На основе категорий сотрудника будут сформированы
                     необходимые исследования
                   </p>
-                </CardBlock>
+                </CardBody>
               </Card>
             </Col>
           </Row>
@@ -98,7 +98,7 @@ class Researches extends React.PureComponent {
                   <i className="fa fa-dot-circle-o" /> Сохранить
                 </Button>
               </CardHeader>
-              <CardBlock className="card-body">
+              <CardBody className="card-body">
                 <Form>
                   <Table responsive>
                     <thead>
@@ -126,7 +126,7 @@ class Researches extends React.PureComponent {
                     </tbody>
                   </Table>
                 </Form>
-              </CardBlock>
+              </CardBody>
               <CardFooter>
                 <Button
                   type="submit"

@@ -8,12 +8,11 @@ import {
   Col,
   CardGroup,
   Card,
-  CardBlock,
+  CardBody,
   Form,
   Button,
   Input,
   InputGroup,
-  InputGroupAddon,
 } from 'reactstrap';
 import {loginUser} from '../../actions/userActions';
 
@@ -83,14 +82,11 @@ class Login extends React.PureComponent {
               {errorsMessage}
               <CardGroup className="mb-0">
                 <Card className="p-4">
-                  <CardBlock className="card-body">
+                  <CardBody className="card-body">
                     <Form onSubmit={this.handleSubmit}>
                       <h1>Вход</h1>
                       <p className="text-muted">Войдите в свой аккаунт</p>
                       <InputGroup className="mb-3">
-                        <InputGroupAddon>
-                          <i className="icon-envelope" />
-                        </InputGroupAddon>
                         <Input
                           type="email"
                           name="email"
@@ -99,27 +95,22 @@ class Login extends React.PureComponent {
                         />
                       </InputGroup>
                       <InputGroup className="mb-4">
-                        <InputGroupAddon>
-                          <i className="icon-lock" />
-                        </InputGroupAddon>
                         <Input
                           type={showPassword ? 'text' : 'password'}
                           name="password"
                           placeholder="Пароль"
                           required
                         />
-                        <InputGroupAddon>
-                          <i
-                            className={
-                              showPassword ? 'fa fa-eye' : 'fa fa-eye-slash'
-                            }
-                            aria-hidden="true"
-                            style={{cursor: 'pointer'}}
-                            onClick={() => {
-                              this.setState({showPassword: !showPassword});
-                            }}
-                          />
-                        </InputGroupAddon>
+                        <i
+                          className={
+                            showPassword ? 'fa fa-eye' : 'fa fa-eye-slash'
+                          }
+                          aria-hidden="true"
+                          style={{cursor: 'pointer'}}
+                          onClick={() => {
+                            this.setState({showPassword: !showPassword});
+                          }}
+                        />
                       </InputGroup>
                       <Row>
                         <Col xs="4">
@@ -149,7 +140,7 @@ class Login extends React.PureComponent {
                         </Col>
                       </Row>
                     </Form>
-                  </CardBlock>
+                  </CardBody>
                 </Card>
               </CardGroup>
             </Col>

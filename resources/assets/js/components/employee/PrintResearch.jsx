@@ -12,7 +12,7 @@ import {
   Col,
   Card,
   CardHeader,
-  CardBlock,
+  CardBody,
   CardFooter,
   Table,
   Button,
@@ -258,10 +258,10 @@ class PrintEmployee extends React.PureComponent {
             <i className="fa fa-dot-circle-o" aria-hidden="true" />
             Что-то пошло не так
           </CardHeader>
-          <CardBlock className="card-body">
+          <CardBody className="card-body">
             Возможно нужно добавить{' '}
             <Link to={'/hospitals'}>медицинское учреждение.</Link>
-          </CardBlock>
+          </CardBody>
         </Card>
       );
     }
@@ -284,7 +284,7 @@ class PrintEmployee extends React.PureComponent {
                 <CardHeader className="d-print-none not-print">
                   {this.getButtons()}
                 </CardHeader>
-                <CardBlock className="card-body">
+                <CardBody className="card-body">
                   <Table
                     responsive
                     id="printResearches"
@@ -536,7 +536,7 @@ class PrintEmployee extends React.PureComponent {
                       </tr>
                     </tbody>
                   </Table>
-                </CardBlock>
+                </CardBody>
                 <CardFooter className="not-print">
                   {this.getButtons()}
                 </CardFooter>

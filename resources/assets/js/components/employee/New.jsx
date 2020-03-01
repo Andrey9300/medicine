@@ -10,7 +10,7 @@ import {
   Card,
   CardHeader,
   CardFooter,
-  CardBlock,
+  CardBody,
   Form,
   FormGroup,
   Label,
@@ -65,7 +65,7 @@ class NewEmployee extends React.PureComponent {
             <Card>
               <Form className="form-horizontal" onSubmit={this.handleSubmit}>
                 <CardHeader>Добавить сотрудника</CardHeader>
-                <CardBlock className="card-body">
+                <CardBody className="card-body">
                   <FormGroup row>
                     <Col md="3">
                       <Label htmlFor="text-input">ФИО</Label>
@@ -187,7 +187,7 @@ class NewEmployee extends React.PureComponent {
                       <Input type="textarea" id="comments" name="comments" />
                     </Col>
                   </FormGroup>
-                </CardBlock>
+                </CardBody>
                 <CardFooter>
                   <Button type="submit" size="sm" color="success">
                     <i className="fa fa-dot-circle-o" /> Сохранить

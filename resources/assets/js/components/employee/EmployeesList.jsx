@@ -1,6 +1,6 @@
 import {Link} from 'react-router-dom';
 import React from 'react';
-import {Card, CardHeader, CardBlock, CardFooter, Table} from 'reactstrap';
+import {Card, CardHeader, CardBody, CardFooter, Table} from 'reactstrap';
 import PropTypes from 'prop-types';
 
 export class EmployeesList extends React.PureComponent {
@@ -13,9 +13,9 @@ export class EmployeesList extends React.PureComponent {
           <i className="fa fa-users" aria-hidden="true" />
           {title}
         </CardHeader>
-        <CardBlock className="card-body">
-          <p>{message}</p>
-        </CardBlock>
+        <CardBody className="card-body">
+          {message}
+        </CardBody>
       </Card>
     );
   }
@@ -44,9 +44,9 @@ export class EmployeesList extends React.PureComponent {
               Добавить <i className="icon-plus" />
             </Link>
           </CardHeader>
-          <CardBlock className="card-body">
+          <CardBody className="card-body">
             <Link to="/employees">Перейти ко всем сотрудникам</Link>
-          </CardBlock>
+          </CardBody>
         </Card>
       );
     }
@@ -63,7 +63,7 @@ export class EmployeesList extends React.PureComponent {
             Добавить <i className="icon-plus" />
           </Link>
         </CardHeader>
-        <CardBlock className="card-body">
+        <CardBody className="card-body">
           <Table responsive>
             <thead>
               <tr>
@@ -120,7 +120,7 @@ export class EmployeesList extends React.PureComponent {
               })}
             </tbody>
           </Table>
-        </CardBlock>
+        </CardBody>
         <CardFooter>
           <Link
             to="/employees/create"

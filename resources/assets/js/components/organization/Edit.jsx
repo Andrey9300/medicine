@@ -10,7 +10,7 @@ import {
   Card,
   CardHeader,
   CardFooter,
-  CardBlock,
+  CardBody,
   Form,
   FormGroup,
   Label,
@@ -77,7 +77,7 @@ class EditOrganization extends React.PureComponent {
             <Card>
               <Form className="form-horizontal" onSubmit={this.handleSubmit}>
                 <CardHeader>Редактировать организацию</CardHeader>
-                <CardBlock className="card-body">
+                <CardBody className="card-body">
                   <FormGroup row>
                     <Col md="3">
                       <Label htmlFor="text-input">Должность</Label>
@@ -125,7 +125,7 @@ class EditOrganization extends React.PureComponent {
                       </Input>
                     </Col>
                   </FormGroup>
-                </CardBlock>
+                </CardBody>
                 <CardFooter>
                   <Button type="submit" size="sm" color="success">
                     <i className="fa fa-dot-circle-o" /> Сохранить

@@ -3,7 +3,7 @@ import {Link} from 'react-router-dom';
 import React from 'react';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
-import {Row, Col, Card, CardHeader, CardBlock, Table} from 'reactstrap';
+import {Row, Col, Card, CardHeader, CardBody, Table} from 'reactstrap';
 
 class Organizations extends React.PureComponent {
   componentDidMount() {
@@ -20,9 +20,9 @@ class Organizations extends React.PureComponent {
             <Col xs="12" sm="6" md="4">
               <Card className="text-center">
                 <CardHeader>Организаций нет</CardHeader>
-                <CardBlock>
+                <CardBody>
                   <Link to={'/organizations/create'}>Добавить организацию</Link>
-                </CardBlock>
+                </CardBody>
               </Card>
             </Col>
           </Row>
@@ -45,7 +45,7 @@ class Organizations extends React.PureComponent {
                   Добавить <i className="icon-plus" />
                 </Link>
               </CardHeader>
-              <CardBlock className="card-body">
+              <CardBody className="card-body">
                 <Table responsive>
                   <thead>
                     <tr>
@@ -80,7 +80,7 @@ class Organizations extends React.PureComponent {
                     })}
                   </tbody>
                 </Table>
-              </CardBlock>
+              </CardBody>
             </Card>
           </Col>
         </Row>

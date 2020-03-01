@@ -3,7 +3,7 @@ import {connect} from 'react-redux';
 import {fetchHospital, deleteHospital} from './../../actions/hospitalActions';
 import {Link} from 'react-router-dom';
 import PropTypes from 'prop-types';
-import {Row, Col, Card, CardHeader, CardBlock, Table} from 'reactstrap';
+import {Row, Col, Card, CardHeader, CardBody, Table} from 'reactstrap';
 
 class Hospital extends React.PureComponent {
   constructor(props) {
@@ -78,7 +78,7 @@ class Hospital extends React.PureComponent {
                     <i className="fa fa-trash" />
                   </span>
                 </CardHeader>
-                <CardBlock className="card-body">
+                <CardBody className="card-body">
                   <Table responsive>
                     <tbody>
                       <tr>
@@ -112,7 +112,7 @@ class Hospital extends React.PureComponent {
                       </tr>
                     </tbody>
                   </Table>
-                </CardBlock>
+                </CardBody>
               </Card>
             </Col>
           </Row>

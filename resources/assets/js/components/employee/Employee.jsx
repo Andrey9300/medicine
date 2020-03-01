@@ -4,7 +4,7 @@ import {fetchEmployee, deleteEmployee, restoreEmployee} from './../../actions/em
 import EmployeeResearches from './research/EmployeeResearches';
 import {Link} from 'react-router-dom';
 import PropTypes from 'prop-types';
-import {Row, Col, Card, CardHeader, CardBlock, Table, Button} from 'reactstrap';
+import {Row, Col, Card, CardHeader, CardBody, Table, Button} from 'reactstrap';
 
 class Employee extends React.PureComponent {
   constructor(props) {
@@ -110,7 +110,7 @@ class Employee extends React.PureComponent {
                     </>
                   )}
                 </CardHeader>
-                <CardBlock className="card-body">
+                <CardBody className="card-body">
                   <Table responsive>
                     <tbody>
                       <tr>
@@ -161,7 +161,7 @@ class Employee extends React.PureComponent {
                       </tr>
                     </tbody>
                   </Table>
-                </CardBlock>
+                </CardBody>
               </Card>
             </Col>
           </Row>

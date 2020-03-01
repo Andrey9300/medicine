@@ -7,7 +7,7 @@ import {
 import {Link} from 'react-router-dom';
 import PropTypes from 'prop-types';
 import {fetchHospitals} from '../../../actions/hospitalActions';
-import {Row, Col, Card, CardHeader, CardBlock, Table} from 'reactstrap';
+import {Row, Col, Card, CardHeader, CardBody, Table} from 'reactstrap';
 
 class Budget extends React.PureComponent {
   constructor(props) {
@@ -66,7 +66,7 @@ class Budget extends React.PureComponent {
                   <i className="fa fa-building-o" aria-hidden="true" />«
                   {organization.name}»
                 </CardHeader>
-                <CardBlock className="card-body">
+                <CardBody className="card-body">
                   <Table responsive>
                     <tbody>
                       <tr>
@@ -116,7 +116,7 @@ class Budget extends React.PureComponent {
                       </tr>
                     </tbody>
                   </Table>
-                </CardBlock>
+                </CardBody>
               </Card>
             </Col>
           </Row>

@@ -10,7 +10,7 @@ import {
   Card,
   CardHeader,
   CardFooter,
-  CardBlock,
+  CardBody,
   Form,
   FormGroup,
   FormText,
@@ -80,7 +80,7 @@ class NewResearch extends React.PureComponent {
           <Col xs="12" md="6">
             <Card>
               <CardHeader>Добавить исследование</CardHeader>
-              <CardBlock className="card-body">
+              <CardBody className="card-body">
                 <Form className="form-horizontal">
                   <FormGroup row>
                     <Col md="3">
@@ -108,7 +108,7 @@ class NewResearch extends React.PureComponent {
                     </Col>
                   </FormGroup>
                 </Form>
-              </CardBlock>
+              </CardBody>
               <CardFooter>
                 <Button
                   type="submit"

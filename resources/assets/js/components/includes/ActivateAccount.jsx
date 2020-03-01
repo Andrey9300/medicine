@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import {Link} from 'react-router-dom';
-import {Row, Col, Card, CardBlock, CardHeader} from 'reactstrap';
+import {Row, Col, Card, CardBody, CardHeader} from 'reactstrap';
 import {fetchUser} from '../../actions/userActions';
 
 class ActivateAccount extends React.PureComponent {
@@ -17,11 +17,11 @@ class ActivateAccount extends React.PureComponent {
           <Col xs="12" sm="6" md="4">
             <Card className="text-center">
               <CardHeader>Вы активировали email</CardHeader>
-              <CardBlock>
+              <CardBody>
                 <Link to={'/organizations/create'} className={'active'}>
                   Добавить компанию
                 </Link>
-              </CardBlock>
+              </CardBody>
             </Card>
           </Col>
         </Row>

@@ -10,7 +10,7 @@ import {
   Col,
   Card,
   CardHeader,
-  CardBlock,
+  CardBody,
   CardFooter,
   Table,
   Form,
@@ -60,7 +60,7 @@ class HospitalResearches extends React.PureComponent {
                   <i className="fa fa-dot-circle-o" /> Сохранить
                 </Button>
               </CardHeader>
-              <CardBlock className="card-body">
+              <CardBody className="card-body">
                 <Form id="hospitalResearch">
                   <Table responsive>
                     <thead>
@@ -87,7 +87,7 @@ class HospitalResearches extends React.PureComponent {
                     </tbody>
                   </Table>
                 </Form>
-              </CardBlock>
+              </CardBody>
               <CardFooter>
                 <Button
                   type="submit"

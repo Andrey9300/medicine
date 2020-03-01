@@ -8,7 +8,7 @@ import {fetchHospitals} from '../../actions/hospitalActions';
 import {EmployeesList} from '../employee/EmployeesList';
 import {Link} from 'react-router-dom';
 import PropTypes from 'prop-types';
-import {Row, Col, Card, CardHeader, CardBlock, Table} from 'reactstrap';
+import {Row, Col, Card, CardHeader, CardBody, Table} from 'reactstrap';
 
 class Organization extends React.PureComponent {
   constructor(props) {
@@ -67,9 +67,9 @@ class Organization extends React.PureComponent {
         <CardHeader>
           <i className="fa fa-building-o" aria-hidden="true" />
         </CardHeader>
-        <CardBlock className="card-body">
-          <p>{message}</p>
-        </CardBlock>
+        <CardBody className="card-body">
+          {message}
+        </CardBody>
       </Card>
     );
   }
@@ -82,7 +82,7 @@ class Organization extends React.PureComponent {
       return this.getMessage('Ошибка, попробуйте снова');
     }
 
-    if (!fetched) {
+    if (!fetched || !organization) {
       return this.getMessage('Загрузка');
     }
 
@@ -111,7 +111,7 @@ class Organization extends React.PureComponent {
                   <i className="fa fa-trash" />
                 </span>
               </CardHeader>
-              <CardBlock className="card-body">
+              <CardBody className="card-body">
                 <Table responsive>
                   <tbody>
                     <tr>
@@ -150,7 +150,7 @@ class Organization extends React.PureComponent {
                     </tr>
                   </tbody>
                 </Table>
-              </CardBlock>
+              </CardBody>
             </Card>
             <EmployeesList
               employees={employeesAttention}
@@ -164,7 +164,7 @@ class Organization extends React.PureComponent {
                 <i className="fa fa-users" aria-hidden="true" />
                 Сотрудники
               </CardHeader>
-              <CardBlock className="card-body">
+              <CardBody className="card-body">
                 <Table responsive>
                   <tbody>
                     <tr>
@@ -184,14 +184,14 @@ class Organization extends React.PureComponent {
                     </tr>
                   </tbody>
                 </Table>
-              </CardBlock>
+              </CardBody>
             </Card>
             <Card>
               <CardHeader>
                 <i className="fa fa-stethoscope" aria-hidden="true" />
                 Медицинские центры
               </CardHeader>
-              <CardBlock className="card-body">
+              <CardBody className="card-body">
                 <Table responsive>
                   <tbody>
                     {hospitals.map((hospital) => (
@@ -205,17 +205,17 @@ class Organization extends React.PureComponent {
                     ))}
                   </tbody>
                 </Table>
-              </CardBlock>
+              </CardBody>
             </Card>
             <Card>
               <CardHeader>
                 <i className="fa fa-info" aria-hidden="true" />
                 Информация
               </CardHeader>
-              <CardBlock className="card-body">
+              <CardBody className="card-body">
                 Справочная информация о медицинском осмотре и правилах
                 оформления личной медицинской книжки
-              </CardBlock>
+              </CardBody>
             </Card>
           </Col>
         </Row>

@@ -9,12 +9,11 @@ import {
   Col,
   CardGroup,
   Card,
-  CardBlock,
+  CardBody,
   Form,
   Button,
   Input,
   InputGroup,
-  InputGroupAddon,
 } from 'reactstrap';
 
 class RestorePassword extends React.PureComponent {
@@ -85,14 +84,11 @@ class RestorePassword extends React.PureComponent {
               {errorsMessage}
               <CardGroup className="mb-0">
                 <Card className="p-4">
-                  <CardBlock className="card-body">
+                  <CardBody className="card-body">
                     <Form onSubmit={this.handleSubmit}>
                       <h1>Восстановить пароль</h1>
                       <p className="text-muted">Восстановление пароля</p>
                       <InputGroup className="mb-3">
-                        <InputGroupAddon>
-                          <i className="icon-envelope" />
-                        </InputGroupAddon>
                         <Input
                           type="email"
                           name="email"
@@ -117,7 +113,7 @@ class RestorePassword extends React.PureComponent {
                         </Col>
                       </Row>
                     </Form>
-                  </CardBlock>
+                  </CardBody>
                 </Card>
               </CardGroup>
             </Col>
