@@ -31,7 +31,7 @@ class RegisterController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/';
+    protected $redirectTo = '/login';
 
     /**
      * Create a new controller instance.
@@ -98,7 +98,7 @@ class RegisterController extends Controller
 
             Auth::login($user, true);
 
-            return redirect('/#/activateAccount');
+            return redirect('/activateAccount');
         }
     }
 }

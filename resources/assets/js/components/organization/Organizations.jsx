@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 import {Row, Col, Card, CardHeader, CardBlock, Table} from 'reactstrap';
 
 class Organizations extends React.PureComponent {
-  componentWillMount() {
+  componentDidMount() {
     this.props.dispatch(fetchOrganizations());
   }
 

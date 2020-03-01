@@ -7,16 +7,16 @@ import PropTypes from 'prop-types';
 import {Row, Col, Card, CardHeader} from 'reactstrap';
 
 class Employees extends React.PureComponent {
-  componentWillMount() {
+  componentDidMount() {
     this.props.dispatch(fetchEmployees());
   }
 
   render() {
-    const {user, employees} = this.props;
-
-    if (!employees) {
-      return null;
-    }
+    const {user, employees, fetched, errors} = this.props;
+    const status = {
+      fetched,
+      errors,
+    };
 
     return (
       <div>
@@ -27,6 +27,7 @@ class Employees extends React.PureComponent {
                 employees={employees}
                 user={user}
                 title={'Сотрудники '}
+                status={status}
               />
             </Col>
           </Row>
@@ -49,6 +50,8 @@ Employees.propTypes = {
   dispatch: PropTypes.func.isRequired,
   employees: PropTypes.array.isRequired,
   user: PropTypes.object,
+  fetched: PropTypes.bool,
+  errors: PropTypes.object,
 };
 
 const mapStateToProps = (state) => {
@@ -56,6 +59,8 @@ const mapStateToProps = (state) => {
     user: state.users.user,
     employees: state.employees.employees,
     organization: state.organizations.organization,
+    fetched: state.employees.fetched,
+    errors: state.employees.errors,
   };
 };
 

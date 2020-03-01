@@ -1,7 +1,7 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
-import {fetchOrganization} from './../../actions/organizationActions';
+import {clearOrganization, fetchOrganization} from './../../actions/organizationActions';
 import {fetchCategories} from '../../actions/categoryActions';
 import {
   Row,
@@ -37,7 +37,8 @@ class EditOrganization extends React.PureComponent {
     );
   }
 
-  componentWillMount() {
+  componentDidMount() {
+    this.props.dispatch(clearOrganization());
     this.props.dispatch(fetchCategories());
     this.props.dispatch(fetchOrganization(this.state.organizationId));
   }
@@ -100,19 +101,6 @@ class EditOrganization extends React.PureComponent {
                         name="head_phone"
                         id="head_phone"
                         defaultValue={organization.head_phone}
-                      />
-                    </Col>
-                  </FormGroup>
-                  <FormGroup row>
-                    <Col md="3">
-                      <Label htmlFor="text-input">E-mail</Label>
-                    </Col>
-                    <Col xs="12" md="9">
-                      <Input
-                        type="input"
-                        name="head_email"
-                        id="head_email"
-                        defaultValue={organization.head_email}
                       />
                     </Col>
                   </FormGroup>

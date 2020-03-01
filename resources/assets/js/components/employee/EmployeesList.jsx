@@ -4,8 +4,32 @@ import {Card, CardHeader, CardBlock, CardFooter, Table} from 'reactstrap';
 import PropTypes from 'prop-types';
 
 export class EmployeesList extends React.PureComponent {
+  getMessage(message) {
+    const {title} = this.props;
+
+    return (
+      <Card>
+        <CardHeader>
+          <i className="fa fa-users" aria-hidden="true" />
+          {title}
+        </CardHeader>
+        <CardBlock className="card-body">
+          <p>{message}</p>
+        </CardBlock>
+      </Card>
+    );
+  }
+
   render() {
-    const {employees, title} = this.props;
+    const {employees, title, status} = this.props;
+
+    if (status.errors) {
+      return this.getMessage('Ошибка, попробуйте снова');
+    }
+
+    if (!status.fetched) {
+      return this.getMessage('Загрузка');
+    }
 
     if (!employees || !employees.length) {
       return (
@@ -58,7 +82,9 @@ export class EmployeesList extends React.PureComponent {
                         {employee.fio}
                       </Link>
                     </td>
-                    <td>{employee.send_to_research ? 'Отправлен на МО' : ''}</td>
+                    <td>
+                      {employee.send_to_research && employee.send_to_research}
+                    </td>
                     <td>
                       {(() => {
                         let text = '';
@@ -110,6 +136,7 @@ export class EmployeesList extends React.PureComponent {
 
 EmployeesList.propTypes = {
   employees: PropTypes.array.isRequired,
+  status: PropTypes.object.isRequired,
   user: PropTypes.object,
   title: PropTypes.string,
 };

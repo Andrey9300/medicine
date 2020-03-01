@@ -23,7 +23,7 @@ class User extends Authenticatable
     /**
      * Send the password reset notification.
      *
-     * @param  string  $token
+     * @param string $token
      * @return void
      */
     public function sendPasswordResetNotification($token)
@@ -62,5 +62,4 @@ class User extends Authenticatable
     {
         return $this->belongsToMany('App\Http\Models\ResearchCategory', 'user_researches', 'user_id', 'research_categories_id')->withPivot('id', 'research_categories_id');
     }
-
 }

@@ -6,12 +6,16 @@ import PropTypes from 'prop-types';
 import {Row, Col} from 'reactstrap';
 
 class EmployeesDeleted extends React.PureComponent {
-  componentWillMount() {
+  componentDidMount() {
     this.props.dispatch(fetchEmployees());
   }
 
   render() {
-    const {user, deleted} = this.props;
+    const {user, deleted, fetched, errors} = this.props;
+    const status = {
+      fetched,
+      errors,
+    };
 
     if (!deleted) {
       return null;
@@ -26,6 +30,7 @@ class EmployeesDeleted extends React.PureComponent {
                 employees={deleted}
                 user={user}
                 title={'Сотрудники в архиве '}
+                status={status}
               />
             </Col>
           </Row>
@@ -39,6 +44,8 @@ EmployeesDeleted.propTypes = {
   dispatch: PropTypes.func.isRequired,
   deleted: PropTypes.array.isRequired,
   user: PropTypes.object,
+  fetched: PropTypes.bool,
+  errors: PropTypes.object,
 };
 
 const mapStateToProps = (state) => {
@@ -46,6 +53,8 @@ const mapStateToProps = (state) => {
     user: state.users.user,
     organization: state.organizations.organization,
     deleted: state.employees.deleted,
+    fetched: state.employees.fetched,
+    errors: state.employees.errors,
   };
 };
 

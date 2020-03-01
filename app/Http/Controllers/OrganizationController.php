@@ -29,7 +29,7 @@ class OrganizationController extends Controller
         $organization->category_id = $request->category_id;
         $organization->head_position = $request->head_position;
         $organization->head_phone = $request->head_phone;
-        $organization->head_email = $request->head_email;
+        $organization->head_email = $currentUser->email;
         $organization->save();
 
         $currentUser->organizations()->attach($organization);
@@ -188,14 +188,14 @@ class OrganizationController extends Controller
         foreach ($organization->users as $user) {
             if ($user->role === 'head'){
                 $organization->head_fio = $user->fio;
-//                $organization->head_email = $user->email;
+                $organization->head_email = $user->email;
                 $head_exist = true;
             }
         }
 
         if (!$head_exist) {
             $organization->head_fio = $organization->users[0]->fio;
-//            $organization->head_email = $organization->users[0]->email;
+            $organization->head_email = $organization->users[0]->email;
         }
 
         return response()->json([
@@ -217,7 +217,6 @@ class OrganizationController extends Controller
         $organization->category_id = $organization_new['category_id'];
         $organization->head_position = $organization_new['head_position'];
         $organization->head_phone = $organization_new['head_phone'];
-        $organization->head_email = $organization_new['head_email'];
 
         // админов может быть несколько
         // менеджер 1 или 0

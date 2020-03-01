@@ -21,7 +21,7 @@ class Organization extends React.PureComponent {
     };
   }
 
-  componentWillMount() {
+  componentDidMount() {
     this.props.dispatch(fetchOrganization(this.state.organizationId));
     this.props.dispatch(fetchHospitals());
   }
@@ -61,12 +61,29 @@ class Organization extends React.PureComponent {
     this.props.dispatch(deleteOrganization(id));
   }
 
+  getMessage(message) {
+    return (
+      <Card>
+        <CardHeader>
+          <i className="fa fa-building-o" aria-hidden="true" />
+        </CardHeader>
+        <CardBlock className="card-body">
+          <p>{message}</p>
+        </CardBlock>
+      </Card>
+    );
+  }
+
   render() {
     const {employeesAttention, researchesEnds, researchesExpired} = this.state;
-    const {organization, hospitals} = this.props;
+    const {organization, hospitals, fetched, errors} = this.props;
 
-    if (!organization || !hospitals) {
-      return null;
+    if (errors) {
+      return this.getMessage('Ошибка, попробуйте снова');
+    }
+
+    if (!fetched) {
+      return this.getMessage('Загрузка');
     }
 
     return (
@@ -110,12 +127,26 @@ class Organization extends React.PureComponent {
                       <td>{organization.head_phone}</td>
                     </tr>
                     <tr>
-                      <td>E-mail менеджера:</td>
+                      <td>
+                        <div>E-mail менеджера:</div>
+                        <div
+                          style={{
+                            fontSize: '12px',
+                            fontStyle: 'italic',
+                            lineHeight: '24px',
+                            fontWeight: '300',
+                          }}
+                        >
+                          на данный адрес будут приходить уведомления
+                        </div>
+                      </td>
                       <td>{organization.head_email}</td>
                     </tr>
                     <tr>
                       <td>Категория:</td>
-                      <td style={{maxWidth: '300px'}}>{organization.category.name}</td>
+                      <td style={{maxWidth: '300px'}}>
+                        {organization.category.name}
+                      </td>
                     </tr>
                   </tbody>
                 </Table>
@@ -124,6 +155,7 @@ class Organization extends React.PureComponent {
             <EmployeesList
               employees={employeesAttention}
               title={'Сотрудники требующие внимания'}
+              status={{fetched: true, errors: null}}
             />
           </Col>
           <Col xs="4" sm="4" md="4" lg="4" xl="6">
@@ -195,11 +227,15 @@ class Organization extends React.PureComponent {
 Organization.propTypes = {
   dispatch: PropTypes.func.isRequired,
   match: PropTypes.object.isRequired,
+  fetched: PropTypes.bool,
+  errors: PropTypes.object,
 };
 
 const mapStateToProps = (state) => {
   return {
     organization: state.organizations.organization,
+    fetched: state.organizations.fetched,
+    errors: state.organizations.errors,
     hospitals: state.hospitals.hospitals,
   };
 };

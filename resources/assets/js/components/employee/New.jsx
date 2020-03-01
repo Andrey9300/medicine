@@ -25,7 +25,7 @@ class NewEmployee extends React.PureComponent {
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  componentWillMount() {
+  componentDidMount() {
     this.props.dispatch(fetchCategories());
     this.props.dispatch(fetchOrganizations());
   }

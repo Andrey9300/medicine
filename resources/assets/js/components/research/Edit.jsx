@@ -38,7 +38,7 @@ class EditResearch extends React.PureComponent {
         new FormData(formElement),
       )
       .then(() => {
-        history.pushState(null, null, '/#/researches');
+        history.pushState(null, null, '/researches');
         window.location.reload();
       })
       .catch((error) => {
@@ -50,7 +50,7 @@ class EditResearch extends React.PureComponent {
       });
   }
 
-  componentWillMount() {
+  componentDidMount() {
     this.props.dispatch(fetchResearch(this.state.researchId));
   }
 

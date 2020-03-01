@@ -32,7 +32,7 @@ class PrintEmployee extends React.PureComponent {
     };
   }
 
-  componentWillMount() {
+  componentDidMount() {
     this.props.dispatch(fetchEmployeeResearches(this.state.employeeId));
     this.props.dispatch(fetchEmployee(this.state.employeeId));
     this.props.dispatch(fetchHospitals());
@@ -86,11 +86,6 @@ class PrintEmployee extends React.PureComponent {
       researches.push(this.addNeedVga());
     }
 
-    // в отдельный раздел Гепатит и Зонне
-    const vaccines = researches.filter((research) => {
-      return research.id === 13 || research.id === 14 || research.id === 20;
-    });
-
     // в отдельный раздел псих. осв., предварительный / периодический МО
     const filterResearches = researches.filter((research) => {
       return (
@@ -123,16 +118,31 @@ class PrintEmployee extends React.PureComponent {
       bufferTr.push(<tr key={999}>{bufferTd}</tr>);
     }
 
-    bufferTr.push(this.getVaccines(vaccines));
+    bufferTr.push(this.getVaccines(researches));
 
     return bufferTr;
   }
 
-  getVaccines(vaccines) {
+  getVaccines(researches) {
     const {employee} = this.props;
 
     if (employee.category.id !== 2) {
       return null;
+    }
+
+    // в отдельный раздел Гепатит и Зонне
+    let vaccines = researches.filter((research) => {
+      return research.id === 13 || research.id === 14 || research.id === 20;
+    });
+    const vaccinesVga = researches.filter((research) => {
+      return research.id === 14 || research.id === 20;
+    });
+
+    // берем только ВГА1
+    if (vaccinesVga.length > 1) {
+      vaccines = researches.filter((research) => {
+        return research.id === 13 || research.id === 14;
+      });
     }
 
     const vaccinesBlock = vaccines.map((vaccine, index) => {
@@ -151,7 +161,6 @@ class PrintEmployee extends React.PureComponent {
         <tr
           style={{
             borderTop: '1px solid',
-            fontWeight: '600',
           }}
         >
           <td>{vaccinesBlock}</td>
@@ -164,15 +173,17 @@ class PrintEmployee extends React.PureComponent {
             </select>
           </td>
         </tr>
-        <tr style={{fontWeight: '600'}}>
+        <tr>
           <td colSpan="2">
-            * Вы можете провести вакцинацию БЕСПЛАТНО по месту жительства по
-            полису ОМС, с предоставлением справки или прививочного сертификата.
+            <span style={{fontWeight: '600'}}>
+              Важно: вы можете провести вакцинацию БЕСПЛАТНО по месту жительства
+              по полису ОМС, с предоставлением справки или прививочного
+              сертификата.
+            </span>
             <br />
-            Прививка против гепатита А, проводится двукратно с интервалом 6-18
-            мес.
+            Вакцинация от Вирусного гепатита А проводится двукратно с интервалом 6-18 мес.
             <br />
-            Прививка против дизентерии Зонне проводится ежегодно
+            Вакцинация от дизентерии Зонне проводится ежегодно
           </td>
         </tr>
       </>
@@ -220,9 +231,7 @@ class PrintEmployee extends React.PureComponent {
           disabled={employee.send_to_research ? true : false}
         >
           <i className="fa fa-dot-circle-o" />{' '}
-          {employee.send_to_research
-            ? 'Отправлен на МО'
-            : 'Отправить на исследование'}
+          {employee.send_to_research ? 'Отправлен на МО' : 'Отправить на МО'}
         </Button>
       </div>
     );

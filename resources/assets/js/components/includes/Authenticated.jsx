@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 
 export default function requireAuthentication(Component) {
   class AuthenticatedComponent extends React.PureComponent {
-    componentWillMount() {
+    componentDidMount() {
       this.checkAuth(this.props.users);
     }
 

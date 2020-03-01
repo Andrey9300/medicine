@@ -1,8 +1,10 @@
 <?php
-Auth::routes();
 Route::view('/welcome', 'layouts.main');
-Route::get('/', 'IndexController@index');
-Route::get('activateAccount/{id}/{token}', 'Auth\RegisterController@activation')->name('activation');
+Route::get('/activateAccount/{id}/{token}', 'Auth\RegisterController@activation')->name('activation');
+Route::view('/{path?}', 'layouts.app')
+    ->where('path', '.*')
+    ->name('react');
+Auth::routes();
 Route::get('/checkResearches', 'CronController@checkResearches');
 
 Route::middleware(['auth'])->group(function () {

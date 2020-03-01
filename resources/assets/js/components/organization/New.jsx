@@ -15,7 +15,6 @@ import {
   Input,
 } from 'reactstrap';
 import {addOrganization} from '../../actions/organizationActions';
-import {fetchUser} from '../../actions/userActions';
 
 class NewOrganization extends React.PureComponent {
   constructor(props) {
@@ -24,8 +23,7 @@ class NewOrganization extends React.PureComponent {
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  componentWillMount() {
-    this.props.dispatch(fetchUser());
+  componentDidMount() {
     this.props.dispatch(fetchCategories());
   }
 
@@ -45,7 +43,7 @@ class NewOrganization extends React.PureComponent {
   }
 
   render() {
-    const {user, categories, errors} = this.props;
+    const {categories, errors} = this.props;
     let errorsMessage = '';
 
     if (errors) {
@@ -55,7 +53,7 @@ class NewOrganization extends React.PureComponent {
         </div>
       );
     }
-    console.log(user);
+
     return (
       <div className="animated fadeIn">
         {errorsMessage}
@@ -87,14 +85,6 @@ class NewOrganization extends React.PureComponent {
                     </Col>
                     <Col xs="12" md="9">
                       <Input type="text" id="head_phone" name="head_phone" required />
-                    </Col>
-                  </FormGroup>
-                  <FormGroup row>
-                    <Col md="3">
-                      <Label htmlFor="text-input">E-mail менеджера</Label>
-                    </Col>
-                    <Col xs="12" md="9">
-                      <Input type="text" id="head_email" name="head_email" value={user.email} required />
                     </Col>
                   </FormGroup>
                   <FormGroup row>
@@ -132,7 +122,6 @@ const mapStateToProps = (state) => {
   return {
     errors: state.organizations.errors,
     categories: state.categories.categories,
-    user: state.users.user,
   };
 };
 

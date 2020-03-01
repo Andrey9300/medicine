@@ -17,7 +17,7 @@ class Employee extends React.PureComponent {
     this.handleBtnDelete = this.handleBtnDelete.bind(this);
   }
 
-  componentWillMount() {
+  componentDidMount() {
     this.props.dispatch(fetchEmployee(this.state.employeeId));
   }
 
@@ -157,7 +157,7 @@ class Employee extends React.PureComponent {
                       </tr>
                       <tr>
                         <td>Отправлен на МО:</td>
-                        <td>{employee.send_to_research && 'Да'}</td>
+                        <td>{employee.send_to_research ? employee.send_to_research : 'Не отправлен'}</td>
                       </tr>
                     </tbody>
                   </Table>

@@ -47,11 +47,6 @@ class UsersResearchesTableSeeder extends Seeder
             'research_categories_id' => 7
         ]);
         DB::table('user_researches')->insert([
-            'id' => 8,
-            'user_id' => 1,
-            'research_categories_id' => 8
-        ]);
-        DB::table('user_researches')->insert([
             'id' => 9,
             'user_id' => 1,
             'research_categories_id' => 9

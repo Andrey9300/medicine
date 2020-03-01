@@ -68,13 +68,8 @@ class ResearchesTableSeeder extends Seeder
             'period_id' => 2
         ]);
         DB::table('researches')->insert([
-            'id' => 12,
-            'name' => 'Исследование на гонорею',
-            'period_id' => 3
-        ]);
-        DB::table('researches')->insert([
             'id' => 13,
-            'name' => 'Вакцинация против шегеллезов (дизентерия Зонне)',
+            'name' => 'Вакцинация от дизентерии Зонне',
             'period_id' => 3
         ]);
         DB::table('researches')->insert([

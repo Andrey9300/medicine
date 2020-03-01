@@ -11,7 +11,7 @@ class Hospitals extends React.PureComponent {
     this.handleBtnDelete = this.handleBtnDelete.bind(this);
   }
 
-  componentWillMount() {
+  componentDidMount() {
     this.props.dispatch(fetchHospitals());
   }
 

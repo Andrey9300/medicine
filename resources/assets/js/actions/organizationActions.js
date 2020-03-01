@@ -6,7 +6,7 @@ export function addOrganization(formElement = null) {
       .post('/organizations/store', new FormData(formElement))
       .then(() => {
         alert('Объект успешно создан');
-        history.pushState(null, null, '/#/organizations');
+        history.pushState(null, null, '/organizations');
         window.location.reload();
       })
       .catch((errors) => {
@@ -24,7 +24,7 @@ export function editOrganization(formElement = null, legalEntityId) {
       .post(`/organizations/update/${legalEntityId}`, new FormData(formElement))
       .then(() => {
         alert('Объект успешно отредактирован');
-        history.pushState(null, null, `/#/organization/${legalEntityId}`);
+        history.pushState(null, null, `/organization/${legalEntityId}`);
         window.location.reload();
       })
       .catch((errors) => {
@@ -54,7 +54,7 @@ export function fetchOrganizations() {
           payload: error,
           type: 'ORGANIZATIONS_REJECTED',
         });
-        history.replaceState(null, null, '/#/login');
+        history.replaceState(null, null, '/login');
         window.location.reload();
       });
   };
@@ -78,7 +78,7 @@ export function fetchExpiredOrganizations(legalEntityId = null) {
         });
       })
       .catch((error) => {
-        history.replaceState(null, null, '/#/login');
+        history.replaceState(null, null, '/login');
         window.location.reload();
         dispatch({
           payload: error,
@@ -124,7 +124,7 @@ export function deleteOrganization(id) {
     axios
       .post(`/organizations/destroy/${id}`)
       .then(() => {
-        history.pushState(null, null, '/#/organizations');
+        history.pushState(null, null, '/organizations');
         window.location.reload();
       })
       .catch((error) => {
@@ -145,7 +145,7 @@ export function deleteOrganizationEmployee(idOrganization, idEmployee) {
     axios
       .post(`/organizations/employees/destroy/${idOrganization}/${idEmployee}`)
       .then(() => {
-        history.pushState(null, null, `/#/organization/${idOrganization}`);
+        history.pushState(null, null, `/organization/${idOrganization}`);
         window.location.reload();
       })
       .catch((error) => {
@@ -153,3 +153,13 @@ export function deleteOrganizationEmployee(idOrganization, idEmployee) {
       });
   };
 }
+
+export function clearOrganization() {
+  return (dispatch) => {
+    dispatch({
+      payload: [],
+      type: 'ORGANIZATION_CLEAR',
+    });
+  };
+}
+

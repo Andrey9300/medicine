@@ -28,7 +28,7 @@ class NewResearch extends React.PureComponent {
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  componentWillMount() {
+  componentDidMount() {
     this.props.dispatch(fetchPeriods());
   }
 
@@ -40,7 +40,7 @@ class NewResearch extends React.PureComponent {
     axios
       .post('/researches/store', formData)
       .then(() => {
-        history.pushState(null, null, '/#/researches');
+        history.pushState(null, null, '/researches');
         window.location.reload();
       })
       .catch((errors) => {

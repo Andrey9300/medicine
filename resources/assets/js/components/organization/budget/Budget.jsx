@@ -18,7 +18,7 @@ class Budget extends React.PureComponent {
     };
   }
 
-  componentWillMount() {
+  componentDidMount() {
     this.props.dispatch(fetchOrganization(this.state.organizationId));
     this.props.dispatch(fetchHospitals());
   }

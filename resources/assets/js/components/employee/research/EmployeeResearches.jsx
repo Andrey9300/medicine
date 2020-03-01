@@ -30,7 +30,7 @@ class EmployeeResearches extends React.PureComponent {
     this.handleClick = this.handleClick.bind(this);
   }
 
-  componentWillMount() {
+  componentDidMount() {
     this.props.dispatch(clearEmployeeResearches());
     this.props.dispatch(fetchEmployeeResearches(this.state.employeeId));
   }

@@ -35,7 +35,7 @@ class EditEmployee extends React.PureComponent {
     );
   }
 
-  componentWillMount() {
+  componentDidMount() {
     this.props.dispatch(clearEmployee());
     this.props.dispatch(fetchCategories());
     this.props.dispatch(fetchEmployee(this.state.employeeId));

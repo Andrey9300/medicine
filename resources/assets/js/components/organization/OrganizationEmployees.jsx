@@ -17,7 +17,7 @@ class OrganizationEmployee extends React.PureComponent {
     };
   }
 
-  componentWillMount() {
+  componentDidMount() {
     this.props.dispatch(fetchOrganization(this.state.organizationId));
   }
 
@@ -44,6 +44,7 @@ class OrganizationEmployee extends React.PureComponent {
               employees={organization.organization.employees}
               handleBtnDelete={this.handleBtnDelete.bind(this)}
               title={`Сотрудники «${organization.organization.name}» `}
+              status={{fetched: true, errors: null}}
             />
           </Col>
         </Row>

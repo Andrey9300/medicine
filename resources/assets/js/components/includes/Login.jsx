@@ -64,7 +64,7 @@ class Login extends React.PureComponent {
     let errorsMessage = '';
 
     if (user && user.isAuthenticated) {
-      window.history.pushState(null, null, '/#/organizations');
+      window.history.pushState(null, null, '/organizations');
     }
 
     if (errors) {

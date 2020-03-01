@@ -81,6 +81,14 @@ export default function reducer(state = initialState, action) {
         organization: action.payload.data.organization,
       };
     }
+    case 'ORGANIZATION_CLEAR': {
+      return {
+        ...state,
+        errors: null,
+        fetched: true,
+        organization: null,
+      };
+    }
     default:
       return {
         ...state,

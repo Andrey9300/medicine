@@ -34,7 +34,7 @@ class EditHospital extends React.PureComponent {
     );
   }
 
-  componentWillMount() {
+  componentDidMount() {
     this.props.dispatch(fetchHospital(this.state.hospitalId));
   }
 

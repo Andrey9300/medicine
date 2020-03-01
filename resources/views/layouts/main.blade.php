@@ -67,9 +67,9 @@
                 <div class="header-content">
                     <div class="header-content-inner">
                         <h1 class="wow fadeInUp">Автоматизированный сервис личных медицинских книжек</h1>
-                        <a href="/#/registration" class="btn btn-primary btn-xl page-scroll wow fadeInUp"
+                        <a href="/registration" class="btn btn-primary btn-xl page-scroll wow fadeInUp"
                            data-wow-delay="0.3">Регистрация</a>
-                        <a href="/#/login" class="btn btn-primary btn-xl page-scroll wow fadeInUp"
+                        <a href="/login" class="btn btn-primary btn-xl page-scroll wow fadeInUp"
                            style="margin-left: 24px;"
                            data-wow-delay="0.3">Вход</a>
                     </div>
@@ -247,7 +247,7 @@
     <h1 class="heading-text">
         Присоединяйся!
     </h1>
-    <a href="/#/registration" class="btn btn-primary btn-xl page-scroll wow fadeInUp"
+    <a href="/registration" class="btn btn-primary btn-xl page-scroll wow fadeInUp"
        data-wow-delay="0.3">Регистрация</a>
 </section>
 <footer class="footer footer--light">

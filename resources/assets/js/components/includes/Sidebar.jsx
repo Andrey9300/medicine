@@ -50,7 +50,7 @@ class Sidebar extends React.PureComponent {
             </Link>
           </NavItem>
           <NavItem>
-            <Link to={'#'} onClick={this.logout.bind(this)}>
+            <Link to={'/'} onClick={this.logout.bind(this)}>
               <i className="fa fa-lock" aria-hidden="true" /> Выход
             </Link>
           </NavItem>

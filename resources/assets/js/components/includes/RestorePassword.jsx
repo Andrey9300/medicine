@@ -40,7 +40,7 @@ class RestorePassword extends React.PureComponent {
       .post('/password/email', new FormData(formElement))
       .then(() => {
         alert('Вам отправлено письмо');
-        window.history.pushState(null, null, '/#/login');
+        window.history.pushState(null, null, '/login');
         window.location.reload();
       })
       .catch((error) => {

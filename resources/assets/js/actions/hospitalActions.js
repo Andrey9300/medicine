@@ -5,7 +5,7 @@ export function addHospital(formElement = null) {
     axios
       .post('/hospitals/store', new FormData(formElement))
       .then(() => {
-        history.pushState(null, null, '/#/hospitals');
+        history.pushState(null, null, '/hospitals');
         window.location.reload();
       })
       .catch((error) => {
@@ -34,7 +34,7 @@ export function editHospital(formElement = null, hospitalId) {
       .post(`/hospitals/update/${hospitalId}`, new FormData(formElement))
       .then(() => {
         alert('Медицинское учреждение успешно отредактировано');
-        history.pushState(null, null, `/#/hospital/${hospitalId}`);
+        history.pushState(null, null, `/hospital/${hospitalId}`);
         window.location.reload();
       })
       .catch((errors) => {
@@ -62,7 +62,7 @@ export function fetchHospitals() {
         });
       })
       .catch((error) => {
-        history.replaceState(null, null, '/#/login');
+        history.replaceState(null, null, '/login');
         window.location.reload();
         dispatch({
           payload: error,
@@ -89,7 +89,7 @@ export function fetchHospital(id) {
         });
       })
       .catch((error) => {
-        history.replaceState(null, null, '/#/login');
+        history.replaceState(null, null, '/login');
         window.location.reload();
         dispatch({
           payload: error,
@@ -110,7 +110,7 @@ export function deleteHospital(id) {
     axios
       .post(`/hospitals/destroy/${id}`)
       .then(() => {
-        history.pushState(null, null, '/#/hospitals');
+        history.pushState(null, null, '/hospitals');
         window.location.reload();
       })
       .catch((error) => {

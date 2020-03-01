@@ -1,8 +1,15 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+import {connect} from 'react-redux';
 import {Link} from 'react-router-dom';
 import {Row, Col, Card, CardBlock, CardHeader} from 'reactstrap';
+import {fetchUser} from '../../actions/userActions';
 
 class ActivateAccount extends React.PureComponent {
+  componentDidMount() {
+    this.props.dispatch(fetchUser());
+  }
+
   render() {
     return (
       <div className="animated fadeIn">
@@ -23,4 +30,8 @@ class ActivateAccount extends React.PureComponent {
   }
 }
 
-export default ActivateAccount;
+ActivateAccount.propTypes = {
+  router: PropTypes.object,
+};
+
+export default connect(null)(ActivateAccount);

@@ -21,7 +21,7 @@ class CronController extends Controller
                     $employeesLink[$employee->user_id] = [];
                 }
 
-                $data = ['url' => '/#/employee/'.$employee->id, 'fio' => $employee->fio];
+                $data = ['url' => '/employee/'.$employee->id, 'fio' => $employee->fio];
                 array_push($employeesLink[$employee->user_id], $data);
             }
         }

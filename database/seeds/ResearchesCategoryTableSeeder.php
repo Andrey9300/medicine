@@ -47,11 +47,6 @@ class ResearchesCategoryTableSeeder extends Seeder
             'research_id' => 7,
         ]);
         DB::table('research_categories')->insert([
-            'id' => 8,
-            'category_id' => 1,
-            'research_id' => 12,
-        ]);
-        DB::table('research_categories')->insert([
             'id' => 9,
             'category_id' => 1,
             'research_id' => 15,

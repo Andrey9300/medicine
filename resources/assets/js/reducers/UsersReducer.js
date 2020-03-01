@@ -40,15 +40,7 @@ export default function reducer(state = initialState, action) {
       };
     }
     case 'LOGOUT_USER_FULFILLED': {
-      return {
-        ...state,
-        errors: null,
-        fetched: false,
-        user: {
-          ...state.user,
-          isAuthenticated: action.payload.isAuthenticated,
-        },
-      };
+      return initialState;
     }
     case 'LOGOUT_USER_REJECTED': {
       return {
@@ -85,6 +77,10 @@ export default function reducer(state = initialState, action) {
         ...state,
         errors: action.payload,
         fetched: false,
+        user: {
+          ...state.user,
+          isAuthenticated: false,
+        },
       };
     }
     case 'USER_FULFILLED': {
@@ -94,7 +90,8 @@ export default function reducer(state = initialState, action) {
         fetched: true,
         user: {
           ...state.user,
-          ...action.payload.data.user
+          ...action.payload.data.user,
+          isAuthenticated: true,
         },
       };
     }

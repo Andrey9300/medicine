@@ -48,7 +48,6 @@ class EmployeesController extends Controller
     public function showAll(Request $request)
     {
         $user = Auth::user();
-        $userAdmin = IndexController::findAdmin();
         $organizations_name = [];
         $organizations = $user->organizations;
 
@@ -56,16 +55,9 @@ class EmployeesController extends Controller
             array_push($organizations_name, $organization->name);
         }
 
-        // можно через $user->employees
-        $employees = Employee::whereIn('organization_name', $organizations_name)
-            ->get();
-        $deleted = Employee::whereIn('organization_name', $organizations_name)
-            ->onlyTrashed()
-            ->get();
-        $withoutOrganization = DB::table('employees')
-            ->where('user_id', '=', $userAdmin->id)
-            ->whereNull('organization_name')
-            ->get();
+        $employees = $user->employees;
+        $deleted = $user->employees()->onlyTrashed()->get();
+        $withoutOrganization = $user->employees()->whereNull('organization_name')->get();
 
         foreach ($employees as $employee) {
             $this->checkMedicalResearch($employee);
@@ -134,11 +126,15 @@ class EmployeesController extends Controller
      */
     public function update(UpdateEmployee $request, $id)
     {
+        $employee = Employee::find($id);
         $date_birthday = Carbon::createFromFormat('d-m-Y', $request->date_birthday)->format('Y-m-d');
         $date_employment = Carbon::createFromFormat('d-m-Y', $request->date_employment)->format('Y-m-d');
-        $dateStartResearch = Carbon::createFromFormat('d.m.Y', $request->send_to_research)->format('Y-m-d');
+        $dateStartResearch = $employee->send_to_research;
 
-        $employee = Employee::find($id);
+        if ($request->send_to_research) {
+            $dateStartResearch = Carbon::createFromFormat('d.m.Y', $request->send_to_research)->format('Y-m-d');
+        }
+
         $employee->fio = $request->fio;
         $employee->date_birthday = $date_birthday;
         $employee->date_employment = $date_employment;
@@ -276,12 +272,15 @@ class EmployeesController extends Controller
         $gepatitDate2 = null;
         $gepatitResearch1 = null;
         $gepatitResearch2 = null;
+        $userResearchesFiltered = [];
 
         foreach ($userResearches as $userResearch) {
-            if ($userResearch->category_id !== $employeeCategoryId) {
-                continue;
+            if ($userResearch->category_id === $employeeCategoryId) {
+                array_push($userResearchesFiltered, $userResearch);
             }
+        }
 
+        foreach ($userResearchesFiltered as $userResearch) {
             $research = Research::find($userResearch->research_id);
             $research->researchPeriod->period; // периодичность конкретного исследования
             $employeeResearch = EmployeeResearch::where('employee_id', '=', $employee->id)
