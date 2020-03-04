@@ -9,6 +9,8 @@ use App\Http\Models\ResearchCategory;
 use App\Http\Requests\StoreEmployee;
 use App\Http\Requests\UpdateEmployee;
 use Carbon\Carbon;
+use Illuminate\Auth\Access\AuthorizationException;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -43,7 +45,7 @@ class EmployeesController extends Controller
     /**
      * Вывести сотрудников всех организаций начальника качества
      *
-     * @return \Illuminate\Http\JsonResponse
+     * @return JsonResponse
      */
     public function showAll(Request $request)
     {
@@ -51,7 +53,7 @@ class EmployeesController extends Controller
         $organizations_name = [];
         $organizations = $user->organizations;
 
-        foreach($organizations as $organization){
+        foreach ($organizations as $organization) {
             array_push($organizations_name, $organization->name);
         }
 
@@ -75,7 +77,7 @@ class EmployeesController extends Controller
 
     /**
      * @param int $id
-     * @return \Illuminate\Http\JsonResponse
+     * @return JsonResponse
      */
     public function show($id)
     {
@@ -103,7 +105,7 @@ class EmployeesController extends Controller
         $employee->date_employment = Carbon::createFromFormat('Y-m-d', $employee->date_employment)->format('d-m-Y');
         $employee->category;
 
-        $employment_date =  Carbon::parse($employee->date_employment);
+        $employment_date = Carbon::parse($employee->date_employment);
         $diffDatesResearch = $employment_date->diffInMonths(Carbon::now());
 
         if ($diffDatesResearch < 3) {
@@ -121,7 +123,7 @@ class EmployeesController extends Controller
      * Обновить сотрудника
      *
      * @param int $id
-     * @param  UpdateEmployee $request
+     * @param UpdateEmployee $request
      * @return void
      */
     public function update(UpdateEmployee $request, $id)
@@ -174,7 +176,7 @@ class EmployeesController extends Controller
      * Полное удаление сотрудника
      *
      * @param int $id
-     * @throws \Illuminate\Auth\Access\AuthorizationException
+     * @throws AuthorizationException
      */
     public function forceDelete($id)
     {
@@ -188,9 +190,10 @@ class EmployeesController extends Controller
      * Исследования сотрудника
      *
      * @param $id
-     * @return \Illuminate\Http\JsonResponse
+     * @return JsonResponse
      */
-    public function researches($id) {
+    public function researches($id)
+    {
         $employee = Employee::withTrashed()->where('id', $id)->first();
         $employeeCategoryId = $employee->category_id;
         $userAdmin = IndexController::findAdmin();
@@ -224,9 +227,10 @@ class EmployeesController extends Controller
      *
      * @param Request $request
      * @param         $id
-     * @throws \Illuminate\Auth\Access\AuthorizationException
+     * @throws AuthorizationException
      */
-    public function researchesStore(Request $request, $id) {
+    public function researchesStore(Request $request, $id)
+    {
         $user = Auth::user();
         $this->authorize('isAdmin', $user);
         $employeeResearches = $request->employeeResearch;
@@ -261,7 +265,8 @@ class EmployeesController extends Controller
      *
      * @param $employee
      */
-    public static function checkMedicalResearch($employee) {
+    public static function checkMedicalResearch($employee)
+    {
         $userAdmin = IndexController::findAdmin();
         $userResearches = $userAdmin->researches;
         $options_ends = $employee->researches_ends = []; // просрочено
@@ -273,6 +278,7 @@ class EmployeesController extends Controller
         $gepatitResearch1 = null;
         $gepatitResearch2 = null;
         $userResearchesFiltered = [];
+        $researches = Research::all();
 
         foreach ($userResearches as $userResearch) {
             if ($userResearch->category_id === $employeeCategoryId) {
@@ -281,7 +287,7 @@ class EmployeesController extends Controller
         }
 
         foreach ($userResearchesFiltered as $userResearch) {
-            $research = Research::find($userResearch->research_id);
+            $research = $researches->find($userResearch->research_id);
             $research->researchPeriod->period; // периодичность конкретного исследования
             $employeeResearch = EmployeeResearch::where('employee_id', '=', $employee->id)
                 ->where('user_researches_id', '=', $userResearch->pivot->id)

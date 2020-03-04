@@ -176,7 +176,7 @@ class EmployeeResearches extends React.PureComponent {
                           <tr key={employeeResearch.id}>
                             <td>
                               <div
-                                style={{fontSize: '16px', fontWeight: '600'}}
+                                style={{fontSize: '14px', fontWeight: '600'}}
                               >
                                 {employeeResearch.research.name}
                               </div>

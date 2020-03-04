@@ -83,7 +83,7 @@ class RestorePassword extends React.PureComponent {
             <Col md="6">
               {errorsMessage}
               <CardGroup className="mb-0">
-                <Card className="p-4">
+                <Card className="p-6">
                   <CardBody className="card-body">
                     <Form onSubmit={this.handleSubmit}>
                       <h1>Восстановить пароль</h1>
@@ -97,7 +97,7 @@ class RestorePassword extends React.PureComponent {
                         />
                       </InputGroup>
                       <Row>
-                        <Col xs="6">
+                        <Col xs="12" lg="4">
                           <Button
                             color="primary"
                             className="px-4 btn-sm"
@@ -106,7 +106,7 @@ class RestorePassword extends React.PureComponent {
                             Восстановить
                           </Button>
                         </Col>
-                        <Col xs="6" className="text-right">
+                        <Col xs="12" lg="4">
                           <Link to="login" className="btn btn-success btn-sm">
                             Вспомнил пароль
                           </Link>

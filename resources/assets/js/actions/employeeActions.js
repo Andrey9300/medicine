@@ -47,8 +47,6 @@ export function editEmployeeJson(formElement = null, employeeId) {
       .post(`/employees/update/${employeeId}`, formElement)
       .then(() => {
         alert('Сотрудник успешно отредактирован');
-        history.pushState(null, null, `/employee/${employeeId}`);
-        window.location.reload();
       })
       .catch((errors) => {
         dispatch({

@@ -79,7 +79,7 @@ class ResetPassword extends React.PureComponent {
             <Col md="6">
               {errorsMessage}
               <CardGroup className="mb-0">
-                <Card className="p-4">
+                <Card className="p-6">
                   <CardBody className="card-body">
                     <Form onSubmit={this.handleSubmit}>
                       <h1>Сбросить пароль</h1>
@@ -114,7 +114,7 @@ class ResetPassword extends React.PureComponent {
                         defaultValue={urlSearchParams.get('token')}
                       />
                       <Row>
-                        <Col xs="6">
+                        <Col xs="12" lg="4">
                           <Button
                             color="primary"
                             className="px-4 btn-sm"

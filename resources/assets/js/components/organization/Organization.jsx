@@ -67,9 +67,7 @@ class Organization extends React.PureComponent {
         <CardHeader>
           <i className="fa fa-building-o" aria-hidden="true" />
         </CardHeader>
-        <CardBody className="card-body">
-          {message}
-        </CardBody>
+        <CardBody className="card-body">{message}</CardBody>
       </Card>
     );
   }
@@ -89,7 +87,7 @@ class Organization extends React.PureComponent {
     return (
       <div className="animated fadeIn">
         <Row>
-          <Col xs="8" sm="8" md="8" lg="8" xl="6">
+          <Col xs="12" sm="12" md="8" lg="8" xl="8">
             <Card>
               <CardHeader>
                 <i className="fa fa-building-o" aria-hidden="true" />«
@@ -158,7 +156,7 @@ class Organization extends React.PureComponent {
               status={{fetched: true, errors: null}}
             />
           </Col>
-          <Col xs="4" sm="4" md="4" lg="4" xl="6">
+          <Col xs="12" sm="12" md="4" lg="4" xl="4">
             <Card>
               <CardHeader>
                 <i className="fa fa-users" aria-hidden="true" />
@@ -169,7 +167,13 @@ class Organization extends React.PureComponent {
                   <tbody>
                     <tr>
                       <td>Вы контролируете медицинские осмотры:</td>
-                      <td>{organization.employees.length} чел.</td>
+                      <td>
+                        <Link
+                          to={`/organizations/employees/${organization.id}`}
+                        >
+                          {organization.employees.length} чел.
+                        </Link>
+                      </td>
                     </tr>
                     <tr>
                       <td>Просрочен медицинский осмотр:</td>

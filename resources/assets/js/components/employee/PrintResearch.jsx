@@ -266,14 +266,6 @@ class PrintEmployee extends React.PureComponent {
       );
     }
 
-    let decree = null;
-
-    if (employee.category.id === 1) {
-      decree = 'п.23 приложение 2, п. 3.2.2.4 Приложение 1.';
-    } else if (employee.category.id === 2) {
-      decree = 'п.15, п.23 Приложение 2';
-    }
-
     return (
       <div>
         {errorsMessage}
@@ -387,6 +379,7 @@ class PrintEmployee extends React.PureComponent {
                         <td colSpan="1">
                           <select>
                             <option />
+                            <option>Нет</option>
                             <option>Новая</option>
                             <option>Продление</option>
                           </select>{' '}
@@ -424,6 +417,7 @@ class PrintEmployee extends React.PureComponent {
                         <td>
                           <select>
                             <option />
+                            <option>Нет</option>
                             <option>Предварительный</option>
                             <option>Периодический</option>
                           </select>{' '}
@@ -441,22 +435,16 @@ class PrintEmployee extends React.PureComponent {
                       <tr>
                         <td colSpan="2">
                           <span style={{marginRight: '12px'}}>
-                            <span style={{fontWeight: '600'}}>2. Отдел:</span>{' '}
+                            <span style={{fontWeight: '600'}}>1. Отдел:</span>{' '}
                             {employee.department}
                             <br />
                           </span>
                           <span style={{marginRight: '12px'}}>
                             <span style={{fontWeight: '600'}}>
-                              3. Должность:
+                              2. Должность:
                             </span>{' '}
                             {employee.position}
                             <br />
-                          </span>
-                          <span style={{marginRight: '12px'}}>
-                            <span style={{fontWeight: '600'}}>
-                              4. Пункты приказа:
-                            </span>{' '}
-                            {decree}
                           </span>
                         </td>
                       </tr>

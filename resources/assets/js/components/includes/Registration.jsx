@@ -74,7 +74,7 @@ class Registration extends React.PureComponent {
             <Col md="6">
               {errorsMessage}
               <CardGroup className="mb-0">
-                <Card className="p-4">
+                <Card className="p-6">
                   <CardBody className="card-body">
                     <Form onSubmit={this.handleSubmit}>
                       <h1>Регистрация</h1>

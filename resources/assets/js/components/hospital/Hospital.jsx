@@ -56,7 +56,7 @@ class Hospital extends React.PureComponent {
         {errorsMessage}
         <div className="animated fadeIn">
           <Row>
-            <Col xs="6" sm="6" md="6">
+            <Col xs="12" sm="6" md="6">
               <Card>
                 <CardHeader>
                   <i className="fa fa-stethoscope" aria-hidden="true" />«

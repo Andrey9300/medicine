@@ -13,9 +13,7 @@ export class EmployeesList extends React.PureComponent {
           <i className="fa fa-users" aria-hidden="true" />
           {title}
         </CardHeader>
-        <CardBody className="card-body">
-          {message}
-        </CardBody>
+        <CardBody className="card-body">{message}</CardBody>
       </Card>
     );
   }
@@ -81,6 +79,16 @@ export class EmployeesList extends React.PureComponent {
                       <Link to={`/employee/${employee.id}`}>
                         {employee.fio}
                       </Link>
+                      <div
+                        style={{
+                          fontSize: '12px',
+                          fontStyle: 'italic',
+                          lineHeight: '24px',
+                          fontWeight: '300',
+                        }}
+                      >
+                        {employee.comments}
+                      </div>
                     </td>
                     <td>
                       {employee.send_to_research && employee.send_to_research}

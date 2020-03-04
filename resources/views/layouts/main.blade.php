@@ -50,9 +50,9 @@
                 <li>
                     <a class="page-scroll" href="#about">О нас</a>
                 </li>
-                <li>
-                    <a class="page-scroll" href="#faqs">Помощь</a>
-                </li>
+{{--                <li>--}}
+{{--                    <a class="page-scroll" href="#faqs">Помощь</a>--}}
+{{--                </li>--}}
                 <li>
                     <a class="page-scroll" href="#contacts">Контакты</a>
                 </li>
@@ -151,49 +151,49 @@
         </div>
     </div>
 </section>
-<section class="faqs" id="faqs">
-    <div class="container">
-        <div class="row section-heading">
-            <h2>F.A.Q</h2>
-            <p>Here's the most important questions for your customers.</p>
-        </div>
+{{--<section class="faqs" id="faqs">--}}
+{{--    <div class="container">--}}
+{{--        <div class="row section-heading">--}}
+{{--            <h2>F.A.Q</h2>--}}
+{{--            <p>Here's the most important questions for your customers.</p>--}}
+{{--        </div>--}}
 
-        <hr/>
+{{--        <hr/>--}}
 
-        <div class="row">
-            <div class="col-sm-6 faq wow fadeInUp">
-                <h4>What is Lorem Ipsum? How it works?</h4>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore
-                    et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-                    aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-                    cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident.</p>
-            </div>
-            <div class="col-sm-6 faq wow fadeInUp">
-                <h4>What is Lorem Ipsum? How it works?</h4>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore
-                    et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-                    aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-                    cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident.</p>
-            </div>
-            <div class="col-sm-6 faq wow fadeInUp" data-wow-delay="0.3s">
-                <h4>What is Lorem Ipsum? How it works?</h4>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore
-                    et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-                    aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-                    cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident.</p>
-            </div>
-            <div class="col-sm-6 faq wow fadeInUp" data-wow-delay="0.3s">
-                <h4>What is Lorem Ipsum? How it works?</h4>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore
-                    et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-                    aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-                    cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident.</p>
-            </div>
-        </div>
+{{--        <div class="row">--}}
+{{--            <div class="col-sm-6 faq wow fadeInUp">--}}
+{{--                <h4>What is Lorem Ipsum? How it works?</h4>--}}
+{{--                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore--}}
+{{--                    et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut--}}
+{{--                    aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse--}}
+{{--                    cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident.</p>--}}
+{{--            </div>--}}
+{{--            <div class="col-sm-6 faq wow fadeInUp">--}}
+{{--                <h4>What is Lorem Ipsum? How it works?</h4>--}}
+{{--                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore--}}
+{{--                    et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut--}}
+{{--                    aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse--}}
+{{--                    cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident.</p>--}}
+{{--            </div>--}}
+{{--            <div class="col-sm-6 faq wow fadeInUp" data-wow-delay="0.3s">--}}
+{{--                <h4>What is Lorem Ipsum? How it works?</h4>--}}
+{{--                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore--}}
+{{--                    et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut--}}
+{{--                    aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse--}}
+{{--                    cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident.</p>--}}
+{{--            </div>--}}
+{{--            <div class="col-sm-6 faq wow fadeInUp" data-wow-delay="0.3s">--}}
+{{--                <h4>What is Lorem Ipsum? How it works?</h4>--}}
+{{--                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore--}}
+{{--                    et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut--}}
+{{--                    aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse--}}
+{{--                    cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident.</p>--}}
+{{--            </div>--}}
+{{--        </div>--}}
 
-    </div>
-</section>
-<section class="contact-default bg-gray" id="contacts">
+{{--    </div>--}}
+{{--</section>--}}
+<section class="contact-default bg-white" id="contacts">
     <div class="container">
         <div class="row">
             <div class="col-lg-6 col-md-6 col-xs-12 info-column">
@@ -203,7 +203,7 @@
                 </div>
 
                 <div class="info-meta">
-                    <h3>email: <a href="mailto:3q@quality.ru">3q@quality.ru</a></h3>
+                    <h3>email: <a href="mailto:3q@quality.ru" id="footerEmail">3q@quality.ru</a></h3>
                 </div>
             </div>
 
