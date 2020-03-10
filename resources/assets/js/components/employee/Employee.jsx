@@ -5,6 +5,7 @@ import EmployeeResearches from './research/EmployeeResearches';
 import {Link} from 'react-router-dom';
 import PropTypes from 'prop-types';
 import {Row, Col, Card, CardHeader, CardBody, Table, Button} from 'reactstrap';
+import {createMarkup} from '../../utils/errorsHelper';
 
 class Employee extends React.PureComponent {
   constructor(props) {
@@ -35,16 +36,6 @@ class Employee extends React.PureComponent {
     );
   }
 
-  createMarkup() {
-    const {errors} = this.state;
-
-    return Object.keys(errors).map((item) => {
-      return errors[item].map((value, index) => {
-        return <p key={index}>{value}</p>;
-      });
-    });
-  }
-
   render() {
     const {employee} = this.props;
     const {errors, employeeId} = this.state;
@@ -53,7 +44,7 @@ class Employee extends React.PureComponent {
     if (errors) {
       errorsMessage = (
         <div className="alert alert-danger" role="alert">
-          {this.createMarkup()}
+          {createMarkup(errors)}
         </div>
       );
     }

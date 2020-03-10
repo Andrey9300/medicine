@@ -1,4 +1,5 @@
 import axios from 'axios';
+import {getResponseError} from '../utils/errorsHelper';
 
 export function addHospital(formElement = null) {
   return (dispatch) => {
@@ -21,7 +22,7 @@ export function addHospital(formElement = null) {
         }
 
         dispatch({
-          payload: errors.response.data.errors,
+          payload: getResponseError(errors),
           type: 'ADD_REJECTED',
         });
       });
@@ -39,7 +40,7 @@ export function editHospital(formElement = null, hospitalId) {
       })
       .catch((errors) => {
         dispatch({
-          payload: errors.response.data.errors,
+          payload: getResponseError(errors),
           type: 'EDIT_REJECTED',
         });
       });

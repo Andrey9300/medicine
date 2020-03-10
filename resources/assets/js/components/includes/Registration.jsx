@@ -14,6 +14,7 @@ import {
   InputGroup,
   CardGroup,
 } from 'reactstrap';
+import {createMarkup} from '../../utils/errorsHelper';
 
 class Registration extends React.PureComponent {
   constructor(props) {
@@ -44,16 +45,6 @@ class Registration extends React.PureComponent {
     window.location.reload();
   }
 
-  createMarkup() {
-    const {errors} = this.props;
-
-    return Object.keys(errors).map((item) => {
-      return errors[item].map((value, index) => {
-        return <p key={index}>{value}</p>;
-      });
-    });
-  }
-
   render() {
     const {errors} = this.props;
     const {doubleClick} = this.state;
@@ -62,7 +53,7 @@ class Registration extends React.PureComponent {
     if (errors) {
       errorsMessage = (
         <div className="alert alert-danger" role="alert">
-          {this.createMarkup()}
+          {createMarkup(errors)}
         </div>
       );
     }

@@ -19,6 +19,7 @@ import {
   clearEmployeeResearches,
   fetchEmployeeResearches,
 } from '../../../actions/employeeActions';
+import {createMarkup} from '../../../utils/errorsHelper';
 
 class EmployeeResearches extends React.PureComponent {
   constructor(props) {
@@ -43,16 +44,6 @@ class EmployeeResearches extends React.PureComponent {
         this.state.employeeId,
       ),
     );
-  }
-
-  createMarkup() {
-    const {errors} = this.props;
-
-    return Object.keys(errors).map((item) => {
-      return errors[item].map((value, index) => {
-        return <p key={index}>{value}</p>;
-      });
-    });
   }
 
   getButtons() {
@@ -96,7 +87,7 @@ class EmployeeResearches extends React.PureComponent {
     if (errors) {
       errorsMessage = (
         <div className="alert alert-danger" role="alert">
-          {this.createMarkup()}
+          {createMarkup(errors)}
         </div>
       );
     }

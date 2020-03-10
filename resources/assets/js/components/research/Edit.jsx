@@ -17,6 +17,7 @@ import {
   Label,
   Input,
 } from 'reactstrap';
+import {createMarkup} from '../../utils/errorsHelper';
 
 class EditResearch extends React.PureComponent {
   constructor(props) {
@@ -54,16 +55,6 @@ class EditResearch extends React.PureComponent {
     this.props.dispatch(fetchResearch(this.state.researchId));
   }
 
-  createMarkup() {
-    const {errors} = this.state;
-
-    return Object.keys(errors).map((item) => {
-      return errors[item].map((value, index) => {
-        return <p key={index}>{value}</p>;
-      });
-    });
-  }
-
   componentWillReceiveProps(nextProps) {
     if (
       this.props.research &&
@@ -82,7 +73,7 @@ class EditResearch extends React.PureComponent {
     if (errors) {
       errorsMessage = (
         <div className="alert alert-danger" role="alert">
-          {this.createMarkup()}
+          {createMarkup(errors)}
         </div>
       );
     }

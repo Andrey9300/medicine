@@ -8,6 +8,7 @@ import {Link} from 'react-router-dom';
 import PropTypes from 'prop-types';
 import {fetchHospitals} from '../../../actions/hospitalActions';
 import {Row, Col, Card, CardHeader, CardBody, Table} from 'reactstrap';
+import {createMarkup} from '../../../utils/errorsHelper';
 
 class Budget extends React.PureComponent {
   constructor(props) {
@@ -23,16 +24,6 @@ class Budget extends React.PureComponent {
     this.props.dispatch(fetchHospitals());
   }
 
-  createMarkup() {
-    const {errors} = this.state;
-
-    return Object.keys(errors).map((item) => {
-      return errors[item].map((value, index) => {
-        return <p key={index}>{value}</p>;
-      });
-    });
-  }
-
   handleBtnDelete(id, event) {
     event.preventDefault();
     this.props.dispatch(deleteOrganization(id));
@@ -46,7 +37,7 @@ class Budget extends React.PureComponent {
     if (errors) {
       errorsMessage = (
         <div className="alert alert-danger" role="alert">
-          {this.createMarkup()}
+          {createMarkup(errors)}
         </div>
       );
     }

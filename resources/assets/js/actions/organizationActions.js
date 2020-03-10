@@ -1,4 +1,5 @@
 import axios from 'axios';
+import {getResponseError} from '../utils/errorsHelper';
 
 export function addOrganization(formElement = null) {
   return (dispatch) => {
@@ -11,7 +12,7 @@ export function addOrganization(formElement = null) {
       })
       .catch((errors) => {
         dispatch({
-          payload: errors.response.data.errors,
+          payload: getResponseError(errors),
           type: 'ORGANIZATION_ADD_REJECTED',
         });
       });
@@ -29,16 +30,13 @@ export function editOrganization(formElement = null, legalEntityId) {
       })
       .catch((errors) => {
         dispatch({
-          payload: errors.response.data.errors,
+          payload: getResponseError(errors),
           type: 'ORGANIZATION_EDIT_REJECTED',
         });
       });
   };
 }
 
-/**
- * @returns {function(*)}
- */
 export function fetchOrganizations() {
   return (dispatch) => {
     axios
@@ -60,11 +58,6 @@ export function fetchOrganizations() {
   };
 }
 
-/**
- * Получить все организации начальника качества
- *
- * @returns {function(*)}
- */
 export function fetchExpiredOrganizations(legalEntityId = null) {
   return (dispatch) => {
     axios
@@ -88,12 +81,6 @@ export function fetchExpiredOrganizations(legalEntityId = null) {
   };
 }
 
-/**
- * Получить организацию
- *
- * @param id
- * @returns {function(*)}
- */
 export function fetchOrganization(id) {
   return (dispatch) => {
     axios
@@ -113,12 +100,6 @@ export function fetchOrganization(id) {
   };
 }
 
-/**
- * Удалить организацию
- *
- * @param id number
- * @returns {Function}
- */
 export function deleteOrganization(id) {
   return () => {
     axios
@@ -133,13 +114,6 @@ export function deleteOrganization(id) {
   };
 }
 
-/**
- * TODO Удалить сотрудника из организации
- *
- * @param idOrganization number
- * @param idEmployee number
- * @returns {Function}
- */
 export function deleteOrganizationEmployee(idOrganization, idEmployee) {
   return () => {
     axios

@@ -15,6 +15,7 @@ import {
   Input,
 } from 'reactstrap';
 import {addOrganization} from '../../actions/organizationActions';
+import {createMarkup} from '../../utils/errorsHelper';
 
 class NewOrganization extends React.PureComponent {
   constructor(props) {
@@ -32,16 +33,6 @@ class NewOrganization extends React.PureComponent {
     this.props.dispatch(addOrganization(document.querySelector('form')));
   }
 
-  createMarkup() {
-    const {errors} = this.props;
-
-    return Object.keys(errors).map((item) => {
-      return errors[item].map((value, index) => {
-        return <p key={index}>{value}</p>;
-      });
-    });
-  }
-
   render() {
     const {categories, errors} = this.props;
     let errorsMessage = '';
@@ -49,7 +40,7 @@ class NewOrganization extends React.PureComponent {
     if (errors) {
       errorsMessage = (
         <div className="alert alert-danger" role="alert">
-          {this.createMarkup()}
+          {createMarkup(errors)}
         </div>
       );
     }

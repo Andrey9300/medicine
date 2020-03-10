@@ -24,6 +24,11 @@ class Organization extends Model
         return $this->belongsToMany('App\User', 'user_organization');
     }
 
+    public function auditors()
+    {
+        return $this->belongsToMany('App\User', 'user_organization')->where('role', '=', 'auditor');
+    }
+
     /**
      * Employees организации
      */

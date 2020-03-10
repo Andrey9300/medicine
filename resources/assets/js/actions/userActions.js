@@ -1,11 +1,6 @@
 import axios from 'axios';
+import {getResponseError} from '../utils/errorsHelper';
 
-/**
- * Вход
- *
- * @param formElement
- * @returns {function(*)}
- */
 export function loginUser(formElement = null) {
   return (dispatch) => {
     axios
@@ -22,18 +17,13 @@ export function loginUser(formElement = null) {
       })
       .catch((errors) => {
         dispatch({
-          payload: errors.response.data.errors,
+          payload: getResponseError(errors),
           type: 'LOGIN_USER_REJECTED',
         });
       });
   };
 }
 
-/**
- * Выход
- *
- * @returns {function(*)}
- */
 export function logoutUser() {
   return (dispatch) => {
     axios
@@ -57,12 +47,6 @@ export function logoutUser() {
   };
 }
 
-/**
- * Регистрация
- *
- * @param formData
- * @returns {function(*)}
- */
 export function registrationUser(formElement = null) {
   return (dispatch) => {
     axios
@@ -74,19 +58,31 @@ export function registrationUser(formElement = null) {
       })
       .catch((errors) => {
         dispatch({
-          payload: errors.response.data.errors,
+          payload: getResponseError(errors),
           type: 'REGISTRATION_USER_REJECTED',
         });
       });
   };
 }
 
-/**
- * TODO пользователей
- * Получить всех пользователей системы
- *
- * @returns {function(*)}
- */
+export function registrationAuditorUser(formElement = null) {
+  return (dispatch) => {
+    axios
+      .post('/users/store', new FormData(formElement))
+      .then(() => {
+        alert('Аудитор добавлен');
+        history.replaceState(null, null, '/auditors');
+        window.location.reload();
+      })
+      .catch((errors) => {
+        dispatch({
+          payload: getResponseError(errors),
+          type: 'REGISTRATION_AUDITOR_USER_REJECTED',
+        });
+      });
+  };
+}
+
 export function fetchUsers() {
   return (dispatch) => {
     axios
@@ -106,15 +102,29 @@ export function fetchUsers() {
   };
 }
 
-/**
- * Получить текущего пользователя системы, если есть
- *
- * @returns {function(*)}
- */
-export function fetchUser() {
+export function fetchCurrentUser() {
   return (dispatch) => {
     axios
       .post('/users/current')
+      .then((response) => {
+        dispatch({
+          payload: response,
+          type: 'CURRENT_USER_FULFILLED',
+        });
+      })
+      .catch((error) => {
+        dispatch({
+          payload: error,
+          type: 'CURRENT_USER_REJECTED',
+        });
+      });
+  };
+}
+
+export function fetchUser(id) {
+  return (dispatch) => {
+    axios
+      .post(`/users/${id}`)
       .then((response) => {
         dispatch({
           payload: response,
@@ -130,12 +140,28 @@ export function fetchUser() {
   };
 }
 
-/**
- * Удалить пользователя системы
- *
- * @param id number
- * @returns {Function}
- */
+export function editUser(formElement = null, userId) {
+  return (dispatch) => {
+    axios
+      .post(`/users/edit/${userId}`, new FormData(formElement))
+      .then((response) => {
+        dispatch({
+          payload: response,
+          type: 'USER_FULFILLED',
+        });
+        alert('Профиль успешно отредактирован');
+        history.pushState(null, null, `/profile`);
+        window.location.reload();
+      })
+      .catch((error) => {
+        dispatch({
+          payload: error,
+          type: 'USER_REJECTED',
+        });
+      });
+  };
+}
+
 export function deleteUser(id) {
   return () => {
     axios

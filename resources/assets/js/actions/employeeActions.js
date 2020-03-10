@@ -1,8 +1,6 @@
 import axios from 'axios';
+import {getResponseError} from '../utils/errorsHelper';
 
-/**
- * @returns {function(*)}
- */
 export function addEmployee(formElement = null) {
   return (dispatch) => {
     axios
@@ -14,16 +12,13 @@ export function addEmployee(formElement = null) {
       })
       .catch((errors) => {
         dispatch({
-          payload: errors.response.data.errors,
+          payload: getResponseError(errors),
           type: 'EMPLOYEE_ADD_REJECTED',
         });
       });
   };
 }
 
-/**
- * @returns {function(*)}
- */
 export function editEmployee(formElement = null, employeeId) {
   return (dispatch) => {
     axios
@@ -35,12 +30,13 @@ export function editEmployee(formElement = null, employeeId) {
       })
       .catch((errors) => {
         dispatch({
-          payload: errors.response.data.errors,
+          payload: getResponseError(errors),
           type: 'EMPLOYEE_ADD_REJECTED',
         });
       });
   };
 }
+
 export function editEmployeeJson(formElement = null, employeeId) {
   return (dispatch) => {
     axios
@@ -50,18 +46,13 @@ export function editEmployeeJson(formElement = null, employeeId) {
       })
       .catch((errors) => {
         dispatch({
-          payload: errors.response.data.errors,
+          payload: getResponseError(errors),
           type: 'EMPLOYEE_ADD_REJECTED',
         });
       });
   };
 }
 
-/**
- * Список сотрудников
- *
- * @returns {function(*)}
- */
 export function fetchEmployees(legalEntityId = null) {
   return (dispatch) => {
     axios
@@ -83,12 +74,6 @@ export function fetchEmployees(legalEntityId = null) {
   };
 }
 
-/**
- * Получить сотрудника
- *
- * @param id
- * @returns {function(*)}
- */
 export function fetchEmployee(id) {
   return (dispatch) => {
     axios
@@ -108,13 +93,6 @@ export function fetchEmployee(id) {
   };
 }
 
-/**
- * Сотрудника в архиве
- *
- * @param id number
- * @param organizationId number
- * @returns {Function}
- */
 export function deleteEmployee(id, organizationId) {
   return () => {
     axios
@@ -144,12 +122,6 @@ export function restoreEmployee(id) {
   };
 }
 
-/**
- * Удалить сотрудника
- *
- * @param id number
- * @returns {Function}
- */
 export function forceDeleteEmployee(id) {
   return () => {
     axios
@@ -163,11 +135,6 @@ export function forceDeleteEmployee(id) {
   };
 }
 
-/**
- * @param formElement
- * @param employeeId
- * @returns {Function}
- */
 export function addEmployeeResearches(formElement = null, employeeId) {
   return (dispatch) => {
     axios
@@ -181,18 +148,13 @@ export function addEmployeeResearches(formElement = null, employeeId) {
       })
       .catch((errors) => {
         dispatch({
-          payload: errors.response.data.errors,
+          payload: getResponseError(errors),
           type: 'EMPLOYEE_RESEARCHES_ADD_REJECTED',
         });
       });
   };
 }
 
-/**
- * Fetch
- * @param id - id сотрудника
- * @returns {function(*)}
- */
 export function fetchEmployeeResearches(id) {
   return (dispatch) => {
     axios

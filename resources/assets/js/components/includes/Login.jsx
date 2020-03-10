@@ -15,6 +15,7 @@ import {
   InputGroup,
 } from 'reactstrap';
 import {loginUser} from '../../actions/userActions';
+import {createMarkup} from '../../utils/errorsHelper';
 
 class Login extends React.PureComponent {
   constructor(props) {
@@ -47,16 +48,6 @@ class Login extends React.PureComponent {
     this.props.dispatch(loginUser(document.querySelector('form')));
   }
 
-  createMarkup() {
-    const {errors} = this.props;
-
-    return Object.keys(errors).map((item) => {
-      return errors[item].map((value, index) => {
-        return <p key={index}>{value}</p>;
-      });
-    });
-  }
-
   render() {
     const {user, errors} = this.props;
     const {doubleClick, showPassword} = this.state;
@@ -69,7 +60,7 @@ class Login extends React.PureComponent {
     if (errors) {
       errorsMessage = (
         <div className="alert alert-danger" role="alert">
-          {this.createMarkup()}
+          {createMarkup(errors)}
         </div>
       );
     }

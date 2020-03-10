@@ -217,8 +217,15 @@ class Organization extends React.PureComponent {
                 Информация
               </CardHeader>
               <CardBody className="card-body">
-                Справочная информация о медицинском осмотре и правилах
-                оформления личной медицинской книжки
+                С подробной информацией о медицинских осмотрах Вы можете ознакомиться по ссылкам:
+                <ul style={{listStyleType: 'none'}}>
+                  <li><a href="/article2" target="_blank">Оформление личной медицинской книжки (ЛМК)</a></li>
+                  <li><a href="/article3" target="_blank">Гигиеническое обучение и аттестация (ГОиА).</a></li>
+                  <li><a href="/article4" target="_blank">Вакцинация (для ЛМК).</a></li>
+                  <li><a href="/article5" target="_blank">Медицинский отвод от вакцинации.</a></li>
+                  <li><a href="/article1" target="_blank">Предварительный и периодический медицинский осмотр.</a></li>
+                  <li><a href="/article6" target="_blank">Психиатрическое освидетельствование.</a></li>
+                </ul>
               </CardBody>
             </Card>
           </Col>

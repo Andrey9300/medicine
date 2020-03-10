@@ -19,6 +19,7 @@ import {
 } from 'reactstrap';
 import {fetchHospitals} from '../../actions/hospitalActions';
 import {fetchOrganization} from '../../actions/organizationActions';
+import {createMarkup} from '../../utils/errorsHelper';
 
 class PrintEmployee extends React.PureComponent {
   constructor(props) {
@@ -44,16 +45,6 @@ class PrintEmployee extends React.PureComponent {
     if (prevProps.employee !== employee) {
       this.props.dispatch(fetchOrganization(employee.organization.id));
     }
-  }
-
-  createMarkup() {
-    const {errors} = this.state;
-
-    return Object.keys(errors).map((item) => {
-      return errors[item].map((value, index) => {
-        return <p key={index}>{value}</p>;
-      });
-    });
   }
 
   addNeedVga() {
@@ -246,7 +237,7 @@ class PrintEmployee extends React.PureComponent {
     if (errors) {
       errorsMessage = (
         <div className="alert alert-danger" role="alert">
-          {this.createMarkup()}
+          {createMarkup(errors)}
         </div>
       );
     }

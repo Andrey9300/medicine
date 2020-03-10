@@ -1,18 +1,13 @@
 const initialState = {
   errors: null,
   fetched: false,
+  currentUser: null,
   user: null,
   userResearch: null,
   userResearches: [],
   users: [],
 };
 
-/**
- * Reducer
- * @param state {Object}
- * @param action {Object}
- * @returns {*}
- */
 export default function reducer(state = initialState, action) {
   switch (action.type) {
     case 'LOGIN_USER_REJECTED': {
@@ -27,7 +22,7 @@ export default function reducer(state = initialState, action) {
         ...state,
         errors: null,
         fetched: true,
-        user: {
+        currentUser: {
           isAuthenticated: action.payload.isAuthenticated,
         },
       };
@@ -72,15 +67,35 @@ export default function reducer(state = initialState, action) {
         users: action.payload.data.users,
       };
     }
+    case 'CURRENT_USER_REJECTED': {
+      return {
+        ...state,
+        errors: action.payload,
+        fetched: false,
+        currentUser: {
+          ...state.currentUser,
+          isAuthenticated: false,
+        },
+      };
+    }
+    case 'CURRENT_USER_FULFILLED': {
+      return {
+        ...state,
+        errors: null,
+        fetched: true,
+        currentUser: {
+          ...state.currentUser,
+          ...action.payload.data.currentUser,
+          isAuthenticated: true,
+        },
+      };
+    }
     case 'USER_REJECTED': {
       return {
         ...state,
         errors: action.payload,
         fetched: false,
-        user: {
-          ...state.user,
-          isAuthenticated: false,
-        },
+        user: null,
       };
     }
     case 'USER_FULFILLED': {
@@ -88,11 +103,7 @@ export default function reducer(state = initialState, action) {
         ...state,
         errors: null,
         fetched: true,
-        user: {
-          ...state.user,
-          ...action.payload.data.user,
-          isAuthenticated: true,
-        },
+        user: action.payload.data.user,
       };
     }
     default:

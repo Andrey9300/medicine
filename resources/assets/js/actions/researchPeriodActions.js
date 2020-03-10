@@ -1,10 +1,5 @@
 import axios from 'axios';
 
-/**
- * Список категорий
- *
- * @returns {function(*)}
- */
 export function fetchPeriods() {
   return (dispatch) => {
     axios

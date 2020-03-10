@@ -18,6 +18,7 @@ import {
 } from 'reactstrap';
 import {editEmployee} from '../../actions/employeeActions';
 import {fetchCategories} from '../../actions/categoryActions';
+import {createMarkup} from '../../utils/errorsHelper';
 
 class EditEmployee extends React.PureComponent {
   constructor(props) {
@@ -42,16 +43,6 @@ class EditEmployee extends React.PureComponent {
     this.props.dispatch(fetchOrganizations());
   }
 
-  createMarkup() {
-    const {errors} = this.props;
-
-    return Object.keys(errors).map((item) => {
-      return errors[item].map((value, index) => {
-        return <p key={index}>{value}</p>;
-      });
-    });
-  }
-
   render() {
     const {employee, organizations, categories, errors} = this.props;
     let errorsMessage = '';
@@ -59,7 +50,7 @@ class EditEmployee extends React.PureComponent {
     if (errors) {
       errorsMessage = (
         <div className="alert alert-danger" role="alert">
-          {this.createMarkup()}
+          {createMarkup(errors)}
         </div>
       );
     }

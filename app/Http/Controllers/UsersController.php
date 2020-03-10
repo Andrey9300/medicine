@@ -8,65 +8,60 @@ use Illuminate\Support\Facades\Auth;
 
 class UsersController extends Controller
 {
-    /**
-     * Создать пользователя
-     *
-     * @param  \Illuminate\Http\Request $request
-     * @return void
-     */
     public function store(Request $request)
     {
-        $user = new User;
-        $user->fio = $request->fio;
-        $user->password = bcrypt($request->password);
-        $user->date_birthday = $request->date_birthday;
-        $user->date_employment = $request->date_employment;
-        $user->medical_book = $request->medical_book;
-        $user->role = $request->role;
-        $user->email = $request->email;
-        $user->organization_name = $request->organization_name;
-        $user->save();
+        $userAdmin = Auth::user();
+        $organization = $userAdmin->organizations->first();
+
+        $newUser = new User;
+        $newUser->fio = $request->fio;
+        $newUser->password = bcrypt($request->password);
+        $newUser->role = 'auditor';
+        $newUser->email = $request->email;
+        $newUser->active = '1';
+        $newUser->save();
+
+        $newUser->organizations()->attach($organization);
     }
 
-    /**
-     * Получить данные пользователя
-     *
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function show()
+    public function currentUser()
     {
         return response()->json([
-            'user' => Auth::user()
+            'currentUser' => Auth::user()
         ]);
     }
 
-    /**
-     * Обновить пользователя
-     *
-     * @param int $id
-     * @param  \Illuminate\Http\Request  $request
-     * @return void
-     */
+    public function showAuditors()
+    {
+        $userAdmin = Auth::user();
+        $organization = $userAdmin->organizations->first();
+
+        return response()->json([
+            'auditors' => $organization->auditors
+        ]);
+    }
+
+    public function showUser($id)
+    {
+        return response()->json([
+            'user' => User::find($id)
+        ]);
+    }
+
     public function update(Request $request, $id)
     {
         $user = User::find($id);
         $user->fio = $request->fio;
-        $user->password = bcrypt($request->password);
-        $user->date_birthday = $request->date_birthday;
-        $user->date_employment = $request->date_employment;
-        $user->medical_book = $request->medical_book;
-        $user->role = $request->role;
+//        $user->password = bcrypt($request->password);
+//        $user->date_birthday = $request->date_birthday;
+//        $user->date_employment = $request->date_employment;
+//        $user->medical_book = $request->medical_book;
+//        $user->role = $request->role;
         $user->email = $request->email;
-        $user->organization_name = $request->organization_name;
+//        $user->organization_name = $request->organization_name;
         $user->save();
     }
 
-    /**
-     * Удалить пользователя
-     *
-     * @param int $id
-     * @return void
-     */
     public function destroy($id)
     {
         User::destroy($id);

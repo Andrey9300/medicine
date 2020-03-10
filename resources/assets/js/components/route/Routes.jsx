@@ -35,6 +35,21 @@ import NewEmployee from '../../components/employee/New';
 import {Main} from '../../components/main/Main';
 
 import EmployeeResearches from '../../components/employee/research/EmployeeResearches';
+import {UserContainer} from '../user/User';
+import {EditUserContainer} from '../user/Edit';
+import {AuditorsContainer} from '../auditors/Auditors';
+import {NewUserContainer} from '../user/New';
+import {CurrentUserContainer} from '../user/CurrentUser';
+import {CriterionContainer} from '../criterion/Criterion';
+import EditCriterion from '../criterion/Edit';
+import {CriterionsContainer} from '../criterion/Criterions';
+import {StructureCheckList} from '../structureCheckList/structureCheckList';
+import {NewCriterionListContainer} from '../criterionList/New';
+import {EditCriterionListContainer} from '../criterionList/Edit';
+import {CriterionListContainer} from '../criterionList/criterionList';
+import {CriterionListsContainer} from '../criterionList/criterionLists';
+import {PlaceCheckListContainer} from '../placeCheckList/PlaceCheckList';
+import {AddPlaceCheckListContainer} from '../placeCheckList/AddPlaceCheckList';
 
 export class Routes extends React.PureComponent {
   render() {
@@ -65,6 +80,31 @@ export class Routes extends React.PureComponent {
           exact
           path="/activateAccount"
           component={(props) => <ActivateAccount {...props} />}
+        />
+        <Route
+          exact
+          path="/profile"
+          component={(props) => <CurrentUserContainer {...props} />}
+        />
+        <Route
+          exact
+          path="/profiles/:id"
+          component={(props) => <UserContainer {...props} />}
+        />
+        <Route
+          exact
+          path="/profiles/edit/:id"
+          component={(props) => <EditUserContainer {...props} />}
+        />
+        <Route
+          exact
+          path="/profiles/create"
+          component={(props) => <NewUserContainer {...props} />}
+        />
+        <Route
+          exact
+          path="/auditors"
+          component={(props) => <AuditorsContainer {...props} />}
         />
 
         <Route
@@ -174,6 +214,60 @@ export class Routes extends React.PureComponent {
           exact
           path="/employees/researches/:idEmployee"
           component={(props) => <EmployeeResearches {...props} />}
+        />
+
+        <Route
+          exact
+          path="/criterion/:id"
+          component={(props) => <CriterionContainer {...props} />}
+        />
+        <Route
+          exact
+          path="/criterions"
+          component={(props) => <CriterionsContainer {...props} />}
+        />
+        <Route
+          exact
+          path="/criterions/edit/:id"
+          component={(props) => <EditCriterion {...props} />}
+        />
+
+        <Route
+          exact
+          path="/structureCheckList"
+          component={(props) => <StructureCheckList {...props} />}
+        />
+
+        <Route
+          exact
+          path="/criterionList/:id"
+          component={(props) => <CriterionListContainer {...props} />}
+        />
+        <Route
+          exact
+          path="/criterionLists"
+          component={(props) => <CriterionListsContainer {...props} />}
+        />
+        <Route
+          exact
+          path="/criterionLists/create"
+          component={(props) => <NewCriterionListContainer {...props} />}
+        />
+        <Route
+          exact
+          path="/criterionLists/edit/:id"
+          component={(props) => <EditCriterionListContainer {...props} />}
+        />
+
+        <Route
+          exact
+          path="/placeCheckList/:id"
+          component={(props) => <PlaceCheckListContainer {...props} />}
+        />
+        <Route
+          exact
+          path="/addPlaceCheckList/:id"
+          component={(props) => <AddPlaceCheckListContainer {...props} />}
         />
       </>
     );

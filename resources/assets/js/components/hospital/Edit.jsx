@@ -17,6 +17,7 @@ import {
   Input,
 } from 'reactstrap';
 import {editHospital} from '../../actions/hospitalActions';
+import {createMarkup} from '../../utils/errorsHelper';
 
 class EditHospital extends React.PureComponent {
   constructor(props) {
@@ -38,16 +39,6 @@ class EditHospital extends React.PureComponent {
     this.props.dispatch(fetchHospital(this.state.hospitalId));
   }
 
-  createMarkup() {
-    const {errors} = this.props;
-
-    return Object.keys(errors).map((item) => {
-      return errors[item].map((value, index) => {
-        return <p key={index}>{value}</p>;
-      });
-    });
-  }
-
   render() {
     const {hospital, errors} = this.props;
     let errorsMessage = '';
@@ -55,7 +46,7 @@ class EditHospital extends React.PureComponent {
     if (errors) {
       errorsMessage = (
         <div className="alert alert-danger" role="alert">
-          this.createMarkup()}
+          {createMarkup(errors)}
         </div>
       );
     }

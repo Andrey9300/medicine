@@ -4,51 +4,117 @@ import {Link} from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 import {logoutUser} from '../../actions/userActions';
-import {Nav, NavItem} from 'reactstrap';
+import {Nav, NavItem, Collapse} from 'reactstrap';
 
 class Sidebar extends React.PureComponent {
+  constructor(props) {
+    super(props);
+    this.state = {
+      collapseLmk: false,
+      collapseAudit: true, // вернуть
+    };
+
+    this.toggleLmk = this.toggleLmk.bind(this);
+    this.toggleAudit = this.toggleAudit.bind(this);
+  }
+
   logout(event) {
     event.preventDefault();
     this.props.dispatch(logoutUser());
   }
 
+  toggleLmk() {
+    const {collapseLmk} = this.state;
+    this.setState({collapseLmk: !collapseLmk});
+  }
+
+  toggleAudit() {
+    const {collapseAudit} = this.state;
+    this.setState({collapseAudit: !collapseAudit});
+  }
+
   render() {
+    const {collapseLmk, collapseAudit} = this.state;
     const {
-      user,
+      currentUser,
       history: {
         location: {hash},
       },
     } = this.props;
+    const profileClass = hash.includes('profile') ? 'active' : '';
     const organizationsClass = hash.includes('organizations') ? 'active' : '';
     const employeesClass = hash.includes('employees') ? 'active' : '';
     const hospitalsClass = hash.includes('hospitals') ? 'active' : '';
     const researchesClass = hash.includes('researches') ? 'active' : '';
     let navItems = null;
 
-    if (user && user.isAuthenticated) {
+    if (currentUser && currentUser.isAuthenticated) {
       navItems = (
         <Nav>
+          <NavItem>
+            <Link to={'/profile'} className={profileClass}>
+              <i className="fa fa-user-o" aria-hidden="true" /> Профиль
+            </Link>
+          </NavItem>
           <NavItem>
             <Link to={'/organizations'} className={organizationsClass}>
               <i className="fa fa-building-o" aria-hidden="true" /> Объекты
             </Link>
           </NavItem>
-          <NavItem>
-            <Link to={'/employees'} className={employeesClass}>
-              <i className="fa fa-users" aria-hidden="true" /> Сотрудники
+
+          <NavItem onClick={this.toggleLmk}>
+            <Link to={'#'} className={employeesClass}>
+              <i className="fa fa-user-md" aria-hidden="true" /> ЛМК
             </Link>
           </NavItem>
-          <NavItem>
-            <Link to={'/hospitals'} className={hospitalsClass}>
-              <i className="fa fa-stethoscope" aria-hidden="true" /> Медицинские
-              центры
+          <Collapse isOpen={collapseLmk}>
+            <NavItem>
+              <Link to={'/employees'} className={employeesClass}>
+                <i className="fa fa-users" aria-hidden="true" /> Сотрудники
+              </Link>
+            </NavItem>
+            <NavItem>
+              <Link to={'/hospitals'} className={hospitalsClass}>
+                <i className="fa fa-stethoscope" aria-hidden="true" />{' '}
+                Медицинские центры
+              </Link>
+            </NavItem>
+            <NavItem>
+              <Link to={'/researches'} className={researchesClass}>
+                <i className="fa fa-heartbeat" aria-hidden="true" />{' '}
+                Исследования
+              </Link>
+            </NavItem>
+          </Collapse>
+
+          <NavItem onClick={this.toggleAudit}>
+            <Link to={'#'} className={researchesClass}>
+              <i className="fa fa-search" aria-hidden="true" /> Аудит
             </Link>
           </NavItem>
-          <NavItem>
-            <Link to={'/researches'} className={researchesClass}>
-              <i className="fa fa-heartbeat" aria-hidden="true" /> Исследования
-            </Link>
-          </NavItem>
+          <Collapse isOpen={collapseAudit}>
+            <NavItem>
+              <Link to={'/audits'} className={researchesClass}>
+                <i className="fa fa-black-tie" aria-hidden="true" /> Аудиты
+              </Link>
+            </NavItem>
+            <NavItem>
+              <Link to={'/auditors'} className={researchesClass}>
+                <i className="fa fa-user-circle" aria-hidden="true" /> Аудиторы
+              </Link>
+            </NavItem>
+            <NavItem>
+              <Link to={'/criterionLists'} className={researchesClass}>
+                <i className="fa fa-book" aria-hidden="true" /> Чек-листы
+              </Link>
+            </NavItem>
+            <NavItem>
+              <Link to={'/structureCheckList'} className={researchesClass}>
+                <i className="fa fa-book" aria-hidden="true" /> Структура чек-листа
+              </Link>
+            </NavItem>
+          </Collapse>
+
           <NavItem>
             <Link to={'/'} onClick={this.logout.bind(this)}>
               <i className="fa fa-lock" aria-hidden="true" /> Выход
@@ -89,7 +155,7 @@ Sidebar.propTypes = {
 
 const mapStateToProps = (state) => {
   return {
-    user: state.users.user,
+    currentUser: state.users.currentUser,
   };
 };
 

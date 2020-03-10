@@ -14,6 +14,7 @@ import {
   Input,
   InputGroup,
 } from 'reactstrap';
+import {createMarkup} from '../../utils/errorsHelper';
 
 class ResetPassword extends React.PureComponent {
   constructor(props) {
@@ -48,16 +49,6 @@ class ResetPassword extends React.PureComponent {
       });
   }
 
-  createMarkup() {
-    const {errors} = this.state;
-
-    return Object.keys(errors).map((item) => {
-      return errors[item].map((value, index) => {
-        return <p key={index}>{value}</p>;
-      });
-    });
-  }
-
   render() {
     const {location} = this.props;
     const {errors, doubleClick} = this.state;
@@ -67,7 +58,7 @@ class ResetPassword extends React.PureComponent {
     if (errors) {
       errorsMessage = (
         <div className="alert alert-danger" role="alert">
-          {this.createMarkup()}
+          {createMarkup(errors)}
         </div>
       );
     }

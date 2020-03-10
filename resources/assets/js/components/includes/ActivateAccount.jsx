@@ -3,11 +3,11 @@ import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import {Link} from 'react-router-dom';
 import {Row, Col, Card, CardBody, CardHeader} from 'reactstrap';
-import {fetchUser} from '../../actions/userActions';
+import {fetchCurrentUser} from '../../actions/userActions';
 
 class ActivateAccount extends React.PureComponent {
   componentDidMount() {
-    this.props.dispatch(fetchUser());
+    this.props.dispatch(fetchCurrentUser());
   }
 
   render() {

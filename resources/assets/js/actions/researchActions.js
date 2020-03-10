@@ -1,11 +1,6 @@
 import axios from 'axios';
+import {getResponseError} from '../utils/errorsHelper';
 
-/**
- * Получить исследование
- *
- * @param id
- * @returns {function(*)}
- */
 export function fetchResearch(id) {
   return (dispatch) => {
     axios
@@ -25,11 +20,6 @@ export function fetchResearch(id) {
   };
 }
 
-/**
- * Все исследования admin
- *
- * @returns {function(*)}
- */
 export function fetchUserResearches() {
   return (dispatch) => {
     axios
@@ -61,7 +51,7 @@ export function addUserResearches(formElement = null) {
       })
       .catch((errors) => {
         dispatch({
-          payload: errors.response.data.errors,
+          payload: getResponseError(errors),
           type: 'ADD_USER_RESEARCH_REJECTED',
         });
       });

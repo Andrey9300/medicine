@@ -17,6 +17,7 @@ import {
   Input,
 } from 'reactstrap';
 import {editOrganization} from '../../actions/organizationActions';
+import {createMarkup} from '../../utils/errorsHelper';
 
 class EditOrganization extends React.PureComponent {
   constructor(props) {
@@ -43,16 +44,6 @@ class EditOrganization extends React.PureComponent {
     this.props.dispatch(fetchOrganization(this.state.organizationId));
   }
 
-  createMarkup() {
-    const {errors} = this.props;
-
-    return Object.keys(errors).map((item) => {
-      return errors[item].map((value, index) => {
-        return <p key={index}>{value}</p>;
-      });
-    });
-  }
-
   render() {
     const {organization, categories, errors} = this.props;
     let errorsMessage = '';
@@ -60,7 +51,7 @@ class EditOrganization extends React.PureComponent {
     if (errors) {
       errorsMessage = (
         <div className="alert alert-danger" role="alert">
-          {this.createMarkup()}
+          {createMarkup(errors)}
         </div>
       );
     }
