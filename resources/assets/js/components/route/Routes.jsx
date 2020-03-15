@@ -50,6 +50,8 @@ import {CriterionListContainer} from '../criterionList/criterionList';
 import {CriterionListsContainer} from '../criterionList/criterionLists';
 import {PlaceCheckListContainer} from '../placeCheckList/PlaceCheckList';
 import {AddPlaceCheckListContainer} from '../placeCheckList/AddPlaceCheckList';
+import {PlaceCheckListCriterionsContainer} from '../placeCheckList/PlaceCheckListCriterions';
+import {PlaceCheckListCriterionsEditContainer} from '../placeCheckList/PlaceCheckListCriterionsEdit';
 
 export class Routes extends React.PureComponent {
   render() {
@@ -268,6 +270,16 @@ export class Routes extends React.PureComponent {
           exact
           path="/addPlaceCheckList/:id"
           component={(props) => <AddPlaceCheckListContainer {...props} />}
+        />
+        <Route
+          exact
+          path="/placeCheckList/criterions/:id"
+          component={(props) => <PlaceCheckListCriterionsContainer {...props} />}
+        />
+        <Route
+          exact
+          path="/placeCheckList/criterions/edit/:id"
+          component={(props) => <PlaceCheckListCriterionsEditContainer {...props} />}
         />
       </>
     );

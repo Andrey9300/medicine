@@ -139,7 +139,8 @@ Route::middleware(['auth'])->group(function () {
     });
 
     Route::prefix('placeCheckLists')->group(function () {
-        Route::post('/store', 'PlaceCheckListController@store');
+        Route::post('/store/{id}', 'PlaceCheckListController@store');
+        Route::post('/criterions/{id}', 'PlaceCheckListController@criterions');
         Route::post('/destroy/{id}', 'PlaceCheckListController@destroy');
         Route::post('/update/{id}', 'PlaceCheckListController@update');
         Route::post('/{id}', 'PlaceCheckListController@show');

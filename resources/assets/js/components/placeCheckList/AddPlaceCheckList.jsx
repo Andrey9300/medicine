@@ -1,12 +1,24 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import {
-  fetchPlaceCheckList,
-  deletePlaceCheckList,
-} from './../../actions/placeCheckListActions';
-import {Link} from 'react-router-dom';
 import PropTypes from 'prop-types';
-import {Row, Col, Card, CardHeader, CardBody, Table} from 'reactstrap';
+import {
+  addPlaceCheckList,
+  fetchPlaceCheckList,
+} from './../../actions/placeCheckListActions';
+import {
+  Row,
+  Col,
+  Card,
+  CardHeader,
+  CardBody,
+  Table,
+  Input,
+  Button,
+  CardFooter,
+  FormGroup,
+  Form,
+  Label,
+} from 'reactstrap';
 import {createMarkup} from '../../utils/errorsHelper';
 
 class AddPlaceCheckListCheckList extends React.PureComponent {
@@ -15,15 +27,22 @@ class AddPlaceCheckListCheckList extends React.PureComponent {
     this.state = {
       placeCheckListId: props.match.params.id,
     };
+
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   componentDidMount() {
     this.props.dispatch(fetchPlaceCheckList(this.state.placeCheckListId));
   }
 
-  handleBtnDelete(id, event) {
+  handleSubmit(event) {
     event.preventDefault();
-    this.props.dispatch(deletePlaceCheckList(id));
+    this.props.dispatch(
+      addPlaceCheckList(
+        document.querySelector('form'),
+        this.state.placeCheckListId,
+      ),
+    );
   }
 
   render() {
@@ -46,25 +65,11 @@ class AddPlaceCheckListCheckList extends React.PureComponent {
       <div className="animated fadeIn">
         {errorsMessage}
         <Row>
-          <Col xs="12" sm="12" md="8" lg="8" xl="8">
+          <Col xs="12" sm="12" md="12" lg="8" xl="8">
             <Card>
               <CardHeader>
                 <i className="fa fa-building-o" aria-hidden="true" />
-                Помещение чек-лист
-                <Link
-                  to={`/placeCheckLists/edit/${placeCheckList.id}`}
-                  style={{
-                    marginLeft: '18px',
-                  }}
-                >
-                  <i className="fa fa-pencil" />
-                </Link>
-                <span
-                  className="pull-right"
-                  onClick={(event) => this.handleBtnDelete(placeCheckList.id, event)}
-                >
-                  <i className="fa fa-trash" />
-                </span>
+                Провести аудит
               </CardHeader>
               <CardBody className="card-body">
                 <Table responsive>
@@ -85,9 +90,120 @@ class AddPlaceCheckListCheckList extends React.PureComponent {
                       <td>Группа критериев:</td>
                       <td>{placeCheckList.groupCriterion.name}</td>
                     </tr>
+                    <tr>
+                      <td>Дата:</td>
+                      <td>
+                        {new Date(Date.now()).toLocaleDateString('ru-RU', {
+                          year: 'numeric',
+                          month: 'numeric',
+                          day: 'numeric',
+                        })}
+                      </td>
+                    </tr>
                   </tbody>
                 </Table>
               </CardBody>
+            </Card>
+          </Col>
+          <Col xs="12" sm="12" md="12" lg="8" xl="8">
+            <Card>
+              <CardBody>
+                <Form className="form-horizontal">
+                  <Table responsive>
+                    <tbody>
+                      <tr>
+                        <td>
+                          <b>Критерий</b>
+                        </td>
+                        <td colSpan="4">
+                          <b>Оценка</b>
+                        </td>
+                        <td>
+                          <b>Комментарий</b>
+                        </td>
+                      </tr>
+                      {placeCheckList.criterions.map((criterion) => (
+                        <tr key={criterion.id}>
+                          <td style={{maxWidth: '400px'}}>
+                            <Input
+                              type="hidden"
+                              id="criterionId"
+                              name={`criterionId[${criterion.id}]`}
+                              defaultValue={criterion.id}
+                            />
+                            {criterion.name}
+                          </td>
+                          <td>
+                            <Input
+                              type="radio"
+                              name={`mark[${criterion.id}]`}
+                              value="3"
+                              style={{width: '20px', height: '20px'}}
+                            />
+                            <span style={{color: 'green', fontWeight: 'bold'}}>
+                              A
+                            </span>
+                          </td>
+                          <td>
+                            <Input
+                              type="radio"
+                              name={`mark[${criterion.id}]`}
+                              value="2"
+                              style={{width: '20px', height: '20px'}}
+                            />
+                            <span
+                              style={{color: '#d39e00', fontWeight: 'bold'}}
+                            >
+                              B
+                            </span>
+                          </td>
+                          <td>
+                            <Input
+                              type="radio"
+                              name={`mark[${criterion.id}]`}
+                              value="1"
+                              style={{width: '20px', height: '20px'}}
+                            />
+                            <span style={{color: 'red', fontWeight: 'bold'}}>
+                              C
+                            </span>
+                          </td>
+                          <td>
+                            <Input
+                              type="radio"
+                              name={`mark[${criterion.id}]`}
+                              value="0"
+                              style={{width: '20px', height: '20px'}}
+                              onChange={() => {}}
+                              checked
+                            />
+                            <span style={{color: 'black', fontWeight: 'bold'}}>
+                              N
+                            </span>
+                          </td>
+                          <td>
+                            <Input
+                              type="textarea"
+                              name={`comment[${criterion.id}]`}
+                              placeholder="Комментарий"
+                            />
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </Table>
+                </Form>
+              </CardBody>
+              <CardFooter>
+                <Button
+                  type="submit"
+                  size="sm"
+                  color="success"
+                  onClick={this.handleSubmit}
+                >
+                  <i className="fa fa-dot-circle-o" /> Сохранить
+                </Button>
+              </CardFooter>
             </Card>
           </Col>
         </Row>
@@ -97,7 +213,6 @@ class AddPlaceCheckListCheckList extends React.PureComponent {
 }
 
 AddPlaceCheckListCheckList.propTypes = {
-  dispatch: PropTypes.func.isRequired,
   match: PropTypes.object.isRequired,
   fetched: PropTypes.bool,
   errors: PropTypes.object,
@@ -111,4 +226,6 @@ const mapStateToProps = (state) => {
   };
 };
 
-export const AddPlaceCheckListContainer = connect(mapStateToProps)(AddPlaceCheckListCheckList);
+export const AddPlaceCheckListContainer = connect(mapStateToProps)(
+  AddPlaceCheckListCheckList,
+);

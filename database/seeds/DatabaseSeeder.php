@@ -21,5 +21,7 @@ class DatabaseSeeder extends Seeder
         $this->call(UserPlacesTableSeeder::class);
         $this->call(UserUnitsTableSeeder::class);
         $this->call(UserGroupCriterionTableSeeder::class);
+        $this->call(UserGroupCriterionListTableSeeder::class);
+        $this->call(UseCriterionListsTableSeeder::class);
     }
 }

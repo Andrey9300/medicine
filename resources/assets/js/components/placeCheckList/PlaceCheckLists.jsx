@@ -11,7 +11,7 @@ class PlaceCheckLists extends React.PureComponent {
   }
 
   render() {
-    const {places} = this.props;
+    const {places, placeId} = this.props;
 
     if (!places || places.length === 0) {
       return (
@@ -20,6 +20,12 @@ class PlaceCheckLists extends React.PureComponent {
             <CardHeader>
               <i className="fa fa-building-o" aria-hidden="true" />
               Чек-листов помещений нет
+              <Link
+                to={`/addPlaceCheckList/${placeId}`}
+                className="btn btn-primary btn-sm pull-right"
+              >
+                Добавить <i className="icon-plus" />
+              </Link>
             </CardHeader>
           </Card>
         </Col>
@@ -32,6 +38,12 @@ class PlaceCheckLists extends React.PureComponent {
           <CardHeader>
             <i className="fa fa-building-o" aria-hidden="true" />
             Чек-листы помещения ({places.length})
+            <Link
+              to={`/addPlaceCheckList/${placeId}`}
+              className="btn btn-primary btn-sm pull-right"
+            >
+              Добавить <i className="icon-plus" />
+            </Link>
           </CardHeader>
           <CardBody className="card-body">
             <Table responsive>

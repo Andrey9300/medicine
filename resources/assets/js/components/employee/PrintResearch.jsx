@@ -89,7 +89,7 @@ class PrintEmployee extends React.PureComponent {
     });
 
     filterResearches.forEach((research, index) => {
-      if (index % 2) {
+      if (index % 2 === 0) {
         bufferTr.push(
           <tr key={research.id}>
             {bufferTd}

@@ -1,12 +1,13 @@
 import axios from 'axios';
 import {getResponseError} from '../utils/errorsHelper';
 
-export function addPlaceCheckList(formElement = null) {
+export function addPlaceCheckList(formElement = null, placeCheckListId) {
   return (dispatch) => {
     axios
-      .post('/placeCheckLists/store', new FormData(formElement))
+      .post(`/placeCheckLists/store/${placeCheckListId}`, new FormData(formElement))
       .then(() => {
         alert('Помещение успешно создано');
+        history.pushState(null, null, `/placeCheckList/${placeCheckListId}`);
         window.location.reload();
       })
       .catch((errors) => {
@@ -69,6 +70,25 @@ export function fetchPlaceCheckList(id) {
         dispatch({
           payload: error,
           type: 'PLACE_CHECK_LIST_REJECTED',
+        });
+      });
+  };
+}
+
+export function fetchPlaceCheckListCriterions(id) {
+  return (dispatch) => {
+    axios
+      .post(`/placeCheckLists/criterions/${id}`)
+      .then((response) => {
+        dispatch({
+          payload: response,
+          type: 'PLACE_CHECK_LIST_CRITERIONS_FULFILLED',
+        });
+      })
+      .catch((error) => {
+        dispatch({
+          payload: error,
+          type: 'PLACE_CHECK_LIST_CRITERIONS_REJECTED',
         });
       });
   };

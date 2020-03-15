@@ -28,6 +28,7 @@ class PlaceCheckListCheckList extends React.PureComponent {
   }
 
   render() {
+    const {placeCheckListId} = this.state;
     const {placeCheckList, errors} = this.props;
     let errorsMessage = '';
 
@@ -62,7 +63,9 @@ class PlaceCheckListCheckList extends React.PureComponent {
                 </Link>
                 <span
                   className="pull-right"
-                  onClick={(event) => this.handleBtnDelete(placeCheckList.id, event)}
+                  onClick={(event) =>
+                    this.handleBtnDelete(placeCheckList.id, event)
+                  }
                 >
                   <i className="fa fa-trash" />
                 </span>
@@ -91,7 +94,43 @@ class PlaceCheckListCheckList extends React.PureComponent {
               </CardBody>
             </Card>
           </Col>
-          <PlaceCheckListsContainer />
+          <Col xs="12" sm="12" md="8" lg="8" xl="8">
+            <Card>
+              <CardHeader>
+                <i className="fa fa-building-o" aria-hidden="true" />
+                Чек-листы помещения ({placeCheckList.placeCheckLists.length})
+                <Link
+                  to={`/addPlaceCheckList/${placeCheckListId}`}
+                  className="btn btn-primary btn-sm pull-right"
+                >
+                  Добавить <i className="icon-plus" />
+                </Link>
+              </CardHeader>
+              <CardBody className="card-body">
+                <Table responsive>
+                  <thead>
+                    <tr>
+                      <th>Дата</th>
+                      <th>Отправлен аудироемому</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {placeCheckList.placeCheckLists.map((placeCheckList) => (
+                      <tr key={placeCheckList.id}>
+                        <td>
+                          <Link to={`/placeCheckList/criterions/${placeCheckList.id}`}>
+                            {placeCheckList.created_at}
+                          </Link>
+                        </td>
+                        <td>{placeCheckList.sended ? 'Да' : 'Нет'}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </Table>
+              </CardBody>
+            </Card>
+          </Col>
+          {/*<PlaceCheckListsContainer placeId={placeCheckList.id} />*/}
         </Row>
       </div>
     );
@@ -113,4 +152,6 @@ const mapStateToProps = (state) => {
   };
 };
 
-export const PlaceCheckListContainer = connect(mapStateToProps)(PlaceCheckListCheckList);
+export const PlaceCheckListContainer = connect(mapStateToProps)(
+  PlaceCheckListCheckList,
+);

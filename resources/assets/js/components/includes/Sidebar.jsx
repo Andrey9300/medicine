@@ -11,7 +11,7 @@ class Sidebar extends React.PureComponent {
     super(props);
     this.state = {
       collapseLmk: false,
-      collapseAudit: true, // вернуть
+      collapseAudit: false,
     };
 
     this.toggleLmk = this.toggleLmk.bind(this);
@@ -93,11 +93,6 @@ class Sidebar extends React.PureComponent {
             </Link>
           </NavItem>
           <Collapse isOpen={collapseAudit}>
-            <NavItem>
-              <Link to={'/audits'} className={researchesClass}>
-                <i className="fa fa-black-tie" aria-hidden="true" /> Аудиты
-              </Link>
-            </NavItem>
             <NavItem>
               <Link to={'/auditors'} className={researchesClass}>
                 <i className="fa fa-user-circle" aria-hidden="true" /> Аудиторы
