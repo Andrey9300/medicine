@@ -219,12 +219,12 @@ class Organization extends React.PureComponent {
               <CardBody className="card-body">
                 С подробной информацией о медицинских осмотрах Вы можете ознакомиться по ссылкам:
                 <ul style={{listStyleType: 'none'}}>
-                  <li><a href="/article2" target="_blank">Оформление личной медицинской книжки (ЛМК)</a></li>
-                  <li><a href="/article3" target="_blank">Гигиеническое обучение и аттестация (ГОиА).</a></li>
-                  <li><a href="/article4" target="_blank">Вакцинация (для ЛМК).</a></li>
-                  <li><a href="/article5" target="_blank">Медицинский отвод от вакцинации.</a></li>
-                  <li><a href="/article1" target="_blank">Предварительный и периодический медицинский осмотр.</a></li>
-                  <li><a href="/article6" target="_blank">Психиатрическое освидетельствование.</a></li>
+                  <li><a href="/blog/medicinskie-osmotry/lichnaja-medicinskaja-knizhka-lmk/" target="_blank">Оформление личной медицинской книжки (ЛМК)</a></li>
+                  <li><a href="/blog/medicinskie-osmotry/gigienicheskoe-obuchenie-i-attestacija-goia/" target="_blank">Гигиеническое обучение и аттестация (ГОиА).</a></li>
+                  <li><a href="/blog/medicinskie-osmotry/vakcinacija-objazatelnye-profilakticheskie-privivki-dlja-lmk/" target="_blank">Вакцинация (для ЛМК).</a></li>
+                  <li><a href="/blog/medicinskie-osmotry/medicinskij-otvod-i-dobrovolnyj-otkaz-ot-vakcinacii-privivok/" target="_blank">Медицинский отвод от вакцинации.</a></li>
+                  <li><a href="/blog/medicinskie-osmotry/predvaritelnyj-i-periodicheskij-medicinskie-osmotry/" target="_blank">Предварительный и периодический медицинский осмотр.</a></li>
+                  <li><a href="/blog/medicinskie-osmotry/psihiatricheskoe-osvidetelstvovanie/" target="_blank">Психиатрическое освидетельствование.</a></li>
                 </ul>
               </CardBody>
             </Card>

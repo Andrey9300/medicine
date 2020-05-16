@@ -1,11 +1,6 @@
 <?php
 Route::view('/welcome', 'layouts.main');
-Route::view('/article1', 'layouts.article1');
-Route::view('/article2', 'layouts.article2');
-Route::view('/article3', 'layouts.article3');
-Route::view('/article4', 'layouts.article4');
-Route::view('/article5', 'layouts.article5');
-Route::view('/article6', 'layouts.article6');
+
 Route::get('/activateAccount/{id}/{token}', 'Auth\RegisterController@activation')->name('activation');
 Route::view('/{path?}', 'layouts.app')
     ->where('path', '.*')
@@ -13,7 +8,10 @@ Route::view('/{path?}', 'layouts.app')
 Auth::routes();
 Route::get('/checkResearches', 'CronController@checkResearches');
 
-
+Route::get('/clear-cache', function() {
+    Artisan::call('cache:clear');
+    return "Cache is cleared";
+});
 
 Route::middleware(['auth'])->group(function () {
     Route::prefix('users')->group(function () {
