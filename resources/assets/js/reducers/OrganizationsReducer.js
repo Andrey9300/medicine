@@ -4,7 +4,6 @@ const initialState = {
   organization: null,
   organizations: [],
   expired: [],
-  organizationEmployees: [],
 };
 
 export default function reducer(state = initialState, action) {
@@ -72,15 +71,47 @@ export default function reducer(state = initialState, action) {
         ...state,
         errors: null,
         fetched: true,
-        organization: action.payload.data.organization,
+        organization: {
+          ...state.organization,
+          ...action.payload.data.organization
+        },
+      };
+    }
+    case 'ORGANIZATION_TRASHED_EMPLOYEES_REJECTED': {
+      return {
+        ...state,
+        errors: action.payload,
+        fetched: false,
+      };
+    }
+    case 'ORGANIZATION_TRASHED_EMPLOYEES_FULFILLED': {
+      return {
+        ...state,
+        errors: null,
+        fetched: true,
+        organization: {
+          ...state.organization,
+          trashedEmployees: action.payload.data.trashedEmployees,
+        },
       };
     }
     case 'ORGANIZATION_CLEAR': {
       return {
         ...state,
         errors: null,
-        fetched: true,
+        fetched: false,
         organization: null,
+      };
+    }
+    case 'ORGANIZATION_EMPLOYEES_CLEAR': {
+      return {
+        ...state,
+        errors: null,
+        fetched: false,
+        organization: {
+          ...state.organization,
+          employees: [],
+        },
       };
     }
     default:

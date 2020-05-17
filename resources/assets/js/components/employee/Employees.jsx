@@ -8,7 +8,9 @@ import {Row, Col, Card, CardHeader} from 'reactstrap';
 
 class Employees extends React.PureComponent {
   componentDidMount() {
-    this.props.dispatch(fetchEmployees());
+    const {dispatch} = this.props;
+
+    dispatch(fetchEmployees());
   }
 
   render() {

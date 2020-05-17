@@ -1,5 +1,5 @@
 <?php
-Route::view('/welcome', 'layouts.main');
+Route::view('/', 'layouts.main');
 
 Route::get('/activateAccount/{id}/{token}', 'Auth\RegisterController@activation')->name('activation');
 Route::view('/{path?}', 'layouts.app')
@@ -35,6 +35,7 @@ Route::middleware(['auth'])->group(function () {
     Route::prefix('organizations')->group(function () {
         Route::post('/store', 'OrganizationController@store');
         Route::post('/expired', 'OrganizationController@expired');
+        Route::post('/trashedEmployees/{id}', 'OrganizationController@showTrashedEmployees');
         Route::post('/destroy/{id}', 'OrganizationController@destroy');
         Route::post('/update/{id}', 'OrganizationController@update');
         Route::post('/{id}', 'OrganizationController@show');

@@ -24,7 +24,7 @@ ul#main_nav li{
 }
 @media print {
     @page { margin: 0; }
-    textarea {
+    textarea, input {
     border: 0px;
 }
     .not-print {

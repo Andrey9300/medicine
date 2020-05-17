@@ -100,13 +100,36 @@ export function fetchOrganization(id) {
   };
 }
 
+export function fetchOrganizationTrashedEmployees(id) {
+  return (dispatch) => {
+    axios
+      .post(`/organizations/trashedEmployees/${id}`)
+      .then((response) => {
+        dispatch({
+          payload: response,
+          type: 'ORGANIZATION_TRASHED_EMPLOYEES_FULFILLED',
+        });
+      })
+      .catch((error) => {
+        dispatch({
+          payload: error,
+          type: 'ORGANIZATION_TRASHED_EMPLOYEES_REJECTED',
+        });
+      });
+  };
+}
+
 export function deleteOrganization(id) {
   return () => {
     axios
       .post(`/organizations/destroy/${id}`)
-      .then(() => {
-        history.pushState(null, null, '/organizations');
-        window.location.reload();
+      .then((answer) => {
+        if (answer && answer.data && answer.data.hasEmployees) {
+          alert('Перед удалением организации перенесите сотрудников в другие компании, в том числе из архива')
+        } else {
+          history.pushState(null, null, '/organizations');
+          window.location.reload();
+        }
       })
       .catch((error) => {
         return error;
@@ -133,6 +156,16 @@ export function clearOrganization() {
     dispatch({
       payload: [],
       type: 'ORGANIZATION_CLEAR',
+    });
+  };
+}
+
+
+export function clearOrganizationEmployees() {
+  return (dispatch) => {
+    dispatch({
+      payload: [],
+      type: 'ORGANIZATION_EMPLOYEES_CLEAR',
     });
   };
 }

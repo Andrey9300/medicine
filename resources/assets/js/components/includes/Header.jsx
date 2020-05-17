@@ -43,7 +43,7 @@ class Header extends React.PureComponent {
         <NavbarToggler className="d-lg-none" onClick={this.mobileSidebarToggle}>
           &#9776;
         </NavbarToggler>
-        <NavbarBrand href="/welcome" />
+        <NavbarBrand href="/profile" />
         <NavbarToggler className="d-md-down-none" onClick={this.sidebarToggle}>
           &#9776;
         </NavbarToggler>

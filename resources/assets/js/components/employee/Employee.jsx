@@ -1,6 +1,6 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import {fetchEmployee, deleteEmployee, restoreEmployee} from './../../actions/employeeActions';
+import {fetchEmployee, deleteEmployee, restoreEmployee, clearEmployee} from './../../actions/employeeActions';
 import EmployeeResearches from './research/EmployeeResearches';
 import {Link} from 'react-router-dom';
 import PropTypes from 'prop-types';
@@ -19,7 +19,10 @@ class Employee extends React.PureComponent {
   }
 
   componentDidMount() {
-    this.props.dispatch(fetchEmployee(this.state.employeeId));
+    const {dispatch} = this.props;
+
+    dispatch(clearEmployee());
+    dispatch(fetchEmployee(this.state.employeeId));
   }
 
   handleBtnDelete(id, event) {

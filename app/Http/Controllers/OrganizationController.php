@@ -170,6 +170,7 @@ class OrganizationController extends Controller
         $organization->totalSumForResearches = 0;
         $user = Auth::user();
         $employees = $organization->employees;
+
         foreach ($employees as $employee) {
             EmployeesController::checkMedicalResearch($employee);
             $organization->totalSumForCompletedResearches += $employee->sumForReseaches;
@@ -200,6 +201,20 @@ class OrganizationController extends Controller
 
         return response()->json([
             'organization' => $organization
+        ]);
+    }
+
+    public function showTrashedEmployees($id)
+    {
+        $organization = Organization::find($id);
+        $trashedEmployees = $organization->employees()->onlyTrashed()->get();;
+
+        foreach ($trashedEmployees as $employee) {
+            EmployeesController::checkMedicalResearch($employee);
+        }
+
+        return response()->json([
+            'trashedEmployees' => $trashedEmployees
         ]);
     }
 
@@ -269,12 +284,12 @@ class OrganizationController extends Controller
     {
         $organization = Organization::find($id);
         $this->authorize('isAdminAndOwner', $organization);
-        foreach ($organization->employees()->withTrashed()->get() as $employee) {
-            $employee->organization_name = null;
-            $employee->save();
-            $employee->delete();
+        $employees = $organization->employees()->withTrashed()->get();
+
+        if (count($employees) > 0) {
+            return response()->json(['hasEmployees' => true]);
         }
 
-        $organization->destroy($id);
+        $organization->delete();
     }
 }

@@ -8,11 +8,16 @@ import {redirect} from './middlewares/redirect';
 import {loadState, saveState} from './utils/localstorage';
 
 const persistedState = loadState();
+let middlewares = applyMiddleware(thunk, promise, redirect);
+
+if (process.env.NODE_ENV === 'development') {
+  middlewares = applyMiddleware(thunk, promise, logger, redirect);
+}
 
 export const store = createStore(
   reducer,
   persistedState,
-  composeWithDevTools(applyMiddleware(thunk, promise, logger, redirect)),
+  composeWithDevTools(middlewares),
 );
 
 store.subscribe(() => {

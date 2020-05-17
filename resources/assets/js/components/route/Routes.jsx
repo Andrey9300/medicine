@@ -52,6 +52,7 @@ import {PlaceCheckListContainer} from '../placeCheckList/PlaceCheckList';
 import {AddPlaceCheckListContainer} from '../placeCheckList/AddPlaceCheckList';
 import {PlaceCheckListCriterionsContainer} from '../placeCheckList/PlaceCheckListCriterions';
 import {PlaceCheckListCriterionsEditContainer} from '../placeCheckList/PlaceCheckListCriterionsEdit';
+import OrganizationTrashedEmployees from "../organization/OrganizationTrashedEmployees";
 
 export class Routes extends React.PureComponent {
   render() {
@@ -159,6 +160,11 @@ export class Routes extends React.PureComponent {
           exact
           path="/organizations/employees/:idOrganization"
           component={(props) => <OrganizationEmployees {...props} />}
+        />
+        <Route
+          exact
+          path="/organizations/trashedEmployees/:idOrganization"
+          component={(props) => <OrganizationTrashedEmployees {...props} />}
         />
         <Route
           exact

@@ -26,7 +26,7 @@ class EmployeeResearches extends React.PureComponent {
     super(props);
     this.state = {
       employeeId: props.idEmployee,
-      needVga: false,
+      needForPrint: new Map(),
     };
     this.handleClick = this.handleClick.bind(this);
   }
@@ -47,13 +47,15 @@ class EmployeeResearches extends React.PureComponent {
   }
 
   getButtons() {
-    const {employeeId, needVga} = this.state;
-    const params = needVga ? '?needVga=1' : '';
+    const {employeeId, needForPrint} = this.state;
 
     return (
       <>
         <Link
-          to={`/employees/print/${employeeId}${params}`}
+          to={{
+            pathname: `/employees/print/${employeeId}`,
+            state: needForPrint,
+          }}
           className="btn btn-secondary btn-sm pull-left"
           style={{marginRight: '16px'}}
         >
@@ -71,9 +73,10 @@ class EmployeeResearches extends React.PureComponent {
     );
   }
 
-  addToResearch() {
-    const {needVga} = this.state;
-    this.setState({needVga: !needVga});
+  addToResearch(event) {
+    const {needForPrint} = this.state;
+
+    needForPrint.set(event.target.value, event.target.checked);
   }
 
   render() {
@@ -123,6 +126,7 @@ class EmployeeResearches extends React.PureComponent {
                       <tr>
                         <th>Исследование</th>
                         <th>Дата</th>
+                        <th style={{borderRight: '1px solid #c2cfd6'}}>Добавить в текущее напраление</th>
                         <th>Отвод</th>
                       </tr>
                     </thead>
@@ -148,21 +152,6 @@ class EmployeeResearches extends React.PureComponent {
                             ? '1px solid red'
                             : {};
 
-                        let needVga = null;
-
-                        if (employeeResearch.research.id === 20) {
-                          needVga = (
-                            <span>
-                              Включить в направление{' '}
-                              <input
-                                type="checkbox"
-                                name={`needVga`}
-                                onChange={addToResearch}
-                              />
-                            </span>
-                          );
-                        }
-
                         return (
                           <tr key={employeeResearch.id}>
                             <td>
@@ -171,7 +160,6 @@ class EmployeeResearches extends React.PureComponent {
                               >
                                 {employeeResearch.research.name}
                               </div>
-                              {needVga}
                               <div
                                 style={{
                                   fontSize: '12px',
@@ -192,11 +180,21 @@ class EmployeeResearches extends React.PureComponent {
                                 style={{border, minWidth: '125px'}}
                               />
                             </td>
+                            <td style={{textAlign: 'center', borderRight: '1px solid #c2cfd6'}}>
+                              <Input
+                                  type="checkbox"
+                                  name={`is_current_research[${employeeResearch.research.id}]`}
+                                  value={employeeResearch.research.id}
+                                  onChange={addToResearch}
+                                  style={{width: '18px', height: '18px', margin: 0}}
+                              />
+                            </td>
                             <td style={{textAlign: 'center'}}>
                               <Input
                                 type="checkbox"
                                 name={`is_exception[${employeeResearch.pivot.id}]`}
                                 defaultChecked={employeeResearch.is_exception}
+                                style={{width: '18px', height: '18px', margin: 0}}
                               />
                             </td>
                           </tr>

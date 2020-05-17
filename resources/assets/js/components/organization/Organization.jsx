@@ -3,6 +3,7 @@ import {connect} from 'react-redux';
 import {
   fetchOrganization,
   deleteOrganization,
+  clearOrganization,
 } from './../../actions/organizationActions';
 import {fetchHospitals} from '../../actions/hospitalActions';
 import {EmployeesList} from '../employee/EmployeesList';
@@ -22,38 +23,52 @@ class Organization extends React.PureComponent {
   }
 
   componentDidMount() {
-    this.props.dispatch(fetchOrganization(this.state.organizationId));
-    this.props.dispatch(fetchHospitals());
+    const {dispatch} = this.props;
+
+    dispatch(clearOrganization());
+    dispatch(fetchOrganization(this.state.organizationId));
+    dispatch(fetchHospitals());
+
+    this.setResearches();
   }
 
-  componentDidUpdate(prevProps) {
+  componentDidUpdate(prevProps, prevState) {
     const {organization} = this.props;
 
     if (
       prevProps.organization !== organization &&
+      organization &&
+      organization.employees &&
       organization.employees.length > 0
     ) {
-      const employeesAttention = organization.employees.filter(
-        (item) =>
-          item.researches_ends.length > 0 || item.researches_expired.length > 0,
-      );
-
-      const researchesEnds = organization.employees.filter(
-        (item) => item.researches_ends.length > 0,
-      );
-
-      const researchesExpired = organization.employees.filter(
-        (item) =>
-          item.researches_expired.length > 0 &&
-          item.researches_ends.length === 0,
-      );
-
-      this.setState({
-        employeesAttention,
-        researchesEnds: researchesEnds.length,
-        researchesExpired: researchesExpired.length,
-      });
+      this.setResearches();
     }
+  }
+
+  setResearches() {
+    const {organization} = this.props;
+
+    if (!organization || !organization.employees) {
+      return;
+    }
+
+    const employeesAttention = organization.employees.filter(
+      (item) =>
+        item.researches_ends.length > 0 || item.researches_expired.length > 0,
+    );
+    const researchesEnds = organization.employees.filter(
+      (item) => item.researches_ends.length > 0,
+    );
+    const researchesExpired = organization.employees.filter(
+      (item) =>
+        item.researches_expired.length > 0 && item.researches_ends.length === 0,
+    );
+
+    this.setState({
+      employeesAttention,
+      researchesEnds: researchesEnds.length,
+      researchesExpired: researchesExpired.length,
+    });
   }
 
   handleBtnDelete(id, event) {
@@ -152,7 +167,7 @@ class Organization extends React.PureComponent {
             </Card>
             <EmployeesList
               employees={employeesAttention}
-              title={'Сотрудники требующие внимания'}
+              title={'Сотрудники требующие внимания '}
               status={{fetched: true, errors: null}}
             />
           </Col>
@@ -186,6 +201,15 @@ class Organization extends React.PureComponent {
                       </td>
                       <td>{researchesEnds} чел.</td>
                     </tr>
+                    <tr>
+                      <td>
+                        <Link
+                          to={`/organizations/trashedEmployees/${organization.id}`}
+                        >
+                          Сотрудники в архиве
+                        </Link>
+                      </td>
+                    </tr>
                   </tbody>
                 </Table>
               </CardBody>
@@ -217,14 +241,57 @@ class Organization extends React.PureComponent {
                 Информация
               </CardHeader>
               <CardBody className="card-body">
-                С подробной информацией о медицинских осмотрах Вы можете ознакомиться по ссылкам:
+                С подробной информацией о медицинских осмотрах Вы можете
+                ознакомиться по ссылкам:
                 <ul style={{listStyleType: 'none'}}>
-                  <li><a href="/blog/medicinskie-osmotry/lichnaja-medicinskaja-knizhka-lmk/" target="_blank">Оформление личной медицинской книжки (ЛМК)</a></li>
-                  <li><a href="/blog/medicinskie-osmotry/gigienicheskoe-obuchenie-i-attestacija-goia/" target="_blank">Гигиеническое обучение и аттестация (ГОиА).</a></li>
-                  <li><a href="/blog/medicinskie-osmotry/vakcinacija-objazatelnye-profilakticheskie-privivki-dlja-lmk/" target="_blank">Вакцинация (для ЛМК).</a></li>
-                  <li><a href="/blog/medicinskie-osmotry/medicinskij-otvod-i-dobrovolnyj-otkaz-ot-vakcinacii-privivok/" target="_blank">Медицинский отвод от вакцинации.</a></li>
-                  <li><a href="/blog/medicinskie-osmotry/predvaritelnyj-i-periodicheskij-medicinskie-osmotry/" target="_blank">Предварительный и периодический медицинский осмотр.</a></li>
-                  <li><a href="/blog/medicinskie-osmotry/psihiatricheskoe-osvidetelstvovanie/" target="_blank">Психиатрическое освидетельствование.</a></li>
+                  <li>
+                    <a
+                      href="/blog/medicinskie-osmotry/lichnaja-medicinskaja-knizhka-lmk/"
+                      target="_blank"
+                    >
+                      Оформление личной медицинской книжки (ЛМК)
+                    </a>
+                  </li>
+                  <li>
+                    <a
+                      href="/blog/medicinskie-osmotry/gigienicheskoe-obuchenie-i-attestacija-goia/"
+                      target="_blank"
+                    >
+                      Гигиеническое обучение и аттестация (ГОиА).
+                    </a>
+                  </li>
+                  <li>
+                    <a
+                      href="/blog/medicinskie-osmotry/vakcinacija-objazatelnye-profilakticheskie-privivki-dlja-lmk/"
+                      target="_blank"
+                    >
+                      Вакцинация (для ЛМК).
+                    </a>
+                  </li>
+                  <li>
+                    <a
+                      href="/blog/medicinskie-osmotry/medicinskij-otvod-i-dobrovolnyj-otkaz-ot-vakcinacii-privivok/"
+                      target="_blank"
+                    >
+                      Медицинский отвод от вакцинации.
+                    </a>
+                  </li>
+                  <li>
+                    <a
+                      href="/blog/medicinskie-osmotry/predvaritelnyj-i-periodicheskij-medicinskie-osmotry/"
+                      target="_blank"
+                    >
+                      Предварительный и периодический медицинский осмотр.
+                    </a>
+                  </li>
+                  <li>
+                    <a
+                      href="/blog/medicinskie-osmotry/psihiatricheskoe-osvidetelstvovanie/"
+                      target="_blank"
+                    >
+                      Психиатрическое освидетельствование.
+                    </a>
+                  </li>
                 </ul>
               </CardBody>
             </Card>

@@ -4,6 +4,8 @@ import {
   fetchEmployee,
   fetchEmployeeResearches,
   editEmployeeJson,
+  clearEmployee,
+  clearEmployeeResearches,
 } from './../../actions/employeeActions';
 import {Link} from 'react-router-dom';
 import PropTypes from 'prop-types';
@@ -24,45 +26,51 @@ import {createMarkup} from '../../utils/errorsHelper';
 class PrintEmployee extends React.PureComponent {
   constructor(props) {
     super(props);
-    const searchParams = new URLSearchParams(props.location.search);
 
     this.state = {
       errors: null,
       employeeId: props.match.params.id,
-      needVga: searchParams.get('needVga') ? true : false,
+      needForResearch: props.location.state,
     };
   }
 
   componentDidMount() {
-    this.props.dispatch(fetchEmployeeResearches(this.state.employeeId));
-    this.props.dispatch(fetchEmployee(this.state.employeeId));
-    this.props.dispatch(fetchHospitals());
+    const {dispatch} = this.props;
+
+    dispatch(clearEmployeeResearches());
+    dispatch(clearEmployee());
+
+    dispatch(fetchEmployeeResearches(this.state.employeeId));
+    dispatch(fetchEmployee(this.state.employeeId));
+    dispatch(fetchHospitals());
   }
 
   componentDidUpdate(prevProps) {
     const {employee} = this.props;
 
-    if (prevProps.employee !== employee) {
+    if (prevProps.employee !== employee && employee && employee.organization) {
       this.props.dispatch(fetchOrganization(employee.organization.id));
     }
   }
 
-  addNeedVga() {
-    const {needVga} = this.state;
+  addNeedForResearch() {
+    const {needForResearch} = this.state;
     const {employeeResearches} = this.props;
-    let vga2Research = null;
+    const researches = [];
 
-    if (!needVga) {
-      return null;
+    if (!needForResearch) {
+      return [];
     }
 
-    employeeResearches.forEach((employeeResearch) => {
-      if (employeeResearch.research.id === 20) {
-        vga2Research = employeeResearch.research;
-      }
+    needForResearch.forEach((value, key) => {
+      employeeResearches.forEach((employeeResearch) => {
+        if (employeeResearch.research.id === Number(key)) {
+          researches.push(employeeResearch.research);
+        }
+      });
     });
 
-    return vga2Research;
+    return researches;
   }
 
   researches() {
@@ -73,9 +81,7 @@ class PrintEmployee extends React.PureComponent {
       employee.researches_ends,
     );
 
-    if (this.addNeedVga()) {
-      researches.push(this.addNeedVga());
-    }
+    researches.push(...this.addNeedForResearch());
 
     // в отдельный раздел псих. осв., предварительный / периодический МО
     const filterResearches = researches.filter((research) => {
@@ -89,23 +95,20 @@ class PrintEmployee extends React.PureComponent {
     });
 
     filterResearches.forEach((research, index) => {
-      if (index % 2 === 0) {
+      if (index % 2 === 1) {
         bufferTr.push(
-          <tr key={research.id}>
+          <tr key={index}>
             {bufferTd}
             <td>{research.name}</td>
           </tr>,
         );
         bufferTd = [];
       } else {
-        bufferTd.push(<td key={research.id}>{research.name}</td>);
+        bufferTd.push(<td key={index}>{research.name}</td>);
       }
     });
 
-    if (
-      (bufferTr.length % 2 === 1 && bufferTd.length) ||
-      (bufferTr.length === 0 && bufferTd.length)
-    ) {
+    if (bufferTd.length) {
       bufferTr.push(<tr key={999}>{bufferTd}</tr>);
     }
 
@@ -172,7 +175,8 @@ class PrintEmployee extends React.PureComponent {
               сертификата.
             </span>
             <br />
-            Вакцинация от Вирусного гепатита А проводится двукратно с интервалом 6-18 мес.
+            Вакцинация от Вирусного гепатита А проводится двукратно с интервалом
+            6-18 мес.
             <br />
             Вакцинация от дизентерии Зонне проводится ежегодно
           </td>
@@ -242,7 +246,7 @@ class PrintEmployee extends React.PureComponent {
       );
     }
 
-    if (!employee || !hospitalOrg) {
+    if (!hospitalOrg && hospital.fetched) {
       return (
         <Card>
           <CardHeader>
@@ -255,6 +259,10 @@ class PrintEmployee extends React.PureComponent {
           </CardBody>
         </Card>
       );
+    }
+
+    if (!employee || !hospitalOrg) {
+      return null;
     }
 
     return (
@@ -467,6 +475,10 @@ class PrintEmployee extends React.PureComponent {
                         }}
                       >
                         <td rowSpan="7">
+                          <span style={{fontWeight: '600'}}>
+                            Пройти медицинский осмотр до:{' '}
+                          </span>
+                          <input type="text" />
                           <textarea
                             style={{width: '100%'}}
                             rows="7"

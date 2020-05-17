@@ -1,15 +1,14 @@
 import {
-  fetchOrganization,
-  deleteOrganizationEmployee,
-  clearOrganizationEmployees,
+  fetchOrganizationTrashedEmployees,
+  deleteOrganizationEmployee, fetchOrganization,
 } from '../../actions/organizationActions';
 import {EmployeesList} from '../employee/EmployeesList';
 import React from 'react';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
-import {Row, Col, Card, CardHeader, CardBody} from 'reactstrap';
+import {Row, Col} from 'reactstrap';
 
-class OrganizationEmployee extends React.PureComponent {
+class OrganizationTrashedEmployees extends React.PureComponent {
   constructor(props) {
     super(props);
 
@@ -18,25 +17,11 @@ class OrganizationEmployee extends React.PureComponent {
     };
   }
 
-  getMessage(message) {
-    const {title} = this.props;
-
-    return (
-      <Card>
-        <CardHeader>
-          <i className="fa fa-users" aria-hidden="true" />
-          {title}
-        </CardHeader>
-        <CardBody className="card-body">{message}</CardBody>
-      </Card>
-    );
-  }
-
   componentDidMount() {
-    const {dispatch} = this.props;
-
-    dispatch(clearOrganizationEmployees());
-    dispatch(fetchOrganization(this.state.organizationId));
+    this.props.dispatch(
+      fetchOrganizationTrashedEmployees(this.state.organizationId),
+    );
+    this.props.dispatch(fetchOrganization(this.state.organizationId));
   }
 
   handleBtnDelete(idEmployee, event) {
@@ -49,10 +34,6 @@ class OrganizationEmployee extends React.PureComponent {
   render() {
     const {user, organization} = this.props;
 
-    if (!organization.fetched) {
-      return this.getMessage('Загрузка');
-    }
-
     if (!organization.organization) {
       return null;
     }
@@ -63,9 +44,9 @@ class OrganizationEmployee extends React.PureComponent {
           <Col xs="12" lg="12">
             <EmployeesList
               user={user}
-              employees={organization.organization.employees}
+              employees={organization.organization.trashedEmployees}
               handleBtnDelete={this.handleBtnDelete.bind(this)}
-              title={`Сотрудники «${organization.organization.name}» `}
+              title={`Сотрудники в архиве «${organization.organization.name}» `}
               status={{fetched: true, errors: null}}
             />
           </Col>
@@ -75,7 +56,7 @@ class OrganizationEmployee extends React.PureComponent {
   }
 }
 
-OrganizationEmployee.propTypes = {
+OrganizationTrashedEmployees.propTypes = {
   dispatch: PropTypes.func,
   match: PropTypes.object,
   router: PropTypes.object,
@@ -88,4 +69,4 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps)(OrganizationEmployee);
+export default connect(mapStateToProps)(OrganizationTrashedEmployees);

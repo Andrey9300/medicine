@@ -34,7 +34,7 @@ export class EmployeesList extends React.PureComponent {
         <Card>
           <CardHeader>
             <i className="fa fa-users" aria-hidden="true" />
-            Cотрудников нет
+              {title}
             <Link
               to="/employees/create"
               className="btn btn-primary btn-sm pull-right"
@@ -43,6 +43,7 @@ export class EmployeesList extends React.PureComponent {
             </Link>
           </CardHeader>
           <CardBody className="card-body">
+            <div>Таких сотрудников нет</div>
             <Link to="/employees">Перейти ко всем сотрудникам</Link>
           </CardBody>
         </Card>

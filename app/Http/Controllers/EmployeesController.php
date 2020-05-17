@@ -259,7 +259,6 @@ class EmployeesController extends Controller
         }
     }
 
-
     /**
      * Поиск просроченных иследований
      *
@@ -268,7 +267,6 @@ class EmployeesController extends Controller
     public static function checkMedicalResearch($employee)
     {
         $userAdmin = IndexController::findAdmin();
-        $userResearches = $userAdmin->researches;
         $options_ends = $employee->researches_ends = []; // просрочено
         $options_expired = $employee->researches_expired = []; // подходит к концу
         $employee->sumForReseaches = 0;
@@ -277,14 +275,8 @@ class EmployeesController extends Controller
         $gepatitDate2 = null;
         $gepatitResearch1 = null;
         $gepatitResearch2 = null;
-        $userResearchesFiltered = [];
+        $userResearchesFiltered = $userAdmin->researches->where('category_id', $employeeCategoryId);
         $researches = Research::all();
-
-        foreach ($userResearches as $userResearch) {
-            if ($userResearch->category_id === $employeeCategoryId) {
-                array_push($userResearchesFiltered, $userResearch);
-            }
-        }
 
         foreach ($userResearchesFiltered as $userResearch) {
             $research = $researches->find($userResearch->research_id);
@@ -396,8 +388,8 @@ class EmployeesController extends Controller
             }
         }
 
-        // для гепатита А разница между дата №1 и дата №2 должна быть не больше 18 месяцев
-        $diffMonthGepatit = 18;
+        // для гепатита А разница между дата №1 и дата №2 должна быть не больше 12 месяцев
+        $diffMonthGepatit = 12;
         if (!is_null($gepatitDate1) && !is_null($gepatitDate2)) {
             $diffGepatit = $gepatitDate1->diffInMonths($gepatitDate2);
 

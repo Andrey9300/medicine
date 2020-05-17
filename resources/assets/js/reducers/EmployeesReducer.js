@@ -59,7 +59,7 @@ export default function reducer(state = initialState, action) {
       return {
         ...state,
         errors: null,
-        fetched: true,
+        fetched: false,
         employee: null,
       };
     }
