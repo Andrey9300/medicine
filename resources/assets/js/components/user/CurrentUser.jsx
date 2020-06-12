@@ -37,7 +37,7 @@ class CurrentUser extends React.PureComponent {
               <CardHeader>
                 <i className="fa fa-building-o" aria-hidden="true" />Пользователь
                 <Link
-                  to={`/profile/edit/${user.id}`}
+                  to={`/lmk/profile/edit/${user.id}`}
                   style={{
                     marginLeft: '18px',
                   }}

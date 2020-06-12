@@ -24,7 +24,7 @@ export function editCriterion(formElement = null, legalEntityId) {
       .post(`/criterions/update/${legalEntityId}`, new FormData(formElement))
       .then(() => {
         alert('Критерий успешно отредактирован');
-        history.pushState(null, null, `/criterion/${legalEntityId}`);
+        history.pushState(null, null, `/lmk/criterion/${legalEntityId}`);
         window.location.reload();
       })
       .catch((errors) => {
@@ -79,7 +79,7 @@ export function deleteCriterion(id) {
     axios
       .post(`/criterions/destroy/${id}`)
       .then(() => {
-        history.pushState(null, null, '/criterions');
+        history.pushState(null, null, '/lmk/criterions');
         window.location.reload();
       })
       .catch((error) => {

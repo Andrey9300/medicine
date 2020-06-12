@@ -38,7 +38,7 @@ class ResetPassword extends React.PureComponent {
     axios
       .post('/password/reset', new FormData(formElement))
       .then(() => {
-        history.pushState(null, null, '/login');
+        history.pushState(null, null, '/lmk/login');
         window.location.reload();
       })
       .catch((error) => {

@@ -21,7 +21,7 @@ class Organizations extends React.PureComponent {
               <Card className="text-center">
                 <CardHeader>Организаций нет</CardHeader>
                 <CardBody>
-                  <Link to={'/organizations/create'}>Добавить организацию</Link>
+                  <Link to={'/lmk/organizations/create'}>Добавить организацию</Link>
                 </CardBody>
               </Card>
             </Col>
@@ -39,7 +39,7 @@ class Organizations extends React.PureComponent {
                 <i className="fa fa-building-o" aria-hidden="true" />
                 Объекты ({organizations.length})
                 <Link
-                  to={'/organizations/create'}
+                  to={'/lmk/organizations/create'}
                   className="btn btn-primary btn-sm pull-right"
                 >
                   Добавить <i className="icon-plus" />
@@ -60,7 +60,7 @@ class Organizations extends React.PureComponent {
                       return (
                         <tr key={organization.id}>
                           <td>
-                            <Link to={`/organization/${organization.id}`}>
+                            <Link to={`/lmk/organization/${organization.id}`}>
                               {organization.name}
                             </Link>
                           </td>
@@ -68,7 +68,7 @@ class Organizations extends React.PureComponent {
                           <td>{organization.head_email}</td>
                           <td>
                             <Link
-                              to={`/organizations/employees/${organization.id}`}
+                              to={`/lmk/organizations/employees/${organization.id}`}
                               className="btn btn-info btn-xs pull-left"
                             >
                               Сотрудники

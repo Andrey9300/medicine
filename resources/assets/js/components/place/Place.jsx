@@ -52,7 +52,7 @@ class Place extends React.PureComponent {
                 <i className="fa fa-building-o" aria-hidden="true" />
                 Помещение
                 <Link
-                  to={`/places/edit/${place.id}`}
+                  to={`/lmk/places/edit/${place.id}`}
                   style={{
                     marginLeft: '18px',
                   }}

@@ -36,7 +36,7 @@ export class EmployeesList extends React.PureComponent {
             <i className="fa fa-users" aria-hidden="true" />
               {title}
             <Link
-              to="/employees/create"
+              to="/lmk/employees/create"
               className="btn btn-primary btn-sm pull-right"
             >
               Добавить <i className="icon-plus" />
@@ -44,7 +44,7 @@ export class EmployeesList extends React.PureComponent {
           </CardHeader>
           <CardBody className="card-body">
             <div>Таких сотрудников нет</div>
-            <Link to="/employees">Перейти ко всем сотрудникам</Link>
+            <Link to="/lmk/employees">Перейти ко всем сотрудникам</Link>
           </CardBody>
         </Card>
       );
@@ -56,7 +56,7 @@ export class EmployeesList extends React.PureComponent {
           <i className="fa fa-users" aria-hidden="true" />
           {title} ({employees.length})
           <Link
-            to="/employees/create"
+            to="/lmk/employees/create"
             className="btn btn-primary btn-sm pull-right"
           >
             Добавить <i className="icon-plus" />
@@ -77,7 +77,7 @@ export class EmployeesList extends React.PureComponent {
                 return (
                   <tr key={employee.id}>
                     <td>
-                      <Link to={`/employee/${employee.id}`}>
+                      <Link to={`/lmk/employee/${employee.id}`}>
                         {employee.fio}
                       </Link>
                       <div
@@ -117,7 +117,7 @@ export class EmployeesList extends React.PureComponent {
                       {(employee.researches_ends.length > 0 ||
                         employee.researches_expired.length > 0) && (
                         <Link
-                          to={`/employees/print/${employee.id}`}
+                          to={`/lmk/employees/print/${employee.id}`}
                           className="btn btn-secondary btn-sm pull-left"
                         >
                           Направление
@@ -132,7 +132,7 @@ export class EmployeesList extends React.PureComponent {
         </CardBody>
         <CardFooter>
           <Link
-            to="/employees/create"
+            to="/lmk/employees/create"
             className="btn btn-primary btn-sm pull-right"
           >
             Добавить <i className="icon-plus" />

@@ -52,12 +52,12 @@ class Sidebar extends React.PureComponent {
       navItems = (
         <Nav>
           <NavItem>
-            <Link to={'/profile'} className={profileClass}>
+            <Link to={'/lmk/profile'} className={profileClass}>
               <i className="fa fa-user-o" aria-hidden="true" /> Профиль
             </Link>
           </NavItem>
           <NavItem>
-            <Link to={'/organizations'} className={organizationsClass}>
+            <Link to={'/lmk/organizations'} className={organizationsClass}>
               <i className="fa fa-building-o" aria-hidden="true" /> Объекты
             </Link>
           </NavItem>
@@ -69,18 +69,18 @@ class Sidebar extends React.PureComponent {
           </NavItem>
           <Collapse isOpen={collapseLmk}>
             <NavItem>
-              <Link to={'/employees'} className={employeesClass}>
+              <Link to={'/lmk/employees'} className={employeesClass}>
                 <i className="fa fa-users" aria-hidden="true" /> Сотрудники
               </Link>
             </NavItem>
             <NavItem>
-              <Link to={'/hospitals'} className={hospitalsClass}>
+              <Link to={'/lmk/hospitals'} className={hospitalsClass}>
                 <i className="fa fa-stethoscope" aria-hidden="true" />{' '}
                 Медицинские центры
               </Link>
             </NavItem>
             <NavItem>
-              <Link to={'/researches'} className={researchesClass}>
+              <Link to={'/lmk/researches'} className={researchesClass}>
                 <i className="fa fa-heartbeat" aria-hidden="true" />{' '}
                 Исследования
               </Link>
@@ -94,24 +94,24 @@ class Sidebar extends React.PureComponent {
           </NavItem>
           <Collapse isOpen={collapseAudit}>
             <NavItem>
-              <Link to={'/auditors'} className={researchesClass}>
+              <Link to={'/lmk/auditors'} className={researchesClass}>
                 <i className="fa fa-user-circle" aria-hidden="true" /> Аудиторы
               </Link>
             </NavItem>
             <NavItem>
-              <Link to={'/criterionLists'} className={researchesClass}>
+              <Link to={'/lmk/criterionLists'} className={researchesClass}>
                 <i className="fa fa-book" aria-hidden="true" /> Чек-листы
               </Link>
             </NavItem>
             <NavItem>
-              <Link to={'/structureCheckList'} className={researchesClass}>
+              <Link to={'/lmk/structureCheckList'} className={researchesClass}>
                 <i className="fa fa-book" aria-hidden="true" /> Структура чек-листа
               </Link>
             </NavItem>
           </Collapse>
 
           <NavItem>
-            <Link to={'/'} onClick={this.logout.bind(this)}>
+            <Link to={'/lmk/'} onClick={this.logout.bind(this)}>
               <i className="fa fa-lock" aria-hidden="true" /> Выход
             </Link>
           </NavItem>
@@ -121,12 +121,12 @@ class Sidebar extends React.PureComponent {
       navItems = (
         <Nav>
           <NavItem>
-            <Link to={'/login'}>
+            <Link to={'/lmk/login'}>
               <i className="fa fa-lock" aria-hidden="true" /> Вход
             </Link>
           </NavItem>
           <NavItem>
-            <Link to={'/registration'}>
+            <Link to={'/lmk/registration'}>
               <i className="fa fa-lock" aria-hidden="true" /> Регистрация
             </Link>
           </NavItem>

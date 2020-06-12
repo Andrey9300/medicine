@@ -108,7 +108,7 @@ class Organization extends React.PureComponent {
                 <i className="fa fa-building-o" aria-hidden="true" />«
                 {organization.name}»
                 <Link
-                  to={`/organizations/edit/${organization.id}`}
+                  to={`/lmk/organizations/edit/${organization.id}`}
                   style={{
                     marginLeft: '18px',
                   }}
@@ -184,7 +184,7 @@ class Organization extends React.PureComponent {
                       <td>Вы контролируете медицинские осмотры:</td>
                       <td>
                         <Link
-                          to={`/organizations/employees/${organization.id}`}
+                          to={`/lmk/organizations/employees/${organization.id}`}
                         >
                           {organization.employees.length} чел.
                         </Link>
@@ -204,7 +204,7 @@ class Organization extends React.PureComponent {
                     <tr>
                       <td>
                         <Link
-                          to={`/organizations/trashedEmployees/${organization.id}`}
+                          to={`/lmk/organizations/trashedEmployees/${organization.id}`}
                         >
                           Сотрудники в архиве
                         </Link>
@@ -225,7 +225,7 @@ class Organization extends React.PureComponent {
                     {hospitals.map((hospital) => (
                       <tr key={hospital.id}>
                         <td>
-                          <Link to={`/hospital/${hospital.id}`}>
+                          <Link to={`/lmk/hospital/${hospital.id}`}>
                             {hospital.name}
                           </Link>
                         </td>

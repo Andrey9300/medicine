@@ -75,7 +75,7 @@ class Budget extends React.PureComponent {
                       <tr>
                         <td>
                           <Link
-                            to={`/organizations/edit/${organization.id}`}
+                            to={`/lmk/organizations/edit/${organization.id}`}
                             className="btn btn-success btn-xs pull-left"
                           >
                             Редактировать

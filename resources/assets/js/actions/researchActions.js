@@ -31,7 +31,7 @@ export function fetchUserResearches() {
         });
       })
       .catch((error) => {
-        history.replaceState(null, null, '/login');
+        history.replaceState(null, null, '/lmk/login');
         window.location.reload();
         dispatch({
           payload: error,

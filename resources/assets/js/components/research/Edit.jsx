@@ -39,7 +39,7 @@ class EditResearch extends React.PureComponent {
         new FormData(formElement),
       )
       .then(() => {
-        history.pushState(null, null, '/researches');
+        history.pushState(null, null, '/lmk/researches');
         window.location.reload();
       })
       .catch((error) => {

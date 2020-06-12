@@ -31,7 +31,7 @@ class Hospitals extends React.PureComponent {
               <Card className="text-center">
                 <CardHeader>Медицинских центров нет</CardHeader>
                 <CardBody>
-                  <Link to={'/hospitals/create'}>
+                  <Link to={'/lmk/hospitals/create'}>
                     Добавить медицинский центр
                   </Link>
                 </CardBody>
@@ -66,7 +66,7 @@ class Hospitals extends React.PureComponent {
                       return (
                         <tr key={hospital.id}>
                           <td>
-                            <Link to={`/hospital/${hospital.id}`}>
+                            <Link to={`/lmk/hospital/${hospital.id}`}>
                               {hospital.name}
                             </Link>
                           </td>

@@ -46,7 +46,7 @@ class YouHead extends Notification
             ->subject('Добавление организации в сервисе медицинских книжек')
             ->greeting('Здравствуйте!')
             ->line('Вас назначили менеджером объекта ' . $this->organization_name . ' в сервисе медицинских книжек')
-            ->action('Войти', url(env('APP_URL') . '/login'));
+            ->action('Войти', url(env('APP_URL') . '/lmk/login'));
     }
 
     /**

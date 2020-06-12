@@ -24,7 +24,7 @@ export function editGroupCriterion(formElement = null, legalEntityId) {
       .post(`/groupCriterions/update/${legalEntityId}`, new FormData(formElement))
       .then(() => {
         alert('Критерий успешно отредактирован');
-        history.pushState(null, null, `/groupCriterion/${legalEntityId}`);
+        history.pushState(null, null, `/lmk/groupCriterion/${legalEntityId}`);
         window.location.reload();
       })
       .catch((errors) => {
@@ -79,7 +79,7 @@ export function deleteGroupCriterion(id) {
     axios
       .post(`/groupCriterions/destroy/${id}`)
       .then(() => {
-        history.pushState(null, null, '/groupCriterions');
+        history.pushState(null, null, '/lmk/groupCriterions');
         window.location.reload();
       })
       .catch((error) => {

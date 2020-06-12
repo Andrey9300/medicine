@@ -53,7 +53,7 @@ class Hospital extends React.PureComponent {
                   <i className="fa fa-stethoscope" aria-hidden="true" />«
                   {hospital.name}»
                   <Link
-                    to={`/hospitals/edit/${hospital.id}`}
+                    to={`/lmk/hospitals/edit/${hospital.id}`}
                     style={{
                       marginLeft: '18px',
                     }}

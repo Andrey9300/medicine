@@ -18,7 +18,7 @@ class ActivateAccount extends React.PureComponent {
             <Card className="text-center">
               <CardHeader>Вы активировали email</CardHeader>
               <CardBody>
-                <Link to={'/organizations/create'} className={'active'}>
+                <Link to={'/lmk/organizations/create'} className={'active'}>
                   Добавить компанию
                 </Link>
               </CardBody>

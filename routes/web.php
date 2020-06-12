@@ -1,5 +1,6 @@
 <?php
 Route::view('/', 'layouts.main');
+Route::view('/lmk_welcome', 'layouts.lmk_welcome');
 
 Route::get('/activateAccount/{id}/{token}', 'Auth\RegisterController@activation')->name('activation');
 Route::view('/{path?}', 'layouts.app')

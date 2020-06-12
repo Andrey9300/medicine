@@ -6,7 +6,7 @@ export const redirect = (store) => (next) => (action) => {
       },
       type: 'LOGOUT_USER_FULFILLED',
     });
-    history.pushState(null, null, '/login');
+    history.pushState(null, null, '/lmk/login');
     window.location.reload();
   }
 

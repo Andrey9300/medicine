@@ -7,7 +7,7 @@ export function addPlaceCheckList(formElement = null, placeCheckListId) {
       .post(`/placeCheckLists/store/${placeCheckListId}`, new FormData(formElement))
       .then(() => {
         alert('Помещение успешно создано');
-        history.pushState(null, null, `/placeCheckList/${placeCheckListId}`);
+        history.pushState(null, null, `/lmk/placeCheckList/${placeCheckListId}`);
         window.location.reload();
       })
       .catch((errors) => {
@@ -25,7 +25,7 @@ export function editPlaceCheckList(formElement = null, legalEntityId) {
       .post(`/placeCheckLists/update/${legalEntityId}`, new FormData(formElement))
       .then(() => {
         alert('Чек лист успешно отредактирован');
-        history.pushState(null, null, `/placeCheckList/${legalEntityId}`);
+        history.pushState(null, null, `/lmk/placeCheckList/${legalEntityId}`);
         window.placeCheckList.reload();
       })
       .catch((errors) => {
@@ -99,7 +99,7 @@ export function deletePlaceCheckList(id) {
     axios
       .post(`/placeCheckLists/destroy/${id}`)
       .then(() => {
-        history.pushState(null, null, '/placeCheckLists');
+        history.pushState(null, null, '/lmk/placeCheckLists');
         window.placeCheckList.reload();
       })
       .catch((error) => {

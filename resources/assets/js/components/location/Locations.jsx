@@ -53,7 +53,7 @@ class Locations extends React.PureComponent {
                       return (
                         <tr key={location.id}>
                           <td>
-                            <Link to={`/location/${location.id}`}>
+                            <Link to={`/lmk/location/${location.id}`}>
                               {location.name}
                             </Link>
                           </td>

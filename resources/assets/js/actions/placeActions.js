@@ -24,7 +24,7 @@ export function editPlace(formElement = null, legalEntityId) {
       .post(`/places/update/${legalEntityId}`, new FormData(formElement))
       .then(() => {
         alert('Критерий успешно отредактирован');
-        history.pushState(null, null, `/place/${legalEntityId}`);
+        history.pushState(null, null, `/lmk/place/${legalEntityId}`);
         window.place.reload();
       })
       .catch((errors) => {
@@ -79,7 +79,7 @@ export function deletePlace(id) {
     axios
       .post(`/places/destroy/${id}`)
       .then(() => {
-        history.pushState(null, null, '/places');
+        history.pushState(null, null, '/lmk/places');
         window.place.reload();
       })
       .catch((error) => {

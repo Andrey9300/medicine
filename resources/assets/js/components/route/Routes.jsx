@@ -58,233 +58,233 @@ export class Routes extends React.PureComponent {
   render() {
     return (
       <>
-        <Route exact path="/main" component={(props) => <Main {...props} />} />
+        <Route exact path="/lmk/main" component={(props) => <Main {...props} />} />
         <Route
           exact
-          path="/login"
+          path="/lmk/login"
           component={(props) => <Login {...props} />}
         />
         <Route
           exact
-          path="/registration"
+          path="/lmk/registration"
           component={(props) => <Registration {...props} />}
         />
         <Route
           exact
-          path="/restorePassword"
+          path="/lmk/restorePassword"
           component={(props) => <RestorePassword {...props} />}
         />
         <Route
           exact
-          path="/resetPassword"
+          path="/lmk/resetPassword"
           component={(props) => <ResetPassword {...props} />}
         />
         <Route
           exact
-          path="/activateAccount"
+          path="/lmk/activateAccount"
           component={(props) => <ActivateAccount {...props} />}
         />
         <Route
           exact
-          path="/profile"
+          path="/lmk/profile"
           component={(props) => <CurrentUserContainer {...props} />}
         />
         <Route
           exact
-          path="/profiles/:id"
+          path="/lmk/profiles/:id"
           component={(props) => <UserContainer {...props} />}
         />
         <Route
           exact
-          path="/profiles/edit/:id"
+          path="/lmk/profiles/edit/:id"
           component={(props) => <EditUserContainer {...props} />}
         />
         <Route
           exact
-          path="/profiles/create"
+          path="/lmk/profiles/create"
           component={(props) => <NewUserContainer {...props} />}
         />
         <Route
           exact
-          path="/auditors"
+          path="/lmk/auditors"
           component={(props) => <AuditorsContainer {...props} />}
         />
 
         <Route
           exact
-          path="/hospital/:id"
+          path="/lmk/hospital/:id"
           component={(props) => <Hospital {...props} />}
         />
         <Route
           exact
-          path="/hospitals"
+          path="/lmk/hospitals"
           component={(props) => <Hospitals {...props} />}
         />
         <Route
           exact
-          path="/hospitals/create"
+          path="/lmk/hospitals/create"
           component={(props) => <NewHospital {...props} />}
         />
         <Route
           exact
-          path="/hospitals/edit/:id"
+          path="/lmk/hospitals/edit/:id"
           component={(props) => <EditHospital {...props} />}
         />
         <Route
           exact
-          path="/hospitals/researches/:idHospital"
+          path="/lmk/hospitals/researches/:idHospital"
           component={(props) => <HospitalResearches {...props} />}
         />
 
         <Route
           exact
-          path="/organization/:id"
+          path="/lmk/organization/:id"
           component={(props) => <OrganizationContainer {...props} />}
         />
         <Route
           exact
-          path="/organizations"
+          path="/lmk/organizations"
           component={(props) => <OrganizationsContainer {...props} />}
         />
         <Route
           exact
-          path="/organizations/create"
+          path="/lmk/organizations/create"
           component={(props) => <NewOrganizationContainer {...props} />}
         />
         <Route
           exact
-          path="/organizations/edit/:id"
+          path="/lmk/organizations/edit/:id"
           component={(props) => <EditOrganization {...props} />}
         />
         <Route
           exact
-          path="/organizations/employees/:idOrganization"
+          path="/lmk/organizations/employees/:idOrganization"
           component={(props) => <OrganizationEmployees {...props} />}
         />
         <Route
           exact
-          path="/organizations/trashedEmployees/:idOrganization"
+          path="/lmk/organizations/trashedEmployees/:idOrganization"
           component={(props) => <OrganizationTrashedEmployees {...props} />}
         />
         <Route
           exact
-          path="/organizations/budget/:idOrganization"
+          path="/lmk/organizations/budget/:idOrganization"
           component={(props) => <OrganizationBudget {...props} />}
         />
 
         <Route
           exact
-          path="/researches"
+          path="/lmk/researches"
           component={(props) => <Researches {...props} />}
         />
         <Route
           exact
-          path="/researches/create"
+          path="/lmk/researches/create"
           component={(props) => <NewResearch {...props} />}
         />
         <Route
           exact
-          path="/researches/edit/:id"
+          path="/lmk/researches/edit/:id"
           component={(props) => <EditResearch {...props} />}
         />
 
         <Route
           exact
-          path="/employee/:id"
+          path="/lmk/employee/:id"
           component={(props) => <Employee {...props} />}
         />
         <Route
           exact
-          path="/employees"
+          path="/lmk/employees"
           component={(props) => <Employees {...props} />}
         />
         <Route
           exact
-          path="/employeesDeleted"
+          path="/lmk/employeesDeleted"
           component={(props) => <EmployeesDeleted {...props} />}
         />
         <Route
           exact
-          path="/employees/create"
+          path="/lmk/employees/create"
           component={(props) => <NewEmployee {...props} />}
         />
         <Route
           exact
-          path="/employees/edit/:id"
+          path="/lmk/employees/edit/:id"
           component={(props) => <EditEmployee {...props} />}
         />
         <Route
           exact
-          path="/employees/print/:id"
+          path="/lmk/employees/print/:id"
           component={(props) => <PrintEmployee {...props} />}
         />
         <Route
           exact
-          path="/employees/researches/:idEmployee"
+          path="/lmk/employees/researches/:idEmployee"
           component={(props) => <EmployeeResearches {...props} />}
         />
 
         <Route
           exact
-          path="/criterion/:id"
+          path="/lmk/criterion/:id"
           component={(props) => <CriterionContainer {...props} />}
         />
         <Route
           exact
-          path="/criterions"
+          path="/lmk/criterions"
           component={(props) => <CriterionsContainer {...props} />}
         />
         <Route
           exact
-          path="/criterions/edit/:id"
+          path="/lmk/criterions/edit/:id"
           component={(props) => <EditCriterion {...props} />}
         />
 
         <Route
           exact
-          path="/structureCheckList"
+          path="/lmk/structureCheckList"
           component={(props) => <StructureCheckList {...props} />}
         />
 
         <Route
           exact
-          path="/criterionList/:id"
+          path="/lmk/criterionList/:id"
           component={(props) => <CriterionListContainer {...props} />}
         />
         <Route
           exact
-          path="/criterionLists"
+          path="/lmk/criterionLists"
           component={(props) => <CriterionListsContainer {...props} />}
         />
         <Route
           exact
-          path="/criterionLists/create"
+          path="/lmk/criterionLists/create"
           component={(props) => <NewCriterionListContainer {...props} />}
         />
         <Route
           exact
-          path="/criterionLists/edit/:id"
+          path="/lmk/criterionLists/edit/:id"
           component={(props) => <EditCriterionListContainer {...props} />}
         />
 
         <Route
           exact
-          path="/placeCheckList/:id"
+          path="/lmk/placeCheckList/:id"
           component={(props) => <PlaceCheckListContainer {...props} />}
         />
         <Route
           exact
-          path="/addPlaceCheckList/:id"
+          path="/lmk/addPlaceCheckList/:id"
           component={(props) => <AddPlaceCheckListContainer {...props} />}
         />
         <Route
           exact
-          path="/placeCheckList/criterions/:id"
+          path="/lmk/placeCheckList/criterions/:id"
           component={(props) => <PlaceCheckListCriterionsContainer {...props} />}
         />
         <Route
           exact
-          path="/placeCheckList/criterions/edit/:id"
+          path="/lmk/placeCheckList/criterions/edit/:id"
           component={(props) => <PlaceCheckListCriterionsEditContainer {...props} />}
         />
       </>

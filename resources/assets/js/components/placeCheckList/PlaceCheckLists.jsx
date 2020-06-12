@@ -21,7 +21,7 @@ class PlaceCheckLists extends React.PureComponent {
               <i className="fa fa-building-o" aria-hidden="true" />
               Чек-листов помещений нет
               <Link
-                to={`/addPlaceCheckList/${placeId}`}
+                to={`/lmk/addPlaceCheckList/${placeId}`}
                 className="btn btn-primary btn-sm pull-right"
               >
                 Добавить <i className="icon-plus" />
@@ -39,7 +39,7 @@ class PlaceCheckLists extends React.PureComponent {
             <i className="fa fa-building-o" aria-hidden="true" />
             Чек-листы помещения ({places.length})
             <Link
-              to={`/addPlaceCheckList/${placeId}`}
+              to={`/lmk/addPlaceCheckList/${placeId}`}
               className="btn btn-primary btn-sm pull-right"
             >
               Добавить <i className="icon-plus" />
@@ -57,7 +57,7 @@ class PlaceCheckLists extends React.PureComponent {
                   return (
                     <tr key={place.id}>
                       <td>
-                        <Link to={`/place/${place.id}`}>{place.name}</Link>
+                        <Link to={`/lmk/place/${place.id}`}>{place.name}</Link>
                       </td>
                     </tr>
                   );

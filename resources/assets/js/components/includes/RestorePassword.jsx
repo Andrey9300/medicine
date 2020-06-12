@@ -40,7 +40,7 @@ class RestorePassword extends React.PureComponent {
       .post('/password/email', new FormData(formElement))
       .then(() => {
         alert('Вам отправлено письмо');
-        window.history.pushState(null, null, '/login');
+        window.history.pushState(null, null, '/lmk/login');
         window.location.reload();
       })
       .catch((error) => {
@@ -98,7 +98,7 @@ class RestorePassword extends React.PureComponent {
                           </Button>
                         </Col>
                         <Col xs="12" lg="4">
-                          <Link to="login" className="btn btn-success btn-sm">
+                          <Link to="/lmk/login" className="btn btn-success btn-sm">
                             Вспомнил пароль
                           </Link>
                         </Col>

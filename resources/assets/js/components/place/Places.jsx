@@ -53,7 +53,7 @@ class Places extends React.PureComponent {
                       return (
                         <tr key={place.id}>
                           <td>
-                            <Link to={`/place/${place.id}`}>
+                            <Link to={`/lmk/place/${place.id}`}>
                               {place.name}
                             </Link>
                           </td>

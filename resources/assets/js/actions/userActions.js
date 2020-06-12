@@ -12,7 +12,7 @@ export function loginUser(formElement = null) {
           },
           type: 'LOGIN_USER_FULFILLED',
         });
-        history.pushState(null, null, '/organizations');
+        history.pushState(null, null, '/lmk/organizations');
         window.location.reload();
       })
       .catch((errors) => {
@@ -35,7 +35,7 @@ export function logoutUser() {
           },
           type: 'LOGOUT_USER_FULFILLED',
         });
-        history.pushState(null, null, '/login');
+        history.pushState(null, null, '/lmk/login');
         window.location.reload();
       })
       .catch((error) => {
@@ -150,7 +150,7 @@ export function editUser(formElement = null, userId) {
           type: 'USER_FULFILLED',
         });
         alert('Профиль успешно отредактирован');
-        history.pushState(null, null, `/profile`);
+        history.pushState(null, null, `/lmk/profile`);
         window.location.reload();
       })
       .catch((error) => {
@@ -167,7 +167,7 @@ export function deleteUser(id) {
     axios
       .post(`/users/destroy/${id}`)
       .then(() => {
-        history.pushState(null, null, '/users');
+        history.pushState(null, null, '/lmk/users');
         window.location.reload();
       })
       .catch((error) => {
