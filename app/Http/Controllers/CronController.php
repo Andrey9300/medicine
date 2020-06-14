@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Models\Research;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\SendMailable;
 use App\User;
@@ -13,9 +14,10 @@ class CronController extends Controller
     {
         $employees = Employee::all();
         $employeesLink = [];
+        $researches = Research::all();
 
         foreach ($employees as $employee) {
-            EmployeesController::checkMedicalResearch($employee);
+            EmployeesController::checkMedicalResearch($employee, $researches);
             if (count($employee->researches_ends) || count($employee->researches_expired)) {
                 if (empty($employeesLink[$employee->user_id])) {
                     $employeesLink[$employee->user_id] = [];

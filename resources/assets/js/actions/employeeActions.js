@@ -74,6 +74,27 @@ export function fetchEmployees(legalEntityId = null) {
   };
 }
 
+export function fetchEmployeesWithCheck(legalEntityId = null) {
+  return (dispatch) => {
+    axios
+      .post('/employees/withCheck', {
+        legalEntityId: legalEntityId,
+      })
+      .then((response) => {
+        dispatch({
+          payload: response,
+          type: 'EMPLOYEES_FULFILLED_WITH_CHECK',
+        });
+      })
+      .catch((error) => {
+        dispatch({
+          payload: error,
+          type: 'EMPLOYEES_REJECTED_WITH_CHECK',
+        });
+      });
+  };
+}
+
 export function fetchEmployee(id) {
   return (dispatch) => {
     axios
@@ -188,6 +209,15 @@ export function clearEmployee() {
     dispatch({
       payload: [],
       type: 'EMPLOYEE_CLEAR',
+    });
+  };
+}
+
+export function clearEmployees() {
+  return (dispatch) => {
+    dispatch({
+      payload: [],
+      type: 'EMPLOYEES_CLEAR',
     });
   };
 }

@@ -21,6 +21,24 @@ export default function reducer(state = initialState, action) {
     case 'EMPLOYEES_FULFILLED': {
       const {employees, deleted, withoutOrganization} = action.payload.data;
 
+      return {
+        ...state,
+        errors: null,
+        fetched: true,
+        employees,
+        deleted,
+        withoutOrganization,
+      };
+    }
+    case 'EMPLOYEES_REJECTED_WITH_CHECK': {
+      return {
+        ...state,
+        errors: action.payload,
+      };
+    }
+    case 'EMPLOYEES_FULFILLED_WITH_CHECK': {
+      const {employees, deleted, withoutOrganization} = action.payload.data;
+
       employees.sort(
         (a, b) => b.researches_ends.length - a.researches_ends.length,
       );
@@ -34,7 +52,6 @@ export default function reducer(state = initialState, action) {
       return {
         ...state,
         errors: null,
-        fetched: true,
         employees,
         deleted,
         withoutOrganization,
@@ -61,6 +78,14 @@ export default function reducer(state = initialState, action) {
         errors: null,
         fetched: false,
         employee: null,
+      };
+    }
+    case 'EMPLOYEES_CLEAR': {
+      return {
+        ...state,
+        errors: null,
+        fetched: false,
+        employees: [],
       };
     }
     case 'EMPLOYEE_RESEARCHES_REJECTED': {

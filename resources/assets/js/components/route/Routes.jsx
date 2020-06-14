@@ -159,7 +159,17 @@ export class Routes extends React.PureComponent {
         <Route
           exact
           path="/lmk/organizations/employees/:idOrganization"
-          component={(props) => <OrganizationEmployees {...props} />}
+          component={(props) => <OrganizationEmployees {...props} type={'all'}/>}
+        />
+        <Route
+          exact
+          path="/lmk/organizations/employeesExpired/:idOrganization"
+          component={(props) => <OrganizationEmployees {...props} type={'expired'}/>}
+        />
+        <Route
+          exact
+          path="/lmk/organizations/employeesEnds/:idOrganization"
+          component={(props) => <OrganizationEmployees {...props} type={'ends'}/>}
         />
         <Route
           exact

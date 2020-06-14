@@ -64,10 +64,11 @@ class Sidebar extends React.PureComponent {
 
           <NavItem onClick={this.toggleLmk}>
             <Link to={'#'} className={employeesClass}>
-              <i className="fa fa-user-md" aria-hidden="true" /> ЛМК
+              <i className="fa fa-user-md" aria-hidden="true" /> ЛМК{' '}
+              <i className="fa fa-caret-down" aria-hidden="true" />
             </Link>
           </NavItem>
-          <Collapse isOpen={collapseLmk}>
+          <Collapse isOpen={collapseLmk} style={{marginLeft: '12px'}}>
             <NavItem>
               <Link to={'/lmk/employees'} className={employeesClass}>
                 <i className="fa fa-users" aria-hidden="true" /> Сотрудники
@@ -89,10 +90,11 @@ class Sidebar extends React.PureComponent {
 
           <NavItem onClick={this.toggleAudit}>
             <Link to={'#'} className={researchesClass}>
-              <i className="fa fa-search" aria-hidden="true" /> Аудит
+              <i className="fa fa-search" aria-hidden="true" /> Аудит{' '}
+              <i className="fa fa-caret-down" aria-hidden="true" />
             </Link>
           </NavItem>
-          <Collapse isOpen={collapseAudit}>
+          <Collapse isOpen={collapseAudit} style={{marginLeft: '12px'}}>
             <NavItem>
               <Link to={'/lmk/auditors'} className={researchesClass}>
                 <i className="fa fa-user-circle" aria-hidden="true" /> Аудиторы
@@ -109,7 +111,12 @@ class Sidebar extends React.PureComponent {
               </Link>
             </NavItem>
           </Collapse>
-
+          <NavItem>
+            <Link to={'/blog'} target={'_blank'}>
+              <i className="fa fa-book" aria-hidden="true" /> Блог{' '}
+              <i className="fa fa-external-link" aria-hidden="true" />
+            </Link>
+          </NavItem>
           <NavItem>
             <Link to={'/lmk/'} onClick={this.logout.bind(this)}>
               <i className="fa fa-lock" aria-hidden="true" /> Выход
@@ -128,6 +135,12 @@ class Sidebar extends React.PureComponent {
           <NavItem>
             <Link to={'/lmk/registration'}>
               <i className="fa fa-lock" aria-hidden="true" /> Регистрация
+            </Link>
+          </NavItem>
+          <NavItem>
+            <Link to={'/blog'} target={'_blank'}>
+              <i className="fa fa-book" aria-hidden="true" /> Блог{' '}
+              <i className="fa fa-external-link" aria-hidden="true" />
             </Link>
           </NavItem>
         </Nav>

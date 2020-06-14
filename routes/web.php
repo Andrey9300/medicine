@@ -36,6 +36,7 @@ Route::middleware(['auth'])->group(function () {
     Route::prefix('organizations')->group(function () {
         Route::post('/store', 'OrganizationController@store');
         Route::post('/expired', 'OrganizationController@expired');
+        Route::post('/employeesWithCheck/{id}', 'OrganizationController@employeesWithCheck');
         Route::post('/trashedEmployees/{id}', 'OrganizationController@showTrashedEmployees');
         Route::post('/destroy/{id}', 'OrganizationController@destroy');
         Route::post('/update/{id}', 'OrganizationController@update');
@@ -60,6 +61,7 @@ Route::middleware(['auth'])->group(function () {
     });
 
     Route::prefix('employees')->group(function () {
+        Route::post('/withCheck', 'EmployeesController@showAllWithCheck');
         Route::post('/store', 'EmployeesController@store');
         Route::post('/softDelete/{id}', 'EmployeesController@softDelete');
         Route::post('/forceDelete/{id}', 'EmployeesController@forceDelete');

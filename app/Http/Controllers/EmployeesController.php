@@ -13,7 +13,6 @@ use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
 
 class EmployeesController extends Controller
 {
@@ -42,12 +41,7 @@ class EmployeesController extends Controller
         $employee->save();
     }
 
-    /**
-     * Вывести сотрудников всех организаций начальника качества
-     *
-     * @return JsonResponse
-     */
-    public function showAll(Request $request)
+    public function showAll()
     {
         $user = Auth::user();
         $organizations_name = [];
@@ -61,11 +55,33 @@ class EmployeesController extends Controller
         $deleted = $user->employees()->onlyTrashed()->get();
         $withoutOrganization = $user->employees()->whereNull('organization_name')->get();
 
+        return response()->json([
+            'employees' => $employees,
+            'deleted' => $deleted,
+            'withoutOrganization' => $withoutOrganization
+        ]);
+    }
+
+    public function showAllWithCheck()
+    {
+        $user = Auth::user();
+        $organizations_name = [];
+        $organizations = $user->organizations;
+        $researches = Research::all();
+
+        foreach ($organizations as $organization) {
+            array_push($organizations_name, $organization->name);
+        }
+
+        $employees = $user->employees;
+        $deleted = $user->employees()->onlyTrashed()->get();
+        $withoutOrganization = $user->employees()->whereNull('organization_name')->get();
+
         foreach ($employees as $employee) {
-            $this->checkMedicalResearch($employee);
+            $this->checkMedicalResearch($employee, $researches);
         }
         foreach ($deleted as $employee) {
-            $this->checkMedicalResearch($employee);
+            $this->checkMedicalResearch($employee, $researches);
         }
 
         return response()->json([
@@ -81,9 +97,10 @@ class EmployeesController extends Controller
      */
     public function show($id)
     {
+        $researches = Research::all();
         $employee = Employee::withTrashed()->where('id', $id)->first();
         $organization = $employee->organization;
-        $this->checkMedicalResearch($employee);
+        $this->checkMedicalResearch($employee, $researches);
         $head_exist = false;
 
         // устанавливаем фио менеджера
@@ -263,20 +280,18 @@ class EmployeesController extends Controller
      * Поиск просроченных иследований
      *
      * @param $employee
+     * @param $researches
      */
-    public static function checkMedicalResearch($employee)
+    public static function checkMedicalResearch($employee, $researches = [])
     {
-        $userAdmin = IndexController::findAdmin();
+        $user = Auth::user();
         $options_ends = $employee->researches_ends = []; // просрочено
         $options_expired = $employee->researches_expired = []; // подходит к концу
-        $employee->sumForReseaches = 0;
-        $employeeCategoryId = $employee->category_id;
         $gepatitDate1 = null;
         $gepatitDate2 = null;
         $gepatitResearch1 = null;
         $gepatitResearch2 = null;
-        $userResearchesFiltered = $userAdmin->researches->where('category_id', $employeeCategoryId);
-        $researches = Research::all();
+        $userResearchesFiltered = $user->researches->where('category_id', $employee->category_id);
 
         foreach ($userResearchesFiltered as $userResearch) {
             $research = $researches->find($userResearch->research_id);
@@ -376,15 +391,6 @@ class EmployeesController extends Controller
                         }
                         break;
                 }
-
-//                if (Carbon::parse($employeeResearch->date)->year === Carbon::now()->year &&
-//                    Carbon::parse($employeeResearch->date)->month === Carbon::now()->subMonth()->month
-//                ) {
-//                    $researchPrice = HospitalResearch::where('user_researches_id', '=', $employeeResearch->user_researches_id)->first()->price;
-//                    if (!is_null($researchPrice)){
-//                        $employee->sumForReseaches += $researchPrice;
-//                    }
-//                }
             }
         }
 

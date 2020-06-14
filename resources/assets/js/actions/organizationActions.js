@@ -100,6 +100,25 @@ export function fetchOrganization(id) {
   };
 }
 
+export function fetchOrganizationEmployeesWithCheck(id) {
+  return (dispatch) => {
+    axios
+      .post(`/organizations/employeesWithCheck/${id}`)
+      .then((response) => {
+        dispatch({
+          payload: response,
+          type: 'ORGANIZATION_EMPLOYEES_WITH_CHECK_FULFILLED',
+        });
+      })
+      .catch((error) => {
+        dispatch({
+          payload: error,
+          type: 'ORGANIZATION_EMPLOYEES_WITH_CHECK_REJECTED',
+        });
+      });
+  };
+}
+
 export function fetchOrganizationTrashedEmployees(id) {
   return (dispatch) => {
     axios

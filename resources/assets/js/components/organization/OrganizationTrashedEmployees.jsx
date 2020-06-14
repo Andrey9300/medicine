@@ -1,6 +1,6 @@
 import {
   fetchOrganizationTrashedEmployees,
-  deleteOrganizationEmployee, fetchOrganization,
+  fetchOrganization,
 } from '../../actions/organizationActions';
 import {EmployeesList} from '../employee/EmployeesList';
 import React from 'react';
@@ -24,15 +24,8 @@ class OrganizationTrashedEmployees extends React.PureComponent {
     this.props.dispatch(fetchOrganization(this.state.organizationId));
   }
 
-  handleBtnDelete(idEmployee, event) {
-    event.preventDefault();
-    this.props.dispatch(
-      deleteOrganizationEmployee(this.state.organizationId, idEmployee),
-    );
-  }
-
   render() {
-    const {user, organization} = this.props;
+    const {organization} = this.props;
 
     if (!organization.organization) {
       return null;
@@ -43,9 +36,7 @@ class OrganizationTrashedEmployees extends React.PureComponent {
         <Row>
           <Col xs="12" lg="12">
             <EmployeesList
-              user={user}
               employees={organization.organization.trashedEmployees}
-              handleBtnDelete={this.handleBtnDelete.bind(this)}
               title={`Сотрудники в архиве «${organization.organization.name}» `}
               status={{fetched: true, errors: null}}
             />
@@ -64,7 +55,6 @@ OrganizationTrashedEmployees.propTypes = {
 
 const mapStateToProps = (state) => {
   return {
-    user: state.users.user,
     organization: state.organizations,
   };
 };

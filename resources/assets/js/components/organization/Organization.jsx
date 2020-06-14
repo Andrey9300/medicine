@@ -4,6 +4,7 @@ import {
   fetchOrganization,
   deleteOrganization,
   clearOrganization,
+  fetchOrganizationEmployeesWithCheck,
 } from './../../actions/organizationActions';
 import {fetchHospitals} from '../../actions/hospitalActions';
 import {EmployeesList} from '../employee/EmployeesList';
@@ -14,6 +15,7 @@ import {Row, Col, Card, CardHeader, CardBody, Table} from 'reactstrap';
 class Organization extends React.PureComponent {
   constructor(props) {
     super(props);
+
     this.state = {
       organizationId: props.match.params.id,
       employeesAttention: [],
@@ -23,17 +25,19 @@ class Organization extends React.PureComponent {
   }
 
   componentDidMount() {
+    const {organizationId} = this.state;
     const {dispatch} = this.props;
 
     dispatch(clearOrganization());
-    dispatch(fetchOrganization(this.state.organizationId));
+    dispatch(fetchOrganization(organizationId));
+    dispatch(fetchOrganizationEmployeesWithCheck(organizationId));
     dispatch(fetchHospitals());
 
     this.setResearches();
   }
 
   componentDidUpdate(prevProps, prevState) {
-    const {organization} = this.props;
+    const {organization, fetchedEmployees} = this.props;
 
     if (
       prevProps.organization !== organization &&
@@ -41,6 +45,10 @@ class Organization extends React.PureComponent {
       organization.employees &&
       organization.employees.length > 0
     ) {
+      this.setResearches();
+    }
+
+    if (prevProps.fetchedEmployees !== fetchedEmployees) {
       this.setResearches();
     }
   }
@@ -54,14 +62,18 @@ class Organization extends React.PureComponent {
 
     const employeesAttention = organization.employees.filter(
       (item) =>
-        item.researches_ends.length > 0 || item.researches_expired.length > 0,
+        (item.researches_ends && item.researches_ends.length > 0) ||
+        (item.researches_expired && item.researches_expired.length > 0),
     );
     const researchesEnds = organization.employees.filter(
-      (item) => item.researches_ends.length > 0,
+      (item) => item.researches_ends && item.researches_ends.length > 0,
     );
     const researchesExpired = organization.employees.filter(
       (item) =>
-        item.researches_expired.length > 0 && item.researches_ends.length === 0,
+        item.researches_expired &&
+        item.researches_expired.length > 0 &&
+        item.researches_ends &&
+        item.researches_ends.length === 0,
     );
 
     this.setState({
@@ -89,7 +101,13 @@ class Organization extends React.PureComponent {
 
   render() {
     const {employeesAttention, researchesEnds, researchesExpired} = this.state;
-    const {organization, hospitals, fetched, errors} = this.props;
+    const {
+      organization,
+      hospitals,
+      fetched,
+      errors,
+      fetchedEmployees,
+    } = this.props;
 
     if (errors) {
       return this.getMessage('Ошибка, попробуйте снова');
@@ -158,7 +176,7 @@ class Organization extends React.PureComponent {
                     <tr>
                       <td>Категория:</td>
                       <td style={{maxWidth: '300px'}}>
-                        {organization.category.name}
+                        {organization.category && organization.category.name}
                       </td>
                     </tr>
                   </tbody>
@@ -168,7 +186,11 @@ class Organization extends React.PureComponent {
             <EmployeesList
               employees={employeesAttention}
               title={'Сотрудники требующие внимания '}
-              status={{fetched: true, errors: null}}
+              status={{
+                fetched: fetchedEmployees,
+                errors: null,
+                fetchedWithCheck: true,
+              }}
             />
           </Col>
           <Col xs="12" sm="12" md="4" lg="4" xl="4">
@@ -176,6 +198,13 @@ class Organization extends React.PureComponent {
               <CardHeader>
                 <i className="fa fa-users" aria-hidden="true" />
                 Сотрудники
+                <Link
+                  to="/lmk/employees/create"
+                  className="btn btn-primary btn-sm pull-right"
+                >
+                  Добавить сотрудника
+                  <i className="icon-plus" />
+                </Link>
               </CardHeader>
               <CardBody className="card-body">
                 <Table responsive>
@@ -192,14 +221,26 @@ class Organization extends React.PureComponent {
                     </tr>
                     <tr>
                       <td>Просрочен медицинский осмотр:</td>
-                      <td>{researchesExpired} чел.</td>
+                      <td>
+                        <Link
+                          to={`/lmk/organizations/employeesExpired/${organization.id}`}
+                        >
+                          {researchesExpired} чел.
+                        </Link>
+                      </td>
                     </tr>
                     <tr>
                       <td>
-                        В следующем месяца нужно направить на медицинский
+                        В следующем месяце нужно направить на медицинский
                         осмотр:
                       </td>
-                      <td>{researchesEnds} чел.</td>
+                      <td>
+                        <Link
+                          to={`/lmk/organizations/employeesEnds/${organization.id}`}
+                        >
+                          {researchesEnds} чел.
+                        </Link>
+                      </td>
                     </tr>
                     <tr>
                       <td>
@@ -209,6 +250,7 @@ class Organization extends React.PureComponent {
                           Сотрудники в архиве
                         </Link>
                       </td>
+                      <td />
                     </tr>
                   </tbody>
                 </Table>
@@ -241,9 +283,11 @@ class Organization extends React.PureComponent {
                 Информация
               </CardHeader>
               <CardBody className="card-body">
-                С подробной информацией о медицинских осмотрах Вы можете
-                ознакомиться по ссылкам:
-                <ul style={{listStyleType: 'none'}}>
+                <p>
+                  С подробной информацией о медицинских осмотрах Вы можете
+                  ознакомиться по ссылкам:
+                </p>
+                <ul>
                   <li>
                     <a
                       href="/blog/medicinskie-osmotry/lichnaja-medicinskaja-knizhka-lmk/"
@@ -306,6 +350,7 @@ Organization.propTypes = {
   dispatch: PropTypes.func.isRequired,
   match: PropTypes.object.isRequired,
   fetched: PropTypes.bool,
+  fetchedEmployees: PropTypes.bool,
   errors: PropTypes.object,
 };
 
@@ -313,6 +358,7 @@ const mapStateToProps = (state) => {
   return {
     organization: state.organizations.organization,
     fetched: state.organizations.fetched,
+    fetchedEmployees: state.organizations.fetchedEmployees,
     errors: state.organizations.errors,
     hospitals: state.hospitals.hospitals,
   };

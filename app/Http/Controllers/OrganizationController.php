@@ -3,13 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Http\Models\HospitalResearch;
-use App\Http\Models\ResearchCategory;
-use App\Http\Models\UserResearches;
+use App\Http\Models\Research;
 use App\Http\Requests\StoreOrganization;
 use App\Http\Requests\UpdateOrganization;
-use App\Notifications\SendPassword;
-use App\Notifications\YouHead;
-use App\User;
 use App\Http\Models\Organization;
 use Illuminate\Support\Facades\Auth;
 
@@ -111,6 +107,7 @@ class OrganizationController extends Controller
         $organizations = $user->organizations;
         $head_exist = false;
         $expiredOrganizations = [];
+        $researches = Research::all();
 
         foreach ($organizations as $organization) {
             // устанавливаем фио менеджера
@@ -132,7 +129,7 @@ class OrganizationController extends Controller
             $medicalResearchesProblem = false;
 
             foreach ($employees_current as $employee) {
-                EmployeesController::checkMedicalResearch($employee);
+                EmployeesController::checkMedicalResearch($employee, $researches);
                 if (count($employee->researches_ends)) {
                     $employeesResearchesEnds[] = $employee;
                     $medicalResearchesProblem = true;
@@ -169,13 +166,7 @@ class OrganizationController extends Controller
         $organization->totalSumForCompletedResearches = 0;
         $organization->totalSumForResearches = 0;
         $user = Auth::user();
-        $employees = $organization->employees;
-
-        foreach ($employees as $employee) {
-            EmployeesController::checkMedicalResearch($employee);
-            $organization->totalSumForCompletedResearches += $employee->sumForReseaches;
-        }
-
+        $organization->employees;
         $userHospitalResearches = HospitalResearch::whereIn('user_researches_id', $user->researches)->get();
 
         foreach ($userHospitalResearches as $userHospitalResearch) {
@@ -204,13 +195,29 @@ class OrganizationController extends Controller
         ]);
     }
 
+    public function employeesWithCheck($id)
+    {
+        $organization = Organization::find($id);
+        $employees = $organization->employees;
+        $researches = Research::all();
+
+        foreach ($employees as $employee) {
+            EmployeesController::checkMedicalResearch($employee, $researches);
+        }
+
+        return response()->json([
+            'employeesWithCheck' => $employees
+        ]);
+    }
+
     public function showTrashedEmployees($id)
     {
         $organization = Organization::find($id);
-        $trashedEmployees = $organization->employees()->onlyTrashed()->get();;
+        $trashedEmployees = $organization->employees()->onlyTrashed()->get();
+        $researches = Research::all();
 
         foreach ($trashedEmployees as $employee) {
-            EmployeesController::checkMedicalResearch($employee);
+            EmployeesController::checkMedicalResearch($employee, $researches);
         }
 
         return response()->json([

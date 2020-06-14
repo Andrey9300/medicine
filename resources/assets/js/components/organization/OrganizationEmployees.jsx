@@ -1,7 +1,7 @@
 import {
   fetchOrganization,
-  deleteOrganizationEmployee,
   clearOrganizationEmployees,
+  fetchOrganizationEmployeesWithCheck,
 } from '../../actions/organizationActions';
 import {EmployeesList} from '../employee/EmployeesList';
 import React from 'react';
@@ -15,6 +15,8 @@ class OrganizationEmployee extends React.PureComponent {
 
     this.state = {
       organizationId: props.match.params.idOrganization,
+      employeesShow: [],
+      title: '',
     };
   }
 
@@ -33,28 +35,74 @@ class OrganizationEmployee extends React.PureComponent {
   }
 
   componentDidMount() {
+    const {organizationId} = this.state;
     const {dispatch} = this.props;
 
     dispatch(clearOrganizationEmployees());
-    dispatch(fetchOrganization(this.state.organizationId));
+    dispatch(fetchOrganization(organizationId));
+    dispatch(fetchOrganizationEmployeesWithCheck(organizationId));
   }
 
-  handleBtnDelete(idEmployee, event) {
-    event.preventDefault();
-    this.props.dispatch(
-      deleteOrganizationEmployee(this.state.organizationId, idEmployee),
-    );
+  componentDidUpdate(prevProps) {
+    const {
+      organization: {employees},
+      fetchedEmployees,
+    } = this.props;
+
+    if (
+      (prevProps.organization &&
+        prevProps.organization.employees.length !== employees.length) ||
+      prevProps.fetchedEmployees !== fetchedEmployees
+    ) {
+      this.setEmployeesShow();
+    }
+  }
+
+  setEmployeesShow() {
+    const {
+      organization: {employees, name},
+      type,
+    } = this.props;
+    let employeesShow = employees;
+    let title = `Сотрудники «${name}» `;
+
+    switch (type) {
+      case 'all':
+        employeesShow = employees;
+        title = `Сотрудники «${name}» `;
+        break;
+      case 'expired':
+        employeesShow = employees.filter(
+          (item) =>
+            item.researches_expired &&
+            item.researches_expired.length > 0 &&
+            item.researches_ends &&
+            item.researches_ends.length === 0,
+        );
+
+        title = `Сотрудники с просроченным МО «${name}» `;
+        break;
+      case 'ends':
+        employeesShow = employees.filter(
+          (item) => item.researches_ends && item.researches_ends.length > 0,
+        );
+        title = `Сотрудники с заканчивающимся МО «${name}» `;
+        break;
+    }
+
+    this.setState({employeesShow, title});
   }
 
   render() {
-    const {user, organization} = this.props;
+    const {employeesShow, title} = this.state;
+    const {
+      fetched,
+      fetchedEmployees,
+      organization: {errors},
+    } = this.props;
 
-    if (!organization.fetched) {
+    if (!fetched) {
       return this.getMessage('Загрузка');
-    }
-
-    if (!organization.organization) {
-      return null;
     }
 
     return (
@@ -62,11 +110,13 @@ class OrganizationEmployee extends React.PureComponent {
         <Row>
           <Col xs="12" lg="12">
             <EmployeesList
-              user={user}
-              employees={organization.organization.employees}
-              handleBtnDelete={this.handleBtnDelete.bind(this)}
-              title={`Сотрудники «${organization.organization.name}» `}
-              status={{fetched: true, errors: null}}
+              employees={employeesShow}
+              title={title}
+              status={{
+                fetched: fetchedEmployees,
+                errors,
+                fetchedWithCheck: true,
+              }}
             />
           </Col>
         </Row>
@@ -83,8 +133,9 @@ OrganizationEmployee.propTypes = {
 
 const mapStateToProps = (state) => {
   return {
-    user: state.users.user,
-    organization: state.organizations,
+    fetched: state.organizations.fetched,
+    fetchedEmployees: state.organizations.fetchedEmployees,
+    organization: state.organizations.organization,
   };
 };
 

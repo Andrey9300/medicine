@@ -1,4 +1,4 @@
-import {fetchEmployees} from '../../actions/employeeActions';
+import {clearEmployees, fetchEmployees, fetchEmployeesWithCheck} from '../../actions/employeeActions';
 import {EmployeesList} from './EmployeesList';
 import React from 'react';
 import {connect} from 'react-redux';
@@ -7,11 +7,14 @@ import {Row, Col} from 'reactstrap';
 
 class EmployeesDeleted extends React.PureComponent {
   componentDidMount() {
-    this.props.dispatch(fetchEmployees());
+    const {dispatch} = this.props;
+
+    dispatch(clearEmployees());
+    dispatch(fetchEmployees());
   }
 
   render() {
-    const {user, deleted, fetched, errors} = this.props;
+    const {deleted, fetched, errors} = this.props;
     const status = {
       fetched,
       errors,
@@ -28,7 +31,6 @@ class EmployeesDeleted extends React.PureComponent {
             <Col xs="12" lg="12">
               <EmployeesList
                 employees={deleted}
-                user={user}
                 title={'Сотрудники в архиве '}
                 status={status}
               />
@@ -43,14 +45,12 @@ class EmployeesDeleted extends React.PureComponent {
 EmployeesDeleted.propTypes = {
   dispatch: PropTypes.func.isRequired,
   deleted: PropTypes.array.isRequired,
-  user: PropTypes.object,
   fetched: PropTypes.bool,
   errors: PropTypes.object,
 };
 
 const mapStateToProps = (state) => {
   return {
-    user: state.users.user,
     organization: state.organizations.organization,
     deleted: state.employees.deleted,
     fetched: state.employees.fetched,

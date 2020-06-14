@@ -1,7 +1,10 @@
 const initialState = {
   errors: null,
   fetched: false,
-  organization: null,
+  fetchedEmployees: false,
+  organization: {
+    employees: [],
+  },
   organizations: [],
   expired: [],
 };
@@ -63,9 +66,16 @@ export default function reducer(state = initialState, action) {
       const {
         organization: {employees},
       } = action.payload.data;
-      employees.sort(
-        (a, b) => b.researches_ends.length - a.researches_ends.length,
-      );
+      employees.sort((a, b) => {
+        if (!b.researches_ends || !a.researches_ends) {
+          return 1;
+        }
+
+        return b.researches_ends.length - a.researches_ends.length;
+      });
+      const employeesData = state.organization
+        ? state.organization.employees
+        : [];
 
       return {
         ...state,
@@ -73,7 +83,41 @@ export default function reducer(state = initialState, action) {
         fetched: true,
         organization: {
           ...state.organization,
-          ...action.payload.data.organization
+          ...action.payload.data.organization,
+          employees: [
+            ...employeesData,
+            ...action.payload.data.organization.employees,
+          ],
+        },
+      };
+    }
+    case 'ORGANIZATION_EMPLOYEES_WITH_CHECK_REJECTED': {
+      return {
+        ...state,
+        errors: action.payload,
+        fetched: false,
+        fetchedEmployees: false,
+      };
+    }
+    case 'ORGANIZATION_EMPLOYEES_WITH_CHECK_FULFILLED': {
+      const {employeesWithCheck} = action.payload.data;
+
+      employeesWithCheck.sort((a, b) => {
+        if (!b.researches_ends || !a.researches_ends) {
+          return 1;
+        }
+
+        return b.researches_ends.length - a.researches_ends.length;
+      });
+
+      return {
+        ...state,
+        errors: null,
+        fetched: true,
+        fetchedEmployees: true,
+        organization: {
+          ...state.organization,
+          employees: employeesWithCheck,
         },
       };
     }
@@ -100,6 +144,7 @@ export default function reducer(state = initialState, action) {
         ...state,
         errors: null,
         fetched: false,
+        fetchedEmployees: false,
         organization: null,
       };
     }
@@ -108,6 +153,7 @@ export default function reducer(state = initialState, action) {
         ...state,
         errors: null,
         fetched: false,
+        fetchedEmployees: false,
         organization: {
           ...state.organization,
           employees: [],
