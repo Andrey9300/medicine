@@ -3,7 +3,7 @@ import {connect} from 'react-redux';
 import {
   fetchCriterion,
   deleteCriterion,
-} from './../../actions/criterionActions';
+} from '../../actions/criterionActions';
 import {Link} from 'react-router-dom';
 import PropTypes from 'prop-types';
 import {Row, Col, Card, CardHeader, CardBody, Table} from 'reactstrap';

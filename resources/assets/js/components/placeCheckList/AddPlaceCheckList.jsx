@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import {
   addPlaceCheckList,
   fetchPlaceCheckList,
-} from './../../actions/placeCheckListActions';
+} from '../../actions/placeCheckListActions';
 import {
   Row,
   Col,

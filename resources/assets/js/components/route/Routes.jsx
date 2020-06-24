@@ -28,7 +28,7 @@ import NewResearch from '../../components/research/New';
 import EditEmployee from '../../components/employee/Edit';
 import PrintEmployee from '../../components/employee/PrintResearch';
 import Employee from '../../components/employee/Employee';
-import Employees from '../../components/employee/Employees';
+import {Employees} from '../employee/Employees';
 import EmployeesDeleted from '../../components/employee/EmployeesDeleted';
 import NewEmployee from '../../components/employee/New';
 

@@ -1,5 +1,5 @@
 import React from 'react';
-import {fetchCategories} from './../../actions/categoryActions';
+import {fetchCategories} from '../../actions/categoryActions';
 import {connect} from 'react-redux';
 import {
   Row,

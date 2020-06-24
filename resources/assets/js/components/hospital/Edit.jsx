@@ -1,6 +1,6 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import {fetchHospital} from './../../actions/hospitalActions';
+import {fetchHospital} from '../../actions/hospitalActions';
 import PropTypes from 'prop-types';
 import {
   Row,

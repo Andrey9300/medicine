@@ -66,6 +66,23 @@ class OrganizationEmployee extends React.PureComponent {
     let employeesShow = employees;
     let title = `Сотрудники «${name}» `;
 
+    // const employeesAttention = organization.employees.filter(
+    //     (item) =>
+    //         (item.researches_ends && item.researches_ends.length > 0) ||
+    //         (item.researches_expired && item.researches_expired.length > 0),
+    // );
+    // const researchesEnds = organization.employees.filter(
+    //     (item) => item.researches_ends && item.researches_ends.length > 0,
+    // );
+    // const researchesExpired = organization.employees.filter(
+    //     (item) =>
+    //         item.researches_expired &&
+    //         item.researches_expired.length > 0 &&
+    //         item.researches_ends &&
+    //         item.researches_ends.length === 0,
+    // );
+
+
     switch (type) {
       case 'all':
         employeesShow = employees;
@@ -80,13 +97,13 @@ class OrganizationEmployee extends React.PureComponent {
             item.researches_ends.length === 0,
         );
 
-        title = `Сотрудники с просроченным МО «${name}» `;
+        title = `Сотрудники с заканчивающимся МО «${name}» `;
         break;
       case 'ends':
         employeesShow = employees.filter(
           (item) => item.researches_ends && item.researches_ends.length > 0,
         );
-        title = `Сотрудники с заканчивающимся МО «${name}» `;
+        title = `Сотрудники с просроченным МО «${name}» `;
         break;
     }
 

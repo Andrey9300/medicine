@@ -1,7 +1,7 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
-import {clearOrganization, fetchOrganization} from './../../actions/organizationActions';
+import {clearOrganization, fetchOrganization} from '../../actions/organizationActions';
 import {fetchCategories} from '../../actions/categoryActions';
 import {
   Row,

@@ -1,7 +1,7 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
-import {clearUnit, fetchUnit} from './../../actions/unitActions';
+import {clearUnit, fetchUnit} from '../../actions/unitActions';
 import {
   Row,
   Col,

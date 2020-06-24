@@ -3,7 +3,7 @@ import {connect} from 'react-redux';
 import {
   fetchUnit,
   deleteUnit,
-} from './../../actions/unitActions';
+} from '../../actions/unitActions';
 import {Link} from 'react-router-dom';
 import PropTypes from 'prop-types';
 import {Row, Col, Card, CardHeader, CardBody, Table} from 'reactstrap';

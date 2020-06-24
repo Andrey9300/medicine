@@ -1,7 +1,7 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
-import {clearGroupCriterion, fetchGroupCriterion} from './../../actions/groupCriterionActions';
+import {clearGroupCriterion, fetchGroupCriterion} from '../../actions/groupCriterionActions';
 import {
   Row,
   Col,

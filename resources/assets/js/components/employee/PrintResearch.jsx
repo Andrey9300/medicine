@@ -6,7 +6,7 @@ import {
   editEmployeeJson,
   clearEmployee,
   clearEmployeeResearches,
-} from './../../actions/employeeActions';
+} from '../../actions/employeeActions';
 import {Link} from 'react-router-dom';
 import PropTypes from 'prop-types';
 import {
@@ -232,42 +232,50 @@ class PrintEmployee extends React.PureComponent {
     );
   }
 
+  needHospital() {
+    return (
+      <Card>
+        <CardHeader>
+          <i className="fa fa-dot-circle-o" aria-hidden="true" />
+          Что-то пошло не так
+        </CardHeader>
+        <CardBody className="card-body">
+          Возможно нужно добавить{' '}
+          <Link to={'/lmk/hospitals'}>медицинское учреждение.</Link>
+        </CardBody>
+      </Card>
+    );
+  }
+
+  showError() {
+    const {errors} = this.state;
+
+    if (!errors) {
+      return null;
+    }
+
+    return (
+      <div className="alert alert-danger" role="alert">
+        {createMarkup(errors)}
+      </div>
+    );
+  }
+
   render() {
     const {organization, employee, hospital} = this.props;
-    const {errors} = this.state;
     const hospitalOrg = hospital[0]; // Пока одна мед организация
-    let errorsMessage = '';
-
-    if (errors) {
-      errorsMessage = (
-        <div className="alert alert-danger" role="alert">
-          {createMarkup(errors)}
-        </div>
-      );
-    }
 
     if (!hospitalOrg && hospital.fetched) {
-      return (
-        <Card>
-          <CardHeader>
-            <i className="fa fa-dot-circle-o" aria-hidden="true" />
-            Что-то пошло не так
-          </CardHeader>
-          <CardBody className="card-body">
-            Возможно нужно добавить{' '}
-            <Link to={'/lmk/hospitals'}>медицинское учреждение.</Link>
-          </CardBody>
-        </Card>
-      );
+      return this.needHospital();
     }
 
-    if (!employee || !hospitalOrg) {
+    if (!employee || !hospitalOrg || !organization) {
       return null;
     }
 
     return (
       <div>
-        {errorsMessage}
+        {this.showError()}
         <div className="animated fadeIn">
           <Row>
             <Col xs="12" sm="12" md="12">
@@ -502,7 +510,10 @@ class PrintEmployee extends React.PureComponent {
                       </tr>
                       <tr>
                         <td>
-                          ФИО: {organization && organization.users[0].fio}
+                          ФИО:{' '}
+                          {organization &&
+                            organization.users &&
+                            organization.users[0].fio}
                         </td>
                       </tr>
                       <tr>

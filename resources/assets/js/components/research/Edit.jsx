@@ -1,7 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 import {connect} from 'react-redux';
-import {fetchResearch} from './../../actions/researchActions';
+import {fetchResearch} from '../../actions/researchActions';
 import PropTypes from 'prop-types';
 import {
   Row,

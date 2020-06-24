@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
-import {fetchOrganizations} from './../../actions/organizationActions';
-import {addEmployee} from './../../actions/employeeActions';
+import {fetchOrganizations} from '../../actions/organizationActions';
+import {addEmployee} from '../../actions/employeeActions';
 import {
   Row,
   Col,

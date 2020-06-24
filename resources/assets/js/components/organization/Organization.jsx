@@ -5,7 +5,7 @@ import {
   deleteOrganization,
   clearOrganization,
   fetchOrganizationEmployeesWithCheck,
-} from './../../actions/organizationActions';
+} from '../../actions/organizationActions';
 import {fetchHospitals} from '../../actions/hospitalActions';
 import {EmployeesList} from '../employee/EmployeesList';
 import {Link} from 'react-router-dom';
@@ -220,7 +220,10 @@ class Organization extends React.PureComponent {
                       </td>
                     </tr>
                     <tr>
-                      <td>Просрочен медицинский осмотр:</td>
+                      <td>
+                        В следующем месяце нужно направить на медицинский
+                        осмотр:
+                      </td>
                       <td>
                         <Link
                           to={`/lmk/organizations/employeesExpired/${organization.id}`}
@@ -230,10 +233,7 @@ class Organization extends React.PureComponent {
                       </td>
                     </tr>
                     <tr>
-                      <td>
-                        В следующем месяце нужно направить на медицинский
-                        осмотр:
-                      </td>
+                      <td>Просрочен медицинский осмотр:</td>
                       <td>
                         <Link
                           to={`/lmk/organizations/employeesEnds/${organization.id}`}
