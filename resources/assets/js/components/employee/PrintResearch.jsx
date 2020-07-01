@@ -318,7 +318,7 @@ class PrintEmployee extends React.PureComponent {
                           <img
                             width="400"
                             height="240"
-                            src={hospitalOrg.photo_map}
+                            src={`/storage/${hospital.photo_map}`}
                           />
                         </td>
                       </tr>

@@ -89,11 +89,13 @@ class Hospital extends React.PureComponent {
                         <td>{hospital.head_fio}</td>
                       </tr>
                       <tr>
-                        <td>Проезд (отображение в направлении может отличаться):</td>
+                        <td>
+                          Проезд (отображение в направлении может отличаться):
+                        </td>
                         <td>
                           {hospital.photo_map ? (
                             <img
-                              src={hospital.photo_map}
+                              src={`/storage/${hospital.photo_map}`}
                               style={{width: '300px', height: '150px'}}
                             />
                           ) : (
