@@ -17,7 +17,7 @@ export default function requireAuthentication(Component) {
         this.props.dispatch({
           payload: {
             method: 'replace',
-            nextUrl: '/lmk/login',
+            nextUrl: '/services/login',
           },
           type: 'ROUTING',
         });

@@ -58,7 +58,7 @@ class Researches extends React.PureComponent {
               <Card className="text-center">
                 <CardHeader>Исследований нет</CardHeader>
                 <CardBody>
-                  <Link to={'/lmk/employees/create'}>Добавьте сотрудника</Link>
+                  <Link to={'/services/lmk/employees/create'}>Добавьте сотрудника</Link>
                   <p>
                     На основе категорий сотрудника будут сформированы
                     необходимые исследования

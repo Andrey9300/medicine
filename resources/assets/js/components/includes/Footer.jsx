@@ -1,4 +1,5 @@
 import React from 'react';
+import {Link} from 'react-router-dom';
 
 class Footer extends React.PureComponent {
   render() {
@@ -17,7 +18,7 @@ class Footer extends React.PureComponent {
               color: '#1b8eb7',
             }}
           >
-            Quality management
+            Quality management{' '}
             <i className="fa fa-long-arrow-right" aria-hidden="true" />
           </span>
           <span
@@ -26,7 +27,7 @@ class Footer extends React.PureComponent {
             }}
           >
             {' '}
-            Quality control
+            Quality control{' '}
             <i className="fa fa-long-arrow-right" aria-hidden="true" />
           </span>
           <span
@@ -38,6 +39,10 @@ class Footer extends React.PureComponent {
             Quality Assurance
           </span>
         </span>
+        <Link to={'/blog'} target={'_blank'} style={{marginLeft: '20px'}}>
+          <i className="fa fa-book" aria-hidden="true" /> Блог{' '}
+          <i className="fa fa-external-link" aria-hidden="true" />
+        </Link>
       </footer>
     );
   }

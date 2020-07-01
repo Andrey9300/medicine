@@ -52,12 +52,12 @@ class Sidebar extends React.PureComponent {
       navItems = (
         <Nav>
           <NavItem>
-            <Link to={'/lmk/profile'} className={profileClass}>
+            <Link to={'/services/profile'} className={profileClass}>
               <i className="fa fa-user-o" aria-hidden="true" /> Профиль
             </Link>
           </NavItem>
           <NavItem>
-            <Link to={'/lmk/organizations'} className={organizationsClass}>
+            <Link to={'/services/lmk/organizations'} className={organizationsClass}>
               <i className="fa fa-building-o" aria-hidden="true" /> Объекты
             </Link>
           </NavItem>
@@ -70,18 +70,18 @@ class Sidebar extends React.PureComponent {
           </NavItem>
           <Collapse isOpen={collapseLmk} style={{marginLeft: '12px'}}>
             <NavItem>
-              <Link to={'/lmk/employees'} className={employeesClass}>
+              <Link to={'/services/lmk/employees'} className={employeesClass}>
                 <i className="fa fa-users" aria-hidden="true" /> Сотрудники
               </Link>
             </NavItem>
             <NavItem>
-              <Link to={'/lmk/hospitals'} className={hospitalsClass}>
+              <Link to={'/services/lmk/hospitals'} className={hospitalsClass}>
                 <i className="fa fa-stethoscope" aria-hidden="true" />{' '}
                 Медицинские центры
               </Link>
             </NavItem>
             <NavItem>
-              <Link to={'/lmk/researches'} className={researchesClass}>
+              <Link to={'/services/lmk/researches'} className={researchesClass}>
                 <i className="fa fa-heartbeat" aria-hidden="true" />{' '}
                 Исследования
               </Link>
@@ -96,29 +96,23 @@ class Sidebar extends React.PureComponent {
           </NavItem>
           <Collapse isOpen={collapseAudit} style={{marginLeft: '12px'}}>
             <NavItem>
-              <Link to={'/lmk/auditors'} className={researchesClass}>
+              <Link to={'/services/audits/auditors'} className={researchesClass}>
                 <i className="fa fa-user-circle" aria-hidden="true" /> Аудиторы
               </Link>
             </NavItem>
             <NavItem>
-              <Link to={'/lmk/criterionLists'} className={researchesClass}>
+              <Link to={'/services/audits/criterionLists'} className={researchesClass}>
                 <i className="fa fa-book" aria-hidden="true" /> Чек-листы
               </Link>
             </NavItem>
             <NavItem>
-              <Link to={'/lmk/structureCheckList'} className={researchesClass}>
+              <Link to={'/services/audits/structureCheckList'} className={researchesClass}>
                 <i className="fa fa-book" aria-hidden="true" /> Структура чек-листа
               </Link>
             </NavItem>
           </Collapse>
           <NavItem>
-            <Link to={'/blog'} target={'_blank'}>
-              <i className="fa fa-book" aria-hidden="true" /> Блог{' '}
-              <i className="fa fa-external-link" aria-hidden="true" />
-            </Link>
-          </NavItem>
-          <NavItem>
-            <Link to={'/lmk/'} onClick={this.logout.bind(this)}>
+            <Link to={'/services/lmk/'} onClick={this.logout.bind(this)}>
               <i className="fa fa-lock" aria-hidden="true" /> Выход
             </Link>
           </NavItem>
@@ -128,19 +122,13 @@ class Sidebar extends React.PureComponent {
       navItems = (
         <Nav>
           <NavItem>
-            <Link to={'/lmk/login'}>
+            <Link to={'/services/login'}>
               <i className="fa fa-lock" aria-hidden="true" /> Вход
             </Link>
           </NavItem>
           <NavItem>
-            <Link to={'/lmk/registration'}>
+            <Link to={'/services/registration'}>
               <i className="fa fa-lock" aria-hidden="true" /> Регистрация
-            </Link>
-          </NavItem>
-          <NavItem>
-            <Link to={'/blog'} target={'_blank'}>
-              <i className="fa fa-book" aria-hidden="true" /> Блог{' '}
-              <i className="fa fa-external-link" aria-hidden="true" />
             </Link>
           </NavItem>
         </Nav>

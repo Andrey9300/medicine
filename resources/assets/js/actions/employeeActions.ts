@@ -7,7 +7,7 @@ export function addEmployee(formElement: HTMLFormElement = null) {
       .post('/employees/store', new FormData(formElement))
       .then(() => {
         alert('Сотрудник успешно создан');
-        history.pushState(null, null, '/lmk/employees/');
+        history.pushState(null, null, '/services/lmk/employees/');
         window.location.reload();
       })
       .catch((errors) => {
@@ -28,7 +28,7 @@ export function editEmployee(
       .post(`/employees/update/${employeeId}`, new FormData(formElement))
       .then(() => {
         alert('Сотрудник успешно отредактирован');
-        history.pushState(null, null, `/lmk/employee/${employeeId}`);
+        history.pushState(null, null, `/services/lmk/employee/${employeeId}`);
         window.location.reload();
       })
       .catch((errors) => {
@@ -126,7 +126,7 @@ export function deleteEmployee(id: number, organizationId: number) {
       .post(`/employees/softDelete/${id}`)
       .then(() => {
         alert('Сотрудник в архиве');
-        history.pushState(null, null, `/lmk/organization/${organizationId}`);
+        history.pushState(null, null, `/services/lmk/organization/${organizationId}`);
         window.location.reload();
       })
       .catch((error) => {

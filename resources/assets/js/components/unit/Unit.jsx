@@ -52,7 +52,7 @@ class Unit extends React.PureComponent {
                 <i className="fa fa-building-o" aria-hidden="true" />
                 Подразделения
                 <Link
-                  to={`/lmk/units/edit/${unit.id}`}
+                  to={`/services/lmk/units/edit/${unit.id}`}
                   style={{
                     marginLeft: '18px',
                   }}

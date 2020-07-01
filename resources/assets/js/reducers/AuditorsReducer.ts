@@ -12,7 +12,7 @@ const initialState: IState = {
   auditors: [],
 };
 
-export const AuditorsReducer = (
+export const auditorsReducer = (
   state = initialState,
   action: AnyAction,
 ): IState => {

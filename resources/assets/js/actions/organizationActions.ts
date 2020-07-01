@@ -7,7 +7,7 @@ export function addOrganization(formElement: HTMLFormElement = null) {
       .post('/organizations/store', new FormData(formElement))
       .then(() => {
         alert('Объект успешно создан');
-        history.pushState(null, null, '/lmk/organizations');
+        history.pushState(null, null, '/services/lmk/organizations');
         window.location.reload();
       })
       .catch((errors) => {
@@ -28,7 +28,7 @@ export function editOrganization(
       .post(`/organizations/update/${legalEntityId}`, new FormData(formElement))
       .then(() => {
         alert('Объект успешно отредактирован');
-        history.pushState(null, null, `/lmk/organization/${legalEntityId}`);
+        history.pushState(null, null, `/services/lmk/organization/${legalEntityId}`);
         window.location.reload();
       })
       .catch((errors) => {
@@ -55,7 +55,7 @@ export function fetchOrganizations() {
           payload: error,
           type: 'ORGANIZATIONS_REJECTED',
         });
-        history.replaceState(null, null, '/lmk/login');
+        history.replaceState(null, null, '/services/login');
         window.location.reload();
       });
   };
@@ -74,7 +74,7 @@ export function fetchExpiredOrganizations(legalEntityId: number = null) {
         });
       })
       .catch((error) => {
-        history.replaceState(null, null, '/lmk/login');
+        history.replaceState(null, null, '/services/login');
         window.location.reload();
         dispatch({
           payload: error,
@@ -151,7 +151,7 @@ export function deleteOrganization(id: number) {
             'Перед удалением организации перенесите сотрудников в другие компании, в том числе из архива',
           );
         } else {
-          history.pushState(null, null, '/lmk/organizations');
+          history.pushState(null, null, '/services/lmk/organizations');
           window.location.reload();
         }
       })
@@ -166,7 +166,7 @@ export function deleteOrganizationEmployee(idOrganization: number, idEmployee: n
     axios
       .post(`/organizations/employees/destroy/${idOrganization}/${idEmployee}`)
       .then(() => {
-        history.pushState(null, null, `/lmk/organization/${idOrganization}`);
+        history.pushState(null, null, `/services/lmk/organization/${idOrganization}`);
         window.location.reload();
       })
       .catch((error) => {

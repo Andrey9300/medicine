@@ -54,7 +54,7 @@ class Login extends React.PureComponent {
     let errorsMessage = '';
 
     if (user && user.isAuthenticated) {
-      window.history.pushState(null, null, '/lmk/organizations');
+      window.history.pushState(null, null, '/services/lmk/organizations');
     }
 
     if (errors) {
@@ -115,7 +115,7 @@ class Login extends React.PureComponent {
                         </Col>
                         <Col xs="12" lg="4">
                           <Link
-                            to="/lmk/registration"
+                            to="/services/registration"
                             className="btn btn-success btn-sm"
                           >
                             Регистрация
@@ -123,7 +123,7 @@ class Login extends React.PureComponent {
                         </Col>
                         <Col xs="12" lg="4">
                           <Link
-                            to="/lmk/restorePassword"
+                            to="/services/restorePassword"
                             className="btn btn-warning btn-sm"
                           >
                             Забыли пароль?

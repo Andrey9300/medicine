@@ -6,7 +6,7 @@ export function addHospital(formElement: HTMLFormElement = null) {
     axios
       .post('/hospitals/store', new FormData(formElement))
       .then(() => {
-        history.pushState(null, null, '/lmk/hospitals');
+        history.pushState(null, null, '/services/lmk/hospitals');
         window.location.reload();
       })
       .catch((error) => {
@@ -38,7 +38,7 @@ export function editHospital(
       .post(`/hospitals/update/${hospitalId}`, new FormData(formElement))
       .then(() => {
         alert('Медицинское учреждение успешно отредактировано');
-        history.pushState(null, null, `/lmk/hospital/${hospitalId}`);
+        history.pushState(null, null, `/services/lmk/hospital/${hospitalId}`);
         window.location.reload();
       })
       .catch((errors) => {
@@ -66,7 +66,7 @@ export function fetchHospitals() {
         });
       })
       .catch((error) => {
-        history.replaceState(null, null, '/lmk/login');
+        history.replaceState(null, null, '/services/login');
         window.location.reload();
         dispatch({
           payload: error,
@@ -93,7 +93,7 @@ export function fetchHospital(id: number) {
         });
       })
       .catch((error) => {
-        history.replaceState(null, null, '/lmk/login');
+        history.replaceState(null, null, '/services/login');
         window.location.reload();
         dispatch({
           payload: error,
@@ -114,7 +114,7 @@ export function deleteHospital(id: number) {
     axios
       .post(`/hospitals/destroy/${id}`)
       .then(() => {
-        history.pushState(null, null, '/lmk/hospitals');
+        history.pushState(null, null, '/services/lmk/hospitals');
         window.location.reload();
       })
       .catch((error) => {

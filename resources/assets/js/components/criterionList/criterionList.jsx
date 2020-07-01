@@ -52,7 +52,7 @@ class CriterionList extends React.PureComponent {
                 <i className="fa fa-building-o" aria-hidden="true" />
                 Критерий
                 <Link
-                  to={`/lmk/criterionLists/edit/${criterionList.id}`}
+                  to={`/services/audits/criterionLists/edit/${criterionList.id}`}
                   style={{
                     marginLeft: '18px',
                   }}

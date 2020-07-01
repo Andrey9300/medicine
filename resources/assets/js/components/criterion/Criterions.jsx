@@ -53,7 +53,7 @@ class Criterions extends React.PureComponent {
                       return (
                         <tr key={criterion.id}>
                           <td>
-                            <Link to={`/lmk/criterion/${criterion.id}`}>
+                            <Link to={`/services/audits/criterion/${criterion.id}`}>
                               {criterion.name}
                             </Link>
                           </td>

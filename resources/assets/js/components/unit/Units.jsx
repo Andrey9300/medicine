@@ -53,7 +53,7 @@ class Units extends React.PureComponent {
                       return (
                         <tr key={unit.id}>
                           <td>
-                            <Link to={`/lmk/unit/${unit.id}`}>
+                            <Link to={`/services/lmk/unit/${unit.id}`}>
                               {unit.name}
                             </Link>
                           </td>

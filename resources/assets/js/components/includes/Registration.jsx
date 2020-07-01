@@ -41,7 +41,7 @@ class Registration extends React.PureComponent {
   }
 
   handleLogin() {
-    history.pushState(null, null, '/lmk/login');
+    history.pushState(null, null, '/services/login');
     window.location.reload();
   }
 

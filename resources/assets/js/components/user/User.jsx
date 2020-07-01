@@ -44,7 +44,7 @@ class User extends React.PureComponent {
               <CardHeader>
                 <i className="fa fa-building-o" aria-hidden="true" />Пользователь
                 <Link
-                  to={`/lmk/profiles/edit/${user.id}`}
+                  to={`/services/profiles/edit/${user.id}`}
                   style={{
                     marginLeft: '18px',
                   }}

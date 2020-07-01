@@ -21,7 +21,7 @@ class CriterionLists extends React.PureComponent {
               <Card className="text-center">
                 <CardHeader>Чек листов нет</CardHeader>
                 <CardBody>
-                  <Link to={'/lmk/criterionLists/create'}>Добавить чек лист</Link>
+                  <Link to={'/services/audits/criterionLists/create'}>Добавить чек лист</Link>
                 </CardBody>
               </Card>
             </Col>
@@ -39,7 +39,7 @@ class CriterionLists extends React.PureComponent {
                 <i className="fa fa-building-o" aria-hidden="true" />
                 Чек листы ({criterionLists.length})
                 <Link
-                  to="/lmk/criterionLists/create"
+                  to="/services/audits/criterionLists/create"
                   className="btn btn-primary btn-sm pull-right"
                 >
                   Добавить <i className="icon-plus" />
@@ -63,7 +63,7 @@ class CriterionLists extends React.PureComponent {
                           <td>{criterionList.location.name}</td>
                           <td>
                             <Link
-                              to={`/lmk/placeCheckList/${criterionList.id}`}
+                              to={`/services/lmk/placeCheckList/${criterionList.id}`}
                             >
                               {criterionList.place.name}
                             </Link>

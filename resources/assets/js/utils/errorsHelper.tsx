@@ -3,15 +3,18 @@ import React from 'react';
 export function createMarkup(errors: any) {
   const err: any = [];
 
-  Object.keys(errors).forEach((item, index) => {
-    if (Array.isArray(item)) {
-      errors[item].map((value: any, ind: any) => {
-        err.push(<p key={`${index}${ind}`}>{value}</p>);
-      });
-    } else {
-      err.push(<p key={index}>{errors[item]}</p>);
-    }
-  });
+  if (Array.isArray(errors)) {
+    Object.keys(errors).forEach((item: any, index) => {
+      if (Array.isArray(item)) {
+        const err = item as any;
+        errors[err].map((value: any, ind: number) => {
+          err.push(<p key={`${index}${ind}`}>{value}</p>);
+        });
+      } else {
+        err.push(<p key={index}>{errors[item]}</p>);
+      }
+    });
+  }
 
   return err.length > 0 ? err : <p>Что-то пошло не так</p>;
 }

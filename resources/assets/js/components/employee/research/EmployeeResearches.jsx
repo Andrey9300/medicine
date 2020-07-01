@@ -53,7 +53,7 @@ class EmployeeResearches extends React.PureComponent {
       <>
         <Link
           to={{
-            pathname: `/lmk/employees/print/${employeeId}`,
+            pathname: `/services/lmk/employees/print/${employeeId}`,
             state: needForPrint,
           }}
           className="btn btn-secondary btn-sm pull-left"
@@ -112,7 +112,7 @@ class EmployeeResearches extends React.PureComponent {
                   </div>
                   <div>
                     Список всех доступных{' '}
-                    <Link to={'/lmk/researches'}>исследований.</Link>
+                    <Link to={'/services/lmk/researches'}>исследований.</Link>
                   </div>
                 </div>
                 <div style={{display: 'flex', alignItems: 'center'}}>

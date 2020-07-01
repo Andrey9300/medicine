@@ -82,7 +82,7 @@ class Employee extends React.PureComponent {
                   {!employee.deleted_at && (
                     <>
                       <Link
-                        to={`/lmk/employees/edit/${employee.id}`}
+                        to={`/services/lmk/employees/edit/${employee.id}`}
                         style={{
                           marginLeft: '12px',
                         }}

@@ -31,7 +31,7 @@ class RegisterController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/lmk/login';
+    protected $redirectTo = '/services/login';
 
     /**
      * Create a new controller instance.

@@ -27,7 +27,7 @@ export function editUnit(
       .post(`/units/update/${legalEntityId}`, new FormData(formElement))
       .then(() => {
         alert('Критерий успешно отредактирован');
-        history.pushState(null, null, `/lmk/unit/${legalEntityId}`);
+        history.pushState(null, null, `/services/lmk/unit/${legalEntityId}`);
         window.location.reload();
       })
       .catch((errors) => {
@@ -82,7 +82,7 @@ export function deleteUnit(id: number) {
     axios
       .post(`/units/destroy/${id}`)
       .then(() => {
-        history.pushState(null, null, '/lmk/units');
+        history.pushState(null, null, '/services/lmk/units');
         window.location.reload();
       })
       .catch((error) => {

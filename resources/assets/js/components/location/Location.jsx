@@ -52,7 +52,7 @@ class Location extends React.PureComponent {
                 <i className="fa fa-building-o" aria-hidden="true" />
                 Критерий
                 <Link
-                  to={`/lmk/locations/edit/${location.id}`}
+                  to={`/services/lmk/locations/edit/${location.id}`}
                   style={{
                     marginLeft: '18px',
                   }}

@@ -30,7 +30,7 @@
     ],
     "typeRoots": ["node_modules/@types"],
     "declaration": false,
-    "sourceMap": true,
+    "sourceMap": false,
     "pretty": true
   },
   "include": ["resources/assets/js/**/*"]

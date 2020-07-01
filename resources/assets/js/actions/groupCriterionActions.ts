@@ -30,7 +30,7 @@ export function editGroupCriterion(
       )
       .then(() => {
         alert('Критерий успешно отредактирован');
-        history.pushState(null, null, `/lmk/groupCriterion/${legalEntityId}`);
+        history.pushState(null, null, `/services/lmk/groupCriterion/${legalEntityId}`);
         window.location.reload();
       })
       .catch((errors) => {
@@ -85,7 +85,7 @@ export function deleteGroupCriterion(id: number) {
     axios
       .post(`/groupCriterions/destroy/${id}`)
       .then(() => {
-        history.pushState(null, null, '/lmk/groupCriterions');
+        history.pushState(null, null, '/services/lmk/groupCriterions');
         window.location.reload();
       })
       .catch((error) => {

@@ -53,7 +53,7 @@ export class EmployeesList extends React.PureComponent {
           <i className="fa fa-users" aria-hidden="true" />
           {title}
           <Link
-            to="/lmk/employees/create"
+            to="/services/lmk/employees/create"
             className="btn btn-primary btn-sm pull-right"
           >
             Добавить <i className="icon-plus" />
@@ -61,7 +61,7 @@ export class EmployeesList extends React.PureComponent {
         </CardHeader>
         <CardBody className="card-body">
           <div>Таких сотрудников нет</div>
-          <Link to="/lmk/employees">Перейти ко всем сотрудникам</Link>
+          <Link to="/services/lmk/employees">Перейти ко всем сотрудникам</Link>
         </CardBody>
       </Card>
     );
@@ -76,7 +76,7 @@ export class EmployeesList extends React.PureComponent {
     return (
       <tr key={employee.id}>
         <td style={{width}}>
-          <Link to={`/lmk/employee/${employee.id}`}>{employee.fio}</Link>
+          <Link to={`/services/lmk/employee/${employee.id}`}>{employee.fio}</Link>
           <div
             style={{
               fontSize: '12px',
@@ -90,14 +90,14 @@ export class EmployeesList extends React.PureComponent {
         </td>
         <td style={{width}}>{employee.department}</td>
         <td style={{width}}>
-          {employee.send_to_research && employee.send_to_research}
+          {employee.send_to_research ? employee.send_to_research : '-'}
         </td>
         {fetchedWithCheck && (
           <td style={{width}}>{this.getEmployeeResearchStatus(employee)}</td>
         )}
         <td style={{width}}>
           <Link
-            to={`/lmk/employees/print/${employee.id}`}
+            to={`/services/lmk/employees/print/${employee.id}`}
             className="btn btn-secondary btn-sm pull-left"
           >
             Направление

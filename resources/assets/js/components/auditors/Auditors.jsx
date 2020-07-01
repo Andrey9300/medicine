@@ -21,7 +21,7 @@ class Auditors extends React.PureComponent {
               <Card className="text-center">
                 <CardHeader>Аудиторов нет</CardHeader>
                 <CardBody>
-                  <Link to={'/lmk/profiles/create'}>Добавить аудитора</Link>
+                  <Link to={'/services/profiles/create'}>Добавить аудитора</Link>
                 </CardBody>
               </Card>
             </Col>
@@ -39,7 +39,7 @@ class Auditors extends React.PureComponent {
                 <i className="fa fa-building-o" aria-hidden="true" />
                 Аудиторы ({auditors.length})
                 <Link
-                  to={'/lmk/profiles/create'}
+                  to={'/services/profiles/create'}
                   className="btn btn-primary btn-sm pull-right"
                 >
                   Добавить <i className="icon-plus" />
@@ -58,7 +58,7 @@ class Auditors extends React.PureComponent {
                       return (
                         <tr key={auditor.id}>
                           <td>
-                            <Link to={`/lmk/profiles/${auditor.id}`}>
+                            <Link to={`/services/profiles/${auditor.id}`}>
                               {auditor.fio}
                             </Link>
                           </td>

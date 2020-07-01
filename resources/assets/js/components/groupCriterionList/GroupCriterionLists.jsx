@@ -53,7 +53,7 @@ class GroupCriterionListList extends React.PureComponent {
                       return (
                         <tr key={groupCriterionList.id}>
                           <td>
-                            <Link to={`/lmk/groupCriterionList/${groupCriterionList.id}`}>
+                            <Link to={`/services/lmk/groupCriterionList/${groupCriterionList.id}`}>
                               {groupCriterionList.name}
                             </Link>
                           </td>

@@ -126,7 +126,7 @@ class Organization extends React.PureComponent {
                 <i className="fa fa-building-o" aria-hidden="true" />«
                 {organization.name}»
                 <Link
-                  to={`/lmk/organizations/edit/${organization.id}`}
+                  to={`/services/lmk/organizations/edit/${organization.id}`}
                   style={{
                     marginLeft: '18px',
                   }}
@@ -199,7 +199,7 @@ class Organization extends React.PureComponent {
                 <i className="fa fa-users" aria-hidden="true" />
                 Сотрудники
                 <Link
-                  to="/lmk/employees/create"
+                  to="/services/lmk/employees/create"
                   className="btn btn-primary btn-sm pull-right"
                 >
                   Добавить сотрудника
@@ -213,7 +213,7 @@ class Organization extends React.PureComponent {
                       <td>Вы контролируете медицинские осмотры:</td>
                       <td>
                         <Link
-                          to={`/lmk/organizations/employees/${organization.id}`}
+                          to={`/services/lmk/organizations/employees/${organization.id}`}
                         >
                           {organization.employees.length} чел.
                         </Link>
@@ -226,7 +226,7 @@ class Organization extends React.PureComponent {
                       </td>
                       <td>
                         <Link
-                          to={`/lmk/organizations/employeesExpired/${organization.id}`}
+                          to={`/services/lmk/organizations/employeesExpired/${organization.id}`}
                         >
                           {researchesExpired} чел.
                         </Link>
@@ -236,7 +236,7 @@ class Organization extends React.PureComponent {
                       <td>Просрочен медицинский осмотр:</td>
                       <td>
                         <Link
-                          to={`/lmk/organizations/employeesEnds/${organization.id}`}
+                          to={`/services/lmk/organizations/employeesEnds/${organization.id}`}
                         >
                           {researchesEnds} чел.
                         </Link>
@@ -245,7 +245,7 @@ class Organization extends React.PureComponent {
                     <tr>
                       <td>
                         <Link
-                          to={`/lmk/organizations/trashedEmployees/${organization.id}`}
+                          to={`/services/lmk/organizations/trashedEmployees/${organization.id}`}
                         >
                           Сотрудники в архиве
                         </Link>
@@ -267,7 +267,7 @@ class Organization extends React.PureComponent {
                     {hospitals.map((hospital) => (
                       <tr key={hospital.id}>
                         <td>
-                          <Link to={`/lmk/hospital/${hospital.id}`}>
+                          <Link to={`/services/lmk/hospital/${hospital.id}`}>
                             {hospital.name}
                           </Link>
                         </td>

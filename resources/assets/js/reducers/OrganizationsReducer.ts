@@ -90,9 +90,6 @@ export default function reducer(
 
         return b.researches_ends.length - a.researches_ends.length;
       });
-      const employeesData: [] = state.organization
-        ? state.organization.employees
-        : [];
 
       return {
         ...state,
@@ -101,10 +98,7 @@ export default function reducer(
         organization: {
           ...state.organization,
           ...action.payload.data.organization,
-          employees: [
-            ...employeesData,
-            ...action.payload.data.organization.employees,
-          ],
+          employees,
         },
       };
     }

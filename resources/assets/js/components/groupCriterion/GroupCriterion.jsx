@@ -52,7 +52,7 @@ class GroupCriterion extends React.PureComponent {
                 <i className="fa fa-building-o" aria-hidden="true" />
                 Критерий
                 <Link
-                  to={`/lmk/groupCriterions/edit/${groupCriterion.id}`}
+                  to={`/services/lmk/groupCriterions/edit/${groupCriterion.id}`}
                   style={{
                     marginLeft: '18px',
                   }}

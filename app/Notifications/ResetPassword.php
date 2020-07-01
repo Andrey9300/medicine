@@ -51,7 +51,7 @@ class ResetPassword extends Notification
             ->subject('Восстановление пароля к сервису медицинских книжек')
             ->greeting('Здравствуйте!')
             ->line('Вы получили это письмо, потому что мы получили запрос на сброс пароля для Вашей учетной записи.')
-            ->action('Cброс пароля', url(env('APP_URL') . '/resetPassword?token=' . $this->token . '&email=' . urlencode($notifiable->email) ))
+            ->action('Cброс пароля', url(env('APP_URL') . '/services/resetPassword?token=' . $this->token . '&email=' . urlencode($notifiable->email) ))
             ->line('Если вы не запросили сброс пароля, дальнейшие действия не требуются.');
     }
 

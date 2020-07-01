@@ -6,7 +6,7 @@ import employees from './EmployeesReducer';
 import users from './UsersReducer';
 import categories from './CategoriesReducer';
 import researchPeriods from './ResearchPeriodsReducer';
-import {AuditorsReducer} from './AuditorsReducer';
+import {auditorsReducer} from './AuditorsReducer';
 import criterions from './CriterionsReducer';
 import units from './UnitsReducer';
 import locations from './LocationsReducer';
@@ -24,7 +24,7 @@ export const reducer = combineReducers({
   users,
   categories,
   researchPeriods,
-  AuditorsReducer,
+  auditorsReducer,
   criterions,
   units,
   locations,

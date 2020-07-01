@@ -62,7 +62,7 @@ class PlaceCheckListCriterions extends React.PureComponent {
                 <i className="fa fa-building-o" aria-hidden="true" />
                 Критерии чек-лист
                 <Link
-                  to={`/lmk/placeCheckList/criterions/edit/${placeCheckListId}`}
+                  to={`/services/lmk/placeCheckList/criterions/edit/${placeCheckListId}`}
                   style={{
                     marginLeft: '8px',
                   }}

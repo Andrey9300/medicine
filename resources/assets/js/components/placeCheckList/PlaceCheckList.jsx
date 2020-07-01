@@ -54,7 +54,7 @@ class PlaceCheckListCheckList extends React.PureComponent {
                 <i className="fa fa-building-o" aria-hidden="true" />
                 Помещение чек-лист
                 <Link
-                  to={`/lmk/placeCheckLists/edit/${placeCheckList.id}`}
+                  to={`/services/lmk/placeCheckLists/edit/${placeCheckList.id}`}
                   style={{
                     marginLeft: '18px',
                   }}
@@ -100,7 +100,7 @@ class PlaceCheckListCheckList extends React.PureComponent {
                 <i className="fa fa-building-o" aria-hidden="true" />
                 Чек-листы помещения ({placeCheckList.placeCheckLists.length})
                 <Link
-                  to={`/lmk/addPlaceCheckList/${placeCheckListId}`}
+                  to={`/services/lmk/addPlaceCheckList/${placeCheckListId}`}
                   className="btn btn-primary btn-sm pull-right"
                 >
                   Добавить <i className="icon-plus" />
@@ -118,7 +118,7 @@ class PlaceCheckListCheckList extends React.PureComponent {
                     {placeCheckList.placeCheckLists.map((placeCheckList) => (
                       <tr key={placeCheckList.id}>
                         <td>
-                          <Link to={`/lmk/placeCheckList/criterions/${placeCheckList.id}`}>
+                          <Link to={`/services/lmk/placeCheckList/criterions/${placeCheckList.id}`}>
                             {placeCheckList.created_at}
                           </Link>
                         </td>

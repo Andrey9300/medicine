@@ -208,7 +208,7 @@ class PrintEmployee extends React.PureComponent {
     return (
       <div style={{display: 'flex'}}>
         <Link
-          to="/lmk/#"
+          to="#"
           className="btn btn-primary btn-sm pull-left"
           style={{
             color: '#fff',
@@ -241,7 +241,7 @@ class PrintEmployee extends React.PureComponent {
         </CardHeader>
         <CardBody className="card-body">
           Возможно нужно добавить{' '}
-          <Link to={'/lmk/hospitals'}>медицинское учреждение.</Link>
+          <Link to={'/services/lmk/hospitals'}>медицинское учреждение.</Link>
         </CardBody>
       </Card>
     );

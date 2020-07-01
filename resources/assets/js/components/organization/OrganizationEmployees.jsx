@@ -54,7 +54,7 @@ class OrganizationEmployee extends React.PureComponent {
         prevProps.organization.employees.length !== employees.length) ||
       prevProps.fetchedEmployees !== fetchedEmployees
     ) {
-      this.setEmployeesShow();
+      this.setState({employeesShow: [], title: ''}, this.setEmployeesShow);
     }
   }
 
@@ -65,23 +65,6 @@ class OrganizationEmployee extends React.PureComponent {
     } = this.props;
     let employeesShow = employees;
     let title = `Сотрудники «${name}» `;
-
-    // const employeesAttention = organization.employees.filter(
-    //     (item) =>
-    //         (item.researches_ends && item.researches_ends.length > 0) ||
-    //         (item.researches_expired && item.researches_expired.length > 0),
-    // );
-    // const researchesEnds = organization.employees.filter(
-    //     (item) => item.researches_ends && item.researches_ends.length > 0,
-    // );
-    // const researchesExpired = organization.employees.filter(
-    //     (item) =>
-    //         item.researches_expired &&
-    //         item.researches_expired.length > 0 &&
-    //         item.researches_ends &&
-    //         item.researches_ends.length === 0,
-    // );
-
 
     switch (type) {
       case 'all':

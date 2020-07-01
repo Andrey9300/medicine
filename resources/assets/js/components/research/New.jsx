@@ -41,7 +41,7 @@ class NewResearch extends React.PureComponent {
     axios
       .post('/researches/store', formData)
       .then(() => {
-        history.pushState(null, null, '/lmk/researches');
+        history.pushState(null, null, '/services/lmk/researches');
         window.location.reload();
       })
       .catch((errors) => {

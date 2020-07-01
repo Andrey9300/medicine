@@ -44,7 +44,7 @@ class EmployeesComponent extends React.PureComponent<IProps> {
           <Col xs="12" lg="12">
             <Card>
               <CardHeader>
-                <Link to={'/lmk/employeesDeleted'}>Сотрудники в архиве</Link>
+                <Link to={'/services/lmk/employeesDeleted'}>Сотрудники в архиве</Link>
               </CardHeader>
             </Card>
           </Col>

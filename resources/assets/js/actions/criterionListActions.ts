@@ -30,7 +30,7 @@ export function editCriterionList(
       )
       .then(() => {
         alert('Критерий успешно отредактирован');
-        history.pushState(null, null, `/lmk/criterionList/${legalEntityId}`);
+        history.pushState(null, null, `/services/audits/criterionList/${legalEntityId}`);
         window.location.reload();
       })
       .catch((errors) => {
@@ -85,7 +85,7 @@ export function deleteCriterionList(id: number) {
     axios
       .post(`/criterionLists/destroy/${id}`)
       .then(() => {
-        history.pushState(null, null, '/lmk/criterionLists');
+        history.pushState(null, null, '/services/audits/criterionLists');
         window.location.reload();
       })
       .catch((error) => {

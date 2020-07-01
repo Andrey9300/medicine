@@ -1,4 +1,9 @@
 <?php
+Auth::routes();
+Route::get('/clear-cache', function() {
+    Artisan::call('cache:clear');
+    return "Cache is cleared";
+});
 Route::view('/', 'layouts.main');
 Route::view('/lmk_welcome', 'layouts.lmk_welcome');
 
@@ -6,13 +11,7 @@ Route::get('/activateAccount/{id}/{token}', 'Auth\RegisterController@activation'
 Route::view('/{path?}', 'layouts.app')
     ->where('path', '.*')
     ->name('react');
-Auth::routes();
 Route::get('/checkResearches', 'CronController@checkResearches');
-
-Route::get('/clear-cache', function() {
-    Artisan::call('cache:clear');
-    return "Cache is cleared";
-});
 
 Route::middleware(['auth'])->group(function () {
     Route::prefix('users')->group(function () {
