@@ -137,11 +137,7 @@ class EditHospital extends React.PureComponent {
                       <Label htmlFor="text-input">Фото карты</Label>
                     </Col>
                     <Col xs="12" md="9">
-                      <Input
-                        type="file"
-                        id="photo_map"
-                        name="photo_map"
-                      />
+                      <Input type="file" id="photo_map" name="photo_map" />
                       <FormText color="muted">Загрузите фото карты</FormText>
                     </Col>
                   </FormGroup>
@@ -152,7 +148,7 @@ class EditHospital extends React.PureComponent {
                     <Col xs="12" md="9">
                       {hospital.photo_map ? (
                         <img
-                          src={hospital.photo_map}
+                          src={`/storage/${hospital.photo_map}`}
                           style={{width: '300px', height: '300px'}}
                         />
                       ) : (

@@ -1,10 +1,20 @@
 import {Link} from 'react-router-dom';
 import React from 'react';
 import {Card, CardHeader, CardBody, CardFooter, Table} from 'reactstrap';
-import PropTypes from 'prop-types';
+import {TableSearch} from '../elements/tableSearch/TableSearch';
 
-export class EmployeesList extends React.PureComponent {
-  getMessage(message) {
+interface IProps {
+  employees: [];
+  status: {
+    fetched: boolean;
+    fetchedWithCheck: boolean;
+    errors?: any;
+  };
+  title: string;
+}
+
+export class EmployeesList extends React.PureComponent<IProps> {
+  private getMessage(message: string) {
     const {title} = this.props;
 
     return (
@@ -18,7 +28,7 @@ export class EmployeesList extends React.PureComponent {
     );
   }
 
-  getEmployeeResearchStatus(employee) {
+  private getEmployeeResearchStatus(employee: any) {
     const researchesEnds =
       employee.researches_ends && employee.researches_ends.length;
     const researchesExpired =
@@ -44,7 +54,7 @@ export class EmployeesList extends React.PureComponent {
     return <div className={classSpan}>{text}</div>;
   }
 
-  showEmployeesNotFound() {
+  private showEmployeesNotFound() {
     const {title} = this.props;
 
     return (
@@ -67,7 +77,7 @@ export class EmployeesList extends React.PureComponent {
     );
   }
 
-  showEmployee(employee) {
+  private showEmployee(employee: any) {
     const {
       status: {fetchedWithCheck},
     } = this.props;
@@ -76,13 +86,14 @@ export class EmployeesList extends React.PureComponent {
     return (
       <tr key={employee.id}>
         <td style={{width}}>
-          <Link to={`/services/lmk/employee/${employee.id}`}>{employee.fio}</Link>
+          <Link to={`/services/lmk/employee/${employee.id}`}>
+            {employee.fio}
+          </Link>
           <div
             style={{
               fontSize: '12px',
               fontStyle: 'italic',
               lineHeight: '24px',
-              fontWeight: '300',
             }}
           >
             {employee.comments}
@@ -133,7 +144,8 @@ export class EmployeesList extends React.PureComponent {
           {title} ({employees.length})
         </CardHeader>
         <CardBody className="card-body">
-          <Table responsive>
+          <TableSearch tableId="employees" />
+          <Table id="employees" responsive>
             <thead>
               <tr>
                 <th>ФИО</th>
@@ -155,9 +167,3 @@ export class EmployeesList extends React.PureComponent {
     );
   }
 }
-
-EmployeesList.propTypes = {
-  employees: PropTypes.array.isRequired,
-  status: PropTypes.object.isRequired,
-  title: PropTypes.string,
-};
