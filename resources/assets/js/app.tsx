@@ -6,9 +6,9 @@ import {createBrowserHistory} from 'history';
 import {Provider} from 'react-redux';
 import {store} from './store';
 import Header from './components/includes/Header';
-import Sidebar from './components/includes/Sidebar';
+import {SidebarContainer} from './components/includes/sidebar/Sidebar';
 import Footer from './components/includes/Footer';
-import {Routes} from './components/route/Routes';
+import {Routes} from './components/includes/route/Routes';
 
 const history = createBrowserHistory();
 
@@ -18,7 +18,7 @@ ReactDOM.render(
       <div className="app">
         <Header />
         <div className="app-body">
-          <Sidebar history={history} />
+          <SidebarContainer />
           <main className="main">
             <Routes />
           </main>
