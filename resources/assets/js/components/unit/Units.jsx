@@ -1,4 +1,4 @@
-import {fetchUnits} from '../../actions/unitActions';
+import {fetchUnits} from '../../actions/audit/unitActions';
 import {Link} from 'react-router-dom';
 import React from 'react';
 import {connect} from 'react-redux';
@@ -53,7 +53,7 @@ class Units extends React.PureComponent {
                       return (
                         <tr key={unit.id}>
                           <td>
-                            <Link to={`/services/lmk/unit/${unit.id}`}>
+                            <Link to={`/services/audits/unit/${unit.id}`}>
                               {unit.name}
                             </Link>
                           </td>

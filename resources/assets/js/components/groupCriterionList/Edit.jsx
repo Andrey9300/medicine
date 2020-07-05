@@ -1,7 +1,7 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
-import {clearGroupCriterionList, fetchGroupCriterionList} from '../../actions/groupCriterionListActions';
+import {clearGroupCriterionList, fetchGroupCriterionList} from '../../actions/audit/groupCriterionListActions';
 import {
   Row,
   Col,
@@ -15,7 +15,7 @@ import {
   Label,
   Input,
 } from 'reactstrap';
-import {editGroupCriterionList} from '../../actions/groupCriterionListActions';
+import {editGroupCriterionList} from '../../actions/audit/groupCriterionListActions';
 import {createMarkup} from '../../utils/errorsHelper';
 
 class EditGroupCriterionList extends React.PureComponent {

@@ -12,7 +12,7 @@ import {
   Label,
   Input,
 } from 'reactstrap';
-import {addCriterion} from '../../actions/criterionActions';
+import {addCriterion} from '../../actions/audit/criterionActions';
 import {createMarkup} from '../../utils/errorsHelper';
 
 class NewCriterion extends React.PureComponent {

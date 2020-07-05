@@ -1,4 +1,4 @@
-import {clearEmployees, fetchEmployees, fetchEmployeesWithCheck} from '../../actions/employeeActions';
+import {clearEmployees, fetchEmployees, fetchEmployeesWithCheck} from '../../actions/lmk/employeeActions';
 import {EmployeesList} from './EmployeesList';
 import React from 'react';
 import {connect} from 'react-redux';

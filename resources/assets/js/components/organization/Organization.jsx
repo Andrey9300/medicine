@@ -5,8 +5,8 @@ import {
   deleteOrganization,
   clearOrganization,
   fetchOrganizationEmployeesWithCheck,
-} from '../../actions/organizationActions';
-import {fetchHospitals} from '../../actions/hospitalActions';
+} from '../../actions/lmk/organizationActions';
+import {fetchHospitals} from '../../actions/lmk/hospitalActions';
 import {EmployeesList} from '../employee/EmployeesList';
 import {Link} from 'react-router-dom';
 import PropTypes from 'prop-types';
@@ -36,7 +36,7 @@ class Organization extends React.PureComponent {
     this.setResearches();
   }
 
-  componentDidUpdate(prevProps, prevState) {
+  componentDidUpdate(prevProps) {
     const {organization, fetchedEmployees} = this.props;
 
     if (
@@ -215,7 +215,7 @@ class Organization extends React.PureComponent {
                         <Link
                           to={`/services/lmk/organizations/employees/${organization.id}`}
                         >
-                          {organization.employees.length} чел.
+                          {organization.employees && organization.employees.length} чел.
                         </Link>
                       </td>
                     </tr>

@@ -1,7 +1,7 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
-import {clearPlace, fetchPlace} from '../../actions/placeActions';
+import {clearPlace, fetchPlace} from '../../actions/audit/placeActions';
 import {
   Row,
   Col,
@@ -15,7 +15,7 @@ import {
   Label,
   Input,
 } from 'reactstrap';
-import {editPlace} from '../../actions/placeActions';
+import {editPlace} from '../../actions/audit/placeActions';
 import {createMarkup} from '../../utils/errorsHelper';
 
 class EditPlace extends React.PureComponent {
@@ -109,4 +109,4 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps)(EditPlace);
+export const EditPlaceContainer = connect(mapStateToProps)(EditPlace);

@@ -12,6 +12,8 @@ class CreatePlaceCheckListsTable extends Migration
             $table->increments('id');
             $table->integer('user_criterion_lists_id')->unsigned();
             $table->foreign('user_criterion_lists_id')->references('id')->on('user_criterion_lists')->onDelete('cascade');
+            $table->integer('user_id')->unsigned();
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->date('created_at');
             $table->boolean('sended');
         });

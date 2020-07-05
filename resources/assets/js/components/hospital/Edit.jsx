@@ -1,6 +1,6 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import {fetchHospital} from '../../actions/hospitalActions';
+import {fetchHospital} from '../../actions/lmk/hospitalActions';
 import PropTypes from 'prop-types';
 import {
   Row,
@@ -16,7 +16,7 @@ import {
   Label,
   Input,
 } from 'reactstrap';
-import {editHospital} from '../../actions/hospitalActions';
+import {editHospital} from '../../actions/lmk/hospitalActions';
 import {createMarkup} from '../../utils/errorsHelper';
 
 class EditHospital extends React.PureComponent {

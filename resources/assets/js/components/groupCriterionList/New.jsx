@@ -12,9 +12,9 @@ import {
   Label,
   Input,
 } from 'reactstrap';
-import {addGroupCriterionList} from '../../actions/groupCriterionListActions';
-import {fetchCriterions} from '../../actions/criterionActions';
-import {fetchGroupCriterions} from '../../actions/groupCriterionActions';
+import {addGroupCriterionList} from '../../actions/audit/groupCriterionListActions';
+import {fetchCriterions} from '../../actions/audit/criterionActions';
+import {fetchGroupCriterions} from '../../actions/audit/groupCriterionActions';
 import {createMarkup} from '../../utils/errorsHelper';
 
 class NewGroupCriterionList extends React.PureComponent {

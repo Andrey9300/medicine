@@ -1,4 +1,4 @@
-import {deleteHospital, fetchHospitals} from '../../actions/hospitalActions';
+import {deleteHospital, fetchHospitals} from '../../actions/lmk/hospitalActions';
 import {Link} from 'react-router-dom';
 import React from 'react';
 import {connect} from 'react-redux';

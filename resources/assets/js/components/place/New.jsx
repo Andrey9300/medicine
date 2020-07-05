@@ -13,7 +13,7 @@ import {
   Label,
   Input,
 } from 'reactstrap';
-import {addPlace} from '../../actions/placeActions';
+import {addPlace} from '../../actions/audit/placeActions';
 import {createMarkup} from '../../utils/errorsHelper';
 
 class NewPlace extends React.PureComponent {

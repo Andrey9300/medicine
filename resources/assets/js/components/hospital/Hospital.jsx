@@ -1,6 +1,6 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import {fetchHospital, deleteHospital} from '../../actions/hospitalActions';
+import {fetchHospital, deleteHospital} from '../../actions/lmk/hospitalActions';
 import {Link} from 'react-router-dom';
 import PropTypes from 'prop-types';
 import {Row, Col, Card, CardHeader, CardBody, Table} from 'reactstrap';

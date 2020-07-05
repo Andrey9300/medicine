@@ -1,7 +1,7 @@
 import {
   fetchOrganizationTrashedEmployees,
   fetchOrganization,
-} from '../../actions/organizationActions';
+} from '../../actions/lmk/organizationActions';
 import {EmployeesList} from '../employee/EmployeesList';
 import React from 'react';
 import {connect} from 'react-redux';

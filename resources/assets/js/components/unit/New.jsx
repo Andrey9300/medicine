@@ -12,7 +12,7 @@ import {
   Label,
   Input,
 } from 'reactstrap';
-import {addUnit} from '../../actions/unitActions';
+import {addUnit} from '../../actions/audit/unitActions';
 import {createMarkup} from '../../utils/errorsHelper';
 
 class NewUnit extends React.PureComponent {

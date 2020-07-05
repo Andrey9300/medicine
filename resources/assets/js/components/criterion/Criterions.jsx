@@ -1,4 +1,4 @@
-import {fetchCriterions} from '../../actions/criterionActions';
+import {fetchCriterions} from '../../actions/audit/criterionActions';
 import {Link} from 'react-router-dom';
 import React from 'react';
 import {connect} from 'react-redux';

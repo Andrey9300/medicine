@@ -13,11 +13,11 @@ import {
   Label,
   Input,
 } from 'reactstrap';
-import {addCriterionList} from '../../actions/criterionListActions';
-import {fetchUnits} from '../../actions/unitActions';
-import {fetchLocations} from '../../actions/locationActions';
-import {fetchPlaces} from '../../actions/placeActions';
-import {fetchGroupCriterionLists} from '../../actions/groupCriterionListActions';
+import {addCriterionList} from '../../actions/audit/criterionListActions';
+import {fetchUnits} from '../../actions/audit/unitActions';
+import {fetchLocations} from '../../actions/audit/locationActions';
+import {fetchPlaces} from '../../actions/audit/placeActions';
+import {fetchGroupCriterionLists} from '../../actions/audit/groupCriterionListActions';
 import {createMarkup} from '../../utils/errorsHelper';
 
 class NewCriterionList extends React.PureComponent {

@@ -1,7 +1,7 @@
 import {
   addHospitalResearches,
   fetchHospitalResearches,
-} from '../../../actions/hospitalActions';
+} from '../../../actions/lmk/hospitalActions';
 import React from 'react';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';

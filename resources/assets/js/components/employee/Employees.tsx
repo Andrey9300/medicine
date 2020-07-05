@@ -3,11 +3,13 @@ import {Link} from 'react-router-dom';
 import {connect} from 'react-redux';
 import {Row, Col, Card, CardHeader} from 'reactstrap';
 
-import {clearEmployees, fetchEmployees} from '../../actions/employeeActions';
+import {clearEmployees, fetchEmployees} from '../../actions/lmk/employeeActions';
 import {EmployeesList} from './EmployeesList';
+import {TState} from '../../reducers';
+import {IEmployee} from '../../interface/lmk/IEmployee';
 
 interface IStateProps {
-  employees: [];
+  employees: IEmployee[];
   fetched: boolean;
 }
 
@@ -44,7 +46,9 @@ class EmployeesComponent extends React.PureComponent<IProps> {
           <Col xs="12" lg="12">
             <Card>
               <CardHeader>
-                <Link to={'/services/lmk/employeesDeleted'}>Сотрудники в архиве</Link>
+                <Link to={'/services/lmk/employeesDeleted'}>
+                  Сотрудники в архиве
+                </Link>
               </CardHeader>
             </Card>
           </Col>
@@ -54,7 +58,7 @@ class EmployeesComponent extends React.PureComponent<IProps> {
   }
 }
 
-const mapStateToProps = (state: any): IStateProps => {
+const mapStateToProps = (state: TState): IStateProps => {
   return {
     employees: state.employees.employees,
     fetched: state.employees.fetched,

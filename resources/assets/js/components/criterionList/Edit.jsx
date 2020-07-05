@@ -1,7 +1,7 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
-import {clearCriterionList, fetchCriterionList} from '../../actions/criterionListActions';
+import {clearCriterionList, fetchCriterionList} from '../../actions/audit/criterionListActions';
 import {
   Row,
   Col,
@@ -15,7 +15,7 @@ import {
   Label,
   Input,
 } from 'reactstrap';
-import {editCriterionList} from '../../actions/criterionListActions';
+import {editCriterionList} from '../../actions/audit/criterionListActions';
 import {createMarkup} from '../../utils/errorsHelper';
 
 class EditCriterionList extends React.PureComponent {

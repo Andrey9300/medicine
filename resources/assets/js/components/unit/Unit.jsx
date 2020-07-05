@@ -3,7 +3,7 @@ import {connect} from 'react-redux';
 import {
   fetchUnit,
   deleteUnit,
-} from '../../actions/unitActions';
+} from '../../actions/audit/unitActions';
 import {Link} from 'react-router-dom';
 import PropTypes from 'prop-types';
 import {Row, Col, Card, CardHeader, CardBody, Table} from 'reactstrap';
@@ -52,7 +52,7 @@ class Unit extends React.PureComponent {
                 <i className="fa fa-building-o" aria-hidden="true" />
                 Подразделения
                 <Link
-                  to={`/services/lmk/units/edit/${unit.id}`}
+                  to={`/services/audits/unit/edit/${unit.id}`}
                   style={{
                     marginLeft: '18px',
                   }}

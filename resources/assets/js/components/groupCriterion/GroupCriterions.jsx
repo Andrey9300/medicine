@@ -1,4 +1,4 @@
-import {fetchGroupCriterions} from '../../actions/groupCriterionActions';
+import {fetchGroupCriterions} from '../../actions/audit/groupCriterionActions';
 import {Link} from 'react-router-dom';
 import React from 'react';
 import {connect} from 'react-redux';
@@ -53,7 +53,7 @@ class GroupCriterions extends React.PureComponent {
                       return (
                         <tr key={groupCriterion.id}>
                           <td>
-                            <Link to={`/services/lmk/groupCriterion/${groupCriterion.id}`}>
+                            <Link to={`/services/audits/groupCriterion/${groupCriterion.id}`}>
                               {groupCriterion.name}
                             </Link>
                           </td>

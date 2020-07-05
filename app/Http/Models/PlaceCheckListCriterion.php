@@ -11,6 +11,6 @@ class PlaceCheckListCriterion extends Model
     protected $table = 'place_check_list_criterion';
 
     protected $fillable = [
-        'place_check_lists_id', 'user_criterions_id', 'mark', 'comment_from_auditor', 'comment_at_auditor',
+        'place_check_lists_id', 'user_criterions_id', 'mark', 'comment_from_auditor', 'comment_at_auditor', 'user_id'
     ];
 }

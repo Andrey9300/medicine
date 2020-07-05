@@ -3,10 +3,10 @@ import {connect} from 'react-redux';
 import {
   fetchOrganization,
   deleteOrganization,
-} from '../../../actions/organizationActions';
+} from '../../../actions/lmk/organizationActions';
 import {Link} from 'react-router-dom';
 import PropTypes from 'prop-types';
-import {fetchHospitals} from '../../../actions/hospitalActions';
+import {fetchHospitals} from '../../../actions/lmk/hospitalActions';
 import {Row, Col, Card, CardHeader, CardBody, Table} from 'reactstrap';
 import {createMarkup} from '../../../utils/errorsHelper';
 

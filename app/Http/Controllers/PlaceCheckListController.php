@@ -17,6 +17,7 @@ class PlaceCheckListController extends Controller
 {
     public function store(Request $request, $id)
     {
+        $currentUser = Auth::user();
         $criterionIds = $request->criterionId;
         $marks = $request->mark;
         $comments = $request->comment;
@@ -25,6 +26,7 @@ class PlaceCheckListController extends Controller
         $placeCheckLists->user_criterion_lists_id = $id;
         $placeCheckLists->created_at = date('Y-m-d', time());
         $placeCheckLists->sended = false;
+        $placeCheckLists->user_id = $currentUser->id;
         $placeCheckLists->save();
 
         foreach ($criterionIds as $key => $value) {
@@ -33,6 +35,7 @@ class PlaceCheckListController extends Controller
             $placeCheckListCriterion->user_criterions_id = $value;
             $placeCheckListCriterion->mark = $marks[$key];
             $placeCheckListCriterion->comment_from_auditor = $comments[$key];
+            $placeCheckListCriterion->user_id = $currentUser->id;
             $placeCheckListCriterion->save();
         }
     }
@@ -57,7 +60,12 @@ class PlaceCheckListController extends Controller
         $placeCheckList->groupCriterion = UserGroupCriterion::find($placeCheckList->user_group_criterion_id);
         $groupCriterionList = UserGroupCriterionList::where('user_group_criterion_id', '=', $placeCheckList->groupCriterion->id)->get();
         $criterions = [];
-        $placeCheckList->placeCheckLists = PlaceCheckLists::where('user_criterion_lists_id', '=', $placeCheckList->id)->get();
+        $placeCheckList->placeCheckLists = PlaceCheckLists::where(
+            [
+                ['user_criterion_lists_id', '=', $placeCheckList->id],
+                ['user_id', '=', $currentUser->id],
+            ]
+        )->get();
 
         foreach ($groupCriterionList as $groupCriterion) {
             $criterion = UserCriterions::find($groupCriterion->user_criterions_criterion_id);
@@ -72,8 +80,13 @@ class PlaceCheckListController extends Controller
 
     public function criterions($id)
     {
-//        $currentUser = Auth::user();
-        $placeCheckListCriterions = PlaceCheckListCriterion::where('place_check_lists_id', '=', $id)->get();
+        $currentUser = Auth::user();
+        $placeCheckListCriterions = PlaceCheckListCriterion::where(
+            [
+                ['place_check_lists_id', '=', $id],
+                ['user_id', '=', $currentUser->id],
+            ]
+        )->get();
 
         foreach ($placeCheckListCriterions as $placeCheckListCriterion) {
             $placeCheckListCriterion->criterion = UserCriterions::find($placeCheckListCriterion->user_criterions_id);

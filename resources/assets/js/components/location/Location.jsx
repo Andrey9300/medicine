@@ -3,7 +3,7 @@ import {connect} from 'react-redux';
 import {
   fetchLocation,
   deleteLocation,
-} from '../../actions/locationActions';
+} from '../../actions/audit/locationActions';
 import {Link} from 'react-router-dom';
 import PropTypes from 'prop-types';
 import {Row, Col, Card, CardHeader, CardBody, Table} from 'reactstrap';
@@ -52,7 +52,7 @@ class Location extends React.PureComponent {
                 <i className="fa fa-building-o" aria-hidden="true" />
                 Критерий
                 <Link
-                  to={`/services/lmk/locations/edit/${location.id}`}
+                  to={`/services/audits/location/edit/${location.id}`}
                   style={{
                     marginLeft: '18px',
                   }}

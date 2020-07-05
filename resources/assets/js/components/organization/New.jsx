@@ -1,5 +1,5 @@
 import React from 'react';
-import {fetchCategories} from '../../actions/categoryActions';
+import {fetchCategories} from '../../actions/lmk/categoryActions';
 import {connect} from 'react-redux';
 import {
   Row,
@@ -14,7 +14,7 @@ import {
   Label,
   Input,
 } from 'reactstrap';
-import {addOrganization} from '../../actions/organizationActions';
+import {addOrganization} from '../../actions/lmk/organizationActions';
 import {createMarkup} from '../../utils/errorsHelper';
 
 class NewOrganization extends React.PureComponent {

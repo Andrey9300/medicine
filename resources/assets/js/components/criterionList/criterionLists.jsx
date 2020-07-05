@@ -1,4 +1,4 @@
-import {fetchCriterionLists} from '../../actions/criterionListActions';
+import {fetchCriterionLists} from '../../actions/audit/criterionListActions';
 import {Link} from 'react-router-dom';
 import React from 'react';
 import {connect} from 'react-redux';
@@ -63,7 +63,7 @@ class CriterionLists extends React.PureComponent {
                           <td>{criterionList.location.name}</td>
                           <td>
                             <Link
-                              to={`/services/lmk/placeCheckList/${criterionList.id}`}
+                              to={`/services/audits/placeCheckList/${criterionList.id}`}
                             >
                               {criterionList.place.name}
                             </Link>

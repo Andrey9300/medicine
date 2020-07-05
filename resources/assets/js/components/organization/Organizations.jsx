@@ -1,4 +1,4 @@
-import {fetchOrganizations} from '../../actions/organizationActions';
+import {fetchOrganizations} from '../../actions/lmk/organizationActions';
 import {Link} from 'react-router-dom';
 import React from 'react';
 import {connect} from 'react-redux';

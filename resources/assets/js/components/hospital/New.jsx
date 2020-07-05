@@ -14,7 +14,7 @@ import {
   Input,
   FormText,
 } from 'reactstrap';
-import {addHospital} from '../../actions/hospitalActions';
+import {addHospital} from '../../actions/lmk/hospitalActions';
 import {createMarkup} from '../../utils/errorsHelper';
 
 class NewHospital extends React.PureComponent {

@@ -1,8 +1,8 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
-import {clearOrganization, fetchOrganization} from '../../actions/organizationActions';
-import {fetchCategories} from '../../actions/categoryActions';
+import {clearOrganization, fetchOrganization} from '../../actions/lmk/organizationActions';
+import {fetchCategories} from '../../actions/lmk/categoryActions';
 import {
   Row,
   Col,
@@ -16,7 +16,7 @@ import {
   Label,
   Input,
 } from 'reactstrap';
-import {editOrganization} from '../../actions/organizationActions';
+import {editOrganization} from '../../actions/lmk/organizationActions';
 import {createMarkup} from '../../utils/errorsHelper';
 
 class EditOrganization extends React.PureComponent {

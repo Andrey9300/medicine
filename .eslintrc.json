@@ -7,13 +7,7 @@
   "globals": {
     "globalThis": "readonly",
     "Atomics": "readonly",
-    "SharedArrayBuffer": "readonly",
-    "__RELEASE__": "readonly",
-    "__STORYBOOK__": "readonly",
-    "__API_URL__": "readonly",
-    "__SITE_URL__": "readonly",
-    "__IS_PUBLIC__": "readonly",
-    "__AMPLITUDE_KEY__": "readonly"
+    "SharedArrayBuffer": "readonly"
   },
   "overrides": [
     {

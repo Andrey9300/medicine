@@ -3,7 +3,7 @@ import {connect} from 'react-redux';
 import {
   fetchPlace,
   deletePlace,
-} from '../../actions/placeActions';
+} from '../../actions/audit/placeActions';
 import {Link} from 'react-router-dom';
 import PropTypes from 'prop-types';
 import {Row, Col, Card, CardHeader, CardBody, Table} from 'reactstrap';
@@ -18,6 +18,7 @@ class Place extends React.PureComponent {
   }
 
   componentDidMount() {
+    console.log('sss');
     this.props.dispatch(fetchPlace(this.state.placeId));
   }
 
@@ -52,7 +53,7 @@ class Place extends React.PureComponent {
                 <i className="fa fa-building-o" aria-hidden="true" />
                 Помещение
                 <Link
-                  to={`/services/lmk/places/edit/${place.id}`}
+                  to={`/services/audits/place/edit/${place.id}`}
                   style={{
                     marginLeft: '18px',
                   }}

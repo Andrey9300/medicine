@@ -223,7 +223,7 @@ class EmployeesController extends Controller
             );
             $researchCategory = ResearchCategory::find($research->id);
             if ($employeeResearch->date) {
-                $employeeResearch->date = Carbon::createFromFormat('Y-m-d', $employeeResearch->date)->format('d-m-Y');
+                $employeeResearch->date = Carbon::createFromFormat('Y-m-d', $employeeResearch->date)->format('Y-m-d');
             }
             if ($researchCategory->category_id === $employeeCategoryId) {
                 $research->category;
@@ -262,7 +262,7 @@ class EmployeesController extends Controller
             $dateSave = null;
 
             if ($date) {
-                $dateSave = Carbon::createFromFormat('d-m-Y', $date)->format('Y-m-d');
+                $dateSave = Carbon::createFromFormat('Y-m-d', $date);
             }
 
             if (!is_null($isExceptions) && array_key_exists($key, $isExceptions)) {

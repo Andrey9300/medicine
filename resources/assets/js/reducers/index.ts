@@ -1,20 +1,20 @@
 import {combineReducers} from 'redux';
-import hospitals from './HospitalsReducer';
-import organizations from './OrganizationsReducer';
-import researches from './ResearchesReducer';
-import employees from './EmployeesReducer';
+import hospitals from './lmk/HospitalsReducer';
+import organizations from './lmk/OrganizationsReducer';
+import researches from './lmk/ResearchesReducer';
+import employees from './lmk/EmployeesReducer';
 import users from './UsersReducer';
-import categories from './CategoriesReducer';
-import researchPeriods from './ResearchPeriodsReducer';
-import {auditorsReducer} from './AuditorsReducer';
-import criterions from './CriterionsReducer';
-import units from './UnitsReducer';
-import locations from './LocationsReducer';
-import places from './PlacesReducer';
-import groupCriterions from './GroupCriterionsReducer';
-import criterionLists from './CriterionListReducer';
-import groupCriterionLists from './GroupCriterionListsReducer';
-import placeCheckLists from './PlaceCheckListsReducer';
+import categories from './lmk/CategoriesReducer';
+import researchPeriods from './lmk/ResearchPeriodsReducer';
+import {auditors} from './audit/AuditorsReducer';
+import criterions from './audit/CriterionsReducer';
+import units from './audit/UnitsReducer';
+import locations from './audit/LocationsReducer';
+import places from './audit/PlacesReducer';
+import groupCriterions from './audit/GroupCriterionsReducer';
+import criterionLists from './audit/CriterionListReducer';
+import groupCriterionLists from './audit/GroupCriterionListsReducer';
+import placeCheckLists from './audit/PlaceCheckListsReducer';
 
 export const reducer = combineReducers({
   hospitals,
@@ -24,7 +24,7 @@ export const reducer = combineReducers({
   users,
   categories,
   researchPeriods,
-  auditorsReducer,
+  auditors,
   criterions,
   units,
   locations,

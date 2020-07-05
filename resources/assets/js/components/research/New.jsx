@@ -2,7 +2,7 @@ import React from 'react';
 import axios from 'axios';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
-import {fetchPeriods} from '../../actions/researchPeriodActions';
+import {fetchPeriods} from '../../actions/lmk/researchPeriodActions';
 import {
   Row,
   Col,

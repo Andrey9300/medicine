@@ -1,4 +1,4 @@
-import {fetchPlaces} from '../../actions/placeActions';
+import {fetchPlaces} from '../../actions/audit/placeActions';
 import {Link} from 'react-router-dom';
 import React from 'react';
 import {connect} from 'react-redux';
@@ -21,7 +21,7 @@ class PlaceCheckLists extends React.PureComponent {
               <i className="fa fa-building-o" aria-hidden="true" />
               Чек-листов помещений нет
               <Link
-                to={`/services/lmk/addPlaceCheckList/${placeId}`}
+                to={`/services/audits/addPlaceCheckList/${placeId}`}
                 className="btn btn-primary btn-sm pull-right"
               >
                 Добавить <i className="icon-plus" />
@@ -39,7 +39,7 @@ class PlaceCheckLists extends React.PureComponent {
             <i className="fa fa-building-o" aria-hidden="true" />
             Чек-листы помещения ({places.length})
             <Link
-              to={`/services/lmk/addPlaceCheckList/${placeId}`}
+              to={`/services/audits/addPlaceCheckList/${placeId}`}
               className="btn btn-primary btn-sm pull-right"
             >
               Добавить <i className="icon-plus" />
@@ -57,7 +57,7 @@ class PlaceCheckLists extends React.PureComponent {
                   return (
                     <tr key={place.id}>
                       <td>
-                        <Link to={`/services/lmk/place/${place.id}`}>{place.name}</Link>
+                        <Link to={`/services/audits/place/${place.id}`}>{place.name}</Link>
                       </td>
                     </tr>
                   );

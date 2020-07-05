@@ -3,7 +3,7 @@ import {connect} from 'react-redux';
 import {
   fetchPlaceCheckList,
   deletePlaceCheckList,
-} from '../../actions/placeCheckListActions';
+} from '../../actions/audit/placeCheckListActions';
 import {Link} from 'react-router-dom';
 import PropTypes from 'prop-types';
 import {Row, Col, Card, CardHeader, CardBody, Table} from 'reactstrap';
@@ -54,7 +54,7 @@ class PlaceCheckListCheckList extends React.PureComponent {
                 <i className="fa fa-building-o" aria-hidden="true" />
                 Помещение чек-лист
                 <Link
-                  to={`/services/lmk/placeCheckLists/edit/${placeCheckList.id}`}
+                  to={`/services/audits/placeCheckLists/edit/${placeCheckList.id}`}
                   style={{
                     marginLeft: '18px',
                   }}
@@ -100,7 +100,7 @@ class PlaceCheckListCheckList extends React.PureComponent {
                 <i className="fa fa-building-o" aria-hidden="true" />
                 Чек-листы помещения ({placeCheckList.placeCheckLists.length})
                 <Link
-                  to={`/services/lmk/addPlaceCheckList/${placeCheckListId}`}
+                  to={`/services/audits/addPlaceCheckList/${placeCheckListId}`}
                   className="btn btn-primary btn-sm pull-right"
                 >
                   Добавить <i className="icon-plus" />
@@ -118,7 +118,7 @@ class PlaceCheckListCheckList extends React.PureComponent {
                     {placeCheckList.placeCheckLists.map((placeCheckList) => (
                       <tr key={placeCheckList.id}>
                         <td>
-                          <Link to={`/services/lmk/placeCheckList/criterions/${placeCheckList.id}`}>
+                          <Link to={`/services/audits/placeCheckList/criterions/${placeCheckList.id}`}>
                             {placeCheckList.created_at}
                           </Link>
                         </td>

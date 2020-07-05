@@ -6,18 +6,20 @@ interface IState {
 }
 
 interface IProps {
-  tableId: any;
+  tableId: string;
 }
 
 export class TableSearch extends React.PureComponent<IProps, IState> {
-  private handleChange = (event: any) => {
+  public state = {inputValue: ''};
+
+  private handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     this.setState({inputValue: event.target.value});
   };
 
   private tableSearch = () => {
     const {inputValue} = this.state;
     const {tableId} = this.props;
-    const table = document.getElementById(tableId) as any;
+    const table = document.getElementById(tableId) as HTMLTableElement;
     const regPhrase = new RegExp(inputValue, 'i');
     let flag = false;
 
@@ -25,8 +27,11 @@ export class TableSearch extends React.PureComponent<IProps, IState> {
       flag = false;
       for (let j = table.rows[i].cells.length - 1; j >= 0; j--) {
         flag = regPhrase.test(table.rows[i].cells[j].innerHTML);
-        if (flag) break;
+        if (flag) {
+          break;
+        }
       }
+
       if (flag) {
         table.rows[i].style.display = '';
       } else {
@@ -34,8 +39,6 @@ export class TableSearch extends React.PureComponent<IProps, IState> {
       }
     }
   };
-
-  public state = {inputValue: ''};
 
   render() {
     const {inputValue} = this.state;

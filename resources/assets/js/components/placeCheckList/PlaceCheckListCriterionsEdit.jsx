@@ -3,7 +3,7 @@ import {connect} from 'react-redux';
 import {
   deletePlaceCheckList,
   fetchPlaceCheckListCriterions,
-} from '../../actions/placeCheckListActions';
+} from '../../actions/audit/placeCheckListActions';
 import {Link} from 'react-router-dom';
 import PropTypes from 'prop-types';
 import {

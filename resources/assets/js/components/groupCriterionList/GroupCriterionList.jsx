@@ -3,7 +3,7 @@ import {connect} from 'react-redux';
 import {
   fetchGroupCriterionList,
   deleteGroupCriterionList,
-} from '../../actions/groupCriterionListActions';
+} from '../../actions/audit/groupCriterionListActions';
 import {Link} from 'react-router-dom';
 import PropTypes from 'prop-types';
 import {Row, Col, Card, CardHeader, CardBody, Table} from 'reactstrap';
@@ -52,7 +52,7 @@ class GroupCriterionListList extends React.PureComponent {
                 <i className="fa fa-building-o" aria-hidden="true" />
                 Критерий
                 <Link
-                  to={`/services/lmk/groupCriterionLists/edit/${groupCriterionList.id}`}
+                  to={`/services/audits/groupCriterionList/edit/${groupCriterionList.id}`}
                   style={{
                     marginLeft: '18px',
                   }}

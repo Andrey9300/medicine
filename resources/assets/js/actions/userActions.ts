@@ -16,7 +16,7 @@ export function loginUser(formElement: HTMLFormElement = null) {
         window.location.reload();
       })
       .catch((errors) => {
-        dispatch({
+          dispatch({
           payload: getResponseError(errors),
           type: 'LOGIN_USER_REJECTED',
         });
@@ -53,7 +53,7 @@ export function registrationUser(formElement: HTMLFormElement = null) {
       .post('/register', new FormData(formElement))
       .then(() => {
         alert('Вам отправлен email для активации аккаунта');
-        history.replaceState(null, null, '/login');
+        history.replaceState(null, null, '/services/login');
         window.location.reload();
       })
       .catch((errors) => {
@@ -71,7 +71,7 @@ export function registrationAuditorUser(formElement: HTMLFormElement = null) {
       .post('/users/store', new FormData(formElement))
       .then(() => {
         alert('Аудитор добавлен');
-        history.replaceState(null, null, '/auditors');
+        history.replaceState(null, null, '/services/audits/auditors');
         window.location.reload();
       })
       .catch((errors) => {

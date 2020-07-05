@@ -1,7 +1,7 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import {clearEmployee, fetchEmployee} from '../../actions/employeeActions';
-import {fetchOrganizations} from '../../actions/organizationActions';
+import {clearEmployee, fetchEmployee} from '../../actions/lmk/employeeActions';
+import {fetchOrganizations} from '../../actions/lmk/organizationActions';
 import PropTypes from 'prop-types';
 import {
   Row,
@@ -16,8 +16,8 @@ import {
   Label,
   Input,
 } from 'reactstrap';
-import {editEmployee} from '../../actions/employeeActions';
-import {fetchCategories} from '../../actions/categoryActions';
+import {editEmployee} from '../../actions/lmk/employeeActions';
+import {fetchCategories} from '../../actions/lmk/categoryActions';
 import {createMarkup} from '../../utils/errorsHelper';
 
 class EditEmployee extends React.PureComponent {

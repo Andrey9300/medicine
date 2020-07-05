@@ -2,9 +2,10 @@ import {Link} from 'react-router-dom';
 import React from 'react';
 import {Card, CardHeader, CardBody, CardFooter, Table} from 'reactstrap';
 import {TableSearch} from '../elements/tableSearch/TableSearch';
+import {IEmployee} from "../../interface/lmk/IEmployee";
 
 interface IProps {
-  employees: [];
+  employees: IEmployee[];
   status: {
     fetched: boolean;
     fetchedWithCheck: boolean;
@@ -28,7 +29,7 @@ export class EmployeesList extends React.PureComponent<IProps> {
     );
   }
 
-  private getEmployeeResearchStatus(employee: any) {
+  private getEmployeeResearchStatus(employee: IEmployee) {
     const researchesEnds =
       employee.researches_ends && employee.researches_ends.length;
     const researchesExpired =
@@ -77,7 +78,7 @@ export class EmployeesList extends React.PureComponent<IProps> {
     );
   }
 
-  private showEmployee(employee: any) {
+  private showEmployee(employee: IEmployee) {
     const {
       status: {fetchedWithCheck},
     } = this.props;

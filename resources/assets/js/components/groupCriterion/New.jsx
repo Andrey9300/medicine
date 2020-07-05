@@ -12,7 +12,7 @@ import {
   Label,
   Input,
 } from 'reactstrap';
-import {addGroupCriterion} from '../../actions/groupCriterionActions';
+import {addGroupCriterion} from '../../actions/audit/groupCriterionActions';
 import {createMarkup} from '../../utils/errorsHelper';
 
 class NewGroupCriterion extends React.PureComponent {

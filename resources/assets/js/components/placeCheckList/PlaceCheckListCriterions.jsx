@@ -3,7 +3,7 @@ import {connect} from 'react-redux';
 import {
   deletePlaceCheckList,
   fetchPlaceCheckListCriterions,
-} from '../../actions/placeCheckListActions';
+} from '../../actions/audit/placeCheckListActions';
 import {Link} from 'react-router-dom';
 import PropTypes from 'prop-types';
 import {Row, Col, Card, CardHeader, CardBody, Table} from 'reactstrap';
@@ -62,7 +62,7 @@ class PlaceCheckListCriterions extends React.PureComponent {
                 <i className="fa fa-building-o" aria-hidden="true" />
                 Критерии чек-лист
                 <Link
-                  to={`/services/lmk/placeCheckList/criterions/edit/${placeCheckListId}`}
+                  to={`/services/audits/placeCheckList/criterions/edit/${placeCheckListId}`}
                   style={{
                     marginLeft: '8px',
                   }}

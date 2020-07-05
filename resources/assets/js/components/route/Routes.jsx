@@ -26,7 +26,7 @@ import Researches from '../../components/research/Researches';
 import NewResearch from '../../components/research/New';
 
 import EditEmployee from '../../components/employee/Edit';
-import PrintEmployee from '../../components/employee/PrintResearch';
+import {PrintEmployee} from '../employee/printResearch/PrintResearch';
 import Employee from '../../components/employee/Employee';
 import {Employees} from '../employee/Employees';
 import EmployeesDeleted from '../../components/employee/EmployeesDeleted';
@@ -34,7 +34,7 @@ import NewEmployee from '../../components/employee/New';
 
 import {Main} from '../../components/main/Main';
 
-import EmployeeResearches from '../../components/employee/research/EmployeeResearches';
+import {EmployeeResearches} from '../employee/research/EmployeeResearches';
 import {UserContainer} from '../user/User';
 import {EditUserContainer} from '../user/Edit';
 import {AuditorsContainer} from '../auditors/Auditors';
@@ -53,6 +53,16 @@ import {AddPlaceCheckListContainer} from '../placeCheckList/AddPlaceCheckList';
 import {PlaceCheckListCriterionsContainer} from '../placeCheckList/PlaceCheckListCriterions';
 import {PlaceCheckListCriterionsEditContainer} from '../placeCheckList/PlaceCheckListCriterionsEdit';
 import OrganizationTrashedEmployees from '../organization/OrganizationTrashedEmployees';
+import {PlaceContainer} from '../place/Place';
+import {UnitContainer} from '../unit/Unit';
+import {LocationContainer} from '../location/Location';
+import {EditUnitContainer} from "../unit/Edit";
+import {EditLocationContainer} from "../location/Edit";
+import {EditPlaceContainer} from "../place/Edit";
+import {GroupCriterionContainer} from "../groupCriterion/GroupCriterion";
+import {EditGroupCriterionContainer} from "../groupCriterion/Edit";
+import {GroupCriterionListContainer} from "../groupCriterionList/GroupCriterionList";
+import {EditGroupCriterionListContainer} from "../groupCriterionList/Edit";
 
 export class Routes extends React.PureComponent {
   render() {
@@ -241,31 +251,6 @@ export class Routes extends React.PureComponent {
           component={(props) => <EmployeeResearches {...props} />}
         />
 
-        <Route
-          exact
-          path="/services/lmk/placeCheckList/:id"
-          component={(props) => <PlaceCheckListContainer {...props} />}
-        />
-        <Route
-          exact
-          path="/services/lmk/addPlaceCheckList/:id"
-          component={(props) => <AddPlaceCheckListContainer {...props} />}
-        />
-        <Route
-          exact
-          path="/services/lmk/placeCheckList/criterions/:id"
-          component={(props) => (
-            <PlaceCheckListCriterionsContainer {...props} />
-          )}
-        />
-        <Route
-          exact
-          path="/services/lmk/placeCheckList/criterions/edit/:id"
-          component={(props) => (
-            <PlaceCheckListCriterionsEditContainer {...props} />
-          )}
-        />
-
         {/*auditors*/}
         <Route
           exact
@@ -313,6 +298,85 @@ export class Routes extends React.PureComponent {
           exact
           path="/services/audits/criterionLists/edit/:id"
           component={(props) => <EditCriterionListContainer {...props} />}
+        />
+        <Route
+          exact
+          path="/services/audits/placeCheckList/:id"
+          component={(props) => <PlaceCheckListContainer {...props} />}
+        />
+        <Route
+          exact
+          path="/services/audits/addPlaceCheckList/:id"
+          component={(props) => <AddPlaceCheckListContainer {...props} />}
+        />
+        <Route
+          exact
+          path="/services/audits/placeCheckList/criterions/:id"
+          component={(props) => (
+            <PlaceCheckListCriterionsContainer {...props} />
+          )}
+        />
+        <Route
+          exact
+          path="/services/audits/placeCheckList/criterions/edit/:id"
+          component={(props) => (
+            <PlaceCheckListCriterionsEditContainer {...props} />
+          )}
+        />
+
+        <Route
+          exact
+          path="/services/audits/unit/:id"
+          component={(props) => <UnitContainer {...props} />}
+        />
+        <Route
+          exact
+          path="/services/audits/unit/edit/:id"
+          component={(props) => <EditUnitContainer {...props} />}
+        />
+
+        <Route
+          exact
+          path="/services/audits/location/:id"
+          component={(props) => <LocationContainer {...props} />}
+        />
+        <Route
+          exact
+          path="/services/audits/location/edit/:id"
+          component={(props) => <EditLocationContainer {...props} />}
+        />
+
+        <Route
+          exact
+          path="/services/audits/place/:id"
+          component={(props) => <PlaceContainer {...props} />}
+        />
+        <Route
+          exact
+          path="/services/audits/place/edit/:id"
+          component={(props) => <EditPlaceContainer {...props} />}
+        />
+
+        <Route
+          exact
+          path="/services/audits/groupCriterion/:id"
+          component={(props) => <GroupCriterionContainer {...props} />}
+        />
+        <Route
+          exact
+          path="/services/audits/groupCriterion/edit/:id"
+          component={(props) => <EditGroupCriterionContainer {...props} />}
+        />
+
+        <Route
+          exact
+          path="/services/audits/groupCriterionList/:id"
+          component={(props) => <GroupCriterionListContainer {...props} />}
+        />
+        <Route
+          exact
+          path="/services/audits/groupCriterionList/edit/:id"
+          component={(props) => <EditGroupCriterionListContainer {...props} />}
         />
       </>
     );

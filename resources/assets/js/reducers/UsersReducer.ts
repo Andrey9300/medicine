@@ -1,15 +1,19 @@
 import {AnyAction} from 'redux';
+import {IUser} from '../interface/IUser';
 
 interface IState {
   errors: object;
   fetched: boolean;
   doubleClick: boolean;
-  currentUser: object;
-  user: object;
+  currentUser: {
+    isAuthenticated: boolean;
+  };
+  user: IUser;
   userResearch: object;
   userResearches: [];
-  users: [];
+  users: IUser[];
 }
+
 
 const initialState: IState = {
   errors: null,

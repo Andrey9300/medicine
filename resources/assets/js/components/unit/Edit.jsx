@@ -1,7 +1,7 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
-import {clearUnit, fetchUnit} from '../../actions/unitActions';
+import {clearUnit, fetchUnit} from '../../actions/audit/unitActions';
 import {
   Row,
   Col,
@@ -15,7 +15,7 @@ import {
   Label,
   Input,
 } from 'reactstrap';
-import {editUnit} from '../../actions/unitActions';
+import {editUnit} from '../../actions/audit/unitActions';
 import {createMarkup} from '../../utils/errorsHelper';
 
 class EditUnit extends React.PureComponent {
@@ -38,6 +38,7 @@ class EditUnit extends React.PureComponent {
   }
 
   componentDidMount() {
+    console.log('tes');
     this.props.dispatch(clearUnit());
     this.props.dispatch(fetchUnit(this.state.unitId));
   }
@@ -109,4 +110,4 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps)(EditUnit);
+export const EditUnitContainer = connect(mapStateToProps)(EditUnit);

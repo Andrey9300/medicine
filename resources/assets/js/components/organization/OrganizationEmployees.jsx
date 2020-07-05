@@ -2,7 +2,7 @@ import {
   fetchOrganization,
   clearOrganizationEmployees,
   fetchOrganizationEmployeesWithCheck,
-} from '../../actions/organizationActions';
+} from '../../actions/lmk/organizationActions';
 import {EmployeesList} from '../employee/EmployeesList';
 import React from 'react';
 import {connect} from 'react-redux';
@@ -51,6 +51,8 @@ class OrganizationEmployee extends React.PureComponent {
 
     if (
       (prevProps.organization &&
+        prevProps.organization.employees &&
+        employees &&
         prevProps.organization.employees.length !== employees.length) ||
       prevProps.fetchedEmployees !== fetchedEmployees
     ) {

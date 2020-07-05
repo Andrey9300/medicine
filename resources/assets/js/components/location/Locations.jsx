@@ -1,4 +1,4 @@
-import {fetchLocations} from '../../actions/locationActions';
+import {fetchLocations} from '../../actions/audit/locationActions';
 import {Link} from 'react-router-dom';
 import React from 'react';
 import {connect} from 'react-redux';
@@ -53,7 +53,7 @@ class Locations extends React.PureComponent {
                       return (
                         <tr key={location.id}>
                           <td>
-                            <Link to={`/services/lmk/location/${location.id}`}>
+                            <Link to={`/services/audits/location/${location.id}`}>
                               {location.name}
                             </Link>
                           </td>

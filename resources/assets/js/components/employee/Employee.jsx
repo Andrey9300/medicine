@@ -1,7 +1,7 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import {fetchEmployee, deleteEmployee, restoreEmployee, clearEmployee} from '../../actions/employeeActions';
-import EmployeeResearches from './research/EmployeeResearches';
+import {fetchEmployee, deleteEmployee, restoreEmployee, clearEmployee} from '../../actions/lmk/employeeActions';
+import {EmployeeResearches} from './research/EmployeeResearches';
 import {Link} from 'react-router-dom';
 import PropTypes from 'prop-types';
 import {Row, Col, Card, CardHeader, CardBody, Table, Button} from 'reactstrap';
