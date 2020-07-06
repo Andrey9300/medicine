@@ -16,12 +16,12 @@ class DatabaseSeeder extends Seeder
         $this->call(EmployeesTableSeeder::class);
         $this->call(HospitalsTableSeeder::class);
         $this->call(UsersResearchesTableSeeder::class);
-        $this->call(UserCriterionsTableSeeder::class);
-        $this->call(UserLocationsTableSeeder::class);
-        $this->call(UserPlacesTableSeeder::class);
-        $this->call(UserUnitsTableSeeder::class);
-        $this->call(UserGroupCriterionTableSeeder::class);
-        $this->call(UserGroupCriterionListTableSeeder::class);
-        $this->call(UseCriterionListsTableSeeder::class);
+        $this->call(AuditsCriterionsTableSeeder::class);
+        $this->call(AuditsUnitsTableSeeder::class);
+        $this->call(AuditsLocationsTableSeeder::class);
+        $this->call(AuditsPlacesTableSeeder::class);
+        $this->call(AuditsGroupCriterionTableSeeder::class);
+        $this->call(AuditsGroupCriterionListTableSeeder::class);
+        $this->call(AuditsCriterionListsTableSeeder::class);
     }
 }

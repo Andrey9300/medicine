@@ -23,51 +23,51 @@ Route::middleware(['auth'])->group(function () {
     });
 
     Route::prefix('hospitals')->group(function () {
-        Route::post('/researches/store/{id}', 'HospitalController@researchesStore');
-        Route::post('/researches/{id}', 'HospitalController@researches');
-        Route::post('/store', 'HospitalController@store');
-        Route::post('/destroy/{id}', 'HospitalController@destroy');
-        Route::post('/update/{id}', 'HospitalController@update');
-        Route::post('/{id}', 'HospitalController@show');
-        Route::post('/', 'HospitalController@showAll');
+        Route::post('/researches/store/{id}', 'Lmk\HospitalController@researchesStore');
+        Route::post('/researches/{id}', 'Lmk\HospitalController@researches');
+        Route::post('/store', 'Lmk\HospitalController@store');
+        Route::post('/destroy/{id}', 'Lmk\HospitalController@destroy');
+        Route::post('/update/{id}', 'Lmk\HospitalController@update');
+        Route::post('/{id}', 'Lmk\HospitalController@show');
+        Route::post('/', 'Lmk\HospitalController@showAll');
     });
 
     Route::prefix('organizations')->group(function () {
-        Route::post('/store', 'OrganizationController@store');
-        Route::post('/expired', 'OrganizationController@expired');
-        Route::post('/employeesWithCheck/{id}', 'OrganizationController@employeesWithCheck');
-        Route::post('/trashedEmployees/{id}', 'OrganizationController@showTrashedEmployees');
-        Route::post('/destroy/{id}', 'OrganizationController@destroy');
-        Route::post('/update/{id}', 'OrganizationController@update');
-        Route::post('/{id}', 'OrganizationController@show');
-        Route::post('/', 'OrganizationController@showAll');
+        Route::post('/store', 'Lmk\OrganizationController@store');
+        Route::post('/expired', 'Lmk\OrganizationController@expired');
+        Route::post('/employeesWithCheck/{id}', 'Lmk\OrganizationController@employeesWithCheck');
+        Route::post('/trashedEmployees/{id}', 'Lmk\OrganizationController@showTrashedEmployees');
+        Route::post('/destroy/{id}', 'Lmk\OrganizationController@destroy');
+        Route::post('/update/{id}', 'Lmk\OrganizationController@update');
+        Route::post('/{id}', 'Lmk\OrganizationController@show');
+        Route::post('/', 'Lmk\OrganizationController@showAll');
     });
 
     Route::prefix('researches')->group(function () {
-        Route::post('/store', 'ResearchController@store');
-        Route::post('/destroy/{id}', 'ResearchController@destroy');
-        Route::post('/update/{id}', 'ResearchController@update');
-        Route::post('/{id}', 'ResearchController@show');
-        Route::post('/', 'ResearchController@showAll');
+        Route::post('/store', 'Lmk\ResearchController@store');
+        Route::post('/destroy/{id}', 'Lmk\ResearchController@destroy');
+        Route::post('/update/{id}', 'Lmk\ResearchController@update');
+        Route::post('/{id}', 'Lmk\ResearchController@show');
+        Route::post('/', 'Lmk\ResearchController@showAll');
     });
 
     Route::prefix('userResearches')->group(function () {
-        Route::post('/store', 'UserResearchesController@store');
-        Route::post('/destroy/{id}', 'UserResearchesController@destroy');
-        Route::post('/update/{id}', 'UserResearchesController@update');
-        Route::post('/{id}', 'UserResearchesController@show');
-        Route::post('/', 'UserResearchesController@showAll');
+        Route::post('/store', 'Lmk\ResearchesController@store');
+        Route::post('/destroy/{id}', 'Lmk\ResearchesController@destroy');
+        Route::post('/update/{id}', 'Lmk\ResearchesController@update');
+        Route::post('/{id}', 'Lmk\ResearchesController@show');
+        Route::post('/', 'Lmk\ResearchesController@showAll');
     });
 
     Route::prefix('employees')->group(function () {
-        Route::post('/withCheck', 'EmployeesController@showAllWithCheck');
-        Route::post('/store', 'EmployeesController@store');
-        Route::post('/softDelete/{id}', 'EmployeesController@softDelete');
-        Route::post('/forceDelete/{id}', 'EmployeesController@forceDelete');
-        Route::post('/restore/{id}', 'EmployeesController@restore');
-        Route::post('/update/{id}', 'EmployeesController@update');
-        Route::post('/{id}', 'EmployeesController@show');
-        Route::post('/', 'EmployeesController@showAll');
+        Route::post('/withCheck', 'Lmk\EmployeesController@showAllWithCheck');
+        Route::post('/store', 'Lmk\EmployeesController@store');
+        Route::post('/softDelete/{id}', 'Lmk\EmployeesController@softDelete');
+        Route::post('/forceDelete/{id}', 'Lmk\EmployeesController@forceDelete');
+        Route::post('/restore/{id}', 'Lmk\EmployeesController@restore');
+        Route::post('/update/{id}', 'Lmk\EmployeesController@update');
+        Route::post('/{id}', 'Lmk\EmployeesController@show');
+        Route::post('/', 'Lmk\EmployeesController@showAll');
 
         Route::prefix('researches')->group(function () {
             Route::post('/store/{id_employee}', 'EmployeesController@researchesStore');
@@ -76,75 +76,75 @@ Route::middleware(['auth'])->group(function () {
     });
 
     Route::prefix('categories')->group(function () {
-        Route::post('/', 'CategoryController@showAll');
+        Route::post('/', 'Lmk\CategoryController@showAll');
     });
 
     Route::prefix('researchPeriods')->group(function () {
-        Route::post('/', 'ResearchPeriodController@showAll');
+        Route::post('/', 'Lmk\ResearchPeriodController@showAll');
     });
 
     Route::prefix('units')->group(function () {
-        Route::post('/store', 'UserUnitController@store');
-        Route::post('/destroy/{id}', 'UserUnitController@destroy');
-        Route::post('/update/{id}', 'UserUnitController@update');
-        Route::post('/{id}', 'UserUnitController@show');
-        Route::post('/', 'UserUnitController@showAll');
+        Route::post('/store', 'Audits\UnitController@store');
+        Route::post('/destroy/{id}', 'Audits\UnitController@destroy');
+        Route::post('/update/{id}', 'Audits\UnitController@update');
+        Route::post('/{id}', 'Audits\UnitController@show');
+        Route::post('/', 'Audits\UnitController@showAll');
     });
 
     Route::prefix('locations')->group(function () {
-        Route::post('/store', 'UserLocationController@store');
-        Route::post('/destroy/{id}', 'UserLocationController@destroy');
-        Route::post('/update/{id}', 'UserLocationController@update');
-        Route::post('/{id}', 'UserLocationController@show');
-        Route::post('/', 'UserLocationController@showAll');
+        Route::post('/store', 'Audits\LocationController@store');
+        Route::post('/destroy/{id}', 'Audits\LocationController@destroy');
+        Route::post('/update/{id}', 'Audits\LocationController@update');
+        Route::post('/{id}', 'Audits\LocationController@show');
+        Route::post('/', 'Audits\LocationController@showAll');
     });
 
     Route::prefix('places')->group(function () {
-        Route::post('/store', 'UserPlaceController@store');
-        Route::post('/destroy/{id}', 'UserPlaceController@destroy');
-        Route::post('/update/{id}', 'UserPlaceController@update');
-        Route::post('/{id}', 'UserPlaceController@show');
-        Route::post('/', 'UserPlaceController@showAll');
+        Route::post('/store', 'Audits\PlaceController@store');
+        Route::post('/destroy/{id}', 'Audits\PlaceController@destroy');
+        Route::post('/update/{id}', 'Audits\PlaceController@update');
+        Route::post('/{id}', 'Audits\PlaceController@show');
+        Route::post('/', 'Audits\PlaceController@showAll');
     });
 
     Route::prefix('criterions')->group(function () {
-        Route::post('/store', 'UserCriterionController@store');
-        Route::post('/destroy/{id}', 'UserCriterionController@destroy');
-        Route::post('/update/{id}', 'UserCriterionController@update');
-        Route::post('/{id}', 'UserCriterionController@show');
-        Route::post('/', 'UserCriterionController@showAll');
+        Route::post('/store', 'Audits\CriterionController@store');
+        Route::post('/destroy/{id}', 'Audits\CriterionController@destroy');
+        Route::post('/update/{id}', 'Audits\CriterionController@update');
+        Route::post('/{id}', 'Audits\CriterionController@show');
+        Route::post('/', 'Audits\CriterionController@showAll');
     });
 
     Route::prefix('criterionLists')->group(function () {
-        Route::post('/store', 'UserCriterionListController@store');
-        Route::post('/destroy/{id}', 'UserCriterionListController@destroy');
-        Route::post('/update/{id}', 'UserCriterionListController@update');
-        Route::post('/{id}', 'UserCriterionListController@show');
-        Route::post('/', 'UserCriterionListController@showAll');
+        Route::post('/store', 'Audits\CriterionListController@store');
+        Route::post('/destroy/{id}', 'Audits\CriterionListController@destroy');
+        Route::post('/update/{id}', 'Audits\CriterionListController@update');
+        Route::post('/{id}', 'Audits\CriterionListController@show');
+        Route::post('/', 'Audits\CriterionListController@showAll');
     });
 
     Route::prefix('groupCriterions')->group(function () {
-        Route::post('/store', 'UserGroupCriterionController@store');
-        Route::post('/destroy/{id}', 'UserGroupCriterionController@destroy');
-        Route::post('/update/{id}', 'UserGroupCriterionController@update');
-        Route::post('/{id}', 'UserGroupCriterionController@show');
-        Route::post('/', 'UserGroupCriterionController@showAll');
+        Route::post('/store', 'Audits\GroupCriterionController@store');
+        Route::post('/destroy/{id}', 'Audits\GroupCriterionController@destroy');
+        Route::post('/update/{id}', 'Audits\GroupCriterionController@update');
+        Route::post('/{id}', 'Audits\GroupCriterionController@show');
+        Route::post('/', 'Audits\GroupCriterionController@showAll');
     });
 
     Route::prefix('groupCriterionLists')->group(function () {
-        Route::post('/store', 'UserGroupCriterionListController@store');
-        Route::post('/destroy/{id}', 'UserGroupCriterionListController@destroy');
-        Route::post('/update/{id}', 'UserGroupCriterionListController@update');
-        Route::post('/{id}', 'UserGroupCriterionListController@show');
-        Route::post('/', 'UserGroupCriterionListController@showAll');
+        Route::post('/store', 'Audits\GroupCriterionListController@store');
+        Route::post('/destroy/{id}', 'Audits\GroupCriterionListController@destroy');
+        Route::post('/update/{id}', 'Audits\GroupCriterionListController@update');
+        Route::post('/{id}', 'Audits\GroupCriterionListController@show');
+        Route::post('/', 'Audits\GroupCriterionListController@showAll');
     });
 
     Route::prefix('placeCheckLists')->group(function () {
-        Route::post('/store/{id}', 'PlaceCheckListController@store');
-        Route::post('/criterions/{id}', 'PlaceCheckListController@criterions');
-        Route::post('/destroy/{id}', 'PlaceCheckListController@destroy');
-        Route::post('/update/{id}', 'PlaceCheckListController@update');
-        Route::post('/{id}', 'PlaceCheckListController@show');
-        Route::post('/', 'PlaceCheckListController@showAll');
+        Route::post('/store/{id}', 'Audits\PlaceCheckListController@store');
+        Route::post('/criterions/{id}', 'Audits\PlaceCheckListController@criterions');
+        Route::post('/destroy/{id}', 'Audits\PlaceCheckListController@destroy');
+        Route::post('/update/{id}', 'Audits\PlaceCheckListController@update');
+        Route::post('/{id}', 'Audits\PlaceCheckListController@show');
+        Route::post('/', 'Audits\PlaceCheckListController@showAll');
     });
 });

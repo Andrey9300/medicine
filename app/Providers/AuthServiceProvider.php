@@ -2,9 +2,9 @@
 
 namespace App\Providers;
 
-use App\Http\Models\Employee;
-use App\Http\Models\Hospital;
-use App\Http\Models\Organization;
+use App\Http\Models\Lmk\Employee;
+use App\Http\Models\Lmk\Hospital;
+use App\Http\Models\Lmk\Organization;
 use App\Policies\EmployeePolicy;
 use App\Policies\HospitalPolicy;
 use App\Policies\OrganizationPolicy;

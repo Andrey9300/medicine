@@ -36,7 +36,7 @@ class User extends Authenticatable
      */
     public function organizations()
     {
-        return $this->belongsToMany('App\Http\Models\Organization', 'user_organization');
+        return $this->belongsToMany('App\Http\Models\Lmk\Organization', 'user_organization');
     }
 
     /**
@@ -44,7 +44,7 @@ class User extends Authenticatable
      */
     public function hospitals()
     {
-        return $this->hasMany('App\Http\Models\Hospital');
+        return $this->hasMany('App\Http\Models\Lmk\Hospital');
     }
 
     /**
@@ -52,7 +52,7 @@ class User extends Authenticatable
      */
     public function employees()
     {
-        return $this->hasMany('App\Http\Models\Employee');
+        return $this->hasMany('App\Http\Models\Lmk\Employee');
     }
 
     /**
@@ -60,76 +60,76 @@ class User extends Authenticatable
      */
     public function researches()
     {
-        return $this->belongsToMany('App\Http\Models\ResearchCategory', 'user_researches', 'user_id', 'research_categories_id')->withPivot('id', 'research_categories_id');
+        return $this->belongsToMany('App\Http\Models\Lmk\ResearchCategory', 'user_researches', 'user_id', 'research_categories_id')->withPivot('id', 'research_categories_id');
     }
 
     public function criterions()
     {
-        return $this->hasMany('App\Http\Models\UserCriterions');
+        return $this->hasMany('App\Http\Models\Lmk\UserCriterions');
     }
 
     public function criterion($id)
     {
-        return $this->hasOne('App\Http\Models\UserCriterions')->where('id', '=', $id);
+        return $this->hasOne('App\Http\Models\Lmk\UserCriterions')->where('id', '=', $id);
     }
 
     public function units()
     {
-        return $this->hasMany('App\Http\Models\UserUnits');
+        return $this->hasMany('App\Http\Models\Lmk\UserUnits');
     }
 
     public function unit($id)
     {
-        return $this->hasOne('App\Http\Models\UserUnits')->where('id', '=', $id);
+        return $this->hasOne('App\Http\Models\Lmk\UserUnits')->where('id', '=', $id);
     }
 
     public function locations()
     {
-        return $this->hasMany('App\Http\Models\UserLocation');
+        return $this->hasMany('App\Http\Models\Lmk\UserLocation');
     }
 
     public function location($id)
     {
-        return $this->hasOne('App\Http\Models\UserLocation')->where('id', '=', $id);
+        return $this->hasOne('App\Http\Models\Lmk\UserLocation')->where('id', '=', $id);
     }
 
     public function places()
     {
-        return $this->hasMany('App\Http\Models\UserPlace');
+        return $this->hasMany('App\Http\Models\Lmk\UserPlace');
     }
 
     public function place($id)
     {
-        return $this->hasOne('App\Http\Models\UserPlace')->where('id', '=', $id);
+        return $this->hasOne('App\Http\Models\Lmk\UserPlace')->where('id', '=', $id);
     }
 
     public function criterionLists()
     {
-        return $this->hasMany('App\Http\Models\UserCriterionList');
+        return $this->hasMany('App\Http\Models\Lmk\UserCriterionList');
     }
 
     public function criterionList($id)
     {
-        return $this->hasOne('App\Http\Models\UserCriterionList')->where('id', '=', $id);
+        return $this->hasOne('App\Http\Models\Lmk\UserCriterionList')->where('id', '=', $id);
     }
 
     public function groupCriterions()
     {
-        return $this->hasMany('App\Http\Models\UserGroupCriterion');
+        return $this->hasMany('App\Http\Models\Lmk\UserGroupCriterion');
     }
 
     public function groupCriterion($id)
     {
-        return $this->hasOne('App\Http\Models\UserGroupCriterion')->where('id', '=', $id);
+        return $this->hasOne('App\Http\Models\Lmk\UserGroupCriterion')->where('id', '=', $id);
     }
 
     public function groupCriterionLists()
     {
-        return $this->hasMany('App\Http\Models\UserGroupCriterionList');
+        return $this->hasMany('App\Http\Models\Lmk\UserGroupCriterionList');
     }
 
     public function groupCriterionList($id)
     {
-        return $this->hasOne('App\Http\Models\UserGroupCriterionList')->where('id', '=', $id);
+        return $this->hasOne('App\Http\Models\Lmk\UserGroupCriterionList')->where('id', '=', $id);
     }
 }

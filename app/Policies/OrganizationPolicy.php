@@ -3,7 +3,7 @@
 namespace App\Policies;
 
 use App\User;
-use App\Http\Models\Organization;
+use App\Http\Models\Lmk\Organization;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
 class OrganizationPolicy

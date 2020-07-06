@@ -2,7 +2,7 @@
 
 namespace App\Http\Requests;
 
-use App\Http\Models\Organization;
+use App\Http\Models\Lmk\Organization;
 use Illuminate\Foundation\Http\FormRequest;
 
 class UpdateOrganization extends FormRequest
