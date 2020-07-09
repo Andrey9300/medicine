@@ -70,8 +70,8 @@ Route::middleware(['auth'])->group(function () {
         Route::post('/', 'Lmk\EmployeesController@showAll');
 
         Route::prefix('researches')->group(function () {
-            Route::post('/store/{id_employee}', 'EmployeesController@researchesStore');
-            Route::post('/{id_employee}', 'EmployeesController@researches');
+            Route::post('/store/{id_employee}', 'Lmk\EmployeesController@researchesStore');
+            Route::post('/{id_employee}', 'Lmk\EmployeesController@researches');
         });
     });
 

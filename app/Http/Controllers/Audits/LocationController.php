@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Audits;
 
 use App\Http\Models\Audits\Location;
+use App\Http\Models\Audits\Units;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -11,10 +12,17 @@ class LocationController extends Controller
     public function store(Request $request)
     {
         $currentUser = Auth::user();
+        $unit = Units::find($request->unitId);
+
+        if (!$unit || $unit->id !== $currentUser->id) {
+            return response()->json([
+                'errors' => 'error'
+            ]);
+        }
 
         $location = new Location;
         $location->name = $request->name;
-        $location->user_id = $currentUser->id;
+        $location->unit_id = $unit->id;
         $location->save();
     }
 

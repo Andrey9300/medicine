@@ -40,7 +40,7 @@ class NewUnit extends React.PureComponent {
     }
 
     return (
-      <Col xs="12" sm="12" md="8" lg="6" xl="6">
+      <Col sm="12" lg="8" xl="6">
         {errorsMessage}
         <Card>
           <Form

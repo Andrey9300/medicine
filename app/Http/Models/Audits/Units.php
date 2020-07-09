@@ -13,4 +13,14 @@ class Units extends Model
     protected $fillable = [
         'name', 'user_id'
     ];
+
+    public function locations()
+    {
+        return $this->hasMany('App\Http\Models\Audits\Location');
+    }
+
+    public function location($id)
+    {
+        return $this->hasOne('App\Http\Models\Audits\Location')->where('id', '=', $id);
+    }
 }

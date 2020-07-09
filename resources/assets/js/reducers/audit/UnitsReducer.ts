@@ -1,10 +1,11 @@
 import {AnyAction} from 'redux';
+import {IUnit} from "../../interface/audit/IUnit";
 
 interface IState {
   errors: object;
   fetched: boolean;
   unit: object;
-  units: [];
+  units: IUnit[];
 }
 
 const initialState: IState = {

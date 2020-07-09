@@ -1,7 +1,6 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import {
-  Row,
   Col,
   Button,
   Card,
@@ -13,24 +12,32 @@ import {
   Label,
   Input,
 } from 'reactstrap';
-import {addPlace} from '../../../actions/audit/placeActions';
+import {addLocation} from '../../../actions/audit/locationActions';
 import {createMarkup} from '../../../utils/errorsHelper';
+import {TState} from '../../../reducers';
 
-class NewPlace extends React.PureComponent {
-  constructor(props) {
-    super(props);
+interface IStateProps {
+  errors: any;
+}
+interface IDispatchProps {
+  addLocation: typeof addLocation;
+}
 
-    this.handleSubmit = this.handleSubmit.bind(this);
-  }
+interface IProps extends IStateProps, IDispatchProps {
+  unitId: number;
+}
 
-  handleSubmit(event) {
+class NewLocation extends React.PureComponent<IProps> {
+  private handleSubmit = (event: any) => {
     event.preventDefault();
-    this.props.dispatch(addPlace(document.querySelector('#place')));
-  }
+    const {unitId, addLocation} = this.props;
+
+    addLocation(document.querySelector(`#location${unitId}`));
+  };
 
   render() {
-    const {errors} = this.props;
-    let errorsMessage = '';
+    const {errors, unitId} = this.props;
+    let errorsMessage = null;
 
     if (errors) {
       errorsMessage = (
@@ -41,22 +48,23 @@ class NewPlace extends React.PureComponent {
     }
 
     return (
-      <Col xs="12" sm="12" md="8" lg="6" xl="6">
+      <Col sm="12" lg="8" xl="6">
         {errorsMessage}
         <Card>
           <Form
             className="form-horizontal"
             onSubmit={this.handleSubmit}
-            id="place"
+            id={`location${unitId}`}
           >
-            <CardHeader>Добавить помещение</CardHeader>
+            <CardHeader>Добавить локацию</CardHeader>
             <CardBody className="card-body">
               <FormGroup row>
                 <Col md="3">
                   <Label htmlFor="text-input">Наименование</Label>
                 </Col>
                 <Col xs="12" md="9">
-                  <Input type="text" id="name" name="name" required />
+                  <Input type="text" name="name" required />
+                  <Input type="hidden" name="unitId" value={unitId} required />
                 </Col>
               </FormGroup>
             </CardBody>
@@ -72,10 +80,19 @@ class NewPlace extends React.PureComponent {
   }
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = (state: TState) => {
   return {
-    errors: state.places.errors,
+    errors: state.locations.errors,
   };
 };
 
-export const NewPlaceContainer = connect(mapStateToProps)(NewPlace);
+const mapDispatchToProps = (dispatch: any): IDispatchProps => {
+  return {
+    addLocation: (form: HTMLFormElement) => dispatch(addLocation(form)),
+  };
+};
+
+export const NewLocationContainer = connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(NewLocation);

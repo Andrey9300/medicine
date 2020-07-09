@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Audits;
 
+use App\Http\Models\Audits\Location;
 use App\Http\Models\Audits\Place;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -11,10 +12,17 @@ class PlaceController extends Controller
     public function store(Request $request)
     {
         $currentUser = Auth::user();
+        $location = Location::find($request->locationId);
+
+        if (!$location || $location->id !== $currentUser->id) {
+            return response()->json([
+                'errors' => 'error'
+            ]);
+        }
 
         $place = new Place;
         $place->name = $request->name;
-        $place->user_id = $currentUser->id;
+        $place->location_id = $location->id;
         $place->save();
     }
 

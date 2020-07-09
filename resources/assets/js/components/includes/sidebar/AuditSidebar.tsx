@@ -46,12 +46,6 @@ export class AuditSidebarComponent extends React.PureComponent<IProps, IState> {
               <i className="fa fa-book" aria-hidden="true" /> Объекты
             </Link>
           </NavItem>
-          <NavItem>
-            <Link to={'/services/audits/structureCheckList'}>
-              <i className="fa fa-book" aria-hidden="true" /> Структура
-              чек-листа
-            </Link>
-          </NavItem>
         </Collapse>
       </>
     );

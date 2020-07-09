@@ -1,15 +1,15 @@
 <?php
 
-namespace App\Http\Controllers\Lmk;
+namespace App\Http\Controllers\Audits;
 
-use App\Http\Models\Lmk\PlaceCheckListCriterion;
-use App\Http\Models\Lmk\PlaceCheckLists;
-use App\Http\Models\Lmk\UserCriterions;
-use App\Http\Models\Lmk\UserGroupCriterion;
-use App\Http\Models\Lmk\UserGroupCriterionList;
-use App\Http\Models\Lmk\UserLocation;
-use App\Http\Models\Lmk\UserPlace;
-use App\Http\Models\Lmk\UserUnits;
+use App\Http\Models\Audits\PlaceCheckListCriterion;
+use App\Http\Models\Audits\PlaceCheckLists;
+use App\Http\Models\Audits\Criterions;
+use App\Http\Models\Audits\GroupCriterion;
+use App\Http\Models\Audits\GroupCriterionList;
+use App\Http\Models\Audits\Location;
+use App\Http\Models\Audits\Place;
+use App\Http\Models\Audits\Units;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -45,7 +45,7 @@ class PlaceCheckListController extends Controller
         $currentUser = Auth::user();
 
         return response()->json([
-            'places' => $currentUser->places()->get()
+            'places' => $currentUser->units()
         ]);
     }
 
@@ -54,11 +54,11 @@ class PlaceCheckListController extends Controller
         $currentUser = Auth::user();
 
         $placeCheckList = $currentUser->criterionList($id)->first();
-        $placeCheckList->unit = UserUnits::find($placeCheckList->unit_id);
-        $placeCheckList->location = UserLocation::find($placeCheckList->location_id);
-        $placeCheckList->place = UserPlace::find($placeCheckList->place_id);
-        $placeCheckList->groupCriterion = UserGroupCriterion::find($placeCheckList->user_group_criterion_id);
-        $groupCriterionList = UserGroupCriterionList::where('user_group_criterion_id', '=', $placeCheckList->groupCriterion->id)->get();
+        $placeCheckList->unit = Units::find($placeCheckList->unit_id);
+        $placeCheckList->location = Location::find($placeCheckList->location_id);
+        $placeCheckList->place = Place::find($placeCheckList->place_id);
+        $placeCheckList->groupCriterion = GroupCriterion::find($placeCheckList->user_group_criterion_id);
+        $groupCriterionList = GroupCriterionList::where('user_group_criterion_id', '=', $placeCheckList->groupCriterion->id)->get();
         $criterions = [];
         $placeCheckList->placeCheckLists = PlaceCheckLists::where(
             [
@@ -68,7 +68,7 @@ class PlaceCheckListController extends Controller
         )->get();
 
         foreach ($groupCriterionList as $groupCriterion) {
-            $criterion = UserCriterions::find($groupCriterion->user_criterions_criterion_id);
+            $criterion = Criterions::find($groupCriterion->user_criterions_criterion_id);
             array_push($criterions, $criterion);
         }
         $placeCheckList->criterions = $criterions;
@@ -89,7 +89,7 @@ class PlaceCheckListController extends Controller
         )->get();
 
         foreach ($placeCheckListCriterions as $placeCheckListCriterion) {
-            $placeCheckListCriterion->criterion = UserCriterions::find($placeCheckListCriterion->user_criterions_id);
+            $placeCheckListCriterion->criterion = Criterions::find($placeCheckListCriterion->user_criterions_id);
         }
 
         return response()->json([

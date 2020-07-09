@@ -13,4 +13,14 @@ class Location extends Model
     protected $fillable = [
         'name', 'unit_id'
     ];
+
+    public function places()
+    {
+        return $this->hasMany('App\Http\Models\Audits\Place');
+    }
+
+    public function place($id)
+    {
+        return $this->hasOne('App\Http\Models\Audits\Place')->where('id', '=', $id);
+    }
 }

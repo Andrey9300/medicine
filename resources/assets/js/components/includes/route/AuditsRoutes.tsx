@@ -5,7 +5,6 @@ import {AuditorsContainer} from '../../audits/auditors/Auditors';
 import {CriterionContainer} from '../../audits/criterion/Criterion';
 import EditCriterion from '../../audits/criterion/Edit';
 import {CriterionsContainer} from '../../audits/criterion/Criterions';
-import {StructureCheckList} from '../../audits/structureCheckList/structureCheckList';
 import {NewCriterionListContainer} from '../../audits/criterionList/New';
 import {EditCriterionListContainer} from '../../audits/criterionList/Edit';
 import {CriterionListContainer} from '../../audits/criterionList/criterionList';
@@ -24,6 +23,7 @@ import {GroupCriterionContainer} from '../../audits/groupCriterion/GroupCriterio
 import {EditGroupCriterionContainer} from '../../audits/groupCriterion/Edit';
 import {GroupCriterionListContainer} from '../../audits/groupCriterionList/GroupCriterionList';
 import {EditGroupCriterionListContainer} from '../../audits/groupCriterionList/Edit';
+import {Objects} from "../../audits/objects/Objects";
 
 export class AuditsRoutes extends React.PureComponent {
   render() {
@@ -48,12 +48,6 @@ export class AuditsRoutes extends React.PureComponent {
           exact
           path="/services/audits/criterions/edit/:id"
           component={(props: any) => <EditCriterion {...props} />}
-        />
-
-        <Route
-          exact
-          path="/services/audits/structureCheckList"
-          component={(props: any) => <StructureCheckList {...props} />}
         />
 
         <Route
@@ -155,6 +149,14 @@ export class AuditsRoutes extends React.PureComponent {
           path="/services/audits/groupCriterionList/edit/:id"
           component={(props: any) => (
             <EditGroupCriterionListContainer {...props} />
+          )}
+        />
+
+        <Route
+          exact
+          path="/services/audits/objects"
+          component={(props: any) => (
+            <Objects {...props} />
           )}
         />
       </>
