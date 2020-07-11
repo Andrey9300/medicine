@@ -8,46 +8,38 @@ import {IPlace} from '../../../interface/audit/IPlace';
 interface IProps {
   obj: IUnit | ILocation | IPlace;
   objUrl: string;
-  objName: string;
 }
 
-export const HeaderObjectComponent: React.FC<IProps> = ({
-  obj,
-  objName,
-  objUrl,
-}) => (
-  <Row>
-    <div className="col-6 py-3 px-lg-5 border bg-light">
-      {objName}:{' '}
-      <Link
-        to={`/services/audits/${objUrl}/${obj.id}`}
-        style={{fontWeight: 600}}
-      >
-        {obj.name}
-      </Link>
-    </div>
-    <div className="col-3 py-3 px-lg-5 border bg-light">
-      <Link to={`/services/audits/${objUrl}/${obj.id}`}>
-        Редактировать <i className="fa fa-pencil" />
-      </Link>
-    </div>
-    <div className="col-3 py-3 px-lg-5 border bg-light">
-      Удалить <i className="fa fa-trash" />
-    </div>
-  </Row>
+export const HeaderObjectComponent: React.FC<IProps> = ({obj, objUrl}) => (
+  <div className="col-12 border">
+    <Row>
+      <Col xs="8">
+        <Link
+          to={`/services/audits/place/${obj.id}`}
+          style={{fontSize: '16px'}}
+        >
+          {' '}
+          «{obj.name}»
+        </Link>
+      </Col>
+      <Col xs="4">
+        <Link to={`/services/audits/addPlaceCheckList/${obj.id}`}>
+          Провести аудит
+        </Link>
+      </Col>
+    </Row>
+  </div>
 );
 
 export const EmptyObjectComponent: React.FC<{objName: string}> = ({
   objName,
 }) => (
-  <Col sm="12" md="6">
-    <Card className="text-center">
-      <CardHeader>
-        <i className="fa fa-building-o" aria-hidden="true" />
-        {objName} нет
-      </CardHeader>
-    </Card>
-  </Col>
+  <Card className="text-center">
+    <CardHeader>
+      <i className="fa fa-building-o" aria-hidden="true" />
+      {objName} нет
+    </CardHeader>
+  </Card>
 );
 
 export const ExpandComponent: React.FC<{
@@ -55,7 +47,10 @@ export const ExpandComponent: React.FC<{
   toggle: () => any;
 }> = ({collapse, toggle}) => (
   <span style={{marginLeft: '20px', cursor: 'pointer'}} onClick={toggle}>
-    <i className={`fa fa-caret-${collapse ? 'up' : 'down'}`} aria-hidden="true" />{' '}
+    <i
+      className={`fa fa-caret-${collapse ? 'up' : 'down'}`}
+      aria-hidden="true"
+    />{' '}
     {collapse ? 'Свернуть' : 'Развернуть'}
   </span>
 );

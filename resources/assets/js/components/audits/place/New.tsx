@@ -1,23 +1,14 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import {
-  Col,
-  Button,
-  Card,
-  CardHeader,
-  CardBody,
-  CardFooter,
-  Form,
-  FormGroup,
-  Label,
-  Input,
-} from 'reactstrap';
+import {Row, Col, Button, Form, Label, Input} from 'reactstrap';
 import {addPlace} from '../../../actions/audit/placeActions';
 import {createMarkup} from '../../../utils/errorsHelper';
 import {TState} from '../../../reducers';
+import {IGroupCriterion} from '../../../interface/audit/IGroupCriterion';
 
 interface IStateProps {
   errors: any;
+  groupCriterionLists: IGroupCriterion[];
 }
 
 interface IDispatchProps {
@@ -31,13 +22,13 @@ interface IProps extends IStateProps, IDispatchProps {
 class NewPlace extends React.PureComponent<IProps> {
   handleSubmit = (event: any) => {
     event.preventDefault();
-    const {addPlace} = this.props;
+    const {locationId, addPlace} = this.props;
 
-    addPlace(document.querySelector('#place'));
+    addPlace(document.querySelector(`#place${locationId}`));
   };
 
   render() {
-    const {errors, locationId} = this.props;
+    const {errors, locationId, groupCriterionLists} = this.props;
     let errorsMessage = null;
 
     if (errors) {
@@ -49,34 +40,53 @@ class NewPlace extends React.PureComponent<IProps> {
     }
 
     return (
-      <Col sm="12" lg="8" xl="6">
+      <Form
+        className="form-horizontal"
+        onSubmit={this.handleSubmit}
+        id={`place${locationId}`}
+      >
         {errorsMessage}
-        <Card>
-          <Form
-            className="form-horizontal"
-            onSubmit={this.handleSubmit}
-            id="place"
-          >
-            <CardHeader>Добавить помещение</CardHeader>
-            <CardBody className="card-body">
-              <FormGroup row>
-                <Col md="3">
-                  <Label htmlFor="text-input">Наименование</Label>
-                </Col>
-                <Col xs="12" md="9">
-                  <Input type="text" id="name" name="name" required />
-                  <Input type="hidden" name="locationId" value={locationId} required />
-                </Col>
-              </FormGroup>
-            </CardBody>
-            <CardFooter>
-              <Button type="submit" size="sm" color="success">
-                <i className="fa fa-dot-circle-o" /> Сохранить
-              </Button>
-            </CardFooter>
-          </Form>
-        </Card>
-      </Col>
+        <Row>
+          <Col xs="2">
+            <Label>Добавить помещение</Label>
+          </Col>
+          <Col xs="4">
+            <Input
+              type="text"
+              name="name"
+              placeholder="Наименование"
+              required
+            />
+            <Input
+              type="hidden"
+              name="locationId"
+              value={locationId}
+              required
+            />
+          </Col>
+          <Col xs="4">
+            {groupCriterionLists.length > 0 && (
+              <select
+                className="custom-select"
+                name="group_criterion_id"
+                required
+              >
+                <option value="">Выберите чек лист</option>
+                {groupCriterionLists.map((groupCriterionList, index) => (
+                  <option key={index} value={groupCriterionList.id}>
+                    {groupCriterionList.name}
+                  </option>
+                ))}
+              </select>
+            )}
+          </Col>
+          <Col xs="2">
+            <Button type="submit" size="sm" color="success">
+              <i className="fa fa-dot-circle-o" /> Сохранить
+            </Button>
+          </Col>
+        </Row>
+      </Form>
     );
   }
 }
@@ -84,6 +94,7 @@ class NewPlace extends React.PureComponent<IProps> {
 const mapStateToProps = (state: TState) => {
   return {
     errors: state.places.errors,
+    groupCriterionLists: state.groupCriterionLists.groupCriterionLists,
   };
 };
 

@@ -1,6 +1,7 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import {
+  Row,
   Col,
   Button,
   Card,
@@ -48,34 +49,27 @@ class NewLocation extends React.PureComponent<IProps> {
     }
 
     return (
-      <Col sm="12" lg="8" xl="6">
+      <Form
+        className="form-horizontal"
+        onSubmit={this.handleSubmit}
+        id={`location${unitId}`}
+      >
         {errorsMessage}
-        <Card>
-          <Form
-            className="form-horizontal"
-            onSubmit={this.handleSubmit}
-            id={`location${unitId}`}
-          >
-            <CardHeader>Добавить локацию</CardHeader>
-            <CardBody className="card-body">
-              <FormGroup row>
-                <Col md="3">
-                  <Label htmlFor="text-input">Наименование</Label>
-                </Col>
-                <Col xs="12" md="9">
-                  <Input type="text" name="name" required />
-                  <Input type="hidden" name="unitId" value={unitId} required />
-                </Col>
-              </FormGroup>
-            </CardBody>
-            <CardFooter>
-              <Button type="submit" size="sm" color="success">
-                <i className="fa fa-dot-circle-o" /> Сохранить
-              </Button>
-            </CardFooter>
-          </Form>
-        </Card>
-      </Col>
+        <Row>
+          <Col xs="2">
+            <Label>Добавить локацию</Label>
+          </Col>
+          <Col xs="8">
+            <Input type="text" name="name" placeholder="Наименование" required />
+            <Input type="hidden" name="unitId" value={unitId} required />
+          </Col>
+          <Col xs="2">
+            <Button type="submit" size="sm" color="success">
+              <i className="fa fa-dot-circle-o" /> Сохранить
+            </Button>
+          </Col>
+        </Row>
+      </Form>
     );
   }
 }

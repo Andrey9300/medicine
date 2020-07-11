@@ -1,17 +1,6 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import {
-  Col,
-  Button,
-  Card,
-  CardHeader,
-  CardBody,
-  CardFooter,
-  Form,
-  FormGroup,
-  Label,
-  Input,
-} from 'reactstrap';
+import {Row, Col, Button, Form, Label, Input} from 'reactstrap';
 import {addUnit} from '../../../actions/audit/unitActions';
 import {createMarkup} from '../../../utils/errorsHelper';
 
@@ -40,33 +29,22 @@ class NewUnit extends React.PureComponent {
     }
 
     return (
-      <Col sm="12" lg="8" xl="6">
+      <Form className="form-horizontal" onSubmit={this.handleSubmit} id="unit">
         {errorsMessage}
-        <Card>
-          <Form
-            className="form-horizontal"
-            onSubmit={this.handleSubmit}
-            id="unit"
-          >
-            <CardHeader>Добавить подразделение</CardHeader>
-            <CardBody className="card-body">
-              <FormGroup row>
-                <Col md="3">
-                  <Label htmlFor="text-input">Наименование</Label>
-                </Col>
-                <Col xs="12" md="9">
-                  <Input type="text" id="name" name="name" required />
-                </Col>
-              </FormGroup>
-            </CardBody>
-            <CardFooter>
-              <Button type="submit" size="sm" color="success">
-                <i className="fa fa-dot-circle-o" /> Сохранить
-              </Button>
-            </CardFooter>
-          </Form>
-        </Card>
-      </Col>
+        <Row>
+          <Col xs="2">
+            <Label>Добавить подразделение</Label>
+          </Col>
+          <Col xs="6">
+            <Input placeholder="Наименование" name="name" />
+          </Col>
+          <Col xs="2">
+            <Button type="submit" size="sm" color="success">
+              <i className="fa fa-dot-circle-o" /> Сохранить
+            </Button>
+          </Col>
+        </Row>
+      </Form>
     );
   }
 }

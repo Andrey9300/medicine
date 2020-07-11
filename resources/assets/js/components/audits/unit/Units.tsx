@@ -1,24 +1,17 @@
 import {fetchUnits} from '../../../actions/audit/unitActions';
 import React from 'react';
 import {connect} from 'react-redux';
-import {
-  Container,
-  Row,
-  Col,
-  Card,
-  CardHeader,
-  CardBody,
-  Collapse,
-} from 'reactstrap';
+import {Row, Col, Card, CardHeader, CardBody, Collapse} from 'reactstrap';
 import {NewUnitContainer} from './New';
 import {TState} from '../../../reducers';
 import {IUnit} from '../../../interface/audit/IUnit';
 import {LocationsComponent} from '../location/Locations';
+import {EmptyObjectComponent, ExpandComponent} from '../objects/HeaderObject';
+import {NewLocationContainer} from '../location/New';
 import {
-  EmptyObjectComponent,
-  ExpandComponent,
-  HeaderObjectComponent,
-} from '../objects/HeaderObject';
+  clearGroupCriterionList,
+  fetchGroupCriterionLists,
+} from '../../../actions/audit/groupCriterionListActions';
 
 interface IStateProps {
   units: IUnit[];
@@ -26,6 +19,8 @@ interface IStateProps {
 
 interface IDispatchProps {
   fetchUnits: typeof fetchUnits;
+  clearGroupCriterionList: typeof clearGroupCriterionList;
+  fetchGroupCriterionLists: typeof fetchGroupCriterionLists;
 }
 
 interface IProps extends IStateProps, IDispatchProps {}
@@ -36,7 +31,7 @@ interface IState {
 
 class UnitsComponent extends React.PureComponent<IProps> {
   public state: IState = {
-    collapse: false,
+    collapse: true,
   };
 
   private toggle = () => {
@@ -45,9 +40,15 @@ class UnitsComponent extends React.PureComponent<IProps> {
   };
 
   componentDidMount() {
-    const {fetchUnits} = this.props;
+    const {
+      fetchUnits,
+      clearGroupCriterionList,
+      fetchGroupCriterionLists,
+    } = this.props;
 
     fetchUnits();
+    clearGroupCriterionList();
+    fetchGroupCriterionLists();
   }
 
   render() {
@@ -67,33 +68,46 @@ class UnitsComponent extends React.PureComponent<IProps> {
       <Row>
         <Col>
           <Card>
-            <Row>
-              <NewUnitContainer />
-            </Row>
             <CardHeader>
               <i className="fa fa-building-o" aria-hidden="true" />
               Подразделения ({units.length})
               <ExpandComponent collapse={collapse} toggle={this.toggle} />
             </CardHeader>
-            <CardBody className="card-body">
-              <Collapse isOpen={collapse}>
+            <Collapse isOpen={collapse}>
+              <CardBody className="card-body">
                 {units.map((unit, index) => (
-                  <React.Fragment key={`${unit.id}${index}`}>
-                    <HeaderObjectComponent
-                      obj={unit}
-                      objName="Подразделение"
-                      objUrl="unit"
-                    />
-                    <div style={{marginLeft: '50px', marginTop: '50px'}}>
-                      <LocationsComponent
-                        unitId={unit.id}
-                        locations={unit.locations}
-                      />
-                    </div>
-                  </React.Fragment>
+                  <Row
+                    key={`${unit.id}${index}`}
+                    style={{
+                      borderBottom: '1px solid #c2cfd6',
+                      marginBottom: '8px',
+                    }}
+                  >
+                    <Col xs="2">{unit.name}</Col>
+                    <Col xs="10">
+                      <Row>
+                        <Col xs="12">
+                          <LocationsComponent
+                            unitId={unit.id}
+                            locations={unit.locations}
+                          />
+                        </Col>
+                      </Row>
+                      <Row>
+                        <Col xs="12" style={{marginBottom: '8px'}}>
+                          <NewLocationContainer unitId={unit.id} />
+                        </Col>
+                      </Row>
+                    </Col>
+                  </Row>
                 ))}
-              </Collapse>
-            </CardBody>
+                <Row>
+                  <Col xs="12">
+                    <NewUnitContainer />
+                  </Col>
+                </Row>
+              </CardBody>
+            </Collapse>
           </Card>
         </Col>
       </Row>
@@ -110,6 +124,8 @@ const mapStateToProps = (state: TState): IStateProps => {
 const mapDispatchToProps = (dispatch: any): IDispatchProps => {
   return {
     fetchUnits: () => dispatch(fetchUnits()),
+    clearGroupCriterionList: () => dispatch(clearGroupCriterionList()),
+    fetchGroupCriterionLists: () => dispatch(fetchGroupCriterionLists()),
   };
 };
 

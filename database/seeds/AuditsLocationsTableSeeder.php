@@ -8,7 +8,7 @@ class AuditsLocationsTableSeeder extends Seeder
     {
         DB::table('audits_locations')->insert([
             'unit_id' => 1,
-            'name' => 'Кухня ресторана TH (1 этаж)'
+            'name' => 'Кухня ресторана ТН (1 этаж)'
         ]);
         DB::table('audits_locations')->insert([
             'unit_id' => 1,
@@ -28,55 +28,61 @@ class AuditsLocationsTableSeeder extends Seeder
         ]);
         DB::table('audits_locations')->insert([
             'unit_id' => 1,
-            'name' => 'Зона сортировки мусора'
+            'name' => 'Склады непищевые'
         ]);
         DB::table('audits_locations')->insert([
             'unit_id' => 1,
+            'name' => 'Зона сортировки мусора'
+        ]);
+
+        DB::table('audits_locations')->insert([
+            'unit_id' => 2,
             'name' => 'Ресторан Town House (1 этаж)'
         ]);
         DB::table('audits_locations')->insert([
-            'unit_id' => 1,
+            'unit_id' => 2,
+            'name' => 'Бар Library'
+        ]);
+        DB::table('audits_locations')->insert([
+            'unit_id' => 2,
             'name' => 'Ресторан Ibis (1 этаж)'
         ]);
         DB::table('audits_locations')->insert([
-            'unit_id' => 1,
+            'unit_id' => 2,
             'name' => 'Бар Ibis (1 этаж)'
         ]);
         DB::table('audits_locations')->insert([
-            'unit_id' => 1,
+            'unit_id' => 2,
             'name' => 'Банкетная служба (2 этаж)'
         ]);
         DB::table('audits_locations')->insert([
-            'unit_id' => 1,
-            'name' => 'Склад алкогольной продукции '
-        ]);
-        DB::table('audits_locations')->insert([
-            'unit_id' => 1,
-            'name' => 'Склад оборудования и материалов'
-        ]);
-        DB::table('audits_locations')->insert([
-            'unit_id' => 1,
-            'name' => 'Зона приемки'
-        ]);
-        DB::table('audits_locations')->insert([
-            'unit_id' => 1,
+            'unit_id' => 2,
             'name' => 'Склады “пищевые”'
         ]);
         DB::table('audits_locations')->insert([
-            'unit_id' => 1,
+            'unit_id' => 2,
+            'name' => 'Склады “непищевые”'
+        ]);
+
+        DB::table('audits_locations')->insert([
+            'unit_id' => 3,
+            'name' => 'Зона приемки'
+        ]);
+        DB::table('audits_locations')->insert([
+            'unit_id' => 3,
+            'name' => 'Склады “пищевые”'
+        ]);
+        DB::table('audits_locations')->insert([
+            'unit_id' => 3,
             'name' => 'Склады “непищевые”'
         ]);
         DB::table('audits_locations')->insert([
-            'unit_id' => 1,
+            'unit_id' => 3,
             'name' => 'Холодильные камеры'
         ]);
         DB::table('audits_locations')->insert([
-            'unit_id' => 1,
+            'unit_id' => 3,
             'name' => 'Морозильные камеры'
-        ]);
-        DB::table('audits_locations')->insert([
-            'unit_id' => 1,
-            'name' => 'Бар Лайбрари (1 этаж)'
         ]);
     }
 }

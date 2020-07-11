@@ -15,9 +15,7 @@ import {
   Input,
   Button,
   CardFooter,
-  FormGroup,
   Form,
-  Label,
 } from 'reactstrap';
 import {createMarkup} from '../../../utils/errorsHelper';
 

@@ -38,16 +38,32 @@ class LocationController extends Controller
     public function show($id)
     {
         $currentUser = Auth::user();
+        $location = Location::find($id);
+        $unit = Units::find($location->unit_id);
+
+        if (!$unit || $unit->id !== $currentUser->id) {
+            return response()->json([
+                'errors' => 'error'
+            ]);
+        }
 
         return response()->json([
-            'location' => $currentUser->location($id)->first()
+            'location' => $location
         ]);
     }
 
     public function update(Request $request, $id)
     {
         $currentUser = Auth::user();
-        $location = $currentUser->location($id)->first();
+        $location = Location::find($id);
+        $unit = Units::find($location->unit_id);
+
+        if (!$unit || $unit->id !== $currentUser->id) {
+            return response()->json([
+                'errors' => 'error'
+            ]);
+        }
+
         $location->name = $request->name;
         $location->save();
     }

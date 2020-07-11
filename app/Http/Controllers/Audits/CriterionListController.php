@@ -19,7 +19,7 @@ class CriterionListController extends Controller
         $userCriterionList->unit_id = $request->unit_id;
         $userCriterionList->location_id = $request->location_id;
         $userCriterionList->place_id = $request->place_id;
-        $userCriterionList->user_group_criterion_id = $request->group_criterion_id;
+        $userCriterionList->group_criterion_id = $request->group_criterion_id;
         $userCriterionList->user_id = $currentUser->id;
         $userCriterionList->save();
     }
@@ -34,7 +34,7 @@ class CriterionListController extends Controller
             $criterionList->unit = Units::find($criterionList->unit_id);
             $criterionList->location = Location::find($criterionList->location_id);
             $criterionList->place = Place::find($criterionList->place_id);
-            $criterionList->groupCriterion = GroupCriterion::find($criterionList->user_group_criterion_id);
+            $criterionList->groupCriterion = GroupCriterion::find($criterionList->group_criterion_id);
         }
 
         return response()->json([

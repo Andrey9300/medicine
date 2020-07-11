@@ -3,11 +3,9 @@ import {Row, Col, Card, CardHeader, CardBody, Collapse} from 'reactstrap';
 import {NewLocationContainer} from './New';
 import {ILocation} from '../../../interface/audit/ILocation';
 import {PlacesComponent} from '../place/Places';
-import {
-  EmptyObjectComponent,
-  ExpandComponent,
-  HeaderObjectComponent,
-} from '../objects/HeaderObject';
+import {EmptyObjectComponent, ExpandComponent} from '../objects/HeaderObject';
+import {NewUnitContainer} from '../unit/New';
+import {NewPlaceContainer} from '../place/New';
 
 interface IProps {
   unitId: number;
@@ -42,41 +40,42 @@ export class LocationsComponent extends React.PureComponent<IProps> {
     }
 
     return (
-      <div className="animated fadeIn">
-        <Row>
-          <NewLocationContainer unitId={unitId} />
-        </Row>
-        <Row>
-          <Col sm="12">
-            <Card>
-              <CardHeader>
-                <i className="fa fa-building-o" aria-hidden="true" />
-                Локации ({locations.length})
-                <ExpandComponent collapse={collapse} toggle={this.toggle} />
-              </CardHeader>
-              <CardBody className="card-body" id="collapseExample">
-                <Collapse isOpen={collapse}>
-                  {locations.map((location) => (
-                    <React.Fragment key={location.id}>
-                      <HeaderObjectComponent
-                        obj={location}
-                        objName="Локация"
-                        objUrl="location"
+      <Card>
+        <CardHeader>
+          <i className="fa fa-building-o" aria-hidden="true" />
+          Локации ({locations.length})
+          <ExpandComponent collapse={collapse} toggle={this.toggle} />
+        </CardHeader>
+        <Collapse isOpen={collapse}>
+          <CardBody className="card-body" id="collapseExample">
+            {locations.map((location, index) => (
+              <Row
+                key={`${location.id}${index}`}
+                style={{borderBottom: '1px solid #c2cfd6', marginBottom: '8px'}}
+              >
+                <Col xs="2">{location.name}</Col>
+                <Col xs="10">
+                  <Row>
+                    <Col xs="12">
+                      <PlacesComponent
+                        locationId={location.id}
+                        places={location.places}
                       />
-                      <div style={{marginLeft: '50px', marginTop: '50px'}}>
-                        <PlacesComponent
-                          locationId={location.id}
-                          places={location.places}
-                        />
-                      </div>
-                    </React.Fragment>
-                  ))}
-                </Collapse>
-              </CardBody>
-            </Card>
-          </Col>
-        </Row>
-      </div>
+                    </Col>
+                  </Row>
+                  {location.places.length > 0 && (
+                    <Row>
+                      <Col xs="12" style={{marginBottom: '8px'}}>
+                        <NewPlaceContainer locationId={location.id} />
+                      </Col>
+                    </Row>
+                  )}
+                </Col>
+              </Row>
+            ))}
+          </CardBody>
+        </Collapse>
+      </Card>
     );
   }
 }

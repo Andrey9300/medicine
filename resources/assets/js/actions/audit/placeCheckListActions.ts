@@ -12,11 +12,11 @@ export function addPlaceCheckList(
         new FormData(formElement),
       )
       .then(() => {
-        alert('Помещение успешно создано');
+        alert('Чек лист успешно сохранен');
         history.pushState(
           null,
           null,
-          `/services/audits/placeCheckList/${placeCheckListId}`,
+          `/services/audits/place/${placeCheckListId}`,
         );
         window.location.reload();
       })

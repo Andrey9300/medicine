@@ -7,7 +7,6 @@ import {
   ExpandComponent,
   HeaderObjectComponent,
 } from '../objects/HeaderObject';
-import {NewLocationContainer} from '../location/New';
 
 interface IProps {
   locationId: number;
@@ -34,41 +33,28 @@ export class PlacesComponent extends React.PureComponent<IProps> {
 
     if (!places || places.length === 0) {
       return (
-        <>
+        <div style={{marginBottom: '8px'}}>
           <EmptyObjectComponent objName="Помещений" />
           <NewPlaceContainer locationId={locationId} />
-        </>
+        </div>
       );
     }
 
     return (
-      <div className="animated fadeIn">
-        <Row>
-          <NewPlaceContainer locationId={locationId} />
-        </Row>
-        <Row>
-          <Col xs="12">
-            <Card>
-              <CardHeader>
-                <i className="fa fa-building-o" aria-hidden="true" />
-                Помещения ({places.length})
-                <ExpandComponent collapse={collapse} toggle={this.toggle} />
-              </CardHeader>
-              <CardBody className="card-body">
-                <Collapse isOpen={collapse}>
-                  {places.map((place) => (
-                    <HeaderObjectComponent
-                      obj={place}
-                      objName="Место"
-                      objUrl="place"
-                    />
-                  ))}
-                </Collapse>
-              </CardBody>
-            </Card>
-          </Col>
-        </Row>
-      </div>
+      <Card>
+        <CardHeader>
+          <i className="fa fa-building-o" aria-hidden="true" />
+          Помещения ({places.length})
+          <ExpandComponent collapse={collapse} toggle={this.toggle} />
+        </CardHeader>
+        <Collapse isOpen={collapse}>
+          <CardBody className="card-body">
+            {places.map((place, index) => (
+              <HeaderObjectComponent key={index} obj={place} objUrl="place" />
+            ))}
+          </CardBody>
+        </Collapse>
+      </Card>
     );
   }
 }

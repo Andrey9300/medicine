@@ -9,7 +9,6 @@ import {NewCriterionListContainer} from '../../audits/criterionList/New';
 import {EditCriterionListContainer} from '../../audits/criterionList/Edit';
 import {CriterionListContainer} from '../../audits/criterionList/criterionList';
 import {CriterionListsContainer} from '../../audits/criterionList/criterionLists';
-import {PlaceCheckListContainer} from '../../audits/placeCheckList/PlaceCheckList';
 import {AddPlaceCheckListContainer} from '../../audits/placeCheckList/AddPlaceCheckList';
 import {PlaceCheckListCriterionsContainer} from '../../audits/placeCheckList/PlaceCheckListCriterions';
 import {PlaceCheckListCriterionsEditContainer} from '../../audits/placeCheckList/PlaceCheckListCriterionsEdit';
@@ -23,7 +22,8 @@ import {GroupCriterionContainer} from '../../audits/groupCriterion/GroupCriterio
 import {EditGroupCriterionContainer} from '../../audits/groupCriterion/Edit';
 import {GroupCriterionListContainer} from '../../audits/groupCriterionList/GroupCriterionList';
 import {EditGroupCriterionListContainer} from '../../audits/groupCriterionList/Edit';
-import {Objects} from "../../audits/objects/Objects";
+import {Objects} from '../../audits/objects/Objects';
+import {GroupsAndCriterionsComponent} from '../../audits/groupCriterions/GroupsAndCriterions';
 
 export class AuditsRoutes extends React.PureComponent {
   render() {
@@ -70,11 +70,7 @@ export class AuditsRoutes extends React.PureComponent {
           path="/services/audits/criterionLists/edit/:id"
           component={(props: any) => <EditCriterionListContainer {...props} />}
         />
-        <Route
-          exact
-          path="/services/audits/placeCheckList/:id"
-          component={(props: any) => <PlaceCheckListContainer {...props} />}
-        />
+
         <Route
           exact
           path="/services/audits/addPlaceCheckList/:id"
@@ -155,8 +151,14 @@ export class AuditsRoutes extends React.PureComponent {
         <Route
           exact
           path="/services/audits/objects"
+          component={(props: any) => <Objects {...props} />}
+        />
+
+        <Route
+          exact
+          path="/services/audits/groupCriterions"
           component={(props: any) => (
-            <Objects {...props} />
+            <GroupsAndCriterionsComponent {...props} />
           )}
         />
       </>

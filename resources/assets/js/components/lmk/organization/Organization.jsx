@@ -215,7 +215,9 @@ class Organization extends React.PureComponent {
                         <Link
                           to={`/services/lmk/organizations/employees/${organization.id}`}
                         >
-                          {organization.employees && organization.employees.length} чел.
+                          {organization.employees &&
+                            organization.employees.length}{' '}
+                          чел.
                         </Link>
                       </td>
                     </tr>

@@ -14,10 +14,19 @@ class GroupCriterionListController extends Controller
         $currentUser = Auth::user();
         $criterions = $request->criterions;
 
+        if (!$criterions || !$request->group_criterion_name) {
+            return null;
+        }
+
+        $groupCriterion = GroupCriterion::firstOrCreate([
+            'name' => $request->group_criterion_name,
+            'user_id' => $currentUser->id
+        ]);
+
         foreach ($criterions as $criterion) {
             GroupCriterionList::firstOrCreate([
-                'user_group_criterion_id' => $request->group_criterion_id,
-                'user_criterions_criterion_id' => $criterion,
+                'group_criterion_id' => $groupCriterion->id,
+                'criterions_criterion_id' => $criterion,
                 'user_id' => $currentUser->id
             ]);
         }
@@ -28,11 +37,11 @@ class GroupCriterionListController extends Controller
         $currentUser = Auth::user();
 
         $groupCriterionLists = $currentUser->groupCriterionLists()->get();
-        $groupCriterionListsUnique = $groupCriterionLists->unique('user_group_criterion_id');
+        $groupCriterionListsUnique = $groupCriterionLists->unique('group_criterion_id');
         $groupName = [];
 
         foreach ($groupCriterionListsUnique as $groupCriterionList) {
-            array_push($groupName, GroupCriterion::find($groupCriterionList->user_group_criterion_id));
+            array_push($groupName, GroupCriterion::find($groupCriterionList->group_criterion_id));
         }
 
         return response()->json([

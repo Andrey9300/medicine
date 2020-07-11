@@ -1,7 +1,10 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
-import {clearCriterion, fetchCriterion} from '../../../actions/audit/criterionActions';
+import {
+  clearCriterion,
+  fetchCriterion,
+} from '../../../actions/audit/criterionActions';
 import {
   Row,
   Col,
@@ -30,10 +33,7 @@ class EditCriterion extends React.PureComponent {
   handleSubmit(event) {
     event.preventDefault();
     this.props.dispatch(
-      editCriterion(
-        document.querySelector('form'),
-        this.state.criterionId,
-      ),
+      editCriterion(document.querySelector('form'), this.state.criterionId),
     );
   }
 
@@ -73,9 +73,11 @@ class EditCriterion extends React.PureComponent {
                     </Col>
                     <Col xs="12" md="9">
                       <Input
-                        type="input"
+                        type="textarea"
                         name="name"
                         id="name"
+                        rows="5"
+                        cols="33"
                         defaultValue={criterion.name}
                       />
                     </Col>
