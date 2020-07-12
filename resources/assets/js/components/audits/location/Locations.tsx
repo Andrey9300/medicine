@@ -4,7 +4,6 @@ import {NewLocationContainer} from './New';
 import {ILocation} from '../../../interface/audit/ILocation';
 import {PlacesComponent} from '../place/Places';
 import {EmptyObjectComponent, ExpandComponent} from '../objects/HeaderObject';
-import {NewUnitContainer} from '../unit/New';
 import {NewPlaceContainer} from '../place/New';
 
 interface IProps {
@@ -18,7 +17,7 @@ interface IState {
 
 export class LocationsComponent extends React.PureComponent<IProps> {
   public state: IState = {
-    collapse: false,
+    collapse: true,
   };
 
   private toggle = () => {

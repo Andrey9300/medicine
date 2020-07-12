@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
+// связка набора критериев помещения и user, с данными об аудите
 class CreateAuditsPlaceCheckListsTable extends Migration
 {
     public function up()

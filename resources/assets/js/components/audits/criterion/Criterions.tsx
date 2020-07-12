@@ -32,7 +32,7 @@ interface IState {
 
 class Criterions extends React.PureComponent<IProps> {
   public state: IState = {
-    collapse: false,
+    collapse: true,
   };
 
   private toggle = () => {

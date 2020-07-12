@@ -81,6 +81,7 @@ class UnitsComponent extends React.PureComponent<IProps> {
                     style={{
                       borderBottom: '1px solid #c2cfd6',
                       marginBottom: '8px',
+                      paddingBottom: '8px',
                     }}
                   >
                     <Col xs="2">{unit.name}</Col>
@@ -93,11 +94,13 @@ class UnitsComponent extends React.PureComponent<IProps> {
                           />
                         </Col>
                       </Row>
-                      <Row>
-                        <Col xs="12" style={{marginBottom: '8px'}}>
-                          <NewLocationContainer unitId={unit.id} />
-                        </Col>
-                      </Row>
+                      {unit.locations.length > 0 && (
+                        <Row>
+                          <Col xs="12" style={{marginBottom: '8px'}}>
+                            <NewLocationContainer unitId={unit.id} />
+                          </Col>
+                        </Row>
+                      )}
                     </Col>
                   </Row>
                 ))}

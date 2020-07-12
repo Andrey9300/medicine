@@ -12,7 +12,6 @@ import units from './audit/UnitsReducer';
 import locations from './audit/LocationsReducer';
 import places from './audit/PlacesReducer';
 import groupCriterions from './audit/GroupCriterionsReducer';
-import criterionLists from './audit/CriterionListReducer';
 import groupCriterionLists from './audit/GroupCriterionListsReducer';
 import placeCheckLists from './audit/PlaceCheckListsReducer';
 
@@ -31,7 +30,6 @@ export const reducer = combineReducers({
   places,
   groupCriterions,
   groupCriterionLists,
-  criterionLists,
   placeCheckLists,
 });
 

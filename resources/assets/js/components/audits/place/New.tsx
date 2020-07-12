@@ -66,11 +66,7 @@ class NewPlace extends React.PureComponent<IProps> {
           </Col>
           <Col xs="4">
             {groupCriterionLists.length > 0 && (
-              <select
-                className="custom-select"
-                name="group_criterion_id"
-                required
-              >
+              <select className="custom-select" name="group_criterion_id">
                 <option value="">Выберите чек лист</option>
                 {groupCriterionLists.map((groupCriterionList, index) => (
                   <option key={index} value={groupCriterionList.id}>

@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
+// связка группы критериев, критерия и user
 class CreateAuditsGroupCriterionListTable extends Migration
 {
     public function up()

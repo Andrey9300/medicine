@@ -19,7 +19,7 @@ interface IState {
 
 export class PlacesComponent extends React.PureComponent<IProps> {
   public state: IState = {
-    collapse: false,
+    collapse: true,
   };
 
   private toggle = () => {

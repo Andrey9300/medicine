@@ -53,7 +53,7 @@ class PlaceController extends Controller
         $location = Location::find($place->location_id);
         $unit = Units::find($location->unit_id);
 
-        if (!$unit || $unit->id !== $currentUser->id) {
+        if (!$unit || $unit->user_id !== $currentUser->id) {
             return response()->json([
                 'errors' => 'error'
             ]);
@@ -82,6 +82,18 @@ class PlaceController extends Controller
 
         $place->name = $request->name;
         $place->save();
+
+        if (!$request->group_criterion_id) {
+            return null;
+        }
+
+        $userCriterionList = new CriterionList;
+        $userCriterionList->unit_id = $unit->id;
+        $userCriterionList->location_id = $location->id;
+        $userCriterionList->place_id = $place->id;
+        $userCriterionList->group_criterion_id = $request->group_criterion_id;
+        $userCriterionList->user_id = $currentUser->id;
+        $userCriterionList->save();
     }
 
     public function destroy($id)

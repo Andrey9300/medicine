@@ -1,11 +1,6 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import {
-  deletePlaceCheckList,
-  fetchPlaceCheckListCriterions,
-} from '../../../actions/audit/placeCheckListActions';
-import {Link} from 'react-router-dom';
-import PropTypes from 'prop-types';
+import {fetchPlaceCheckListCriterions} from '../../../actions/audit/placeCheckListActions';
 import {
   Row,
   Col,
@@ -20,37 +15,53 @@ import {
   Input,
 } from 'reactstrap';
 import {createMarkup} from '../../../utils/errorsHelper';
+import {IPlaceCheckListCriterion} from '../../../interface/audit/IPlaceCheckList';
+import {TState} from '../../../reducers';
 
-class PlaceCheckListCriterionsEdit extends React.PureComponent {
-  constructor(props) {
-    super(props);
-    this.state = {
-      placeCheckListId: props.match.params.id,
-    };
+interface IStateProps {
+  placeCheckListCriterions: IPlaceCheckListCriterion[];
+  fetched: boolean;
+  errors: any;
+}
 
-    this.map = {
-      0: 'N',
-      1: 'C',
-      2: 'B',
-      3: 'A',
-    };
-  }
+interface IDispatchProps {
+  fetchPlaceCheckListCriterions: typeof fetchPlaceCheckListCriterions;
+}
+
+interface IProps extends IStateProps, IDispatchProps {
+  match: any;
+}
+
+interface IState {
+  placeCheckListId: number;
+}
+
+class PlaceCheckListCriterionsEdit extends React.PureComponent<IProps> {
+  public state: IState = {
+    placeCheckListId: null,
+  };
 
   componentDidMount() {
-    this.props.dispatch(
-      fetchPlaceCheckListCriterions(this.state.placeCheckListId),
-    );
+    const {match, fetchPlaceCheckListCriterions} = this.props;
+
+    fetchPlaceCheckListCriterions(match.params.id);
+    this.setState({placeCheckListId: match.params.id});
   }
 
-  handleClick(id, event) {
+  handleClick = (event: any) => {
     event.preventDefault();
     // this.props.dispatch(deletePlaceCheckList(id));
-  }
+  };
+
+  handleSubmit = (event: any) => {
+    event.preventDefault();
+    // this.props.dispatch(deletePlaceCheckList(id));
+  };
 
   render() {
     const {placeCheckListId} = this.state;
     const {placeCheckListCriterions, errors} = this.props;
-    let errorsMessage = '';
+    let errorsMessage = null;
 
     if (!placeCheckListCriterions) {
       return null;
@@ -93,10 +104,10 @@ class PlaceCheckListCriterionsEdit extends React.PureComponent {
               <Form className="form-horizontal" onSubmit={this.handleSubmit}>
                 <CardBody className="card-body">
                   <FormGroup row>
-                    <Col lg="4">
+                    <Col lg="5">
                       <Label>Критерий</Label>
                     </Col>
-                    <Col lg="2">
+                    <Col lg="1">
                       <Label>Оценка</Label>
                     </Col>
                     <Col lg="3">
@@ -109,24 +120,18 @@ class PlaceCheckListCriterionsEdit extends React.PureComponent {
                   {placeCheckListCriterions.map(
                     (placeCheckListCriterion, index) => (
                       <FormGroup row key={index}>
-                        <Col lg="4">
+                        <Col lg="5">
                           {placeCheckListCriterion.criterion.name}
                         </Col>
-                        <Col
-                          lg="2"
-                          style={{
-                            display: 'flex',
-                            justifyContent: 'space-around',
-                          }}
-                        >
+                        <Col lg="1">
                           <div>
                             <Input
                               type="radio"
                               name={`mark[${placeCheckListCriterion.id}]`}
                               value="3"
-                              style={{width: '20px', height: '20px'}}
-                              checked={placeCheckListCriterion.mark === "3"}
-                              onChange={() => {}}
+                              defaultChecked={
+                                placeCheckListCriterion.mark === '3'
+                              }
                             />
                             <span style={{color: 'green', fontWeight: 'bold'}}>
                               A
@@ -137,11 +142,13 @@ class PlaceCheckListCriterionsEdit extends React.PureComponent {
                               type="radio"
                               name={`mark[${placeCheckListCriterion.id}]`}
                               value="2"
-                              style={{width: '20px', height: '20px'}}
-                              checked={placeCheckListCriterion.mark === "2"}
-                              onChange={() => {}}
+                              defaultChecked={
+                                placeCheckListCriterion.mark === '2'
+                              }
                             />
-                            <span style={{color: '#d39e00', fontWeight: 'bold'}}>
+                            <span
+                              style={{color: '#d39e00', fontWeight: 'bold'}}
+                            >
                               B
                             </span>
                           </div>
@@ -150,9 +157,9 @@ class PlaceCheckListCriterionsEdit extends React.PureComponent {
                               type="radio"
                               name={`mark[${placeCheckListCriterion.id}]`}
                               value="1"
-                              style={{width: '20px', height: '20px'}}
-                              checked={placeCheckListCriterion.mark === "1"}
-                              onChange={() => {}}
+                              defaultChecked={
+                                placeCheckListCriterion.mark === '1'
+                              }
                             />
                             <span style={{color: 'red', fontWeight: 'bold'}}>
                               C
@@ -163,9 +170,9 @@ class PlaceCheckListCriterionsEdit extends React.PureComponent {
                               type="radio"
                               name={`mark[${placeCheckListCriterion.id}]`}
                               value="0"
-                              style={{width: '20px', height: '20px'}}
-                              checked={placeCheckListCriterion.mark === "0"}
-                              onChange={() => {}}
+                              defaultChecked={
+                                placeCheckListCriterion.mark === '0'
+                              }
                             />
                             <span style={{color: 'black', fontWeight: 'bold'}}>
                               N
@@ -210,14 +217,7 @@ class PlaceCheckListCriterionsEdit extends React.PureComponent {
   }
 }
 
-PlaceCheckListCriterionsEdit.propTypes = {
-  dispatch: PropTypes.func.isRequired,
-  match: PropTypes.object.isRequired,
-  fetched: PropTypes.bool,
-  errors: PropTypes.object,
-};
-
-const mapStateToProps = (state) => {
+const mapStateToProps = (state: TState) => {
   return {
     placeCheckListCriterions: state.placeCheckLists.placeCheckListCriterions,
     fetched: state.placeCheckLists.fetched,
@@ -225,6 +225,14 @@ const mapStateToProps = (state) => {
   };
 };
 
-export const PlaceCheckListCriterionsEditContainer = connect(mapStateToProps)(
-  PlaceCheckListCriterionsEdit,
-);
+const mapDispatchToProps = (dispatch: any): IDispatchProps => {
+  return {
+    fetchPlaceCheckListCriterions: (id: number) =>
+      dispatch(fetchPlaceCheckListCriterions(id)),
+  };
+};
+
+export const PlaceCheckListCriterionsEditContainer = connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(PlaceCheckListCriterionsEdit);

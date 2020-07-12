@@ -1,18 +1,6 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import {
-  Row,
-  Col,
-  Button,
-  Card,
-  CardHeader,
-  CardBody,
-  CardFooter,
-  Form,
-  FormGroup,
-  Label,
-  Input,
-} from 'reactstrap';
+import {Row, Col, Button, Form, Label, Input} from 'reactstrap';
 import {addLocation} from '../../../actions/audit/locationActions';
 import {createMarkup} from '../../../utils/errorsHelper';
 import {TState} from '../../../reducers';
@@ -60,7 +48,12 @@ class NewLocation extends React.PureComponent<IProps> {
             <Label>Добавить локацию</Label>
           </Col>
           <Col xs="8">
-            <Input type="text" name="name" placeholder="Наименование" required />
+            <Input
+              type="text"
+              name="name"
+              placeholder="Наименование"
+              required
+            />
             <Input type="hidden" name="unitId" value={unitId} required />
           </Col>
           <Col xs="2">

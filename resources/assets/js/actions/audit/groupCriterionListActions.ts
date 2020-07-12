@@ -7,7 +7,6 @@ export function addGroupCriterionList(formElement: HTMLFormElement = null) {
       .post('/groupCriterionLists/store', new FormData(formElement))
       .then(() => {
         alert('Критерий успешно создан');
-        history.pushState(null, null, `criterionLists`);
         window.location.reload();
       })
       .catch((errors) => {

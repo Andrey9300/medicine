@@ -140,8 +140,8 @@ class EditPlace extends React.PureComponent<IProps, IState> {
                           name="group_criterion_id"
                         >
                           <option value="">Выберите</option>
-                          {groupCriterionLists.map((groupCriterionList) => (
-                            <option value={groupCriterionList.id}>
+                          {groupCriterionLists.map((groupCriterionList, index) => (
+                            <option key={index} value={groupCriterionList.id}>
                               {groupCriterionList.name}
                             </option>
                           ))}

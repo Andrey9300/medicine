@@ -12,11 +12,11 @@ export class CheckListsComponent extends React.PureComponent<IProps> {
   render() {
     const {placeId, placeCheckLists} = this.props;
     const checkLists = placeCheckLists?.checkLists;
-    console.log(placeCheckLists );
+
     return (
       <Col xs="12" sm="12" md="8" lg="8" xl="8">
         <Card>
-          {placeCheckLists ? (
+          {placeCheckLists?.groupCriterion ? (
             <CardHeader>
               <i className="fa fa-building-o" aria-hidden="true" />
               Чек-листы помещения ({checkLists?.length})

@@ -1,12 +1,12 @@
 import {AnyAction} from 'redux';
-import {IPlaceCheckList} from "../../interface/audit/IPlaceCheckList";
+import {IPlaceCheckList, IPlaceCheckListCriterion} from "../../interface/audit/IPlaceCheckList";
 
 interface IState {
   errors: object;
   fetched: boolean;
   placeCheckList: IPlaceCheckList;
   placeCheckLists: IPlaceCheckList[];
-  placeCheckListCriterions: [];
+  placeCheckListCriterions: IPlaceCheckListCriterion[];
 }
 
 const initialState: IState = {

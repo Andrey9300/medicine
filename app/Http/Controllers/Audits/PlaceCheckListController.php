@@ -66,14 +66,21 @@ class PlaceCheckListController extends Controller
         $placeCheckList->location = Location::find($placeCheckList->location_id);
         $placeCheckList->place = Place::find($placeCheckList->place_id);
         $placeCheckList->groupCriterion = GroupCriterion::find($placeCheckList->group_criterion_id);
-        $groupCriterionList = GroupCriterionList::where('group_criterion_id', '=', $placeCheckList->groupCriterion->id)->get();
-        $criterions = [];
         $placeCheckList->checkLists = PlaceCheckLists::where(
             [
                 ['criterion_lists_id', '=', $placeCheckList->id],
                 ['user_id', '=', $currentUser->id],
             ]
         )->get();
+
+        if (!$placeCheckList->groupCriterion) {
+            return response()->json([
+                'placeCheckList' => $placeCheckList
+            ]);
+        }
+
+        $groupCriterionList = GroupCriterionList::where('group_criterion_id', '=', $placeCheckList->groupCriterion->id)->get();
+        $criterions = [];
 
         foreach ($groupCriterionList as $groupCriterion) {
             $criterion = Criterions::find($groupCriterion->criterions_criterion_id);

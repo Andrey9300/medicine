@@ -115,14 +115,6 @@ Route::middleware(['auth'])->group(function () {
         Route::post('/', 'Audits\CriterionController@showAll');
     });
 
-    Route::prefix('criterionLists')->group(function () {
-        Route::post('/store', 'Audits\CriterionListController@store');
-        Route::post('/destroy/{id}', 'Audits\CriterionListController@destroy');
-        Route::post('/update/{id}', 'Audits\CriterionListController@update');
-        Route::post('/{id}', 'Audits\CriterionListController@show');
-        Route::post('/', 'Audits\CriterionListController@showAll');
-    });
-
     Route::prefix('groupCriterions')->group(function () {
         Route::post('/store', 'Audits\GroupCriterionController@store');
         Route::post('/destroy/{id}', 'Audits\GroupCriterionController@destroy');

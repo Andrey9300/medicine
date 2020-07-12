@@ -1,10 +1,11 @@
 import {AnyAction} from 'redux';
+import {ICriterion} from "../../interface/audit/ICriterion";
 
 interface IState {
   errors: object;
   fetched: boolean;
-  criterion: object;
-  criterions: [];
+  criterion: ICriterion;
+  criterions: ICriterion[];
 }
 
 const initialState: IState = {
@@ -14,6 +15,7 @@ const initialState: IState = {
   criterions: [],
 };
 
+// отдельные критерии
 export default function reducer(
   state = initialState,
   action: AnyAction,
