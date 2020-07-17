@@ -45,12 +45,10 @@ class AddPlaceCheckListCheckList extends React.PureComponent<IProps> {
 
   private handleSubmit = (event: any) => {
     event.preventDefault();
+    const {placeCheckListId} = this.state;
     const {addPlaceCheckList} = this.props;
 
-    addPlaceCheckList(
-      document.querySelector('form'),
-      this.state.placeCheckListId,
-    );
+    addPlaceCheckList(document.querySelector('form'), placeCheckListId);
   };
 
   render() {
@@ -58,7 +56,7 @@ class AddPlaceCheckListCheckList extends React.PureComponent<IProps> {
     const {placeCheckList, errors} = this.props;
     let errorsMessage = null;
 
-    if (!placeCheckList) {
+    if (!placeCheckList?.groupCriterion?.id) {
       return (
         <Card>
           <CardBody>

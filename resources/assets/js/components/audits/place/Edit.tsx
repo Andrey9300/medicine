@@ -1,4 +1,5 @@
 import React from 'react';
+import {Link} from 'react-router-dom';
 import {connect} from 'react-redux';
 import {clearPlace, fetchPlace} from '../../../actions/audit/placeActions';
 import {
@@ -59,15 +60,6 @@ class EditPlace extends React.PureComponent<IProps, IState> {
   public state: IState = {
     placeId: null,
   };
-
-  private handleSubmit = (event: any) => {
-    event.preventDefault();
-    const {placeId} = this.state;
-    const {editPlace} = this.props;
-
-    editPlace(document.querySelector('form'), placeId);
-  };
-
   componentDidMount() {
     const {
       match,
@@ -88,6 +80,41 @@ class EditPlace extends React.PureComponent<IProps, IState> {
 
     this.setState({placeId: match.params.id});
   }
+
+  private handleSubmit = (event: any) => {
+    event.preventDefault();
+    const {placeId} = this.state;
+    const {editPlace} = this.props;
+
+    editPlace(document.querySelector('form'), placeId);
+  };
+
+  private getCheckListOption = () => {
+    const {groupCriterionLists, placeCheckList} = this.props;
+    const hasCheckListName = placeCheckList?.groupCriterion?.name;
+    const hasCheckLists = groupCriterionLists.length > 0;
+
+    if (hasCheckListName) {
+      return hasCheckListName;
+    } else if (hasCheckLists) {
+      return (
+        <select className="custom-select" name="group_criterion_id">
+          <option value="">Выберите</option>
+          {groupCriterionLists.map((groupCriterionList, index) => (
+            <option key={index} value={groupCriterionList.id}>
+              {groupCriterionList.name}
+            </option>
+          ))}
+        </select>
+      );
+    } else {
+      return (
+        <div>
+          <Link to={'/services/audits/groupCriterions'}>Укажите чек лист</Link>
+        </div>
+      );
+    }
+  };
 
   render() {
     const {place, groupCriterionLists, placeCheckList, errors} = this.props;
@@ -132,21 +159,7 @@ class EditPlace extends React.PureComponent<IProps, IState> {
                       <Label htmlFor="text-input">Чек лист</Label>
                     </Col>
                     <Col xs="12" md="9">
-                      {placeCheckList?.groupCriterion?.name ? (
-                        placeCheckList.groupCriterion.name
-                      ) : (
-                        <select
-                          className="custom-select"
-                          name="group_criterion_id"
-                        >
-                          <option value="">Выберите</option>
-                          {groupCriterionLists.map((groupCriterionList, index) => (
-                            <option key={index} value={groupCriterionList.id}>
-                              {groupCriterionList.name}
-                            </option>
-                          ))}
-                        </select>
-                      )}
+                      {this.getCheckListOption()}
                     </Col>
                   </FormGroup>
                 </CardBody>

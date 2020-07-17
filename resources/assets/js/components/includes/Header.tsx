@@ -1,41 +1,42 @@
 import React from 'react';
 import {Nav, NavbarToggler, NavbarBrand} from 'reactstrap';
 
-class Header extends React.PureComponent {
-  constructor(props) {
-    super(props);
+interface IProps {}
 
-    this.toggle = this.toggle.bind(this);
-    this.state = {
-      dropdownOpen: false,
-    };
-  }
+interface IState {
+  dropdownOpen: boolean;
+}
 
-  toggle() {
+export class Header extends React.PureComponent<IProps> {
+  public state: IState = {
+    dropdownOpen: false,
+  };
+
+  private toggle = () => {
     this.setState({
       dropdownOpen: !this.state.dropdownOpen,
     });
-  }
+  };
 
-  sidebarToggle(event) {
+  private sidebarToggle = (event: any) => {
     event.preventDefault();
     document.body.classList.toggle('sidebar-hidden');
-  }
+  };
 
-  sidebarMinimize(event) {
+  private sidebarMinimize = (event: any) => {
     event.preventDefault();
     document.body.classList.toggle('sidebar-minimized');
-  }
+  };
 
-  mobileSidebarToggle(event) {
+  private mobileSidebarToggle = (event: any) => {
     event.preventDefault();
     document.body.classList.toggle('sidebar-mobile-show');
-  }
+  };
 
-  asideToggle(event) {
+  private asideToggle = (event: any) => {
     event.preventDefault();
     document.body.classList.toggle('aside-menu-hidden');
-  }
+  };
 
   render() {
     return (
@@ -53,5 +54,3 @@ class Header extends React.PureComponent {
     );
   }
 }
-
-export default Header;

@@ -1,13 +1,20 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import {Link} from 'react-router-dom';
 import {Row, Col, Card, CardBody, CardHeader} from 'reactstrap';
 import {fetchCurrentUser} from '../../actions/userActions';
 
-class ActivateAccount extends React.PureComponent {
+interface IDispatchProps {
+  fetchCurrentUser: typeof fetchCurrentUser;
+}
+
+interface IProps extends IDispatchProps {}
+
+class ActivateAccount extends React.PureComponent<IProps> {
   componentDidMount() {
-    this.props.dispatch(fetchCurrentUser());
+    const {fetchCurrentUser} = this.props;
+
+    fetchCurrentUser();
   }
 
   render() {
@@ -18,7 +25,10 @@ class ActivateAccount extends React.PureComponent {
             <Card className="text-center">
               <CardHeader>Вы активировали email</CardHeader>
               <CardBody>
-                <Link to={'/services/lmk/organizations/create'} className={'active'}>
+                <Link
+                  to={'/services/lmk/organizations/create'}
+                  className={'active'}
+                >
                   Добавить компанию
                 </Link>
               </CardBody>
@@ -30,8 +40,10 @@ class ActivateAccount extends React.PureComponent {
   }
 }
 
-ActivateAccount.propTypes = {
-  router: PropTypes.object,
+const mapDispatchToProps = (dispatch: any): IDispatchProps => {
+  return {
+    fetchCurrentUser: () => dispatch(fetchCurrentUser()),
+  };
 };
 
-export default connect(null)(ActivateAccount);
+export default connect(null, mapDispatchToProps)(ActivateAccount);

@@ -3,22 +3,29 @@ import {connect} from 'react-redux';
 import {Row, Col, Button, Form, Label, Input} from 'reactstrap';
 import {addUnit} from '../../../actions/audit/unitActions';
 import {createMarkup} from '../../../utils/errorsHelper';
+import {TState} from '../../../reducers';
 
-class NewUnit extends React.PureComponent {
-  constructor(props) {
-    super(props);
+interface IStateProps {
+  errors: any;
+}
 
-    this.handleSubmit = this.handleSubmit.bind(this);
-  }
+interface IDispatchProps {
+  addUnit: typeof addUnit;
+}
 
-  handleSubmit(event) {
+interface IProps extends IStateProps, IDispatchProps {}
+
+class NewUnit extends React.PureComponent<IProps> {
+  handleSubmit = (event: any) => {
     event.preventDefault();
-    this.props.dispatch(addUnit(document.querySelector('#unit')));
-  }
+    const {addUnit} = this.props;
+
+    addUnit(document.querySelector('#unit'));
+  };
 
   render() {
     const {errors} = this.props;
-    let errorsMessage = '';
+    let errorsMessage = null;
 
     if (errors) {
       errorsMessage = (
@@ -35,7 +42,7 @@ class NewUnit extends React.PureComponent {
           <Col xs="2">
             <Label>Добавить подразделение</Label>
           </Col>
-          <Col xs="6">
+          <Col xs="8">
             <Input placeholder="Наименование" name="name" />
           </Col>
           <Col xs="2">
@@ -49,10 +56,19 @@ class NewUnit extends React.PureComponent {
   }
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = (state: TState) => {
   return {
     errors: state.units.errors,
   };
 };
 
-export const NewUnitContainer = connect(mapStateToProps)(NewUnit);
+const mapDispatchToProps = (dispatch: any): IDispatchProps => {
+  return {
+    addUnit: (form: HTMLFormElement) => dispatch(addUnit(form)),
+  };
+};
+
+export const NewUnitContainer = connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(NewUnit);

@@ -3,7 +3,7 @@ import {Route} from 'react-router-dom';
 
 import {AuditorsContainer} from '../../audits/auditors/Auditors';
 import {CriterionContainer} from '../../audits/criterion/Criterion';
-import EditCriterion from '../../audits/criterion/Edit';
+import {EditCriterionContainer} from '../../audits/criterion/Edit';
 import {CriterionsContainer} from '../../audits/criterion/Criterions';
 import {AddPlaceCheckListContainer} from '../../audits/placeCheckList/AddPlaceCheckList/AddPlaceCheckList';
 import {PlaceCheckListCriterionsContainer} from '../../audits/placeCheckList/PlaceCheckListCriterions';
@@ -14,8 +14,6 @@ import {LocationContainer} from '../../audits/location/Location';
 import {EditUnitContainer} from '../../audits/unit/Edit';
 import {EditLocationContainer} from '../../audits/location/Edit';
 import {EditPlaceContainer} from '../../audits/place/Edit';
-import {GroupCriterionContainer} from '../../audits/groupCriterion/GroupCriterion';
-import {EditGroupCriterionContainer} from '../../audits/groupCriterion/Edit';
 import {GroupCriterionListContainer} from '../../audits/groupCriterionList/GroupCriterionList';
 import {EditGroupCriterionListContainer} from '../../audits/groupCriterionList/Edit';
 import {Objects} from '../../audits/objects/Objects';
@@ -43,7 +41,7 @@ export class AuditsRoutes extends React.PureComponent {
         <Route
           exact
           path="/services/audits/criterions/edit/:id"
-          component={(props: any) => <EditCriterion {...props} />}
+          component={(props: any) => <EditCriterionContainer {...props} />}
         />
 
         <Route
@@ -97,17 +95,6 @@ export class AuditsRoutes extends React.PureComponent {
           exact
           path="/services/audits/place/edit/:id"
           component={(props: any) => <EditPlaceContainer {...props} />}
-        />
-
-        <Route
-          exact
-          path="/services/audits/groupCriterion/:id"
-          component={(props: any) => <GroupCriterionContainer {...props} />}
-        />
-        <Route
-          exact
-          path="/services/audits/groupCriterion/edit/:id"
-          component={(props: any) => <EditGroupCriterionContainer {...props} />}
         />
 
         <Route

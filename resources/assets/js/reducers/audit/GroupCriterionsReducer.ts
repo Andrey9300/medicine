@@ -1,5 +1,5 @@
 import {AnyAction} from 'redux';
-import {IGroupCriterion} from "../../interface/audit/IGroupCriterion";
+import {IGroupCriterion} from '../../interface/audit/IGroupCriterion';
 
 interface IState {
   errors: object;
@@ -20,20 +20,6 @@ export default function reducer(
   action: AnyAction,
 ): IState {
   switch (action.type) {
-    case 'GROUP_CRITERION_ADD_REJECTED': {
-      return {
-        ...state,
-        errors: action.payload,
-        fetched: false,
-      };
-    }
-    case 'GROUP_CRITERION_EDIT_REJECTED': {
-      return {
-        ...state,
-        errors: action.payload,
-        fetched: false,
-      };
-    }
     case 'GROUP_CRITERIONS_REJECTED': {
       return {
         ...state,
@@ -47,29 +33,6 @@ export default function reducer(
         errors: null,
         fetched: true,
         groupCriterions: action.payload.data.groupCriterions,
-      };
-    }
-    case 'GROUP_CRITERION_REJECTED': {
-      return {
-        ...state,
-        errors: action.payload,
-        fetched: false,
-      };
-    }
-    case 'GROUP_CRITERION_FULFILLED': {
-      return {
-        ...state,
-        errors: null,
-        fetched: true,
-        groupCriterion: action.payload.data.groupCriterion,
-      };
-    }
-    case 'GROUP_CRITERION_CLEAR': {
-      return {
-        ...state,
-        errors: null,
-        fetched: true,
-        groupCriterion: null,
       };
     }
     default:

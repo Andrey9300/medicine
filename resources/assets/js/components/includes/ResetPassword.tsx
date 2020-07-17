@@ -1,6 +1,4 @@
 import React from 'react';
-import {connect} from 'react-redux';
-import PropTypes from 'prop-types';
 import axios from 'axios';
 import {
   Container,
@@ -16,18 +14,22 @@ import {
 } from 'reactstrap';
 import {createMarkup} from '../../utils/errorsHelper';
 
-class ResetPassword extends React.PureComponent {
-  constructor(props) {
-    super(props);
+interface IProps {
+  location: any;
+}
 
-    this.state = {
-      errors: null,
-      doubleClick: false,
-    };
-    this.handleSubmit = this.handleSubmit.bind(this);
-  }
+interface IState {
+  errors: any;
+  doubleClick: boolean;
+}
 
-  handleSubmit(event) {
+export class ResetPasswordComponent extends React.PureComponent<IProps> {
+  public state: IState = {
+    errors: null,
+    doubleClick: false,
+  };
+
+  handleSubmit = (event: any) => {
     event.preventDefault();
     const formElement = document.querySelector('form');
 
@@ -47,13 +49,13 @@ class ResetPassword extends React.PureComponent {
           doubleClick: false,
         });
       });
-  }
+  };
 
   render() {
     const {location} = this.props;
     const {errors, doubleClick} = this.state;
     const urlSearchParams = new URLSearchParams(location.search);
-    let errorsMessage = '';
+    let errorsMessage = null;
 
     if (errors) {
       errorsMessage = (
@@ -126,15 +128,3 @@ class ResetPassword extends React.PureComponent {
     );
   }
 }
-
-ResetPassword.propTypes = {
-  dispatch: PropTypes.func.isRequired,
-};
-
-const mapStateToProps = (state) => {
-  return {
-    users: state.users.users,
-  };
-};
-
-export default connect(mapStateToProps)(ResetPassword);

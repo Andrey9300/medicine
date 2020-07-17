@@ -17,18 +17,20 @@ import {
 } from 'reactstrap';
 import {createMarkup} from '../../utils/errorsHelper';
 
-class RestorePassword extends React.PureComponent {
-  constructor(props) {
-    super(props);
+interface IProps {}
 
-    this.state = {
-      errors: null,
-      doubleClick: false,
-    };
-    this.handleSubmit = this.handleSubmit.bind(this);
-  }
+interface IState {
+  errors: any;
+  doubleClick: boolean;
+}
 
-  handleSubmit(event) {
+export class RestorePasswordComponent extends React.PureComponent<IProps> {
+  public state: IState = {
+    errors: null,
+    doubleClick: false,
+  };
+
+  handleSubmit = (event: any) => {
     event.preventDefault();
     const formElement = document.querySelector('form');
 
@@ -57,7 +59,7 @@ class RestorePassword extends React.PureComponent {
 
   render() {
     const {errors, doubleClick} = this.state;
-    let errorsMessage = '';
+    let errorsMessage = null;
 
     if (errors) {
       errorsMessage = (
@@ -114,15 +116,3 @@ class RestorePassword extends React.PureComponent {
     );
   }
 }
-
-RestorePassword.propTypes = {
-  dispatch: PropTypes.func.isRequired,
-};
-
-const mapStateToProps = (state) => {
-  return {
-    users: state.users.users,
-  };
-};
-
-export default connect(mapStateToProps)(RestorePassword);

@@ -57,10 +57,22 @@ class UnitsComponent extends React.PureComponent<IProps> {
 
     if (units.length === 0) {
       return (
-        <Row>
-          <EmptyObjectComponent objName="Подразделений" />
-          <NewUnitContainer />
-        </Row>
+        <>
+          <Row>
+            <Col xs="6">
+              <EmptyObjectComponent objName="Подразделений" />
+            </Col>
+          </Row>
+          <Row>
+            <Col xs="8">
+              <Card>
+                <CardBody>
+                  <NewUnitContainer />
+                </CardBody>
+              </Card>
+            </Col>
+          </Row>
+        </>
       );
     }
 
@@ -105,7 +117,7 @@ class UnitsComponent extends React.PureComponent<IProps> {
                   </Row>
                 ))}
                 <Row>
-                  <Col xs="12">
+                  <Col xs="8">
                     <NewUnitContainer />
                   </Col>
                 </Row>

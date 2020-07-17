@@ -1,10 +1,10 @@
 import React from 'react';
 import {Route} from 'react-router-dom';
 
-import Login from '../Login';
-import Registration from '../Registration';
-import RestorePassword from '../RestorePassword';
-import ResetPassword from '../ResetPassword';
+import {LoginContainer} from '../Login';
+import {RegistrationContainer} from '../Registration';
+import {RestorePasswordComponent} from '../RestorePassword';
+import {ResetPasswordComponent} from '../ResetPassword';
 import ActivateAccount from '../ActivateAccount';
 import {UserContainer} from '../../user/User';
 import {EditUserContainer} from '../../user/Edit';
@@ -20,22 +20,22 @@ export class Routes extends React.PureComponent {
         <Route
           exact
           path="/services/login"
-          component={(props: any) => <Login {...props} />}
+          component={(props: any) => <LoginContainer {...props} />}
         />
         <Route
           exact
           path="/services/registration"
-          component={(props: any) => <Registration {...props} />}
+          component={(props: any) => <RegistrationContainer {...props} />}
         />
         <Route
           exact
           path="/services/restorePassword"
-          component={(props: any) => <RestorePassword {...props} />}
+          component={(props: any) => <RestorePasswordComponent {...props} />}
         />
         <Route
           exact
           path="/services/resetPassword"
-          component={(props: any) => <ResetPassword {...props} />}
+          component={(props: any) => <ResetPasswordComponent {...props} />}
         />
         <Route
           exact

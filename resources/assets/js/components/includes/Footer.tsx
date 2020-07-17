@@ -1,7 +1,7 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
 
-class Footer extends React.PureComponent {
+export class Footer extends React.PureComponent {
   render() {
     return (
       <footer className="app-footer d-print-none">
@@ -47,5 +47,3 @@ class Footer extends React.PureComponent {
     );
   }
 }
-
-export default Footer;

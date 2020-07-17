@@ -115,9 +115,24 @@ class PlaceCheckListController extends Controller
     public function update(Request $request, $id)
     {
         $currentUser = Auth::user();
-        $place = $currentUser->place($id)->first();
-        $place->name = $request->name;
-        $place->save();
+        $placeCheckListCriterionIds = $request->placeCheckListCriterion;
+        $marks = $request->mark;
+        $commentsFromAuditor = $request->comment_from_auditor;
+        $commentsAtAuditor = $request->comment_at_auditor;
+        $currentCriterions = PlaceCheckListCriterion::where('place_check_lists_id', '=', $id)->get();
+
+        foreach ($placeCheckListCriterionIds as $key => $value) {
+            $criterion = $currentCriterions->find($key);
+
+            if ($criterion->user_id !== $currentUser->id) {
+                return;
+            }
+
+            $criterion->mark = $marks[$key];
+            $criterion->comment_from_auditor = $commentsFromAuditor[$key];
+            $criterion->comment_at_auditor = $commentsAtAuditor[$key];
+            $criterion->save();
+        }
     }
 
     public function destroy($id)

@@ -4,7 +4,7 @@ import {IUnit} from "../../interface/audit/IUnit";
 interface IState {
   errors: object;
   fetched: boolean;
-  unit: object;
+  unit: IUnit;
   units: IUnit[];
 }
 

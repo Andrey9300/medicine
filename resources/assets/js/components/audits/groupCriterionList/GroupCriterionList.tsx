@@ -5,30 +5,51 @@ import {
   deleteGroupCriterionList,
 } from '../../../actions/audit/groupCriterionListActions';
 import {Link} from 'react-router-dom';
-import PropTypes from 'prop-types';
 import {Row, Col, Card, CardHeader, CardBody, Table} from 'reactstrap';
 import {createMarkup} from '../../../utils/errorsHelper';
+import {IGroupCriterion} from '../../../interface/audit/IGroupCriterion';
+import {TState} from '../../../reducers';
 
-class GroupCriterionListList extends React.PureComponent {
-  constructor(props) {
-    super(props);
-    this.state = {
-      groupCriterionListId: props.match.params.id,
-    };
-  }
+interface IStateProps {
+  groupCriterionList: IGroupCriterion;
+  errors: any;
+}
+
+interface IDispatchProps {
+  fetchGroupCriterionList: typeof fetchGroupCriterionList;
+  deleteGroupCriterionList: typeof deleteGroupCriterionList;
+}
+
+interface IProps extends IStateProps, IDispatchProps {
+  match: any;
+}
+
+interface IState {
+  groupCriterionListId: number;
+}
+
+class GroupCriterionListList extends React.PureComponent<IProps> {
+  public state: IState = {
+    groupCriterionListId: null,
+  };
 
   componentDidMount() {
-    this.props.dispatch(fetchGroupCriterionList(this.state.groupCriterionListId));
+    const {match, fetchGroupCriterionList} = this.props;
+
+    this.setState({groupCriterionListId: match.params.id});
+    fetchGroupCriterionList(match.params.id);
   }
 
-  handleBtnDelete(id, event) {
+  private handleBtnDelete = (id: number, event: any) => {
     event.preventDefault();
-    this.props.dispatch(deleteGroupCriterionList(id));
-  }
+    const {deleteGroupCriterionList} = this.props;
+
+    deleteGroupCriterionList(id);
+  };
 
   render() {
     const {groupCriterionList, errors} = this.props;
-    let errorsMessage = '';
+    let errorsMessage = null;
 
     if (!groupCriterionList) {
       return null;
@@ -61,7 +82,9 @@ class GroupCriterionListList extends React.PureComponent {
                 </Link>
                 <span
                   className="pull-right"
-                  onClick={(event) => this.handleBtnDelete(groupCriterionList.id, event)}
+                  onClick={(event) =>
+                    this.handleBtnDelete(groupCriterionList.id, event)
+                  }
                 >
                   <i className="fa fa-trash" />
                 </span>
@@ -84,19 +107,23 @@ class GroupCriterionListList extends React.PureComponent {
   }
 }
 
-GroupCriterionListList.propTypes = {
-  dispatch: PropTypes.func.isRequired,
-  match: PropTypes.object.isRequired,
-  fetched: PropTypes.bool,
-  errors: PropTypes.object,
-};
-
-const mapStateToProps = (state) => {
+const mapStateToProps = (state: TState) => {
   return {
     groupCriterionList: state.groupCriterionLists.groupCriterionList,
-    fetched: state.groupCriterionLists.fetched,
     errors: state.groupCriterionLists.errors,
   };
 };
 
-export const GroupCriterionListContainer = connect(mapStateToProps)(GroupCriterionListList);
+const mapDispatchToProps = (dispatch: any): IDispatchProps => {
+  return {
+    fetchGroupCriterionList: (id: number) =>
+      dispatch(fetchGroupCriterionList(id)),
+    deleteGroupCriterionList: (id: number) =>
+      dispatch(deleteGroupCriterionList(id)),
+  };
+};
+
+export const GroupCriterionListContainer = connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(GroupCriterionListList);

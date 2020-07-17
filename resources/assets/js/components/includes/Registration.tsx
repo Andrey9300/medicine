@@ -1,7 +1,6 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import {registrationUser} from '../../actions/userActions';
-import PropTypes from 'prop-types';
 import {
   Container,
   Row,
@@ -15,16 +14,29 @@ import {
   CardGroup,
 } from 'reactstrap';
 import {createMarkup} from '../../utils/errorsHelper';
+import {TState} from '../../reducers';
 
-class Registration extends React.PureComponent {
-  constructor(props) {
-    super(props);
+interface IStateProps {
+  user: {
+    isAuthenticated: boolean;
+  };
+  errors: any;
+}
 
-    this.state = {
-      doubleClick: false,
-    };
-    this.handleSubmit = this.handleSubmit.bind(this);
-  }
+interface IDispatchProps {
+  registrationUser: typeof registrationUser;
+}
+
+interface IProps extends IStateProps, IDispatchProps {}
+
+interface IState {
+  doubleClick: boolean;
+}
+
+class RegistrationComponent extends React.PureComponent<IProps> {
+  public state: IState = {
+    doubleClick: false,
+  };
 
   componentWillReceiveProps() {
     this.setState({
@@ -32,23 +44,25 @@ class Registration extends React.PureComponent {
     });
   }
 
-  handleSubmit(event) {
+  private handleSubmit = (event: any) => {
     event.preventDefault();
+    const {registrationUser} = this.props;
     this.setState({
       doubleClick: true,
     });
-    this.props.dispatch(registrationUser(document.querySelector('form')));
-  }
 
-  handleLogin() {
+    registrationUser(document.querySelector('form'));
+  };
+
+  private handleLogin = () => {
     history.pushState(null, null, '/services/login');
     window.location.reload();
-  }
+  };
 
   render() {
     const {errors} = this.props;
     const {doubleClick} = this.state;
-    let errorsMessage = '';
+    let errorsMessage = null;
 
     if (errors) {
       errorsMessage = (
@@ -121,16 +135,21 @@ class Registration extends React.PureComponent {
   }
 }
 
-Registration.propTypes = {
-  dispatch: PropTypes.func.isRequired,
-  errors: PropTypes.object,
-};
-
-const mapStateToProps = (state) => {
+const mapStateToProps = (state: TState) => {
   return {
     errors: state.users.errors,
     users: state.users.users,
   };
 };
 
-export default connect(mapStateToProps)(Registration);
+const mapDispatchToProps = (dispatch: any): IDispatchProps => {
+  return {
+    registrationUser: (form: HTMLFormElement) =>
+      dispatch(registrationUser(form)),
+  };
+};
+
+export const RegistrationContainer = connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(RegistrationComponent);

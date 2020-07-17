@@ -14,7 +14,7 @@ class LocationController extends Controller
         $currentUser = Auth::user();
         $unit = Units::find($request->unitId);
 
-        if (!$unit || $unit->id !== $currentUser->id) {
+        if (!$unit || $unit->user_id !== $currentUser->id) {
             return response()->json([
                 'errors' => 'error'
             ]);
@@ -41,7 +41,7 @@ class LocationController extends Controller
         $location = Location::find($id);
         $unit = Units::find($location->unit_id);
 
-        if (!$unit || $unit->id !== $currentUser->id) {
+        if (!$unit || $unit->user_id !== $currentUser->id) {
             return response()->json([
                 'errors' => 'error'
             ]);
@@ -58,7 +58,7 @@ class LocationController extends Controller
         $location = Location::find($id);
         $unit = Units::find($location->unit_id);
 
-        if (!$unit || $unit->id !== $currentUser->id) {
+        if (!$unit || $unit->user_id !== $currentUser->id) {
             return response()->json([
                 'errors' => 'error'
             ]);

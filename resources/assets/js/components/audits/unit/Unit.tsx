@@ -1,34 +1,43 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import {
-  fetchUnit,
-  deleteUnit,
-} from '../../../actions/audit/unitActions';
+import {fetchUnit, deleteUnit} from '../../../actions/audit/unitActions';
 import {Link} from 'react-router-dom';
-import PropTypes from 'prop-types';
 import {Row, Col, Card, CardHeader, CardBody, Table} from 'reactstrap';
 import {createMarkup} from '../../../utils/errorsHelper';
+import {TState} from '../../../reducers';
+import {IUnit} from '../../../interface/audit/IUnit';
 
-class Unit extends React.PureComponent {
-  constructor(props) {
-    super(props);
-    this.state = {
-      unitId: props.match.params.id,
-    };
-  }
+interface IStateProps {
+  unit: IUnit;
+  errors: any;
+}
 
+interface IDispatchProps {
+  fetchUnit: typeof fetchUnit;
+  deleteUnit: typeof deleteUnit;
+}
+
+interface IProps extends IStateProps, IDispatchProps {
+  match: any;
+}
+
+class Unit extends React.PureComponent<IProps> {
   componentDidMount() {
-    this.props.dispatch(fetchUnit(this.state.unitId));
+    const {match, fetchUnit} = this.props;
+
+    fetchUnit(match.params.id);
   }
 
-  handleBtnDelete(id, event) {
+  handleBtnDelete = (id: number, event: any) => {
     event.preventDefault();
-    this.props.dispatch(deleteUnit(id));
-  }
+    const {deleteUnit} = this.props;
+
+    deleteUnit(id);
+  };
 
   render() {
     const {unit, errors} = this.props;
-    let errorsMessage = '';
+    let errorsMessage = null;
 
     if (!unit) {
       return null;
@@ -84,19 +93,18 @@ class Unit extends React.PureComponent {
   }
 }
 
-Unit.propTypes = {
-  dispatch: PropTypes.func.isRequired,
-  match: PropTypes.object.isRequired,
-  fetched: PropTypes.bool,
-  errors: PropTypes.object,
-};
-
-const mapStateToProps = (state) => {
+const mapStateToProps = (state: TState) => {
   return {
     unit: state.units.unit,
-    fetched: state.units.fetched,
     errors: state.units.errors,
   };
 };
 
-export const UnitContainer = connect(mapStateToProps)(Unit);
+const mapDispatchToProps = (dispatch: any): IDispatchProps => {
+  return {
+    fetchUnit: (id: number) => dispatch(fetchUnit(id)),
+    deleteUnit: (id: number) => dispatch(deleteUnit(id)),
+  };
+};
+
+export const UnitContainer = connect(mapStateToProps, mapDispatchToProps)(Unit);

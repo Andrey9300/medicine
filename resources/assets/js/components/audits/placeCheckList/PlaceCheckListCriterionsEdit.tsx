@@ -1,6 +1,9 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import {fetchPlaceCheckListCriterions} from '../../../actions/audit/placeCheckListActions';
+import {
+  editPlaceCheckList,
+  fetchPlaceCheckListCriterions,
+} from '../../../actions/audit/placeCheckListActions';
 import {
   Row,
   Col,
@@ -26,6 +29,7 @@ interface IStateProps {
 
 interface IDispatchProps {
   fetchPlaceCheckListCriterions: typeof fetchPlaceCheckListCriterions;
+  editPlaceCheckList: typeof editPlaceCheckList;
 }
 
 interface IProps extends IStateProps, IDispatchProps {
@@ -50,16 +54,17 @@ class PlaceCheckListCriterionsEdit extends React.PureComponent<IProps> {
 
   handleClick = (event: any) => {
     event.preventDefault();
-    // this.props.dispatch(deletePlaceCheckList(id));
   };
 
   handleSubmit = (event: any) => {
     event.preventDefault();
-    // this.props.dispatch(deletePlaceCheckList(id));
+    const {placeCheckListId} = this.state;
+    const {editPlaceCheckList} = this.props;
+
+    editPlaceCheckList(document.querySelector('form'), placeCheckListId);
   };
 
   render() {
-    const {placeCheckListId} = this.state;
     const {placeCheckListCriterions, errors} = this.props;
     let errorsMessage = null;
 
@@ -81,27 +86,27 @@ class PlaceCheckListCriterionsEdit extends React.PureComponent<IProps> {
         <Row>
           <Col xs="12" sm="12" md="12" lg="12" xl="12">
             <Card>
-              <CardHeader>
-                <Row>
-                  <Col lg="3">Редактировать чек-лист</Col>
-                  <Col lg="6">
-                    <Button
-                      type="submit"
-                      size="sm"
-                      color="primary"
-                      onClick={this.handleClick}
-                    >
-                      <i className="fa fa-dot-circle-o" /> Закончить аудит
-                    </Button>
-                  </Col>
-                  <Col lg="3">
-                    <Button type="submit" size="sm" color="success">
-                      <i className="fa fa-dot-circle-o" /> Сохранить изменения
-                    </Button>
-                  </Col>
-                </Row>
-              </CardHeader>
               <Form className="form-horizontal" onSubmit={this.handleSubmit}>
+                <CardHeader>
+                  <Row>
+                    <Col lg="3">Редактировать чек-лист</Col>
+                    <Col lg="6">
+                      <Button
+                        type="submit"
+                        size="sm"
+                        color="primary"
+                        onClick={this.handleClick}
+                      >
+                        <i className="fa fa-dot-circle-o" /> Закончить аудит
+                      </Button>
+                    </Col>
+                    <Col lg="3">
+                      <Button type="submit" size="sm" color="success">
+                        <i className="fa fa-dot-circle-o" /> Сохранить изменения
+                      </Button>
+                    </Col>
+                  </Row>
+                </CardHeader>
                 <CardBody className="card-body">
                   <FormGroup row>
                     <Col lg="5">
@@ -121,6 +126,12 @@ class PlaceCheckListCriterionsEdit extends React.PureComponent<IProps> {
                     (placeCheckListCriterion, index) => (
                       <FormGroup row key={index}>
                         <Col lg="5">
+                          <Input
+                            type="hidden"
+                            id="criterionId"
+                            name={`placeCheckListCriterion[${placeCheckListCriterion.id}]`}
+                            defaultValue={placeCheckListCriterion.criterion.id}
+                          />
                           {placeCheckListCriterion.criterion.name}
                         </Col>
                         <Col lg="1">
@@ -182,8 +193,7 @@ class PlaceCheckListCriterionsEdit extends React.PureComponent<IProps> {
                         <Col lg="3">
                           <Input
                             type="textarea"
-                            id="comment"
-                            name="comment"
+                            name={`comment_from_auditor[${placeCheckListCriterion.id}]`}
                             defaultValue={
                               placeCheckListCriterion.comment_from_auditor
                             }
@@ -192,8 +202,7 @@ class PlaceCheckListCriterionsEdit extends React.PureComponent<IProps> {
                         <Col lg="3">
                           <Input
                             type="textarea"
-                            id="comment"
-                            name="comment"
+                            name={`comment_at_auditor[${placeCheckListCriterion.id}]`}
                             defaultValue={
                               placeCheckListCriterion.comment_at_auditor
                             }
@@ -203,12 +212,12 @@ class PlaceCheckListCriterionsEdit extends React.PureComponent<IProps> {
                     ),
                   )}
                 </CardBody>
+                <CardFooter>
+                  <Button type="submit" size="sm" color="success">
+                    <i className="fa fa-dot-circle-o" /> Сохранить
+                  </Button>
+                </CardFooter>
               </Form>
-              <CardFooter>
-                <Button type="submit" size="sm" color="success">
-                  <i className="fa fa-dot-circle-o" /> Сохранить
-                </Button>
-              </CardFooter>
             </Card>
           </Col>
         </Row>
@@ -229,6 +238,8 @@ const mapDispatchToProps = (dispatch: any): IDispatchProps => {
   return {
     fetchPlaceCheckListCriterions: (id: number) =>
       dispatch(fetchPlaceCheckListCriterions(id)),
+    editPlaceCheckList: (form: HTMLFormElement, id: number) =>
+      dispatch(editPlaceCheckList(form, id)),
   };
 };
 

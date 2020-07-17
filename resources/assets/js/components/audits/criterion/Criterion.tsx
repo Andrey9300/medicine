@@ -5,30 +5,52 @@ import {
   deleteCriterion,
 } from '../../../actions/audit/criterionActions';
 import {Link} from 'react-router-dom';
-import PropTypes from 'prop-types';
-import {Row, Col, Card, CardHeader, CardBody, Table} from 'reactstrap';
+import {Row, Col, Card, CardHeader, CardBody} from 'reactstrap';
 import {createMarkup} from '../../../utils/errorsHelper';
+import {ICriterion} from '../../../interface/audit/ICriterion';
+import {TState} from '../../../reducers';
 
-class Criterion extends React.PureComponent {
-  constructor(props) {
-    super(props);
-    this.state = {
-      criterionId: props.match.params.id,
-    };
-  }
+interface IStateProps {
+  criterion: ICriterion;
+  errors: any;
+}
+
+interface IDispatchProps {
+  fetchCriterion: typeof fetchCriterion;
+  deleteCriterion: typeof deleteCriterion;
+}
+
+interface IProps extends IStateProps, IDispatchProps {
+  match: any;
+}
+
+interface IState {
+  criterionId: number;
+}
+
+class Criterion extends React.PureComponent<IProps> {
+  public state: IState = {
+    criterionId: null,
+  };
 
   componentDidMount() {
-    this.props.dispatch(fetchCriterion(this.state.criterionId));
+    const {match, fetchCriterion} = this.props;
+
+    fetchCriterion(match.params.id);
+
+    this.setState({criterionId: match.params.id});
   }
 
-  handleBtnDelete(id, event) {
+  handleBtnDelete = (id: number, event: any) => {
     event.preventDefault();
-    this.props.dispatch(deleteCriterion(id));
-  }
+    const {deleteCriterion} = this.props;
+
+    deleteCriterion(id);
+  };
 
   render() {
     const {criterion, errors} = this.props;
-    let errorsMessage = '';
+    let errorsMessage = null;
 
     if (!criterion) {
       return null;
@@ -67,14 +89,12 @@ class Criterion extends React.PureComponent {
                 </span>
               </CardHeader>
               <CardBody className="card-body">
-                <Table responsive>
-                  <tbody>
-                    <tr>
-                      <td>Наименование:</td>
-                      <td>{criterion.name}</td>
-                    </tr>
-                  </tbody>
-                </Table>
+                <Row
+                  style={{borderTop: '1px solid #c2cfd6', padding: '12px 0'}}
+                >
+                  <Col xs="2">Наименование</Col>
+                  <Col xs="10">{criterion.name}</Col>
+                </Row>
               </CardBody>
             </Card>
           </Col>
@@ -84,19 +104,21 @@ class Criterion extends React.PureComponent {
   }
 }
 
-Criterion.propTypes = {
-  dispatch: PropTypes.func.isRequired,
-  match: PropTypes.object.isRequired,
-  fetched: PropTypes.bool,
-  errors: PropTypes.object,
-};
-
-const mapStateToProps = (state) => {
+const mapStateToProps = (state: TState) => {
   return {
     criterion: state.criterions.criterion,
-    fetched: state.criterions.fetched,
     errors: state.criterions.errors,
   };
 };
 
-export const CriterionContainer = connect(mapStateToProps)(Criterion);
+const mapDispatchToProps = (dispatch: any): IDispatchProps => {
+  return {
+    fetchCriterion: (id: number) => dispatch(fetchCriterion(id)),
+    deleteCriterion: (id: number) => dispatch(deleteCriterion(id)),
+  };
+};
+
+export const CriterionContainer = connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(Criterion);

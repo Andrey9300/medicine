@@ -1,6 +1,5 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import PropTypes from 'prop-types';
 import {
   clearCriterion,
   fetchCriterion,
@@ -20,31 +19,52 @@ import {
 } from 'reactstrap';
 import {editCriterion} from '../../../actions/audit/criterionActions';
 import {createMarkup} from '../../../utils/errorsHelper';
+import {TState} from '../../../reducers';
+import {ICriterion} from '../../../interface/audit/ICriterion';
 
-class EditCriterion extends React.PureComponent {
-  constructor(props) {
-    super(props);
-    this.state = {
-      criterionId: props.match.params.id,
-    };
-    this.handleSubmit = this.handleSubmit.bind(this);
-  }
+interface IStateProps {
+  criterion: ICriterion;
+  errors: any;
+}
 
-  handleSubmit(event) {
+interface IDispatchProps {
+  editCriterion: typeof editCriterion;
+  clearCriterion: typeof clearCriterion;
+  fetchCriterion: typeof fetchCriterion;
+}
+
+interface IProps extends IStateProps, IDispatchProps {
+  match: any;
+}
+
+interface IState {
+  criterionId: number;
+}
+
+class EditCriterion extends React.PureComponent<IProps> {
+  public state: IState = {
+    criterionId: null,
+  };
+
+  private handleSubmit = (event: any) => {
     event.preventDefault();
-    this.props.dispatch(
-      editCriterion(document.querySelector('form'), this.state.criterionId),
-    );
-  }
+    const {criterionId} = this.state;
+    const {editCriterion} = this.props;
+
+    editCriterion(document.querySelector('form'), criterionId);
+  };
 
   componentDidMount() {
-    this.props.dispatch(clearCriterion());
-    this.props.dispatch(fetchCriterion(this.state.criterionId));
+    const {match, clearCriterion, fetchCriterion} = this.props;
+
+    this.setState({criterionId: match.params.id});
+    clearCriterion();
+    fetchCriterion(match.params.id);
   }
 
   render() {
     const {criterion, errors} = this.props;
-    let errorsMessage = '';
+    let errorsMessage = null;
 
     if (errors) {
       errorsMessage = (
@@ -97,18 +117,20 @@ class EditCriterion extends React.PureComponent {
   }
 }
 
-EditCriterion.propTypes = {
-  dispatch: PropTypes.func.isRequired,
-  match: PropTypes.object.isRequired,
-  errors: PropTypes.array,
-  criterion: PropTypes.object,
-};
-
-const mapStateToProps = (state) => {
+const mapStateToProps = (state: TState) => {
   return {
     errors: state.criterions.errors,
     criterion: state.criterions.criterion,
   };
 };
 
-export default connect(mapStateToProps)(EditCriterion);
+const mapDispatchToProps = (dispatch: any): IDispatchProps => {
+  return {
+    editCriterion: (form: HTMLFormElement, id: number) =>
+      dispatch(editCriterion(form, id)),
+    clearCriterion: () => dispatch(clearCriterion()),
+    fetchCriterion: (id: number) => dispatch(fetchCriterion(id)),
+  };
+};
+
+export const EditCriterionContainer = connect(mapStateToProps, mapDispatchToProps)(EditCriterion);

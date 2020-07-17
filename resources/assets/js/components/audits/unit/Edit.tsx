@@ -1,7 +1,6 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import PropTypes from 'prop-types';
-import {clearLocation, fetchLocation} from '../../../actions/audit/locationActions';
+import {clearUnit, fetchUnit} from '../../../actions/audit/unitActions';
 import {
   Row,
   Col,
@@ -15,36 +14,54 @@ import {
   Label,
   Input,
 } from 'reactstrap';
-import {editLocation} from '../../../actions/audit/locationActions';
+import {editUnit} from '../../../actions/audit/unitActions';
 import {createMarkup} from '../../../utils/errorsHelper';
+import {TState} from '../../../reducers';
+import {IUnit} from '../../../interface/audit/IUnit';
 
-class EditLocation extends React.PureComponent {
-  constructor(props) {
-    super(props);
-    this.state = {
-      locationId: props.match.params.id,
-    };
-    this.handleSubmit = this.handleSubmit.bind(this);
-  }
+interface IStateProps {
+  unit: IUnit;
+  errors: any;
+}
 
-  handleSubmit(event) {
+interface IDispatchProps {
+  clearUnit: typeof clearUnit;
+  fetchUnit: typeof fetchUnit;
+  editUnit: typeof editUnit;
+}
+
+interface IProps extends IStateProps, IDispatchProps {
+  match: any;
+}
+
+interface IState {
+  unitId: number;
+}
+
+class EditUnit extends React.PureComponent<IProps> {
+  public state: IState = {
+    unitId: null,
+  };
+
+  private handleSubmit = (event: any) => {
     event.preventDefault();
-    this.props.dispatch(
-      editLocation(
-        document.querySelector('form'),
-        this.state.locationId,
-      ),
-    );
-  }
+    const {unitId} = this.state;
+    const {editUnit} = this.props;
+
+    editUnit(document.querySelector('form'), unitId);
+  };
 
   componentDidMount() {
-    this.props.dispatch(clearLocation());
-    this.props.dispatch(fetchLocation(this.state.locationId));
+    const {match, clearUnit, fetchUnit} = this.props;
+
+    this.setState({unitId: match.params.id});
+    clearUnit();
+    fetchUnit(match.params.id);
   }
 
   render() {
-    const {location, errors} = this.props;
-    let errorsMessage = '';
+    const {unit, errors} = this.props;
+    let errorsMessage = null;
 
     if (errors) {
       errorsMessage = (
@@ -54,7 +71,7 @@ class EditLocation extends React.PureComponent {
       );
     }
 
-    if (!location) {
+    if (!unit) {
       return null;
     }
 
@@ -73,10 +90,10 @@ class EditLocation extends React.PureComponent {
                     </Col>
                     <Col xs="12" md="9">
                       <Input
-                        type="input"
+                        type="text"
                         name="name"
                         id="name"
-                        defaultValue={location.name}
+                        defaultValue={unit.name}
                       />
                     </Col>
                   </FormGroup>
@@ -95,18 +112,23 @@ class EditLocation extends React.PureComponent {
   }
 }
 
-EditLocation.propTypes = {
-  dispatch: PropTypes.func.isRequired,
-  match: PropTypes.object.isRequired,
-  errors: PropTypes.array,
-  location: PropTypes.object,
-};
-
-const mapStateToProps = (state) => {
+const mapStateToProps = (state: TState) => {
   return {
-    errors: state.locations.errors,
-    location: state.locations.location,
+    errors: state.units.errors,
+    unit: state.units.unit,
   };
 };
 
-export const EditLocationContainer = connect(mapStateToProps)(EditLocation);
+const mapDispatchToProps = (dispatch: any): IDispatchProps => {
+  return {
+    clearUnit: () => dispatch(clearUnit()),
+    fetchUnit: (id: number) => dispatch(fetchUnit(id)),
+    editUnit: (form: HTMLFormElement, id: number) =>
+      dispatch(editUnit(form, id)),
+  };
+};
+
+export const EditUnitContainer = connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(EditUnit);

@@ -1,7 +1,6 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import {Link} from 'react-router-dom';
-import PropTypes from 'prop-types';
 import {
   Container,
   Row,
@@ -14,24 +13,38 @@ import {
   Input,
   InputGroup,
 } from 'reactstrap';
-import {loginUser} from '../../actions/userActions';
+import {clearUser, loginUser} from '../../actions/userActions';
 import {createMarkup} from '../../utils/errorsHelper';
+import {TState} from '../../reducers';
+import {IUser} from "../../interface/IUser";
 
-class Login extends React.PureComponent {
-  constructor(props) {
-    super(props);
+interface IStateProps {
+  user: any;
+  errors: any;
+}
 
-    this.state = {
-      doubleClick: false,
-      showPassword: false,
-    };
+interface IDispatchProps {
+  clearUser: typeof clearUser;
+  loginUser: typeof loginUser;
+}
 
-    this.props.dispatch({
-      payload: [],
-      type: 'LOGIN_USER_CLEAR_ERRORS',
-    });
+interface IProps extends IStateProps, IDispatchProps {}
 
-    this.handleSubmit = this.handleSubmit.bind(this);
+interface IState {
+  doubleClick: boolean;
+  showPassword: boolean;
+}
+
+class LoginComponent extends React.PureComponent<IProps> {
+  public state: IState = {
+    doubleClick: false,
+    showPassword: false,
+  };
+
+  componentDidMount() {
+    const {clearUser} = this.props;
+
+    clearUser();
   }
 
   componentWillReceiveProps() {
@@ -40,18 +53,21 @@ class Login extends React.PureComponent {
     });
   }
 
-  handleSubmit(event) {
+  private handleSubmit = (event: any) => {
     event.preventDefault();
+    const {loginUser} = this.props;
+
     this.setState({
       doubleClick: true,
     });
-    this.props.dispatch(loginUser(document.querySelector('form')));
-  }
+
+    loginUser(document.querySelector('form'));
+  };
 
   render() {
     const {user, errors} = this.props;
     const {doubleClick, showPassword} = this.state;
-    let errorsMessage = '';
+    let errorsMessage = null;
 
     if (user && user.isAuthenticated) {
       window.history.pushState(null, null, '/services/lmk/organizations');
@@ -142,15 +158,21 @@ class Login extends React.PureComponent {
   }
 }
 
-Login.propTypes = {
-  dispatch: PropTypes.func.isRequired,
-};
-
-const mapStateToProps = (state) => {
+const mapStateToProps = (state: TState) => {
   return {
     errors: state.users.errors,
     user: state.users.user,
   };
 };
 
-export default connect(mapStateToProps)(Login);
+const mapDispatchToProps = (dispatch: any): IDispatchProps => {
+  return {
+    clearUser: () => dispatch(clearUser()),
+    loginUser: (form: HTMLFormElement) => dispatch(loginUser(form)),
+  };
+};
+
+export const LoginContainer = connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(LoginComponent);

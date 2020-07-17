@@ -1,7 +1,9 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import PropTypes from 'prop-types';
-import {clearGroupCriterionList, fetchGroupCriterionList} from '../../../actions/audit/groupCriterionListActions';
+import {
+  clearGroupCriterionList,
+  fetchGroupCriterionList,
+} from '../../../actions/audit/groupCriterionListActions';
 import {
   Row,
   Col,
@@ -17,34 +19,58 @@ import {
 } from 'reactstrap';
 import {editGroupCriterionList} from '../../../actions/audit/groupCriterionListActions';
 import {createMarkup} from '../../../utils/errorsHelper';
+import {TState} from '../../../reducers';
+import {IGroupCriterion} from '../../../interface/audit/IGroupCriterion';
 
-class EditGroupCriterionList extends React.PureComponent {
-  constructor(props) {
-    super(props);
-    this.state = {
-      groupCriterionListId: props.match.params.id,
-    };
-    this.handleSubmit = this.handleSubmit.bind(this);
-  }
+interface IStateProps {
+  groupCriterionList: IGroupCriterion;
+  errors: any;
+}
 
-  handleSubmit(event) {
+interface IDispatchProps {
+  clearGroupCriterionList: typeof clearGroupCriterionList;
+  fetchGroupCriterionList: typeof fetchGroupCriterionList;
+  editGroupCriterionList: typeof editGroupCriterionList;
+}
+
+interface IProps extends IStateProps, IDispatchProps {
+  match: any;
+}
+
+interface IState {
+  groupCriterionListId: number;
+}
+
+class EditGroupCriterionList extends React.PureComponent<IProps> {
+  public state: IState = {
+    groupCriterionListId: null,
+  };
+
+  handleSubmit = (event: any) => {
     event.preventDefault();
-    this.props.dispatch(
-      editGroupCriterionList(
-        document.querySelector('form'),
-        this.state.groupCriterionListId,
-      ),
+    const {editGroupCriterionList} = this.props;
+
+    editGroupCriterionList(
+      document.querySelector('form'),
+      this.state.groupCriterionListId,
     );
-  }
+  };
 
   componentDidMount() {
-    this.props.dispatch(clearGroupCriterionList());
-    this.props.dispatch(fetchGroupCriterionList(this.state.groupCriterionListId));
+    const {
+      match,
+      clearGroupCriterionList,
+      fetchGroupCriterionList,
+    } = this.props;
+
+    this.setState({groupCriterionListId: match.params.id});
+    clearGroupCriterionList();
+    fetchGroupCriterionList(match.params.id);
   }
 
   render() {
     const {groupCriterionList, errors} = this.props;
-    let errorsMessage = '';
+    let errorsMessage = null;
 
     if (errors) {
       errorsMessage = (
@@ -73,7 +99,7 @@ class EditGroupCriterionList extends React.PureComponent {
                     </Col>
                     <Col xs="12" md="9">
                       <Input
-                        type="input"
+                        type="text"
                         name="name"
                         id="name"
                         defaultValue={groupCriterionList.name}
@@ -95,18 +121,24 @@ class EditGroupCriterionList extends React.PureComponent {
   }
 }
 
-EditGroupCriterionList.propTypes = {
-  dispatch: PropTypes.func.isRequired,
-  match: PropTypes.object.isRequired,
-  errors: PropTypes.array,
-  groupCriterionList: PropTypes.object,
-};
-
-const mapStateToProps = (state) => {
+const mapStateToProps = (state: TState) => {
   return {
     errors: state.groupCriterionLists.errors,
     groupCriterionList: state.groupCriterionLists.groupCriterionList,
   };
 };
 
-export const EditGroupCriterionListContainer = connect(mapStateToProps)(EditGroupCriterionList);
+const mapDispatchToProps = (dispatch: any): IDispatchProps => {
+  return {
+    clearGroupCriterionList: () => dispatch(clearGroupCriterionList()),
+    fetchGroupCriterionList: (id: number) =>
+      dispatch(fetchGroupCriterionList(id)),
+    editGroupCriterionList: (form: HTMLFormElement, id: number) =>
+      dispatch(editGroupCriterionList(form, id)),
+  };
+};
+
+export const EditGroupCriterionListContainer = connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(EditGroupCriterionList);

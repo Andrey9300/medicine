@@ -41,7 +41,7 @@ export function editPlaceCheckList(
       )
       .then(() => {
         alert('Чек лист успешно отредактирован');
-        history.pushState(null, null, `/services/audits/placeCheckList/${legalEntityId}`);
+        history.pushState(null, null, `/services/audits/placeCheckList/criterions/${legalEntityId}`);
         window.location.reload();
       })
       .catch((errors) => {

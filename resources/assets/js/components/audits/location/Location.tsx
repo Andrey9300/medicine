@@ -5,30 +5,51 @@ import {
   deleteLocation,
 } from '../../../actions/audit/locationActions';
 import {Link} from 'react-router-dom';
-import PropTypes from 'prop-types';
 import {Row, Col, Card, CardHeader, CardBody, Table} from 'reactstrap';
 import {createMarkup} from '../../../utils/errorsHelper';
+import {ILocation} from '../../../interface/audit/ILocation';
+import {TState} from '../../../reducers';
 
-class Location extends React.PureComponent {
-  constructor(props) {
-    super(props);
-    this.state = {
-      locationId: props.match.params.id,
-    };
-  }
+interface IStateProps {
+  location: ILocation;
+  errors: any;
+}
+
+interface IDispatchProps {
+  fetchLocation: typeof fetchLocation;
+  deleteLocation: typeof deleteLocation;
+}
+
+interface IProps extends IStateProps, IDispatchProps {
+  match: any;
+}
+
+interface IState {
+  locationId: number;
+}
+
+class Location extends React.PureComponent<IProps> {
+  public state: IState = {
+    locationId: null,
+  };
 
   componentDidMount() {
-    this.props.dispatch(fetchLocation(this.state.locationId));
+    const {match, fetchLocation} = this.props;
+
+    this.setState({locationId: match.params.id});
+    fetchLocation(match.params.id);
   }
 
-  handleBtnDelete(id, event) {
+  private handleBtnDelete = (id: number, event: any) => {
     event.preventDefault();
-    this.props.dispatch(deleteLocation(id));
-  }
+    const {deleteLocation} = this.props;
+
+    deleteLocation(id);
+  };
 
   render() {
     const {location, errors} = this.props;
-    let errorsMessage = '';
+    let errorsMessage = null;
 
     if (!location) {
       return null;
@@ -84,14 +105,7 @@ class Location extends React.PureComponent {
   }
 }
 
-Location.propTypes = {
-  dispatch: PropTypes.func.isRequired,
-  match: PropTypes.object.isRequired,
-  fetched: PropTypes.bool,
-  errors: PropTypes.object,
-};
-
-const mapStateToProps = (state) => {
+const mapStateToProps = (state: TState) => {
   return {
     location: state.locations.location,
     fetched: state.locations.fetched,
@@ -99,4 +113,14 @@ const mapStateToProps = (state) => {
   };
 };
 
-export const LocationContainer = connect(mapStateToProps)(Location);
+const mapDispatchToProps = (dispatch: any): IDispatchProps => {
+  return {
+    fetchLocation: (id: number) => dispatch(fetchLocation(id)),
+    deleteLocation: (id: number) => dispatch(deleteLocation(id)),
+  };
+};
+
+export const LocationContainer = connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(Location);

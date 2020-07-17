@@ -16,7 +16,7 @@ export function loginUser(formElement: HTMLFormElement = null) {
         window.location.reload();
       })
       .catch((errors) => {
-          dispatch({
+        dispatch({
           payload: getResponseError(errors),
           type: 'LOGIN_USER_REJECTED',
         });
@@ -173,5 +173,14 @@ export function deleteUser(id: number) {
       .catch((error) => {
         return error;
       });
+  };
+}
+
+export function clearUser() {
+  return (dispatch: any) => {
+    dispatch({
+      payload: [],
+      type: 'LOGIN_USER_CLEAR_ERRORS',
+    });
   };
 }

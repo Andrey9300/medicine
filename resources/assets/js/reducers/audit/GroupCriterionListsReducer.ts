@@ -1,10 +1,11 @@
 import {AnyAction} from 'redux';
+import {IGroupCriterion} from "../../interface/audit/IGroupCriterion";
 
 interface IState {
   errors: object;
   fetched: boolean;
-  groupCriterionList: object;
-  groupCriterionLists: [];
+  groupCriterionList: IGroupCriterion;
+  groupCriterionLists: IGroupCriterion[];
 }
 
 const initialState: IState = {

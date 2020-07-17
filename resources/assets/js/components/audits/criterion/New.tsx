@@ -12,24 +12,36 @@ import {
   Label,
   Input,
 } from 'reactstrap';
-import {addCriterion} from '../../../actions/audit/criterionActions';
+import {
+  addCriterion,
+  deleteCriterion,
+  fetchCriterion,
+} from '../../../actions/audit/criterionActions';
 import {createMarkup} from '../../../utils/errorsHelper';
+import {ICriterion} from '../../../interface/audit/ICriterion';
+import {TState} from '../../../reducers';
 
-class NewCriterion extends React.PureComponent {
-  constructor(props) {
-    super(props);
+interface IStateProps {
+  errors: any;
+}
 
-    this.handleSubmit = this.handleSubmit.bind(this);
-  }
+interface IDispatchProps {
+  addCriterion: typeof addCriterion;
+}
 
-  handleSubmit(event) {
+interface IProps extends IStateProps, IDispatchProps {}
+
+class NewCriterion extends React.PureComponent<IProps> {
+  handleSubmit = (event: any) => {
     event.preventDefault();
-    this.props.dispatch(addCriterion(document.querySelector('#criterion')));
-  }
+    const {addCriterion} = this.props;
+
+    addCriterion(document.querySelector('#criterion'));
+  };
 
   render() {
     const {errors} = this.props;
-    let errorsMessage = '';
+    let errorsMessage = null;
 
     if (errors) {
       errorsMessage = (
@@ -55,7 +67,14 @@ class NewCriterion extends React.PureComponent {
                   <Label htmlFor="text-input">Наименование</Label>
                 </Col>
                 <Col xs="12" md="9">
-                  <Input type="textarea" id="name" name="name" rows="5" cols="33" required />
+                  <Input
+                    type="textarea"
+                    id="name"
+                    name="name"
+                    rows="5"
+                    cols="33"
+                    required
+                  />
                 </Col>
               </FormGroup>
             </CardBody>
@@ -71,10 +90,19 @@ class NewCriterion extends React.PureComponent {
   }
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = (state: TState) => {
   return {
     errors: state.criterions.errors,
   };
 };
 
-export const NewCriterionContainer = connect(mapStateToProps)(NewCriterion);
+const mapDispatchToProps = (dispatch: any): IDispatchProps => {
+  return {
+    addCriterion: (form: HTMLFormElement) => dispatch(addCriterion(form)),
+  };
+};
+
+export const NewCriterionContainer = connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(NewCriterion);

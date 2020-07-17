@@ -94,10 +94,14 @@ class NewGroupCriterionList extends React.PureComponent<IProps> {
                   <Input type="text" name="group_criterion_name" required />
                 </Col>
               </FormGroup>
-              <div style={{fontWeight: 600, marginBottom: '20px'}}>
-                Критерии{' '}
-                <ExpandComponent collapse={collapse} toggle={this.toggle} />
-              </div>
+              {criterions?.length > 0 ? (
+                <div style={{fontWeight: 600, marginBottom: '20px'}}>
+                  Критерии{' '}
+                  <ExpandComponent collapse={collapse} toggle={this.toggle} />
+                </div>
+              ) : (
+                <div style={{color: 'red'}}>Добавьте критерий ниже</div>
+              )}
               <Collapse isOpen={collapse}>
                 {criterions.map((criterion, index) => {
                   return (
