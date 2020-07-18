@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\Http\Models\ResearchCategory;
-use App\Http\Models\UserResearches;
+use App\Http\Models\Lmk\ResearchCategory;
+use App\Http\Models\Lmk\Researches;
 use App\Notifications\ActivateAccount;
 use App\User;
 use App\Http\Controllers\Controller;
@@ -76,7 +76,7 @@ class RegisterController extends Controller
         $researchCategories = ResearchCategory::all();
 
         foreach ($researchCategories as $researchCategory) {
-            UserResearches::firstOrCreate([
+            Researches::firstOrCreate([
                 'research_categories_id' => $researchCategory->id,
                 'user_id' => $newUser->id
             ]);

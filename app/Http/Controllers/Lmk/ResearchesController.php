@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Lmk;
 
 use App\Http\Models\Lmk\ResearchCategory;
-use App\Http\Models\Lmk\UserResearches;
+use App\Http\Models\Lmk\Researches;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -20,16 +20,16 @@ class ResearchesController extends Controller
         $researches = $request->research;
         $user = Auth::user();
         $this->authorize('isAdmin', $user);
-        $userResearches = $user->researches;
+        $Researches = $user->researches;
 
-        foreach ($userResearches as $userResearch) {
+        foreach ($Researches as $userResearch) {
             if (!in_array($userResearch->pivot->research_categories_id, $researches)) {
-                UserResearches::destroy($userResearch->pivot->id);
+                Researches::destroy($userResearch->pivot->id);
             }
         }
 
         foreach ($researches as $research) {
-            UserResearches::firstOrCreate([
+            Researches::firstOrCreate([
                 'research_categories_id' => $research,
                 'user_id' => $user->id
             ]);
@@ -52,10 +52,10 @@ class ResearchesController extends Controller
 
         $categoriesId = array_unique($categoriesId);
         $researches = ResearchCategory::all();
-        $userResearches = $userAdmin->researches;
+        $Researches = $userAdmin->researches;
 
         foreach ($researches as $research) {
-            foreach ($userResearches as $userReseach) {
+            foreach ($Researches as $userReseach) {
                 if ($userReseach->pivot->research_categories_id === $research->id) {
                     $research->check = true;
                 }
@@ -65,7 +65,7 @@ class ResearchesController extends Controller
         }
 
         return response()->json([
-            'userResearches' => $researches
+            'Researches' => $researches
         ]);
     }
 }

@@ -1,6 +1,5 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import PropTypes from 'prop-types';
 import {Link} from 'react-router-dom';
 import {
   Table,
@@ -24,7 +23,6 @@ import {IEmployee} from '../../../../interface/lmk/IEmployee';
 import {IEmployeeResearch} from '../../../../interface/lmk/IEmployeeResearch';
 import {IUser} from '../../../../interface/IUser';
 import {TState} from '../../../../reducers';
-import {DateHelper} from '../../../../utils/dateHelper';
 
 interface IStateProps {
   errors: object;
@@ -70,7 +68,7 @@ class EmployeeResearchesComponent extends React.PureComponent<IProps, IState> {
     fetchEmployeeResearches(idEmployee);
   }
 
-  getButtons() {
+  private getButtons() {
     const {employeeId, needForPrint} = this.state;
 
     return (
@@ -92,13 +90,13 @@ class EmployeeResearchesComponent extends React.PureComponent<IProps, IState> {
     );
   }
 
-  addToResearch(event: any) {
+  private addToResearch(event: any) {
     const {needForPrint} = this.state;
 
     needForPrint.set(event.target.value, event.target.checked);
   }
 
-  submitForm = (e: any) => {
+  private submitForm = (e: any) => {
     e.preventDefault();
     const {employeeId} = this.state;
     const {addEmployeeResearches} = this.props;
@@ -107,11 +105,94 @@ class EmployeeResearchesComponent extends React.PureComponent<IProps, IState> {
     return false;
   };
 
+  private getEmployeeResearches = () => {
+    const {employeeResearches, employee} = this.props;
+    const addToResearch = this.addToResearch.bind(this);
+
+    return employeeResearches.map((employeeResearch) => {
+      const isResearchesEnds = Object.values(employee.researches_ends).find(
+        (item: any) =>
+          item.id === employeeResearch.research.id &&
+          !employeeResearch.is_exception,
+      );
+      const isResearchesExpired = Object.values(
+        employee.researches_expired,
+      ).find(
+        (item: any) =>
+          item.id === employeeResearch.research.id &&
+          !employeeResearch.is_exception,
+      );
+
+      const border =
+        isResearchesEnds || isResearchesExpired ? '1px solid red' : '';
+
+      return (
+        <tr key={employeeResearch.id}>
+          <td>
+            <div style={{fontSize: '14px', fontWeight: 600}}>
+              {employeeResearch.research.name}
+            </div>
+            <div
+              style={{
+                fontSize: '12px',
+                fontStyle: 'italic',
+                lineHeight: '24px',
+                fontWeight: 300,
+              }}
+            >
+              {employeeResearch.research.description}
+            </div>
+          </td>
+          <td>
+            <Input
+              type="text"
+              pattern="(\d{1,2})+\.(\d{1,2})+\.(\d{4})"
+              placeHolder="дд.мм.гггг"
+              name={`employeeResearch[${employeeResearch.pivot.id}]`}
+              defaultValue={employeeResearch.date}
+              style={{border, minWidth: '125px'}}
+            />
+          </td>
+          <td
+            style={{
+              textAlign: 'center',
+              borderRight: '1px solid #c2cfd6',
+            }}
+          >
+            <Input
+              type="checkbox"
+              name={`is_current_research[${employeeResearch.research.id}]`}
+              value={employeeResearch.research.id}
+              onChange={addToResearch}
+              style={{
+                width: '18px',
+                height: '18px',
+                margin: 0,
+              }}
+            />
+          </td>
+          <td style={{textAlign: 'center'}}>
+            <Input
+              type="checkbox"
+              name={`is_exception[${employeeResearch.pivot.id}]`}
+              defaultChecked={employeeResearch.is_exception}
+              style={{
+                width: '18px',
+                height: '18px',
+                margin: 0,
+              }}
+            />
+          </td>
+        </tr>
+      );
+    });
+  };
+
   render() {
     const {employeeResearches, errors, employee} = this.props;
     let errorsMessage = null;
 
-    if (!employeeResearches) {
+    if (!employeeResearches || !employee) {
       return null;
     }
 
@@ -122,7 +203,6 @@ class EmployeeResearchesComponent extends React.PureComponent<IProps, IState> {
         </div>
       );
     }
-    const addToResearch = this.addToResearch.bind(this);
 
     return (
       <div className="animated fadeIn">
@@ -160,89 +240,7 @@ class EmployeeResearchesComponent extends React.PureComponent<IProps, IState> {
                         <th>Отвод</th>
                       </tr>
                     </thead>
-                    <tbody>
-                      {employeeResearches.map((employeeResearch) => {
-                        const isResearchesEnds = Object.values(
-                          employee.researches_ends,
-                        ).find(
-                          (item: any) =>
-                            item.id === employeeResearch.research.id &&
-                            !employeeResearch.is_exception,
-                        );
-                        const isResearchesExpired = Object.values(
-                          employee.researches_expired,
-                        ).find(
-                          (item: any) =>
-                            item.id === employeeResearch.research.id &&
-                            !employeeResearch.is_exception,
-                        );
-
-                        const border =
-                          isResearchesEnds || isResearchesExpired
-                            ? '1px solid red'
-                            : '';
-
-                        return (
-                          <tr key={employeeResearch.id}>
-                            <td>
-                              <div style={{fontSize: '14px', fontWeight: 600}}>
-                                {employeeResearch.research.name}
-                              </div>
-                              <div
-                                style={{
-                                  fontSize: '12px',
-                                  fontStyle: 'italic',
-                                  lineHeight: '24px',
-                                  fontWeight: 300,
-                                }}
-                              >
-                                {employeeResearch.research.description}
-                              </div>
-                            </td>
-                            <td>
-                              <Input
-                                type="date"
-                                min="1900-01-01"
-                                max={`${DateHelper.getYear()}-0${DateHelper.getMonth() + 1}-0${DateHelper.getDate()}`}
-                                name={`employeeResearch[${employeeResearch.pivot.id}]`}
-                                defaultValue={employeeResearch.date}
-                                style={{border, minWidth: '125px'}}
-                              />
-                            </td>
-                            <td
-                              style={{
-                                textAlign: 'center',
-                                borderRight: '1px solid #c2cfd6',
-                              }}
-                            >
-                              <Input
-                                type="checkbox"
-                                name={`is_current_research[${employeeResearch.research.id}]`}
-                                value={employeeResearch.research.id}
-                                onChange={addToResearch}
-                                style={{
-                                  width: '18px',
-                                  height: '18px',
-                                  margin: 0,
-                                }}
-                              />
-                            </td>
-                            <td style={{textAlign: 'center'}}>
-                              <Input
-                                type="checkbox"
-                                name={`is_exception[${employeeResearch.pivot.id}]`}
-                                defaultChecked={employeeResearch.is_exception}
-                                style={{
-                                  width: '18px',
-                                  height: '18px',
-                                  margin: 0,
-                                }}
-                              />
-                            </td>
-                          </tr>
-                        );
-                      })}
-                    </tbody>
+                    <tbody>{this.getEmployeeResearches()}</tbody>
                   </Table>
                 </CardBody>
                 <CardFooter>

@@ -10,20 +10,11 @@
     <title>Quality - сервис медицинских книжек</title>
 
     <link href="./vendor/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-    <link href="./vendor/vendor/video.js/video-js.min.css" rel="stylesheet">
     <link href="./vendor/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet">
     <link href="./vendor/vendor/magnific-popup/magnific-popup.css" rel="stylesheet">
     <link href="./vendor/vendor/animate.css/animate.min.css" rel="stylesheet">
     <link href="./vendor/vendor/device-mockups/device-mockups.min.css" rel="stylesheet">
     <link href="./vendor/css/style.min.css" rel="stylesheet">
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-    // TODO в vendor
-    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
-
     <link rel="shortcut icon" href="/favicon.png">
 </head>
 <body id="page-top" data-scroll-animation="true">
@@ -192,14 +183,11 @@
     </div>
 </footer>
 <script src="./vendor/vendor/jquery/jquery.min.js"></script>
-<script src="./vendor/vendor/video.js/video.min.js"></script>
 <script src="./vendor/vendor/bootstrap/js/bootstrap.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script>
 <script src="./vendor/vendor/scrollreveal/scrollreveal.min.js"></script>
 <script src="./vendor/vendor/magnific-popup/jquery.magnific-popup.min.js"></script>
 <script src="./vendor/vendor/svg-injector/svg-injector.min.js"></script>
 <script src="./vendor/vendor/wowjs/wow.min.js"></script>
-
 <script src="./vendor/js/index.min.js"></script>
 </body>
 </html>
