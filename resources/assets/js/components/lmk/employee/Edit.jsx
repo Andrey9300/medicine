@@ -45,7 +45,7 @@ class EditEmployee extends React.PureComponent {
 
   render() {
     const {employee, organizations, categories, errors} = this.props;
-    let errorsMessage = '';
+    let errorsMessage = null;
 
     if (errors) {
       errorsMessage = (

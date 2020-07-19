@@ -262,7 +262,7 @@ class EmployeesController extends Controller
             $dateSave = null;
 
             if ($date) {
-                $dateSave = Carbon::createFromFormat('d.m.Y', $date);
+                $dateSave = Carbon::createFromFormat('d.m.Y', $date)->format('Y-m-d');
             }
 
             if (!is_null($isExceptions) && array_key_exists($key, $isExceptions)) {

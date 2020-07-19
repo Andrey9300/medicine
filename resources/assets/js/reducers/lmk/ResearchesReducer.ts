@@ -67,7 +67,7 @@ export default function reducer(
         ...state,
         error: null,
         fetched: true,
-        userResearches: action.payload.data.userResearches,
+        userResearches: action.payload.data.Researches,
       };
     }
     case 'ADD_USER_RESEARCH_REJECTED': {

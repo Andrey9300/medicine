@@ -4,7 +4,6 @@ import {
 } from '../../../actions/lmk/researchActions';
 import React from 'react';
 import {connect} from 'react-redux';
-import PropTypes from 'prop-types';
 import {Link} from 'react-router-dom';
 import {
   Row,
@@ -18,39 +17,39 @@ import {
   Button,
   Input,
 } from 'reactstrap';
+import {TState} from '../../../reducers';
+import {IUserResearches} from '../../../interface/lmk/IResearch';
 
-class Researches extends React.PureComponent {
-  constructor(props) {
-    super(props);
+interface IStateProps {
+  userResearches: IUserResearches[];
+  errors: any;
+}
 
-    this.toggle = this.toggle.bind(this);
-    this.state = {
-      activeTab: '1',
-    };
-    this.handleClick = this.handleClick.bind(this);
-  }
+interface IDispatchProps {
+  fetchUserResearches: typeof fetchUserResearches;
+  addUserResearches: typeof addUserResearches;
+}
 
+interface IProps extends IStateProps, IDispatchProps {}
+
+class ResearchesComponent extends React.PureComponent<IProps> {
   componentDidMount() {
-    this.props.dispatch(fetchUserResearches());
+    const {fetchUserResearches} = this.props;
+
+    fetchUserResearches();
   }
 
-  toggle(tab) {
-    if (this.state.activeTab !== tab) {
-      this.setState({
-        activeTab: tab,
-      });
-    }
-  }
+  private handleClick = () => {
+    const {addUserResearches} = this.props;
 
-  handleClick() {
-    this.props.dispatch(addUserResearches(document.querySelector('form')));
-  }
+    addUserResearches(document.querySelector('form'));
+  };
 
   render() {
     const {errors, userResearches} = this.props;
-    let errorsMessage = '';
-
-    if (userResearches.length === 0 || userResearches === null) {
+    let errorsMessage = null;
+    console.log(userResearches);
+    if (!userResearches || !userResearches.length) {
       return (
         <div className="animated fadeIn">
           <Row>
@@ -58,7 +57,9 @@ class Researches extends React.PureComponent {
               <Card className="text-center">
                 <CardHeader>Исследований нет</CardHeader>
                 <CardBody>
-                  <Link to={'/services/lmk/employees/create'}>Добавьте сотрудника</Link>
+                  <Link to={'/services/lmk/employees/create'}>
+                    Добавьте сотрудника
+                  </Link>
                   <p>
                     На основе категорий сотрудника будут сформированы
                     необходимые исследования
@@ -117,7 +118,7 @@ class Researches extends React.PureComponent {
                             <Input
                               type="checkbox"
                               name={`research[${research.id}]`}
-                              defaultChecked={research.check ? 'checked' : ''}
+                              defaultChecked={research.check}
                               value={research.id}
                             />
                           </td>
@@ -145,17 +146,21 @@ class Researches extends React.PureComponent {
   }
 }
 
-Researches.propTypes = {
-  dispatch: PropTypes.func.isRequired,
-  userResearches: PropTypes.array.isRequired,
-  errors: PropTypes.array,
-};
-
-const mapStateToProps = (state) => {
+const mapStateToProps = (state: TState) => {
   return {
-    errors: state.researches.errors,
+    errors: state.researches.error,
     userResearches: state.researches.userResearches,
   };
 };
 
-export default connect(mapStateToProps)(Researches);
+const mapDispatchToProps = (dispatch: any): IDispatchProps => {
+  return {
+    fetchUserResearches: () => dispatch(fetchUserResearches()),
+    addUserResearches: () => dispatch(addUserResearches()),
+  };
+};
+
+export const ResearchesContainer = connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(ResearchesComponent);

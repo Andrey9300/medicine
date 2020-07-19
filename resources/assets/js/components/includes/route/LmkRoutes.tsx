@@ -13,7 +13,7 @@ import {NewOrganizationContainer} from '../../lmk/organization/New';
 import OrganizationEmployees from '../../lmk/organization/OrganizationEmployees';
 import OrganizationBudget from '../../lmk/organization/budget/Budget';
 import EditResearch from '../../lmk/research/Edit';
-import Researches from '../../lmk/research/Researches';
+import {ResearchesContainer} from '../../lmk/research/Researches';
 import NewResearch from '../../lmk/research/New';
 import EditEmployee from '../../lmk/employee/Edit';
 import {PrintEmployee} from '../../lmk/employee/printResearch/PrintResearch';
@@ -111,7 +111,7 @@ export class LmkRoutes extends React.PureComponent {
         <Route
           exact
           path="/services/lmk/researches"
-          component={(props: any) => <Researches {...props} />}
+          component={(props: any) => <ResearchesContainer {...props} />}
         />
         <Route
           exact

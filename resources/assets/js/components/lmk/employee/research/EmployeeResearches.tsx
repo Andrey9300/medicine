@@ -147,7 +147,7 @@ class EmployeeResearchesComponent extends React.PureComponent<IProps, IState> {
             <Input
               type="text"
               pattern="(\d{1,2})+\.(\d{1,2})+\.(\d{4})"
-              placeHolder="дд.мм.гггг"
+              placeholder="дд.мм.гггг"
               name={`employeeResearch[${employeeResearch.pivot.id}]`}
               defaultValue={employeeResearch.date}
               style={{border, minWidth: '125px'}}
