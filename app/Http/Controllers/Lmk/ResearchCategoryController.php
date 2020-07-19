@@ -7,9 +7,6 @@ use Illuminate\Http\Request;
 
 class ResearchCategoryController extends Controller
 {
-    /**
-     * @return \Illuminate\Http\JsonResponse
-     */
     public function showAll()
     {
         $researchCategory = ResearchCategory::all();

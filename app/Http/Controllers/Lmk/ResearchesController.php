@@ -9,12 +9,6 @@ use Illuminate\Support\Facades\Auth;
 
 class ResearchesController extends Controller
 {
-    /**
-     * Сохранить исследования выбранные админом
-     *
-     * @param  \Illuminate\Http\Request $request
-     * @throws \Illuminate\Auth\Access\AuthorizationException
-     */
     public function store(Request $request)
     {
         $researches = $request->research;
@@ -36,11 +30,6 @@ class ResearchesController extends Controller
         }
     }
 
-    /**
-     * Вывести все исследования, категории берем из организаций.
-     *
-     * @return \Illuminate\Http\JsonResponse
-     */
     public function showAll()
     {
         $userAdmin = IndexController::findAdmin();

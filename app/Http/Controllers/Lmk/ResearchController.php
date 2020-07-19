@@ -10,12 +10,6 @@ use Illuminate\Support\Facades\Auth;
 
 class ResearchController extends Controller
 {
-    /**
-     * Создать исследование
-     *
-     * @param  \Illuminate\Http\Request $request
-     * @return void
-     */
     public function store(Request $request)
     {
         $research = new Research;
@@ -24,11 +18,6 @@ class ResearchController extends Controller
         $research->save();
     }
 
-    /**
-     * Вывести исследования по категориям
-     *
-     * @return \Illuminate\Http\JsonResponse
-     */
     public function showAll()
     {
         $researches = ResearchCategory::all();
@@ -43,12 +32,6 @@ class ResearchController extends Controller
         ]);
     }
 
-    /**
-     * Показать данные исследования
-     *
-     * @param int $id
-     * @return \Illuminate\Http\JsonResponse
-     */
     public function show($id)
     {
         $research = Research::find($id);
@@ -60,13 +43,6 @@ class ResearchController extends Controller
         ]);
     }
 
-    /**
-     * Обновить исследование
-     *
-     * @param int $id
-     * @param  \Illuminate\Http\Request  $request
-     * @return void
-     */
     public function update(Request $request, $id)
     {
         $research_new = $request->all();
@@ -76,12 +52,6 @@ class ResearchController extends Controller
         $research->save();
     }
 
-    /**
-     * Удалить исследование
-     *
-     * @param int $id
-     * @return void
-     */
     public function destroy($id)
     {
         Research::destroy($id);

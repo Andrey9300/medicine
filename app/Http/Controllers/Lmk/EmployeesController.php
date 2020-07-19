@@ -16,12 +16,6 @@ use Illuminate\Support\Facades\Auth;
 
 class EmployeesController extends Controller
 {
-    /**
-     * Создать сотрудника
-     *
-     * @param StoreEmployee $request
-     * @return void
-     */
     public function store(StoreEmployee $request)
     {
         $date_birthday = Carbon::createFromFormat('d-m-Y', $request->date_birthday)->format('Y-m-d');
@@ -44,13 +38,6 @@ class EmployeesController extends Controller
     public function showAll()
     {
         $user = Auth::user();
-        $organizations_name = [];
-        $organizations = $user->organizations;
-
-        foreach ($organizations as $organization) {
-            array_push($organizations_name, $organization->name);
-        }
-
         $employees = $user->employees;
         $deleted = $user->employees()->onlyTrashed()->get();
         $withoutOrganization = $user->employees()->whereNull('organization_name')->get();
@@ -65,14 +52,7 @@ class EmployeesController extends Controller
     public function showAllWithCheck()
     {
         $user = Auth::user();
-        $organizations_name = [];
-        $organizations = $user->organizations;
         $researches = Research::all();
-
-        foreach ($organizations as $organization) {
-            array_push($organizations_name, $organization->name);
-        }
-
         $employees = $user->employees;
         $deleted = $user->employees()->onlyTrashed()->get();
         $withoutOrganization = $user->employees()->whereNull('organization_name')->get();
@@ -91,15 +71,12 @@ class EmployeesController extends Controller
         ]);
     }
 
-    /**
-     * @param int $id
-     * @return JsonResponse
-     */
     public function show($id)
     {
         $researches = Research::all();
         $employee = Employee::withTrashed()->where('id', $id)->first();
         $organization = $employee->organization;
+        $this->authorize('owner', $organization);
         $this->checkMedicalResearch($employee, $researches);
         $head_exist = false;
 
@@ -136,16 +113,10 @@ class EmployeesController extends Controller
         ]);
     }
 
-    /**
-     * Обновить сотрудника
-     *
-     * @param int $id
-     * @param UpdateEmployee $request
-     * @return void
-     */
     public function update(UpdateEmployee $request, $id)
     {
         $employee = Employee::find($id);
+        $this->authorize('owner', $employee->organization);
         $date_birthday = Carbon::createFromFormat('d-m-Y', $request->date_birthday)->format('Y-m-d');
         $date_employment = Carbon::createFromFormat('d-m-Y', $request->date_employment)->format('Y-m-d');
         $dateStartResearch = $employee->send_to_research;
@@ -167,34 +138,24 @@ class EmployeesController extends Controller
         $employee->save();
     }
 
-    /**
-     * Мягкое удаление сотрудника
-     *
-     * @param int $id
-     * @return void
-     */
     public function softDelete($id)
     {
         $userAdmin = IndexController::findAdmin();
         $employee = $userAdmin->employees->find($id);
+        $this->authorize('owner', $employee->organization);
         $employee->delete();
     }
 
     public function restore($id)
     {
         $employee = Employee::onlyTrashed()->find($id);
+        $this->authorize('owner', $employee->organization);
 
         if (!is_null($employee)) {
             $employee->restore();
         }
     }
 
-    /**
-     * Полное удаление сотрудника
-     *
-     * @param int $id
-     * @throws AuthorizationException
-     */
     public function forceDelete($id)
     {
         $userAdmin = IndexController::findAdmin();
@@ -203,15 +164,10 @@ class EmployeesController extends Controller
         $employee->forceDelete();
     }
 
-    /**
-     * Исследования сотрудника
-     *
-     * @param $id
-     * @return JsonResponse
-     */
     public function researches($id)
     {
         $employee = Employee::withTrashed()->where('id', $id)->first();
+        $this->authorize('owner', $employee->organization);
         $employeeCategoryId = $employee->category_id;
         $userAdmin = IndexController::findAdmin();
         $userResearches = $userAdmin->researches;
@@ -239,13 +195,6 @@ class EmployeesController extends Controller
         ]);
     }
 
-    /**
-     * Обновить или сохранить дату исследований сотрудника
-     *
-     * @param Request $request
-     * @param         $id
-     * @throws AuthorizationException
-     */
     public function researchesStore(Request $request, $id)
     {
         $user = Auth::user();
@@ -254,6 +203,7 @@ class EmployeesController extends Controller
         $isExceptions = $request->is_exception;
 
         $employee = Employee::find($id);
+        $this->authorize('owner', $employee->organization);
         $employee->send_to_research = null;
         $employee->save();
 
@@ -276,12 +226,6 @@ class EmployeesController extends Controller
         }
     }
 
-    /**
-     * Поиск просроченных иследований
-     *
-     * @param $employee
-     * @param $researches
-     */
     public static function checkMedicalResearch($employee, $researches = [])
     {
         $user = Auth::user();

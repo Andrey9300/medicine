@@ -12,12 +12,6 @@ use Illuminate\Support\Facades\Auth;
 
 class HospitalController extends Controller
 {
-    /**
-     * Создать медицинскую организацию
-     *
-     * @param StoreHospital $request
-     * @return void
-     */
     public function store(StoreHospital $request)
     {
         $photo_map = null;
@@ -38,15 +32,9 @@ class HospitalController extends Controller
         $hospital->save();
     }
 
-    /**
-     * Вывести медицинские организации
-     *
-     * @return \Illuminate\Http\JsonResponse
-     */
     public function showAll()
     {
         $userAdmin = IndexController::findAdmin();
-
         $hospitals = $userAdmin->hospitals;
 
         foreach ($hospitals as $hospital) {
@@ -56,20 +44,15 @@ class HospitalController extends Controller
         }
 
         return response()->json([
-            'hospitals' => $userAdmin->hospitals
+            'hospitals' => $hospitals
         ]);
     }
 
-    /**
-     * Показать медицинскую организацию
-     *
-     * @param int $id
-     * @return \Illuminate\Http\JsonResponse
-     */
     public function show($id)
     {
         $userAdmin = IndexController::findAdmin();
         $hospital = $userAdmin->hospitals->find($id);
+        $this->authorize('isAdminAndOwner', $hospital);
 
         if (Storage::disk('local')->exists($hospital->photo_map)) {
             $hospital->photo_map = Storage::url($hospital->photo_map);
@@ -80,16 +63,11 @@ class HospitalController extends Controller
         ]);
     }
 
-    /**
-     * Обновить медицинскиую организацию
-     *
-     * @param UpdateHospital $request
-     * @param                $id
-     */
     public function update(UpdateHospital $request, $id)
     {
         $hospital_new = $request->all();
         $hospital = Hospital::find($id);
+        $this->authorize('isAdminAndOwner', $hospital);
         $path = $hospital->photo_map;
 
         if (!is_null($request->file('photo_map'))) {
@@ -105,12 +83,6 @@ class HospitalController extends Controller
         $hospital->save();
     }
 
-    /**
-     * Удалить медицинскиую организацию
-     *
-     * @param int $id
-     * @throws \Illuminate\Auth\Access\AuthorizationException
-     */
     public function destroy($id)
     {
         $user = Auth::user();
@@ -119,12 +91,6 @@ class HospitalController extends Controller
         $hospital->destroy($id);
     }
 
-    /**
-     * Цены на исследования
-     *
-     * @param $id - hospital_id
-     * @return \Illuminate\Http\JsonResponse
-     */
     public function researches($id) {
         $userAdmin = IndexController::findAdmin();
         $userResearches = $userAdmin->researches;
@@ -144,13 +110,6 @@ class HospitalController extends Controller
         ]);
     }
 
-    /**
-     * Обновить или сохранить цены на исследований
-     *
-     * @param Request $request
-     * @param         $id
-     * @throws \Illuminate\Auth\Access\AuthorizationException
-     */
     public function researchesStore(Request $request, $id) {
         $user = Auth::user();
         $this->authorize('isAdmin', $user);

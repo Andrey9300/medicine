@@ -3,7 +3,7 @@
 namespace App\Policies;
 
 use App\User;
-use App\Http\Models\Employee;
+use App\Http\Models\Lmk\Employee;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
 class EmployeePolicy

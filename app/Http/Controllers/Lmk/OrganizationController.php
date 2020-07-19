@@ -11,12 +11,6 @@ use Illuminate\Support\Facades\Auth;
 
 class OrganizationController extends Controller
 {
-    /**
-     * Создать организацию
-     *
-     * @param StoreOrganization $request
-     * @return \Response
-     */
     public function store(StoreOrganization $request)
     {
         $currentUser = Auth::user();
@@ -64,9 +58,6 @@ class OrganizationController extends Controller
         return response('Ok', 200);
     }
 
-    /**
-     * @return \Illuminate\Http\JsonResponse
-     */
     public function showAll()
     {
         $user = Auth::user();
@@ -97,9 +88,6 @@ class OrganizationController extends Controller
         ]);
     }
 
-    /**
-     * @return \Illuminate\Http\JsonResponse
-     */
     public function expired()
     {
         // TODO будет еще endsEmployees, нужно объединить или дополнить showAll
@@ -150,22 +138,16 @@ class OrganizationController extends Controller
         ]);
     }
 
-    /**
-     * Получить данные организации
-     *
-     * @param $id
-     * @return \Illuminate\Http\JsonResponse
-     * @throws \Illuminate\Auth\Access\AuthorizationException
-     */
     public function show($id)
     {
+        $user = Auth::user();
         $organization = Organization::find($id);
         $this->authorize('owner', $organization);
         $organization->category;
         $head_exist = false;
         $organization->totalSumForCompletedResearches = 0;
         $organization->totalSumForResearches = 0;
-        $user = Auth::user();
+
         $organization->employees;
         $userHospitalResearches = HospitalResearch::whereIn('user_researches_id', $user->researches)->get();
 
@@ -198,6 +180,7 @@ class OrganizationController extends Controller
     public function employeesWithCheck($id)
     {
         $organization = Organization::find($id);
+        $this->authorize('owner', $organization);
         $employees = $organization->employees;
         $researches = Research::all();
 
@@ -213,6 +196,7 @@ class OrganizationController extends Controller
     public function showTrashedEmployees($id)
     {
         $organization = Organization::find($id);
+        $this->authorize('owner', $organization);
         $trashedEmployees = $organization->employees()->onlyTrashed()->get();
         $researches = Research::all();
 
@@ -225,17 +209,11 @@ class OrganizationController extends Controller
         ]);
     }
 
-    /**
-     * Обновить организацию
-     *
-     * @param UpdateOrganization $request
-     * @param                    $id
-     * @return \Response
-     */
     public function update(UpdateOrganization $request, $id)
     {
         $organization_new = $request->all();
         $organization = Organization::find($id);
+        $this->authorize('owner', $organization);
         $organization->category_id = $organization_new['category_id'];
         $organization->head_position = $organization_new['head_position'];
         $organization->head_phone = $organization_new['head_phone'];
@@ -281,12 +259,6 @@ class OrganizationController extends Controller
         return response('Ок', 200);
     }
 
-    /**
-     * Удалить организацию
-     *
-     * @param int $id
-     * @throws \Illuminate\Auth\Access\AuthorizationException
-     */
     public function destroy($id)
     {
         $organization = Organization::find($id);
