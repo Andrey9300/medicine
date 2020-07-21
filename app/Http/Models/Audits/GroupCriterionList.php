@@ -10,7 +10,5 @@ class GroupCriterionList extends Model
 
     protected $table = 'audits_group_criterion_list';
 
-    protected $fillable = [
-        'group_criterion_id', 'criterions_criterion_id', 'user_id'
-    ];
+    protected $fillable = ['group_criterion_id', 'criterions_criterion_id'];
 }

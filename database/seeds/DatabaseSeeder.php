@@ -16,6 +16,7 @@ class DatabaseSeeder extends Seeder
         $this->call(EmployeesTableSeeder::class);
         $this->call(HospitalsTableSeeder::class);
         $this->call(UsersResearchesTableSeeder::class);
+
         $this->call(AuditsCriterionsTableSeeder::class);
         $this->call(AuditsUnitsTableSeeder::class);
         $this->call(AuditsLocationsTableSeeder::class);
@@ -23,5 +24,13 @@ class DatabaseSeeder extends Seeder
         $this->call(AuditsGroupCriterionTableSeeder::class);
         $this->call(AuditsGroupCriterionListTableSeeder::class);
         $this->call(AuditsCriterionListsTableSeeder::class);
+
+        $this->call(UserGroupCriterionListTableSeeder::class);
+        $this->call(UserCriterionListsTableSeeder::class);
+        $this->call(UserGroupCriterionTableSeeder::class);
+
+        $this->call(UserCriterionsTableSeeder::class);
+
+        $this->call(UserUnitsTableSeeder::class);
     }
 }

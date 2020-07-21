@@ -16,8 +16,9 @@ class UnitController extends Controller
 
         $unit = new Units;
         $unit->name = $request->name;
-        $unit->user_id = $currentUser->id;
         $unit->save();
+
+        $currentUser->units()->attach($unit);
     }
 
     public function showAll()
@@ -51,6 +52,9 @@ class UnitController extends Controller
     {
         $currentUser = Auth::user();
         $unit = $currentUser->unit($id)->first();
+
+        $this->authorize('owner', $unit);
+
         $unit->name = $request->name;
         $unit->save();
     }

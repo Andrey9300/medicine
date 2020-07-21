@@ -12,7 +12,6 @@ class AuditsCriterionListsTableSeeder extends Seeder
             'location_id' => 1,
             'place_id' => 1,
             'group_criterion_id' => 2,
-            'user_id' => 1,
         ]);
         DB::table('audits_criterion_lists')->insert([
             'id' => 5,
@@ -20,7 +19,6 @@ class AuditsCriterionListsTableSeeder extends Seeder
             'location_id' => 1,
             'place_id' => 2,
             'group_criterion_id' => 2,
-            'user_id' => 1,
         ]);
         DB::table('audits_criterion_lists')->insert([
             'id' => 6,
@@ -28,7 +26,6 @@ class AuditsCriterionListsTableSeeder extends Seeder
             'location_id' => 1,
             'place_id' => 3,
             'group_criterion_id' => 2,
-            'user_id' => 1,
         ]);
         DB::table('audits_criterion_lists')->insert([
             'id' => 7,
@@ -36,7 +33,6 @@ class AuditsCriterionListsTableSeeder extends Seeder
             'location_id' => 1,
             'place_id' => 26,
             'group_criterion_id' => 3,
-            'user_id' => 1,
         ]);
         DB::table('audits_criterion_lists')->insert([
             'id' => 8,
@@ -44,7 +40,6 @@ class AuditsCriterionListsTableSeeder extends Seeder
             'location_id' => 1,
             'place_id' => 27,
             'group_criterion_id' => 3,
-            'user_id' => 1,
         ]);
         DB::table('audits_criterion_lists')->insert([
             'id' => 9,
@@ -52,7 +47,6 @@ class AuditsCriterionListsTableSeeder extends Seeder
             'location_id' => 1,
             'place_id' => 28,
             'group_criterion_id' => 4,
-            'user_id' => 1,
         ]);
         DB::table('audits_criterion_lists')->insert([
             'id' => 10,
@@ -60,7 +54,6 @@ class AuditsCriterionListsTableSeeder extends Seeder
             'location_id' => 2,
             'place_id' => 4,
             'group_criterion_id' => 2,
-            'user_id' => 1,
         ]);
         DB::table('audits_criterion_lists')->insert([
             'id' => 11,
@@ -68,7 +61,6 @@ class AuditsCriterionListsTableSeeder extends Seeder
             'location_id' => 2,
             'place_id' => 5,
             'group_criterion_id' => 2,
-            'user_id' => 1,
         ]);
         DB::table('audits_criterion_lists')->insert([
             'id' => 12,
@@ -76,7 +68,6 @@ class AuditsCriterionListsTableSeeder extends Seeder
             'location_id' => 2,
             'place_id' => 26,
             'group_criterion_id' => 3,
-            'user_id' => 1,
         ]);
         DB::table('audits_criterion_lists')->insert([
             'id' => 13,
@@ -84,7 +75,6 @@ class AuditsCriterionListsTableSeeder extends Seeder
             'location_id' => 2,
             'place_id' => 27,
             'group_criterion_id' => 3,
-            'user_id' => 1,
         ]);
         DB::table('audits_criterion_lists')->insert([
             'id' => 14,
@@ -92,7 +82,6 @@ class AuditsCriterionListsTableSeeder extends Seeder
             'location_id' => 3,
             'place_id' => 1,
             'group_criterion_id' => 2,
-            'user_id' => 1,
         ]);
         DB::table('audits_criterion_lists')->insert([
             'id' => 15,
@@ -100,7 +89,6 @@ class AuditsCriterionListsTableSeeder extends Seeder
             'location_id' => 3,
             'place_id' => 2,
             'group_criterion_id' => 2,
-            'user_id' => 1,
         ]);
         DB::table('audits_criterion_lists')->insert([
             'id' => 16,
@@ -108,7 +96,6 @@ class AuditsCriterionListsTableSeeder extends Seeder
             'location_id' => 3,
             'place_id' => 26,
             'group_criterion_id' => 3,
-            'user_id' => 1,
         ]);
         DB::table('audits_criterion_lists')->insert([
             'id' => 17,
@@ -116,7 +103,6 @@ class AuditsCriterionListsTableSeeder extends Seeder
             'location_id' => 3,
             'place_id' => 27,
             'group_criterion_id' => 3,
-            'user_id' => 1,
         ]);
         DB::table('audits_criterion_lists')->insert([
             'id' => 18,
@@ -124,7 +110,6 @@ class AuditsCriterionListsTableSeeder extends Seeder
             'location_id' => 4,
             'place_id' => 6,
             'group_criterion_id' => 2,
-            'user_id' => 1,
         ]);
         DB::table('audits_criterion_lists')->insert([
             'id' => 19,
@@ -132,7 +117,6 @@ class AuditsCriterionListsTableSeeder extends Seeder
             'location_id' => 4,
             'place_id' => 26,
             'group_criterion_id' => 3,
-            'user_id' => 1,
         ]);
         DB::table('audits_criterion_lists')->insert([
             'id' => 20,
@@ -140,7 +124,6 @@ class AuditsCriterionListsTableSeeder extends Seeder
             'location_id' => 4,
             'place_id' => 27,
             'group_criterion_id' => 3,
-            'user_id' => 1,
         ]);
         DB::table('audits_criterion_lists')->insert([
             'id' => 21,
@@ -148,7 +131,6 @@ class AuditsCriterionListsTableSeeder extends Seeder
             'location_id' => 5,
             'place_id' => 7,
             'group_criterion_id' => 2,
-            'user_id' => 1,
         ]);
         DB::table('audits_criterion_lists')->insert([
             'id' => 22,
@@ -156,7 +138,6 @@ class AuditsCriterionListsTableSeeder extends Seeder
             'location_id' => 5,
             'place_id' => 8,
             'group_criterion_id' => 2,
-            'user_id' => 1,
         ]);
         DB::table('audits_criterion_lists')->insert([
             'id' => 23,
@@ -164,7 +145,6 @@ class AuditsCriterionListsTableSeeder extends Seeder
             'location_id' => 5,
             'place_id' => 9,
             'group_criterion_id' => 2,
-            'user_id' => 1,
         ]);
         DB::table('audits_criterion_lists')->insert([
             'id' => 24,
@@ -172,7 +152,6 @@ class AuditsCriterionListsTableSeeder extends Seeder
             'location_id' => 5,
             'place_id' => 10,
             'group_criterion_id' => 2,
-            'user_id' => 1,
         ]);
         DB::table('audits_criterion_lists')->insert([
             'id' => 25,
@@ -180,7 +159,6 @@ class AuditsCriterionListsTableSeeder extends Seeder
             'location_id' => 5,
             'place_id' => 11,
             'group_criterion_id' => 5,
-            'user_id' => 1,
         ]);
         DB::table('audits_criterion_lists')->insert([
             'id' => 26,
@@ -188,7 +166,6 @@ class AuditsCriterionListsTableSeeder extends Seeder
             'location_id' => 7,
             'place_id' => 15,
             'group_criterion_id' => 2,
-            'user_id' => 1,
         ]);
         DB::table('audits_criterion_lists')->insert([
             'id' => 27,
@@ -196,7 +173,6 @@ class AuditsCriterionListsTableSeeder extends Seeder
             'location_id' => 18,
             'place_id' => 15,
             'group_criterion_id' => 2,
-            'user_id' => 1,
         ]);
         DB::table('audits_criterion_lists')->insert([
             'id' => 28,
@@ -204,7 +180,6 @@ class AuditsCriterionListsTableSeeder extends Seeder
             'location_id' => 8,
             'place_id' => 15,
             'group_criterion_id' => 2,
-            'user_id' => 1,
         ]);
         DB::table('audits_criterion_lists')->insert([
             'id' => 29,
@@ -212,7 +187,6 @@ class AuditsCriterionListsTableSeeder extends Seeder
             'location_id' => 9,
             'place_id' => 15,
             'group_criterion_id' => 2,
-            'user_id' => 1,
         ]);
         DB::table('audits_criterion_lists')->insert([
             'id' => 30,
@@ -220,7 +194,6 @@ class AuditsCriterionListsTableSeeder extends Seeder
             'location_id' => 10,
             'place_id' => 15,
             'group_criterion_id' => 2,
-            'user_id' => 1,
         ]);
         DB::table('audits_criterion_lists')->insert([
             'id' => 31,
@@ -228,7 +201,6 @@ class AuditsCriterionListsTableSeeder extends Seeder
             'location_id' => 11,
             'place_id' => 18,
             'group_criterion_id' => 4,
-            'user_id' => 1,
         ]);
         DB::table('audits_criterion_lists')->insert([
             'id' => 32,
@@ -236,7 +208,6 @@ class AuditsCriterionListsTableSeeder extends Seeder
             'location_id' => 12,
             'place_id' => 20,
             'group_criterion_id' => 5,
-            'user_id' => 1,
         ]);
         DB::table('audits_criterion_lists')->insert([
             'id' => 33,
@@ -244,7 +215,6 @@ class AuditsCriterionListsTableSeeder extends Seeder
             'location_id' => 14,
             'place_id' => 17,
             'group_criterion_id' => 4,
-            'user_id' => 1,
         ]);
         DB::table('audits_criterion_lists')->insert([
             'id' => 34,
@@ -252,7 +222,6 @@ class AuditsCriterionListsTableSeeder extends Seeder
             'location_id' => 14,
             'place_id' => 18,
             'group_criterion_id' => 4,
-            'user_id' => 1,
         ]);
         DB::table('audits_criterion_lists')->insert([
             'id' => 35,
@@ -260,7 +229,6 @@ class AuditsCriterionListsTableSeeder extends Seeder
             'location_id' => 15,
             'place_id' => 19,
             'group_criterion_id' => 5,
-            'user_id' => 1,
         ]);
         DB::table('audits_criterion_lists')->insert([
             'id' => 36,
@@ -268,7 +236,6 @@ class AuditsCriterionListsTableSeeder extends Seeder
             'location_id' => 15,
             'place_id' => 20,
             'group_criterion_id' => 5,
-            'user_id' => 1,
         ]);
         DB::table('audits_criterion_lists')->insert([
             'id' => 37,
@@ -276,7 +243,6 @@ class AuditsCriterionListsTableSeeder extends Seeder
             'location_id' => 15,
             'place_id' => 21,
             'group_criterion_id' => 5,
-            'user_id' => 1,
         ]);
         DB::table('audits_criterion_lists')->insert([
             'id' => 38,
@@ -284,7 +250,6 @@ class AuditsCriterionListsTableSeeder extends Seeder
             'location_id' => 16,
             'place_id' => 22,
             'group_criterion_id' => 4,
-            'user_id' => 1,
         ]);
         DB::table('audits_criterion_lists')->insert([
             'id' => 39,
@@ -292,7 +257,6 @@ class AuditsCriterionListsTableSeeder extends Seeder
             'location_id' => 16,
             'place_id' => 23,
             'group_criterion_id' => 4,
-            'user_id' => 1,
         ]);
         DB::table('audits_criterion_lists')->insert([
             'id' => 41,
@@ -300,7 +264,6 @@ class AuditsCriterionListsTableSeeder extends Seeder
             'location_id' => 17,
             'place_id' => 24,
             'group_criterion_id' => 4,
-            'user_id' => 1,
         ]);
         DB::table('audits_criterion_lists')->insert([
             'id' => 42,
@@ -308,7 +271,6 @@ class AuditsCriterionListsTableSeeder extends Seeder
             'location_id' => 17,
             'place_id' => 25,
             'group_criterion_id' => 4,
-            'user_id' => 1,
         ]);
     }
 }

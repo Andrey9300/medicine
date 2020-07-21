@@ -65,17 +65,17 @@ class User extends Authenticatable
 
     public function criterions()
     {
-        return $this->hasMany('App\Http\Models\Audits\Criterions');
+        return $this->belongsToMany('App\Http\Models\Audits\Criterions',  'user_criterions', 'user_id', 'criterion_id');
     }
 
     public function criterion($id)
     {
-        return $this->hasOne('App\Http\Models\Audits\Criterions')->where('id', '=', $id);
+        return $this->belongsToMany('App\Http\Models\Audits\Criterions',  'user_criterions', 'user_id', 'criterion_id')->where('id', '=', $id);
     }
 
     public function units()
     {
-        return $this->hasMany('App\Http\Models\Audits\Units');
+        return $this->belongsToMany('App\Http\Models\Audits\Units', 'user_units', 'user_id', 'unit_id');
     }
 
     public function unit($id)
@@ -85,7 +85,7 @@ class User extends Authenticatable
 
     public function criterionLists()
     {
-        return $this->hasMany('App\Http\Models\Audits\CriterionList');
+        return $this->belongsToMany('App\Http\Models\Audits\CriterionList', 'user_criterion_lists', 'user_id', 'lists_id');
     }
 
     public function criterionList($id)
@@ -95,7 +95,7 @@ class User extends Authenticatable
 
     public function groupCriterions()
     {
-        return $this->hasMany('App\Http\Models\Audits\GroupCriterion');
+        return $this->belongsToMany('App\Http\Models\Audits\GroupCriterion', 'user_group_criterion', 'user_id', 'group_criterion_id');
     }
 
     public function groupCriterion($id)
@@ -105,11 +105,21 @@ class User extends Authenticatable
 
     public function groupCriterionLists()
     {
-        return $this->hasMany('App\Http\Models\Audits\GroupCriterionList');
+        return $this->belongsToMany('App\Http\Models\Audits\GroupCriterionList', 'user_group_criterion_list', 'user_id', 'group_criterion_list_id');
     }
 
     public function groupCriterionList($id)
     {
-        return $this->hasOne('App\Http\Models\Audits\GroupCriterionList')->where('id', '=', $id);
+        return $this->belongsToMany('App\Http\Models\Audits\GroupCriterionList', 'user_group_criterion_list', 'user_id', 'group_criterion_list_id')->where('id', '=', $id);
+    }
+
+    public function placeCheckLists()
+    {
+        return $this->belongsToMany('App\Http\Models\Audits\PlaceCheckLists', 'user_place_check_lists', 'user_id', 'lists_id');
+    }
+
+    public function placeCheckListCriterion()
+    {
+        return $this->belongsToMany('App\Http\Models\Audits\PlaceCheckListCriterion', 'user_place_check_list_criterion', 'user_id', 'list_id');
     }
 }

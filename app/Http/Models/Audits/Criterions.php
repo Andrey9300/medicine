@@ -10,7 +10,5 @@ class Criterions extends Model
 
     protected $table = 'audits_criterions';
 
-    protected $fillable = [
-        'name', 'user_id'
-    ];
+    protected $fillable = ['name'];
 }

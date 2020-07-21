@@ -10,7 +10,10 @@ class GroupCriterion extends Model
 
     protected $table = 'audits_group_criterion';
 
-    protected $fillable = [
-        'name', 'user_id'
-    ];
+    protected $fillable = ['name'];
+
+    public function users()
+    {
+        return $this->belongsToMany('App\User', 'user_group_criterion');
+    }
 }

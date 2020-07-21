@@ -20,8 +20,6 @@ class CreateAuditsCriterionListsTable extends Migration
             $table->foreign('place_id')->references('id')->on('audits_places')->onDelete('cascade');
             $table->integer('group_criterion_id')->unsigned();
             $table->foreign('group_criterion_id')->references('id')->on('audits_group_criterion')->onDelete('cascade');
-            $table->integer('user_id')->unsigned();
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
 

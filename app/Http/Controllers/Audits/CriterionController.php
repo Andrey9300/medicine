@@ -14,8 +14,9 @@ class CriterionController extends Controller
 
         $criterion = new Criterions;
         $criterion->name = $request->name;
-        $criterion->user_id = $currentUser->id;
         $criterion->save();
+
+        $currentUser->criterions()->attach($criterion);
     }
 
     public function showAll()
@@ -30,16 +31,17 @@ class CriterionController extends Controller
     public function show($id)
     {
         $currentUser = Auth::user();
+        $criterion = $currentUser->criterions()->get()->where('id', $id)->first();
 
         return response()->json([
-            'criterion' => $currentUser->criterion($id)->first()
+            'criterion' => $criterion
         ]);
     }
 
     public function update(Request $request, $id)
     {
         $currentUser = Auth::user();
-        $criterion = $currentUser->criterion($id)->first();
+        $criterion = $currentUser->criterions()->get()->where('id', $id)->first();
         $criterion->name = $request->name;
         $criterion->save();
     }
@@ -47,7 +49,7 @@ class CriterionController extends Controller
     public function destroy($id)
     {
         $currentUser = Auth::user();
-        $criterion = $currentUser->criterion($id)->first();
+        $criterion = $currentUser->criterions()->get()->where('id', $id)->first();
         $criterion::destroy();
     }
 }

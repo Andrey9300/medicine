@@ -15,8 +15,6 @@ class CreateAuditsPlaceCheckListCriterionTable extends Migration
             $table->foreign('place_check_lists_id')->references('id')->on('audits_place_check_lists')->onDelete('cascade');
             $table->integer('criterions_id')->unsigned();
             $table->foreign('criterions_id')->references('id')->on('audits_criterions')->onDelete('cascade');
-            $table->integer('user_id')->unsigned();
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->enum('mark', [3, 2, 1, 0]); // 3 - A, 2 - B, 1 - C, 0 - N
             $table->string('comment_from_auditor', 5000)->nullable();
             $table->string('comment_at_auditor', 5000)->nullable();

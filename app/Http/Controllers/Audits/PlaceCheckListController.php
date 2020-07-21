@@ -28,8 +28,9 @@ class PlaceCheckListController extends Controller
         $placeCheckLists->criterion_lists_id = $placeCheckList->id;
         $placeCheckLists->created_at = date('Y-m-d', time());
         $placeCheckLists->sended = false;
-        $placeCheckLists->user_id = $currentUser->id;
         $placeCheckLists->save();
+
+        $currentUser->placeCheckLists()->attach($placeCheckLists);
 
         foreach ($criterionIds as $key => $value) {
             $placeCheckListCriterion = new PlaceCheckListCriterion;
@@ -37,8 +38,9 @@ class PlaceCheckListController extends Controller
             $placeCheckListCriterion->criterions_id = $value;
             $placeCheckListCriterion->mark = $marks[$key];
             $placeCheckListCriterion->comment_from_auditor = $comments[$key];
-            $placeCheckListCriterion->user_id = $currentUser->id;
             $placeCheckListCriterion->save();
+
+            $currentUser->placeCheckListCriterion()->attach($placeCheckListCriterion);
         }
     }
 
@@ -53,25 +55,27 @@ class PlaceCheckListController extends Controller
 
     public function show($id)
     {
-        $currentUser = Auth::user();
         $placeCheckList = CriterionList::where('place_id', '=', $id)->first();
 
-        if (!$placeCheckList || $placeCheckList->user_id !== $currentUser->id) {
-            return response()->json([
-                'errors' => 'error'
-            ]);
+        $this->authorize('owner', $placeCheckList);
+
+        $placeCheckLists = PlaceCheckLists::where('criterion_lists_id', '=', $placeCheckList->id)->get();
+
+        if ($placeCheckLists && count($placeCheckLists)) {
+            foreach ($placeCheckLists as $checkList) {
+                $this->authorize('owner', $checkList);
+            }
         }
+
+        $groupCriterion = GroupCriterion::find($placeCheckList->group_criterion_id);
+
+        $this->authorize('owner', $groupCriterion);
 
         $placeCheckList->unit = Units::find($placeCheckList->unit_id);
         $placeCheckList->location = Location::find($placeCheckList->location_id);
         $placeCheckList->place = Place::find($placeCheckList->place_id);
-        $placeCheckList->groupCriterion = GroupCriterion::find($placeCheckList->group_criterion_id);
-        $placeCheckList->checkLists = PlaceCheckLists::where(
-            [
-                ['criterion_lists_id', '=', $placeCheckList->id],
-                ['user_id', '=', $currentUser->id],
-            ]
-        )->get();
+        $placeCheckList->groupCriterion = $groupCriterion;
+        $placeCheckList->checkLists = $placeCheckLists;
 
         if (!$placeCheckList->groupCriterion) {
             return response()->json([
@@ -95,15 +99,11 @@ class PlaceCheckListController extends Controller
 
     public function criterions($id)
     {
-        $currentUser = Auth::user();
-        $placeCheckListCriterions = PlaceCheckListCriterion::where(
-            [
-                ['place_check_lists_id', '=', $id],
-                ['user_id', '=', $currentUser->id],
-            ]
-        )->get();
+        $placeCheckListCriterions = PlaceCheckListCriterion::where('place_check_lists_id', $id)->get();
 
         foreach ($placeCheckListCriterions as $placeCheckListCriterion) {
+            $this->authorize('owner', $placeCheckListCriterion);
+
             $placeCheckListCriterion->criterion = Criterions::find($placeCheckListCriterion->criterions_id);
         }
 
@@ -114,7 +114,6 @@ class PlaceCheckListController extends Controller
 
     public function update(Request $request, $id)
     {
-        $currentUser = Auth::user();
         $placeCheckListCriterionIds = $request->placeCheckListCriterion;
         $marks = $request->mark;
         $commentsFromAuditor = $request->comment_from_auditor;
@@ -124,9 +123,7 @@ class PlaceCheckListController extends Controller
         foreach ($placeCheckListCriterionIds as $key => $value) {
             $criterion = $currentCriterions->find($key);
 
-            if ($criterion->user_id !== $currentUser->id) {
-                return;
-            }
+            $this->authorize('owner', $criterion);
 
             $criterion->mark = $marks[$key];
             $criterion->comment_from_auditor = $commentsFromAuditor[$key];

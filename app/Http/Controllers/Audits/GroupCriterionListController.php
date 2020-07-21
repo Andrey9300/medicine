@@ -20,15 +20,17 @@ class GroupCriterionListController extends Controller
 
         $groupCriterion = GroupCriterion::firstOrCreate([
             'name' => $request->group_criterion_name,
-            'user_id' => $currentUser->id
         ]);
 
+        $currentUser->groupCriterions()->attach($groupCriterion);
+
         foreach ($criterions as $criterion) {
-            GroupCriterionList::firstOrCreate([
+            $groupCriterionList = GroupCriterionList::firstOrCreate([
                 'group_criterion_id' => $groupCriterion->id,
                 'criterions_criterion_id' => $criterion,
-                'user_id' => $currentUser->id
             ]);
+
+            $currentUser->groupCriterionLists()->attach($groupCriterionList);
         }
     }
 
@@ -52,9 +54,10 @@ class GroupCriterionListController extends Controller
     public function show($id)
     {
         $currentUser = Auth::user();
+        $groupCriterionList = $currentUser->groupCriterionLists()->get()->where('id', $id)->first();
 
         return response()->json([
-            'groupCriterionList' => $currentUser->groupCriterionList($id)->first()
+            'groupCriterionList' => $groupCriterionList
         ]);
     }
 

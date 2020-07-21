@@ -12,10 +12,11 @@ class GroupCriterionController extends Controller
     {
         $currentUser = Auth::user();
 
-        $groupCriterion = new GroupCriterion();
+        $groupCriterion = new GroupCriterion;
         $groupCriterion->name = $request->name;
-        $groupCriterion->user_id = $currentUser->id;
         $groupCriterion->save();
+
+        $currentUser->groupCriterions()->attach($groupCriterion);
     }
 
     public function showAll()

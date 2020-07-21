@@ -11,8 +11,6 @@ class CreateAuditsGroupCriterionTable extends Migration
         Schema::create('audits_group_criterion', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
-            $table->integer('user_id')->unsigned();
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
 

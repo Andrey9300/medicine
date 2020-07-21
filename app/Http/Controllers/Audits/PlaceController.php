@@ -16,12 +16,7 @@ class PlaceController extends Controller
         $currentUser = Auth::user();
         $location = Location::find($request->locationId);
         $unit = Units::find($location->unit_id);
-
-        if (!$location || $unit->user_id !== $currentUser->id) {
-            return response()->json([
-                'errors' => 'error'
-            ]);
-        }
+        $this->authorize('owner', $unit);
 
         $place = new Place;
         $place->name = $request->name;
@@ -32,13 +27,14 @@ class PlaceController extends Controller
             return null;
         }
 
-        $userCriterionList = new CriterionList;
-        $userCriterionList->unit_id = $unit->id;
-        $userCriterionList->location_id = $location->id;
-        $userCriterionList->place_id = $place->id;
-        $userCriterionList->group_criterion_id = $request->group_criterion_id;
-        $userCriterionList->user_id = $currentUser->id;
-        $userCriterionList->save();
+        $criterionList = new CriterionList;
+        $criterionList->unit_id = $unit->id;
+        $criterionList->location_id = $location->id;
+        $criterionList->place_id = $place->id;
+        $criterionList->group_criterion_id = $request->group_criterion_id;
+        $criterionList->save();
+
+        $currentUser->criterionLists()->attach($criterionList);
     }
 
     public function showAll()
@@ -52,17 +48,10 @@ class PlaceController extends Controller
 
     public function show($id)
     {
-        $currentUser = Auth::user();
         $place = Place::find($id);
         $location = Location::find($place->location_id);
         $unit = Units::find($location->unit_id);
-
-        if (!$unit || $unit->user_id !== $currentUser->id) {
-            return response()->json([
-                'errors' => 'error'
-            ]);
-        }
-
+        $this->authorize('owner', $unit);
         $place->location = $location;
         $place->unit = $unit;
 
@@ -78,11 +67,7 @@ class PlaceController extends Controller
         $location = Location::find($place->location_id);
         $unit = Units::find($location->unit_id);
 
-        if (!$unit || $unit->user_id !== $currentUser->id) {
-            return response()->json([
-                'errors' => 'error'
-            ]);
-        }
+        $this->authorize('owner', $unit);
 
         $place->name = $request->name;
         $place->save();
@@ -91,19 +76,25 @@ class PlaceController extends Controller
             return null;
         }
 
-        $userCriterionList = new CriterionList;
-        $userCriterionList->unit_id = $unit->id;
-        $userCriterionList->location_id = $location->id;
-        $userCriterionList->place_id = $place->id;
-        $userCriterionList->group_criterion_id = $request->group_criterion_id;
-        $userCriterionList->user_id = $currentUser->id;
-        $userCriterionList->save();
+        $criterionList = new CriterionList;
+        $criterionList->unit_id = $unit->id;
+        $criterionList->location_id = $location->id;
+        $criterionList->place_id = $place->id;
+        $criterionList->group_criterion_id = $request->group_criterion_id;
+        $criterionList->save();
+
+
+        $currentUser->criterionLists()->attach($criterionList);
     }
 
     public function destroy($id)
     {
-        $currentUser = Auth::user();
-        $place = $currentUser->place($id)->first();
+        $place = Place::find($id);
+        $location = Location::find($place->location_id);
+        $unit = Units::find($location->unit_id);
+
+        $this->authorize('owner', $unit);
+
         $place::destroy();
     }
 }

@@ -11,14 +11,9 @@ class LocationController extends Controller
 {
     public function store(Request $request)
     {
-        $currentUser = Auth::user();
         $unit = Units::find($request->unitId);
 
-        if (!$unit || $unit->user_id !== $currentUser->id) {
-            return response()->json([
-                'errors' => 'error'
-            ]);
-        }
+        $this->authorize('owner', $unit);
 
         $location = new Location;
         $location->name = $request->name;
@@ -37,15 +32,9 @@ class LocationController extends Controller
 
     public function show($id)
     {
-        $currentUser = Auth::user();
         $location = Location::find($id);
         $unit = Units::find($location->unit_id);
-
-        if (!$unit || $unit->user_id !== $currentUser->id) {
-            return response()->json([
-                'errors' => 'error'
-            ]);
-        }
+        $this->authorize('owner', $unit);
 
         return response()->json([
             'location' => $location
@@ -54,15 +43,10 @@ class LocationController extends Controller
 
     public function update(Request $request, $id)
     {
-        $currentUser = Auth::user();
         $location = Location::find($id);
         $unit = Units::find($location->unit_id);
 
-        if (!$unit || $unit->user_id !== $currentUser->id) {
-            return response()->json([
-                'errors' => 'error'
-            ]);
-        }
+        $this->authorize('owner', $unit);
 
         $location->name = $request->name;
         $location->save();
@@ -72,6 +56,10 @@ class LocationController extends Controller
     {
         $currentUser = Auth::user();
         $location = $currentUser->location($id)->first();
+        $unit = Units::find($location->unit_id);
+
+        $this->authorize('owner', $unit);
+
         $location::destroy();
     }
 }

@@ -10,9 +10,7 @@ class Units extends Model
 
     protected $table = 'audits_units';
 
-    protected $fillable = [
-        'name', 'user_id'
-    ];
+    protected $fillable = ['name'];
 
     public function locations()
     {
@@ -22,5 +20,10 @@ class Units extends Model
     public function location($id)
     {
         return $this->hasOne('App\Http\Models\Audits\Location')->where('id', '=', $id);
+    }
+
+    public function users()
+    {
+        return $this->belongsToMany('App\User', 'user_units', 'unit_id', 'user_id');
     }
 }
