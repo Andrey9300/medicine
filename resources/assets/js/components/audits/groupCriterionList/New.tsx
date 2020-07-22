@@ -28,7 +28,6 @@ interface IStateProps {
 
 interface IDispatchProps {
   fetchCriterions: typeof fetchCriterions;
-  fetchGroupCriterions: typeof fetchGroupCriterions;
   addGroupCriterionList: typeof addGroupCriterionList;
 }
 
@@ -49,10 +48,9 @@ class NewGroupCriterionList extends React.PureComponent<IProps> {
   };
 
   componentDidMount() {
-    const {fetchCriterions, fetchGroupCriterions} = this.props;
+    const {fetchCriterions} = this.props;
 
     fetchCriterions();
-    fetchGroupCriterions();
   }
 
   private handleSubmit = (event: any) => {
@@ -143,7 +141,6 @@ const mapStateToProps = (state: TState) => {
 const mapDispatchToProps = (dispatch: any): IDispatchProps => {
   return {
     fetchCriterions: () => dispatch(fetchCriterions()),
-    fetchGroupCriterions: () => dispatch(fetchGroupCriterions()),
     addGroupCriterionList: (form: HTMLFormElement) =>
       dispatch(addGroupCriterionList(form)),
   };

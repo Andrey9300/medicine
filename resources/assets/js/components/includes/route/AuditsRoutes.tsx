@@ -4,7 +4,7 @@ import {Route} from 'react-router-dom';
 import {AuditorsContainer} from '../../audits/auditors/Auditors';
 import {CriterionContainer} from '../../audits/criterion/Criterion';
 import {EditCriterionContainer} from '../../audits/criterion/Edit';
-import {CriterionsContainer} from '../../audits/criterion/Criterions';
+import {CriterionsContainer} from '../../audits/criterion/CriterionsContainer';
 import {AddPlaceCheckListContainer} from '../../audits/placeCheckList/AddPlaceCheckList/AddPlaceCheckList';
 import {PlaceCheckListCriterionsContainer} from '../../audits/placeCheckList/PlaceCheckListCriterions';
 import {PlaceCheckListCriterionsEditContainer} from '../../audits/placeCheckList/PlaceCheckListCriterionsEdit';
@@ -18,6 +18,7 @@ import {GroupCriterionListContainer} from '../../audits/groupCriterionList/Group
 import {EditGroupCriterionListContainer} from '../../audits/groupCriterionList/Edit';
 import {Objects} from '../../audits/objects/Objects';
 import {GroupsAndCriterionsComponent} from '../../audits/groupCriterions/GroupsAndCriterions';
+import {NewAuditorContainer} from "../../audits/auditors/New";
 
 export class AuditsRoutes extends React.PureComponent {
   render() {
@@ -28,6 +29,14 @@ export class AuditsRoutes extends React.PureComponent {
           path="/services/audits/auditors"
           component={(props: any) => <AuditorsContainer {...props} />}
         />
+        <Route
+          exact
+          path="/services/audits/auditors/create"
+          component={(props: any) => (
+            <NewAuditorContainer {...props} />
+          )}
+        />
+
         <Route
           exact
           path="/services/audits/criterion/:id"

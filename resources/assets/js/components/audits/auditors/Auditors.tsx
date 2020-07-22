@@ -33,7 +33,7 @@ class Auditors extends React.PureComponent<IProps> {
               <Card className="text-center">
                 <CardHeader>Аудиторов нет</CardHeader>
                 <CardBody>
-                  <Link to={'/services/profiles/create'}>
+                  <Link to={'/services/audits/auditors/create'}>
                     Добавить аудитора
                   </Link>
                 </CardBody>
@@ -53,7 +53,7 @@ class Auditors extends React.PureComponent<IProps> {
                 <i className="fa fa-building-o" aria-hidden="true" />
                 Аудиторы ({auditors.length})
                 <Link
-                  to={'/services/profiles/create'}
+                  to={'/services/audits/auditors/create'}
                   className="btn btn-primary btn-sm pull-right"
                 >
                   Добавить <i className="icon-plus" />

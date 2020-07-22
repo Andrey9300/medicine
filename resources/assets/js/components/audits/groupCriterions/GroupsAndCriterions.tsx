@@ -1,7 +1,7 @@
 import React from 'react';
 
 import {GroupCriterionListsContainer} from "../groupCriterionList/GroupCriterionLists";
-import {CriterionsContainer} from "../criterion/Criterions";
+import {CriterionsContainer} from "../criterion/CriterionsContainer";
 
 interface IProps {}
 

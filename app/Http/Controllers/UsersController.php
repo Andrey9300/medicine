@@ -16,12 +16,59 @@ class UsersController extends Controller
         $newUser = new User;
         $newUser->fio = $request->fio;
         $newUser->password = bcrypt($request->password);
-        $newUser->role = 'auditor';
+        $newUser->email = $request->email;
+        $newUser->active = '0';
+        $newUser->save();
+
+        $newUser->organizations()->attach($organization);
+    }
+
+    public function createAuditor(Request $request)
+    {
+        $userAdmin = Auth::user();
+
+        $newUser = new User;
+        $newUser->fio = $request->fio;
+        $newUser->password = bcrypt($request->password);
         $newUser->email = $request->email;
         $newUser->active = '1';
         $newUser->save();
 
-        $newUser->organizations()->attach($organization);
+        $userUnits = $userAdmin->units;
+        $placeCheckLists = $userAdmin->placeCheckLists;
+        $placeCheckListCriterion = $userAdmin->placeCheckListCriterion;
+        $groupCriterionLists = $userAdmin->groupCriterionLists;
+        $groupCriterions = $userAdmin->groupCriterions;
+        $criterions = $userAdmin->criterions;
+        $criterionLists = $userAdmin->criterionLists;
+
+        foreach ($userUnits as $userUnit) {
+            $newUser->units()->attach($userUnit);
+        }
+
+        foreach ($placeCheckLists as $placeCheckList) {
+            $newUser->placeCheckLists()->attach($placeCheckList);
+        }
+
+        foreach ($placeCheckListCriterion as $checkListCriterion) {
+            $newUser->placeCheckListCriterion()->attach($checkListCriterion);
+        }
+
+        foreach ($groupCriterionLists as $groupCriterionList) {
+            $newUser->groupCriterionLists()->attach($groupCriterionList);
+        }
+
+        foreach ($groupCriterions as $groupCriterion) {
+            $newUser->groupCriterions()->attach($groupCriterion);
+        }
+
+        foreach ($criterions as $criterion) {
+            $newUser->criterions()->attach($criterion);
+        }
+        
+        foreach ($criterionLists as $criterionList) {
+            $newUser->criterionLists()->attach($criterionList);
+        }
     }
 
     public function currentUser()
@@ -34,10 +81,10 @@ class UsersController extends Controller
     public function showAuditors()
     {
         $userAdmin = Auth::user();
-        $organization = $userAdmin->organizations->first();
+        $userUnit = $userAdmin->units->first();
 
         return response()->json([
-            'auditors' => $organization->auditors
+            'auditors' => $userUnit->users
         ]);
     }
 

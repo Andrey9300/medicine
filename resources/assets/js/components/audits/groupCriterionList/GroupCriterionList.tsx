@@ -7,11 +7,14 @@ import {
 import {Link} from 'react-router-dom';
 import {Row, Col, Card, CardHeader, CardBody, Table} from 'reactstrap';
 import {createMarkup} from '../../../utils/errorsHelper';
-import {IGroupCriterion} from '../../../interface/audit/IGroupCriterion';
+import {IGroupCriterionList} from '../../../interface/audit/IGroupCriterion';
 import {TState} from '../../../reducers';
+import {ICriterion} from '../../../interface/audit/ICriterion';
+import {Criterions} from "../criterion/Criterions";
 
 interface IStateProps {
-  groupCriterionList: IGroupCriterion;
+  criterions: ICriterion[];
+  groupCriterionList: IGroupCriterionList;
   errors: any;
 }
 
@@ -48,7 +51,7 @@ class GroupCriterionListList extends React.PureComponent<IProps> {
   };
 
   render() {
-    const {groupCriterionList, errors} = this.props;
+    const {criterions, groupCriterionList, errors} = this.props;
     let errorsMessage = null;
 
     if (!groupCriterionList) {
@@ -67,7 +70,7 @@ class GroupCriterionListList extends React.PureComponent<IProps> {
       <div className="animated fadeIn">
         {errorsMessage}
         <Row>
-          <Col xs="12" sm="12" md="8" lg="8" xl="8">
+          <Col xs="12" sm="12" md="8" lg="6" xl="6">
             <Card>
               <CardHeader>
                 <i className="fa fa-building-o" aria-hidden="true" />
@@ -90,18 +93,17 @@ class GroupCriterionListList extends React.PureComponent<IProps> {
                 </span>
               </CardHeader>
               <CardBody className="card-body">
-                <Table responsive>
-                  <tbody>
-                    <tr>
-                      <td>Наименование:</td>
-                      <td>{groupCriterionList.name}</td>
-                    </tr>
-                  </tbody>
-                </Table>
+                <Row
+                  style={{borderTop: '1px solid #c2cfd6', padding: '12px 0'}}
+                >
+                  <Col>Наименование</Col>
+                  <Col>{groupCriterionList.name}</Col>
+                </Row>
               </CardBody>
             </Card>
           </Col>
         </Row>
+        <Criterions criterions={criterions} needNewContainer={false} />
       </div>
     );
   }
@@ -109,6 +111,7 @@ class GroupCriterionListList extends React.PureComponent<IProps> {
 
 const mapStateToProps = (state: TState) => {
   return {
+    criterions: state.groupCriterionLists.criterions,
     groupCriterionList: state.groupCriterionLists.groupCriterionList,
     errors: state.groupCriterionLists.errors,
   };

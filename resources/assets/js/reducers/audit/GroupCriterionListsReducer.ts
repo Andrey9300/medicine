@@ -1,16 +1,22 @@
 import {AnyAction} from 'redux';
-import {IGroupCriterion} from "../../interface/audit/IGroupCriterion";
+import {
+  IGroupCriterion,
+  IGroupCriterionList,
+} from '../../interface/audit/IGroupCriterion';
+import {ICriterion} from '../../interface/audit/ICriterion';
 
 interface IState {
   errors: object;
   fetched: boolean;
+  criterions: ICriterion[];
   groupCriterionList: IGroupCriterion;
-  groupCriterionLists: IGroupCriterion[];
+  groupCriterionLists: IGroupCriterionList[];
 }
 
 const initialState: IState = {
   errors: null,
   fetched: false,
+  criterions: [],
   groupCriterionList: null,
   groupCriterionLists: [],
 };
@@ -61,15 +67,14 @@ export default function reducer(
         ...state,
         errors: null,
         fetched: true,
-        groupCriterionList: action.payload.data.groupCriterionList,
+        criterions: action.payload.data.criterions,
+        groupCriterionList: action.payload.data.groupCriterion,
       };
     }
     case 'GROUP_CRITERION_LIST_CLEAR': {
       return {
         ...state,
-        errors: null,
-        fetched: true,
-        groupCriterionList: null,
+        ...initialState,
       };
     }
     default:

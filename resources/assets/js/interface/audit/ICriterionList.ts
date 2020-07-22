@@ -14,6 +14,5 @@ export interface ICriterionList {
   unit: IUnit;
   unit_id: number;
   group_criterion_id: number;
-  user_id: number;
   checkLists: ICheckList[];
 }

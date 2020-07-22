@@ -68,7 +68,7 @@ export function registrationUser(formElement: HTMLFormElement = null) {
 export function registrationAuditorUser(formElement: HTMLFormElement = null) {
   return (dispatch: any) => {
     axios
-      .post('/users/store', new FormData(formElement))
+      .post('/users/createAuditor', new FormData(formElement))
       .then(() => {
         alert('Аудитор добавлен');
         history.replaceState(null, null, '/services/audits/auditors');

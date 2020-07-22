@@ -16,24 +16,30 @@ import {ExpandComponent} from '../objects/HeaderObject';
 import {TState} from '../../../reducers';
 import {ICriterion} from '../../../interface/audit/ICriterion';
 
-interface IStateProps {
+export interface IStateProps {
   criterions: ICriterion[];
 }
 
-interface IDispatchProps {
-  fetchCriterions: typeof fetchCriterions;
+export interface IDispatchProps {
+  fetchCriterions?: typeof fetchCriterions;
 }
 
-interface IProps extends IStateProps, IDispatchProps {}
+export interface IProps extends IStateProps, IDispatchProps {
+  needNewContainer: boolean;
+}
 
 interface IState {
   collapse: boolean;
 }
 
-class Criterions extends React.PureComponent<IProps> {
+export class Criterions extends React.PureComponent<IProps> {
   public state: IState = {
     collapse: true,
   };
+
+  public static defaultProps: Pick<IProps, 'needNewContainer'> = {
+    needNewContainer: true,
+  }
 
   private toggle = () => {
     const {collapse} = this.state;
@@ -43,12 +49,14 @@ class Criterions extends React.PureComponent<IProps> {
   componentDidMount() {
     const {fetchCriterions} = this.props;
 
-    fetchCriterions();
+    if (fetchCriterions) {
+      fetchCriterions();
+    }
   }
 
   render() {
     const {collapse} = this.state;
-    const {criterions} = this.props;
+    const {criterions, needNewContainer} = this.props;
 
     if (criterions.length === 0) {
       return (
@@ -97,26 +105,9 @@ class Criterions extends React.PureComponent<IProps> {
               </Collapse>
             </Card>
           </Col>
-          <NewCriterionContainer />
+          {needNewContainer && <NewCriterionContainer />}
         </Row>
       </div>
     );
   }
 }
-
-const mapStateToProps = (state: TState) => {
-  return {
-    criterions: state.criterions.criterions,
-  };
-};
-
-const mapDispatchToProps = (dispatch: any): IDispatchProps => {
-  return {
-    fetchCriterions: () => dispatch(fetchCriterions()),
-  };
-};
-
-export const CriterionsContainer = connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(Criterions);

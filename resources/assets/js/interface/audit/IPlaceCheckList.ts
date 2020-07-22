@@ -9,7 +9,6 @@ export interface IPlaceCheckListCriterion {
   id: number;
   mark: string;
   place_check_lists_id: number;
-  user_id: number;
 }
 
 export interface IPlaceCheckList extends ICriterionList {
