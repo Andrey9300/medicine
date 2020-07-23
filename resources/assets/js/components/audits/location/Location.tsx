@@ -71,7 +71,7 @@ class Location extends React.PureComponent<IProps> {
             <Card>
               <CardHeader>
                 <i className="fa fa-building-o" aria-hidden="true" />
-                Критерий
+                Локация
                 <Link
                   to={`/services/audits/location/edit/${location.id}`}
                   style={{
@@ -88,14 +88,12 @@ class Location extends React.PureComponent<IProps> {
                 </span>
               </CardHeader>
               <CardBody className="card-body">
-                <Table responsive>
-                  <tbody>
-                    <tr>
-                      <td>Наименование:</td>
-                      <td>{location.name}</td>
-                    </tr>
-                  </tbody>
-                </Table>
+                <Row
+                  style={{borderTop: '1px solid #c2cfd6', padding: '12px 0'}}
+                >
+                  <Col>Наименование:</Col>
+                  <Col>{location.name}</Col>
+                </Row>
               </CardBody>
             </Card>
           </Col>

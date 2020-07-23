@@ -42,19 +42,18 @@ class UnitController extends Controller
     public function show($id)
     {
         $currentUser = Auth::user();
+        $unit = $currentUser->units()->get()->where('id', $id)->first();
 
         return response()->json([
-            'unit' => $currentUser->unit($id)->first()
+            'unit' => $unit
         ]);
     }
 
     public function update(Request $request, $id)
     {
         $currentUser = Auth::user();
-        $unit = $currentUser->unit($id)->first();
-
+        $unit = $currentUser->units()->get()->where('id', $id)->first();
         $this->authorize('owner', $unit);
-
         $unit->name = $request->name;
         $unit->save();
     }
@@ -62,7 +61,8 @@ class UnitController extends Controller
     public function destroy($id)
     {
         $currentUser = Auth::user();
-        $unit = $currentUser->unit($id)->first();
+        $unit = $currentUser->units()->get()->where('id', $id)->first();
+        $this->authorize('owner', $unit);
         $unit::destroy();
     }
 }

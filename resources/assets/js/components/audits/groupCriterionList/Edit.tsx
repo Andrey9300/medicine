@@ -91,7 +91,7 @@ class EditGroupCriterionList extends React.PureComponent<IProps> {
           <Col xs="12" md="6">
             <Card>
               <Form className="form-horizontal" onSubmit={this.handleSubmit}>
-                <CardHeader>Редактировать критерий</CardHeader>
+                <CardHeader>Редактировать группу критериев</CardHeader>
                 <CardBody className="card-body">
                   <FormGroup row>
                     <Col md="3">

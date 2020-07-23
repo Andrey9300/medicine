@@ -74,7 +74,7 @@ class GroupCriterionListList extends React.PureComponent<IProps> {
             <Card>
               <CardHeader>
                 <i className="fa fa-building-o" aria-hidden="true" />
-                Критерий
+                Группа критериев
                 <Link
                   to={`/services/audits/groupCriterionList/edit/${groupCriterionList.id}`}
                   style={{

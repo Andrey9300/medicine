@@ -26,7 +26,7 @@ export function editPlace(
     axios
       .post(`/places/update/${legalEntityId}`, new FormData(formElement))
       .then(() => {
-        alert('Критерий успешно отредактирован');
+        alert('Помещение успешно отредактировано');
         history.pushState(null, null, `/services/audits/place/${legalEntityId}`);
         window.location.reload();
       })

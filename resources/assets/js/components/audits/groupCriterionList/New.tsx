@@ -15,7 +15,6 @@ import {
 } from 'reactstrap';
 import {addGroupCriterionList} from '../../../actions/audit/groupCriterionListActions';
 import {fetchCriterions} from '../../../actions/audit/criterionActions';
-import {fetchGroupCriterions} from '../../../actions/audit/groupCriterionActions';
 import {createMarkup} from '../../../utils/errorsHelper';
 import {TState} from '../../../reducers';
 import {ICriterion} from '../../../interface/audit/ICriterion';
@@ -45,6 +44,44 @@ class NewGroupCriterionList extends React.PureComponent<IProps> {
   private toggle = () => {
     const {collapse} = this.state;
     this.setState({collapse: !collapse});
+  };
+
+  private getFooter = () => {
+    const {criterions} = this.props;
+
+    return criterions?.length > 0 ? (
+      <CardFooter>
+        <Button type="submit" size="sm" color="success">
+          <i className="fa fa-dot-circle-o" /> Сохранить
+        </Button>
+      </CardFooter>
+    ) : null;
+  };
+
+  private getCriterions = () => {
+    const {collapse} = this.state;
+    const {criterions} = this.props;
+
+    return (
+      <Collapse isOpen={collapse}>
+        {criterions.map((criterion, index) => {
+          return (
+            <FormGroup row key={index}>
+              <Col md="9" lg="9">
+                <Label htmlFor="text-input">{criterion.name}</Label>
+              </Col>
+              <Col md="3" lg="3">
+                <Input
+                  type="checkbox"
+                  name={`criterions[${criterion.id}]`}
+                  value={criterion.id}
+                />
+              </Col>
+            </FormGroup>
+          );
+        })}
+      </Collapse>
+    );
   };
 
   componentDidMount() {
@@ -84,46 +121,27 @@ class NewGroupCriterionList extends React.PureComponent<IProps> {
           >
             <CardHeader>Добавить группу чек листов</CardHeader>
             <CardBody className="card-body">
-              <FormGroup row>
-                <Col md="4">
-                  <Label htmlFor="text-input">Название группы</Label>
-                </Col>
-                <Col xs="12" md="8">
-                  <Input type="text" name="group_criterion_name" required />
-                </Col>
-              </FormGroup>
               {criterions?.length > 0 ? (
-                <div style={{fontWeight: 600, marginBottom: '20px'}}>
-                  Критерии{' '}
-                  <ExpandComponent collapse={collapse} toggle={this.toggle} />
-                </div>
+                <>
+                  <FormGroup row>
+                    <Col md="4">
+                      <Label htmlFor="text-input">Название группы</Label>
+                    </Col>
+                    <Col xs="12" md="8">
+                      <Input type="text" name="group_criterion_name" required />
+                    </Col>
+                  </FormGroup>
+                  <div style={{fontWeight: 600, marginBottom: '20px'}}>
+                    Критерии{' '}
+                    <ExpandComponent collapse={collapse} toggle={this.toggle} />
+                  </div>
+                  {this.getCriterions()}
+                </>
               ) : (
                 <div style={{color: 'red'}}>Добавьте критерий ниже</div>
               )}
-              <Collapse isOpen={collapse}>
-                {criterions.map((criterion, index) => {
-                  return (
-                    <FormGroup row key={index}>
-                      <Col md="9" lg="9">
-                        <Label htmlFor="text-input">{criterion.name}</Label>
-                      </Col>
-                      <Col md="3" lg="3">
-                        <Input
-                          type="checkbox"
-                          name={`criterions[${criterion.id}]`}
-                          value={criterion.id}
-                        />
-                      </Col>
-                    </FormGroup>
-                  );
-                })}
-              </Collapse>
             </CardBody>
-            <CardFooter>
-              <Button type="submit" size="sm" color="success">
-                <i className="fa fa-dot-circle-o" /> Сохранить
-              </Button>
-            </CardFooter>
+            {this.getFooter()}
           </Form>
         </Card>
       </Col>

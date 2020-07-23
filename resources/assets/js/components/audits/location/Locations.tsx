@@ -1,4 +1,5 @@
 import React from 'react';
+import {Link} from 'react-router-dom';
 import {Row, Col, Card, CardHeader, CardBody, Collapse} from 'reactstrap';
 import {NewLocationContainer} from './New';
 import {ILocation} from '../../../interface/audit/ILocation';
@@ -52,7 +53,11 @@ export class LocationsComponent extends React.PureComponent<IProps> {
                 key={`${location.id}${index}`}
                 style={{borderBottom: '1px solid #c2cfd6', marginBottom: '8px'}}
               >
-                <Col xs="2">{location.name}</Col>
+                <Col xs="2">
+                  <Link to={`/services/audits/location/${location.id}`}>
+                    {location.name}
+                  </Link>
+                </Col>
                 <Col xs="10">
                   <Row>
                     <Col xs="12">

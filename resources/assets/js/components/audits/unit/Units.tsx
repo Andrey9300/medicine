@@ -1,5 +1,6 @@
 import {fetchUnits} from '../../../actions/audit/unitActions';
 import React from 'react';
+import {Link} from 'react-router-dom';
 import {connect} from 'react-redux';
 import {Row, Col, Card, CardHeader, CardBody, Collapse} from 'reactstrap';
 import {NewUnitContainer} from './New';
@@ -96,7 +97,11 @@ class UnitsComponent extends React.PureComponent<IProps> {
                       paddingBottom: '8px',
                     }}
                   >
-                    <Col xs="2">{unit.name}</Col>
+                    <Col xs="2">
+                      <Link to={`/services/audits/unit/${unit.id}`}>
+                        {unit.name}
+                      </Link>
+                    </Col>
                     <Col xs="10">
                       <Row>
                         <Col xs="12">

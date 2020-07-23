@@ -52,7 +52,7 @@ class GroupCriterionListList extends React.PureComponent<IProps> {
             <Card>
               <CardHeader>
                 <i className="fa fa-building-o" aria-hidden="true" />
-                Группа критериев ({groupCriterionLists.length})
+                Группы критериев ({groupCriterionLists.length})
               </CardHeader>
               <CardBody className="card-body">
                 <Row

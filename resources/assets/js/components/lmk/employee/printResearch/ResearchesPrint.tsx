@@ -77,13 +77,12 @@ export class ResearchesPrint extends React.PureComponent<IProps> {
     );
   };
 
-  // TODO: проверить типы, не состыковываются
-  addNeedForResearch = (): any => {
+  addNeedForResearch = (): IResearch[] => {
     const {needForResearch, employeeResearches} = this.props;
     const researches: IResearch[] = [];
 
     if (!needForResearch) {
-      return [];
+      return null;
     }
 
     needForResearch.forEach((value: any, key: any) => {
@@ -101,7 +100,7 @@ export class ResearchesPrint extends React.PureComponent<IProps> {
     const {employee} = this.props;
     const bufferTr: any[] = [];
     let bufferTd: any[] = [];
-    const researches = employee.researches_expired.concat(
+    const researches: IResearch[] = employee.researches_expired.concat(
       employee.researches_ends,
     );
 

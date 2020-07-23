@@ -26,7 +26,7 @@ export function editLocation(
     axios
       .post(`/locations/update/${legalEntityId}`, new FormData(formElement))
       .then(() => {
-        alert('Критерий успешно отредактирован');
+        alert('Локация успешно отредактирована');
         history.pushState(null, null, `/services/audits/location/${legalEntityId}`);
         window.location.reload();
       })
