@@ -45,7 +45,13 @@ class Criterion extends React.PureComponent<IProps> {
     event.preventDefault();
     const {deleteCriterion} = this.props;
 
-    deleteCriterion(id);
+    const result = confirm(
+      'Удаление приведет к потере данных в аудите связанным с этим критерием. Удалить?',
+    );
+
+    if (result) {
+      deleteCriterion(id);
+    }
   };
 
   render() {

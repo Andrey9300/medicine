@@ -47,7 +47,14 @@ class GroupCriterionListList extends React.PureComponent<IProps> {
     event.preventDefault();
     const {deleteGroupCriterionList} = this.props;
 
-    deleteGroupCriterionList(id);
+
+    const result = confirm(
+        'Удаление приведет к потере данных в аудите связанным с этой группой чек-листов. Удалить?',
+    );
+
+    if (result) {
+      deleteGroupCriterionList(id);
+    }
   };
 
   render() {

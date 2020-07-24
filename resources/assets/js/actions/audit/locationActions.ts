@@ -82,7 +82,7 @@ export function deleteLocation(id: number) {
     axios
       .post(`/locations/destroy/${id}`)
       .then(() => {
-        history.pushState(null, null, '/services/audits/locations');
+        history.pushState(null, null, '/services/audits/objects');
         window.location.reload();
       })
       .catch((error) => {

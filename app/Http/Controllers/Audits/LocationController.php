@@ -54,12 +54,11 @@ class LocationController extends Controller
 
     public function destroy($id)
     {
-        $currentUser = Auth::user();
-        $location = $currentUser->location($id)->first();
+        $location = Location::find($id);
         $unit = Units::find($location->unit_id);
 
         $this->authorize('owner', $unit);
 
-        $location::destroy();
+        $location->delete();
     }
 }

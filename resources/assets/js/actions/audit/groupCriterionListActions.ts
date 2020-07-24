@@ -85,7 +85,7 @@ export function deleteGroupCriterionList(id: number) {
     axios
       .post(`/groupCriterionLists/destroy/${id}`)
       .then(() => {
-        history.pushState(null, null, '/services/audits/groupCriterionLists');
+        history.pushState(null, null, '/services/audits/groupCriterions');
         window.location.reload();
       })
       .catch((error) => {

@@ -95,6 +95,6 @@ class PlaceController extends Controller
 
         $this->authorize('owner', $unit);
 
-        $place::destroy();
+        $place->delete();
     }
 }

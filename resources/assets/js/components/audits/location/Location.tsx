@@ -5,7 +5,7 @@ import {
   deleteLocation,
 } from '../../../actions/audit/locationActions';
 import {Link} from 'react-router-dom';
-import {Row, Col, Card, CardHeader, CardBody, Table} from 'reactstrap';
+import {Row, Col, Card, CardHeader, CardBody} from 'reactstrap';
 import {createMarkup} from '../../../utils/errorsHelper';
 import {ILocation} from '../../../interface/audit/ILocation';
 import {TState} from '../../../reducers';
@@ -44,7 +44,13 @@ class Location extends React.PureComponent<IProps> {
     event.preventDefault();
     const {deleteLocation} = this.props;
 
-    deleteLocation(id);
+    const result = confirm(
+      'Удаление приведет к потере данных аудита по всем помещениям данной локации и потере самой локации. Удалить?',
+    );
+
+    if (result) {
+      deleteLocation(id);
+    }
   };
 
   render() {

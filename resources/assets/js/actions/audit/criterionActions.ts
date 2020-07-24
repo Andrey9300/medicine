@@ -82,7 +82,7 @@ export function deleteCriterion(id: number) {
     axios
       .post(`/criterions/destroy/${id}`)
       .then(() => {
-        history.pushState(null, null, '/services/audits/criterions');
+        history.pushState(null, null, '/services/audits/groupCriterions');
         window.location.reload();
       })
       .catch((error) => {

@@ -82,7 +82,7 @@ export function deleteUnit(id: number) {
     axios
       .post(`/units/destroy/${id}`)
       .then(() => {
-        history.pushState(null, null, '/services/audits/units');
+        history.pushState(null, null, '/services/audits/objects');
         window.location.reload();
       })
       .catch((error) => {

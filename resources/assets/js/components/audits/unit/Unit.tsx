@@ -32,7 +32,13 @@ class Unit extends React.PureComponent<IProps> {
     event.preventDefault();
     const {deleteUnit} = this.props;
 
-    deleteUnit(id);
+    const result = confirm(
+      'Удаление приведет к потере данных аудита по всем локациям данного подразделения и потере самого подразделения. Удалить?',
+    );
+
+    if (result) {
+      deleteUnit(id);
+    }
   };
 
   render() {

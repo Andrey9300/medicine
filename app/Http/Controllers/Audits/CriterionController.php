@@ -50,6 +50,6 @@ class CriterionController extends Controller
     {
         $currentUser = Auth::user();
         $criterion = $currentUser->criterions()->get()->where('id', $id)->first();
-        $criterion::destroy();
+        $criterion->delete();
     }
 }

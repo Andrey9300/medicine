@@ -80,7 +80,7 @@ class GroupCriterionListController extends Controller
     public function destroy($id)
     {
         $currentUser = Auth::user();
-        $groupCriterion = $currentUser->groupCriterionList($id)->first();
-        $groupCriterion::destroy();
+        $groupCriterion = $currentUser->groupCriterions()->where('group_criterion_id', '=', $id)->first();
+        $groupCriterion->delete();
     }
 }

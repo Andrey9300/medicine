@@ -45,7 +45,13 @@ class Place extends React.PureComponent<IProps> {
     event.preventDefault();
     const {deletePlace} = this.props;
 
-    deletePlace(id);
+    const result = confirm(
+        'Удаление приведет к потере данных аудита по данному помещению. Удалить?',
+    );
+
+    if (result) {
+      deletePlace(id);
+    }
   };
 
   render() {

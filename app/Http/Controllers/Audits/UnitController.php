@@ -63,6 +63,6 @@ class UnitController extends Controller
         $currentUser = Auth::user();
         $unit = $currentUser->units()->get()->where('id', $id)->first();
         $this->authorize('owner', $unit);
-        $unit::destroy();
+        $unit->delete();
     }
 }
