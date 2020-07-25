@@ -16,7 +16,6 @@ import {
 import {clearUser, loginUser} from '../../actions/userActions';
 import {createMarkup} from '../../utils/errorsHelper';
 import {TState} from '../../reducers';
-import {IUser} from "../../interface/IUser";
 
 interface IStateProps {
   user: any;

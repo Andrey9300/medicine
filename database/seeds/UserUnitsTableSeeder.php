@@ -18,5 +18,19 @@ class UserUnitsTableSeeder extends Seeder
             'user_id' => 1,
             'unit_id' => 3
         ]);
+
+        // for demo user
+        DB::table('user_units')->insert([
+            'user_id' => 4,
+            'unit_id' => 5
+        ]);
+        DB::table('user_units')->insert([
+            'user_id' => 4,
+            'unit_id' => 6
+        ]);
+        DB::table('user_units')->insert([
+            'user_id' => 4,
+            'unit_id' => 7
+        ]);
     }
 }

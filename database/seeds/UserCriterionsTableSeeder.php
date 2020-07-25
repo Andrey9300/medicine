@@ -150,17 +150,47 @@ class UserCriterionsTableSeeder extends Seeder
             'user_id' => 1,
             'criterion_id' => 36
         ]);
+
+        // for demo user
         DB::table('user_criterions')->insert([
-            'user_id' => 1,
+            'user_id' => 4,
             'criterion_id' => 37
         ]);
         DB::table('user_criterions')->insert([
-            'user_id' => 1,
+            'user_id' => 4,
             'criterion_id' => 38
         ]);
         DB::table('user_criterions')->insert([
-            'user_id' => 1,
+            'user_id' => 4,
             'criterion_id' => 39
+        ]);
+        DB::table('user_criterions')->insert([
+            'user_id' => 4,
+            'criterion_id' => 40
+        ]);
+        DB::table('user_criterions')->insert([
+            'user_id' => 4,
+            'criterion_id' => 41
+        ]);
+        DB::table('user_criterions')->insert([
+            'user_id' => 4,
+            'criterion_id' => 42
+        ]);
+        DB::table('user_criterions')->insert([
+            'user_id' => 4,
+            'criterion_id' => 43
+        ]);
+        DB::table('user_criterions')->insert([
+            'user_id' => 4,
+            'criterion_id' => 44
+        ]);
+        DB::table('user_criterions')->insert([
+            'user_id' => 4,
+            'criterion_id' => 45
+        ]);
+        DB::table('user_criterions')->insert([
+            'user_id' => 4,
+            'criterion_id' => 46
         ]);
     }
 }

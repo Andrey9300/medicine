@@ -174,9 +174,5 @@ class UserGroupCriterionListTableSeeder extends Seeder
             'user_id' => 1,
             'group_criterion_list_id' => 42
         ]);
-        DB::table('user_group_criterion_list')->insert([
-            'user_id' => 1,
-            'group_criterion_list_id' => 43
-        ]);
     }
 }

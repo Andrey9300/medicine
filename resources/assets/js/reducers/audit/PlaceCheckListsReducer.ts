@@ -1,9 +1,14 @@
 import {AnyAction} from 'redux';
-import {IPlaceCheckList, IPlaceCheckListCriterion} from "../../interface/audit/IPlaceCheckList";
+import {
+  IPlaceCheckList,
+  IPlaceCheckListCriterion,
+} from '../../interface/audit/IPlaceCheckList';
+import {ICheckList} from '../../interface/audit/CheckList';
 
 interface IState {
   errors: object;
   fetched: boolean;
+  checkList: ICheckList;
   placeCheckList: IPlaceCheckList;
   placeCheckLists: IPlaceCheckList[];
   placeCheckListCriterions: IPlaceCheckListCriterion[];
@@ -12,6 +17,7 @@ interface IState {
 const initialState: IState = {
   errors: null,
   fetched: false,
+  checkList: null,
   placeCheckList: null,
   placeCheckLists: [],
   placeCheckListCriterions: [],
@@ -87,6 +93,21 @@ export default function reducer(
         errors: null,
         fetched: true,
         placeCheckListCriterions: action.payload.data.placeCheckListCriterions,
+      };
+    }
+    case 'CHECK_LIST_REJECTED': {
+      return {
+        ...state,
+        errors: action.payload,
+        fetched: false,
+      };
+    }
+    case 'CHECK_LIST_FULFILLED': {
+      return {
+        ...state,
+        errors: null,
+        fetched: true,
+        checkList: action.payload.data.checkList,
       };
     }
     case 'PLACE_CHECK_LIST_CRITERIONS_CLEAR': {

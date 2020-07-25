@@ -46,7 +46,7 @@ class Place extends React.PureComponent<IProps> {
     const {deletePlace} = this.props;
 
     const result = confirm(
-        'Удаление приведет к потере данных аудита по данному помещению. Удалить?',
+      'Удаление приведет к потере данных аудита по данному помещению. Удалить?',
     );
 
     if (result) {
@@ -71,70 +71,60 @@ class Place extends React.PureComponent<IProps> {
     }
 
     return (
-      <>
-        <Row>
-          <Col xs="12" sm="12" md="8" lg="8" xl="8">
-            <Card>
-              {errorsMessage}
-              <CardHeader>
-                <i className="fa fa-building-o" aria-hidden="true" />
-                Помещение
-                <Link
-                  to={`/services/audits/place/edit/${place.id}`}
-                  style={{
-                    marginLeft: '18px',
-                  }}
-                >
-                  <i className="fa fa-pencil" />
-                </Link>
-                <span
-                  className="pull-right"
-                  onClick={(event) => this.handleBtnDelete(place.id, event)}
-                >
-                  <i className="fa fa-trash" />
-                </span>
-              </CardHeader>
-              <CardBody className="card-body">
-                <Row
-                  style={{borderTop: '1px solid #c2cfd6', padding: '12px 0'}}
-                >
-                  <Col>Подразделение:</Col>
-                  <Col>{place.unit?.name}</Col>
-                </Row>
-                <Row
-                  style={{borderTop: '1px solid #c2cfd6', padding: '12px 0'}}
-                >
-                  <Col>Локация:</Col>
-                  <Col>{place.location?.name}</Col>
-                </Row>
-                <Row
-                  style={{borderTop: '1px solid #c2cfd6', padding: '12px 0'}}
-                >
-                  <Col>Помещение:</Col>
-                  <Col>{place.name}</Col>
-                </Row>
-                <Row
-                  style={{borderTop: '1px solid #c2cfd6', padding: '12px 0'}}
-                >
-                  <Col>Чек лист:</Col>
-                  <Col>
-                    {placeCheckList?.groupCriterion?.name}
-                    {!placeCheckList?.groupCriterion?.name && (
-                      <Link to={`/services/audits/place/edit/${place.id}`}>
-                        укажите чек лист
-                      </Link>
-                    )}
-                  </Col>
-                </Row>
-              </CardBody>
-            </Card>
-          </Col>
-          <CheckListsComponent
-            placeId={place.id}
-            placeCheckLists={placeCheckList}
-          />
-        </Row>
-      </>
+      <Row>
+        <Col xs="12" sm="12" md="8" lg="8" xl="8">
+          <Card>
+            {errorsMessage}
+            <CardHeader>
+              <i className="fa fa-building-o" aria-hidden="true" />
+              Помещение
+              <Link
+                to={`/services/audits/place/edit/${place.id}`}
+                style={{
+                  marginLeft: '18px',
+                }}
+              >
+                <i className="fa fa-pencil" />
+              </Link>
+              <span
+                className="pull-right"
+                onClick={(event) => this.handleBtnDelete(place.id, event)}
+              >
+                <i className="fa fa-trash" />
+              </span>
+            </CardHeader>
+            <CardBody className="card-body">
+              <Row style={{borderTop: '1px solid #c2cfd6', padding: '12px 0'}}>
+                <Col>Подразделение:</Col>
+                <Col>{place.unit?.name}</Col>
+              </Row>
+              <Row style={{borderTop: '1px solid #c2cfd6', padding: '12px 0'}}>
+                <Col>Локация:</Col>
+                <Col>{place.location?.name}</Col>
+              </Row>
+              <Row style={{borderTop: '1px solid #c2cfd6', padding: '12px 0'}}>
+                <Col>Помещение:</Col>
+                <Col>{place.name}</Col>
+              </Row>
+              <Row style={{borderTop: '1px solid #c2cfd6', padding: '12px 0'}}>
+                <Col>Чек лист:</Col>
+                <Col>
+                  {placeCheckList?.groupCriterion?.name}
+                  {!placeCheckList?.groupCriterion?.name && (
+                    <Link to={`/services/audits/place/edit/${place.id}`}>
+                      укажите чек лист
+                    </Link>
+                  )}
+                </Col>
+              </Row>
+            </CardBody>
+          </Card>
+        </Col>
+        <CheckListsComponent
+          placeId={place.id}
+          placeCheckLists={placeCheckList}
+        />
+      </Row>
     );
   }
 }

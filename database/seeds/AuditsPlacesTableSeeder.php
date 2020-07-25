@@ -226,5 +226,63 @@ class AuditsPlacesTableSeeder extends Seeder
             'location_id' => 19,
             'name' => 'Овощи / мороженое'
         ]);
+
+        // for demo user
+        DB::table('audits_places')->insert([
+            'location_id' => 20,
+            'name' => 'Горячий цех'
+        ]);
+        DB::table('audits_places')->insert([
+            'location_id' => 20,
+            'name' => 'Холодный цех'
+        ]);
+        DB::table('audits_places')->insert([
+            'location_id' => 20,
+            'name' => 'Зона сервировки завтраков'
+        ]);
+        DB::table('audits_places')->insert([
+            'location_id' => 21,
+            'name' => 'Мясной цех'
+        ]);
+        DB::table('audits_places')->insert([
+            'location_id' => 21,
+            'name' => 'Яичный цех'
+        ]);
+        DB::table('audits_places')->insert([
+            'location_id' => 21,
+            'name' => 'Выпечной цех'
+        ]);
+        DB::table('audits_places')->insert([
+            'location_id' => 22,
+            'name' => 'Горячий цех'
+        ]);
+        DB::table('audits_places')->insert([
+            'location_id' => 22,
+            'name' => 'Холодный цех'
+        ]);
+        DB::table('audits_places')->insert([
+            'location_id' => 22,
+            'name' => 'Мойка кух посуды'
+        ]);
+        DB::table('audits_places')->insert([
+            'location_id' => 23,
+            'name' => 'Напитки алкогольные'
+        ]);
+        DB::table('audits_places')->insert([
+            'location_id' => 24,
+            'name' => 'Мясной гастроном'
+        ]);
+        DB::table('audits_places')->insert([
+            'location_id' => 24,
+            'name' => 'Молочный гастроном'
+        ]);
+        DB::table('audits_places')->insert([
+            'location_id' => 25,
+            'name' => 'Мясо-рыбный'
+        ]);
+        DB::table('audits_places')->insert([
+            'location_id' => 25,
+            'name' => 'Овощи / мороженое'
+        ]);
     }
 }

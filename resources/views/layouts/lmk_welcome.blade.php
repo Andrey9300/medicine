@@ -61,7 +61,7 @@
                         <h1 class="wow fadeInUp">Автоматизированный сервис личных медицинских книжек</h1>
                         <a href="/services/registration" class="btn btn-primary btn-xl page-scroll wow fadeInUp"
                            data-wow-delay="0.3">Регистрация</a>
-                        <a href="/services/lmk/organizations" class="btn btn-primary btn-xl page-scroll wow fadeInUp"
+                        <a href="/services/profile" class="btn btn-primary btn-xl page-scroll wow fadeInUp"
                            style="margin-left: 24px;"
                            data-wow-delay="0.3">Вход</a>
                     </div>

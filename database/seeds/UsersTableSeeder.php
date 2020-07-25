@@ -35,5 +35,13 @@ class UsersTableSeeder extends Seeder
             'active' => true,
             'role' => 'admin'
         ]);
+        DB::table('users')->insert([
+            'id' => 4,
+            'fio' => 'Иванов Иван Иванович',
+            'password' => bcrypt('demo'),
+            'email' => 'demo',
+            'active' => true,
+            'role' => 'admin'
+        ]);
     }
 }

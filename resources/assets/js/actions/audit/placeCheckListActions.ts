@@ -41,7 +41,11 @@ export function editPlaceCheckList(
       )
       .then(() => {
         alert('Чек лист успешно отредактирован');
-        history.pushState(null, null, `/services/audits/placeCheckList/criterions/${legalEntityId}`);
+        history.pushState(
+          null,
+          null,
+          `/services/audits/placeCheckList/criterions/${legalEntityId}`,
+        );
         window.location.reload();
       })
       .catch((errors) => {
@@ -105,6 +109,39 @@ export function fetchPlaceCheckListCriterions(id: number) {
         dispatch({
           payload: error,
           type: 'PLACE_CHECK_LIST_CRITERIONS_REJECTED',
+        });
+      });
+  };
+}
+
+export function finishAudit(id: number) {
+  return (dispatch: any) => {
+    axios
+      .post(`/placeCheckLists/finishAudit/${id}`)
+      .then((response) => {
+        alert('Аудит закончен');
+        window.location.reload();
+      })
+      .catch((error) => {
+        alert('Что-то пошло не так');
+      });
+  };
+}
+// данные только по PlaceCheckLists, TODO fetchPlaceCheckList
+export function fetchCheckList(id: number) {
+  return (dispatch: any) => {
+    axios
+      .post(`/placeCheckLists/showCheckList/${id}`)
+      .then((response) => {
+        dispatch({
+          payload: response,
+          type: 'CHECK_LIST_FULFILLED',
+        });
+      })
+      .catch((error) => {
+        dispatch({
+          payload: error,
+          type: 'PLACE_CHECK_LIST_REJECTED',
         });
       });
   };

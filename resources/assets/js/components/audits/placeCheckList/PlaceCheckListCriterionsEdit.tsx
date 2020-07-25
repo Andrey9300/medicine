@@ -2,7 +2,9 @@ import React from 'react';
 import {connect} from 'react-redux';
 import {
   editPlaceCheckList,
+  fetchCheckList,
   fetchPlaceCheckListCriterions,
+  finishAudit,
 } from '../../../actions/audit/placeCheckListActions';
 import {
   Row,
@@ -20,8 +22,10 @@ import {
 import {createMarkup} from '../../../utils/errorsHelper';
 import {IPlaceCheckListCriterion} from '../../../interface/audit/IPlaceCheckList';
 import {TState} from '../../../reducers';
+import {ICheckList} from '../../../interface/audit/CheckList';
 
 interface IStateProps {
+  checkList: ICheckList;
   placeCheckListCriterions: IPlaceCheckListCriterion[];
   fetched: boolean;
   errors: any;
@@ -30,6 +34,8 @@ interface IStateProps {
 interface IDispatchProps {
   fetchPlaceCheckListCriterions: typeof fetchPlaceCheckListCriterions;
   editPlaceCheckList: typeof editPlaceCheckList;
+  fetchCheckList: typeof fetchCheckList;
+  finishAudit: typeof finishAudit;
 }
 
 interface IProps extends IStateProps, IDispatchProps {
@@ -46,14 +52,19 @@ class PlaceCheckListCriterionsEdit extends React.PureComponent<IProps> {
   };
 
   componentDidMount() {
-    const {match, fetchPlaceCheckListCriterions} = this.props;
+    const {match, fetchCheckList, fetchPlaceCheckListCriterions} = this.props;
 
     fetchPlaceCheckListCriterions(match.params.id);
+    fetchCheckList(match.params.id);
     this.setState({placeCheckListId: match.params.id});
   }
 
   handleClick = (event: any) => {
     event.preventDefault();
+    const {placeCheckListId} = this.state;
+    const {finishAudit} = this.props;
+
+    finishAudit(placeCheckListId);
   };
 
   handleSubmit = (event: any) => {
@@ -65,7 +76,7 @@ class PlaceCheckListCriterionsEdit extends React.PureComponent<IProps> {
   };
 
   render() {
-    const {placeCheckListCriterions, errors} = this.props;
+    const {placeCheckListCriterions, checkList, errors} = this.props;
     let errorsMessage = null;
 
     if (!placeCheckListCriterions) {
@@ -95,9 +106,13 @@ class PlaceCheckListCriterionsEdit extends React.PureComponent<IProps> {
                         type="submit"
                         size="sm"
                         color="primary"
+                        disabled={!!checkList?.sended}
                         onClick={this.handleClick}
                       >
-                        <i className="fa fa-dot-circle-o" /> Закончить аудит
+                        <i className="fa fa-dot-circle-o" />
+                        {checkList?.sended
+                          ? ' Аудит проведен'
+                          : ' Закончить аудит'}
                       </Button>
                     </Col>
                     <Col lg="3">
@@ -197,6 +212,7 @@ class PlaceCheckListCriterionsEdit extends React.PureComponent<IProps> {
                             defaultValue={
                               placeCheckListCriterion.comment_from_auditor
                             }
+                            readOnly={!!checkList?.sended}
                           />
                         </Col>
                         <Col lg="3">
@@ -228,6 +244,7 @@ class PlaceCheckListCriterionsEdit extends React.PureComponent<IProps> {
 
 const mapStateToProps = (state: TState) => {
   return {
+    checkList: state.placeCheckLists.checkList,
     placeCheckListCriterions: state.placeCheckLists.placeCheckListCriterions,
     fetched: state.placeCheckLists.fetched,
     errors: state.placeCheckLists.errors,
@@ -240,6 +257,8 @@ const mapDispatchToProps = (dispatch: any): IDispatchProps => {
       dispatch(fetchPlaceCheckListCriterions(id)),
     editPlaceCheckList: (form: HTMLFormElement, id: number) =>
       dispatch(editPlaceCheckList(form, id)),
+    finishAudit: (id: number) => dispatch(finishAudit(id)),
+    fetchCheckList: (id: number) => dispatch(fetchCheckList(id)),
   };
 };
 

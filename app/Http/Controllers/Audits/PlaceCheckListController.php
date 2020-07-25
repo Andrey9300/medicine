@@ -96,6 +96,17 @@ class PlaceCheckListController extends Controller
             'placeCheckList' => $placeCheckList
         ]);
     }
+    public function showCheckList($id)
+    {
+        $currentUser = Auth::user();
+        $checkList = $currentUser->placeCheckLists()->get()->where('id', $id)->first();
+
+        $this->authorize('owner', $checkList);
+
+        return response()->json([
+            'checkList' => $checkList
+        ]);
+    }
 
     public function criterions($id)
     {
@@ -130,6 +141,13 @@ class PlaceCheckListController extends Controller
             $criterion->comment_at_auditor = $commentsAtAuditor[$key];
             $criterion->save();
         }
+    }
+    public function finishAudit(Request $request, $id)
+    {
+        $currentUser = Auth::user();
+        $placeCheckLists = $currentUser->placeCheckLists()->get()->where('id', $id)->first();
+        $placeCheckLists->sended = true;
+        $placeCheckLists->save();
     }
 
     public function destroy($id)

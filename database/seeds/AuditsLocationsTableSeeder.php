@@ -84,5 +84,37 @@ class AuditsLocationsTableSeeder extends Seeder
             'unit_id' => 3,
             'name' => 'Морозильные камеры'
         ]);
+
+        // for demo user
+        DB::table('audits_locations')->insert([
+            'id' => 20,
+            'unit_id' => 5,
+            'name' => 'Кухня ресторана'
+        ]);
+        DB::table('audits_locations')->insert([
+            'id' => 21,
+            'unit_id' => 5,
+            'name' => 'Общие производственные помещения'
+        ]);
+        DB::table('audits_locations')->insert([
+            'id' => 22,
+            'unit_id' => 5,
+            'name' => 'Банкетная служба'
+        ]);
+        DB::table('audits_locations')->insert([
+            'id' => 23,
+            'unit_id' => 6,
+            'name' => 'Склады “пищевые”'
+        ]);
+        DB::table('audits_locations')->insert([
+            'id' => 24,
+            'unit_id' => 6,
+            'name' => 'Холодильные камеры'
+        ]);
+        DB::table('audits_locations')->insert([
+            'id' => 25,
+            'unit_id' => 7,
+            'name' => 'Морозильные камеры'
+        ]);
     }
 }
