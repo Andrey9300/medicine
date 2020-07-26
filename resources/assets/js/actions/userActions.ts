@@ -12,7 +12,7 @@ export function loginUser(formElement: HTMLFormElement = null) {
           },
           type: 'LOGIN_USER_FULFILLED',
         });
-        history.pushState(null, null, '/services/lmk/organizations');
+        history.pushState(null, null, '/services/profile');
         window.location.reload();
       })
       .catch((errors) => {

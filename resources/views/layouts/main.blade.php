@@ -27,7 +27,8 @@
                 >
                     <a href="/blog" class="btn btn-primary btn-xl page-scroll wow fadeInUp"
                        data-wow-delay="0.3"
-                       style="margin-bottom: 30px; padding: 15px;white-space: normal; border-radius: 10px;">Блог</a>
+                       style="margin-bottom: 30px; padding: 15px;white-space: normal; border-radius: 10px;">Блог «Управление качеством»
+                    </a>
                     <a href="/lmk_welcome" class="btn btn-primary btn-xl page-scroll wow fadeInUp"
                        data-wow-delay="0.3" style="padding: 15px; border-radius: 10px;">Сервисы</a>
                 </div>
