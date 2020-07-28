@@ -107,16 +107,25 @@ class LoginComponent extends React.PureComponent<IProps> {
                           placeholder="Пароль"
                           required
                         />
-                        <i
-                          className={
-                            showPassword ? 'fa fa-eye' : 'fa fa-eye-slash'
-                          }
-                          aria-hidden="true"
-                          style={{cursor: 'pointer'}}
-                          onClick={() => {
-                            this.setState({showPassword: !showPassword});
+                        <div
+                          style={{
+                            display: 'flex',
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                            width: '30px',
                           }}
-                        />
+                        >
+                          <i
+                            className={
+                              showPassword ? 'fa fa-eye' : 'fa fa-eye-slash'
+                            }
+                            aria-hidden="true"
+                            style={{cursor: 'pointer'}}
+                            onClick={() => {
+                              this.setState({showPassword: !showPassword});
+                            }}
+                          />
+                        </div>
                       </InputGroup>
                       <Row>
                         <Col xs="12" lg="4">
