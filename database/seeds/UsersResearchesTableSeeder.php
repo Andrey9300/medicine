@@ -91,5 +91,87 @@ class UsersResearchesTableSeeder extends Seeder
             'user_id' => 1,
             'research_categories_id' => 26
         ]);
+        
+        // for demo user
+        DB::table('user_researches')->insert([
+            'id' => 18,
+            'user_id' => 4,
+            'research_categories_id' => 1
+        ]);
+        DB::table('user_researches')->insert([
+            'id' => 19,
+            'user_id' => 4,
+            'research_categories_id' => 2
+        ]);
+        DB::table('user_researches')->insert([
+            'id' => 20,
+            'user_id' => 4,
+            'research_categories_id' => 3
+        ]);
+        DB::table('user_researches')->insert([
+            'id' => 21,
+            'user_id' => 4,
+            'research_categories_id' => 4
+        ]);
+        DB::table('user_researches')->insert([
+            'id' => 22,
+            'user_id' => 4,
+            'research_categories_id' => 5
+        ]);
+        DB::table('user_researches')->insert([
+            'id' => 23,
+            'user_id' => 4,
+            'research_categories_id' => 6
+        ]);
+        DB::table('user_researches')->insert([
+            'id' => 24,
+            'user_id' => 4,
+            'research_categories_id' => 7
+        ]);
+        DB::table('user_researches')->insert([
+            'id' => 25,
+            'user_id' => 4,
+            'research_categories_id' => 9
+        ]);
+        DB::table('user_researches')->insert([
+            'id' => 26,
+            'user_id' => 4,
+            'research_categories_id' => 10
+        ]);
+        DB::table('user_researches')->insert([
+            'id' => 27,
+            'user_id' => 4,
+            'research_categories_id' => 11
+        ]);
+        DB::table('user_researches')->insert([
+            'id' => 28,
+            'user_id' => 4,
+            'research_categories_id' => 12
+        ]);
+        DB::table('user_researches')->insert([
+            'id' => 29,
+            'user_id' => 4,
+            'research_categories_id' => 13
+        ]);
+        DB::table('user_researches')->insert([
+            'id' => 30,
+            'user_id' => 4,
+            'research_categories_id' => 14
+        ]);
+        DB::table('user_researches')->insert([
+            'id' => 31,
+            'user_id' => 4,
+            'research_categories_id' => 15
+        ]);
+        DB::table('user_researches')->insert([
+            'id' => 32,
+            'user_id' => 4,
+            'research_categories_id' => 48
+        ]);
+        DB::table('user_researches')->insert([
+            'id' => 33,
+            'user_id' => 4,
+            'research_categories_id' => 26
+        ]);
     }
 }

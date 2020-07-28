@@ -55,5 +55,15 @@ class OrganizationsTableSeeder extends Seeder
             'head_position' => 'Зам. менеджер',
             'head_phone' => '5-555-555-55-55',
         ]);
+
+        // for demo user
+        DB::table('organizations')->insert([
+            'id' => 6,
+            'name' => 'ООО Колбасный цех',
+            'head_email' => 'demo@demo',
+            'category_id' => '3',
+            'head_position' => 'Зам. менеджер',
+            'head_phone' => '5-555-555-55-55',
+        ]);
     }
 }

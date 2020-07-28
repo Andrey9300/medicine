@@ -1,5 +1,4 @@
 import React from 'react';
-import {connect} from 'react-redux';
 import {
   fetchPlace,
   deletePlace,
@@ -8,33 +7,36 @@ import {
 import {Link} from 'react-router-dom';
 import {Row, Col, Card, CardHeader, CardBody} from 'reactstrap';
 import {createMarkup} from '../../../utils/errorsHelper';
-import {TState} from '../../../reducers';
 import {IPlace} from '../../../interface/audit/IPlace';
 import {CheckListsComponent} from '../checkLists/CheckLists';
 import {fetchPlaceCheckList} from '../../../actions/audit/placeCheckListActions';
 import {ICriterionList} from '../../../interface/audit/ICriterionList';
 
-interface IStateProps {
+interface IPlaceStateProps {
   place: IPlace;
-  placeCheckList: ICriterionList;
-  fetched: boolean;
-  errors: any;
+  placeCheckList?: ICriterionList;
+  fetched?: boolean;
+  errors?: any;
 }
 
-interface IDispatchProps {
-  clearPlace: typeof clearPlace;
-  fetchPlace: typeof fetchPlace;
-  deletePlace: typeof deletePlace;
-  fetchPlaceCheckList: typeof fetchPlaceCheckList;
+export interface IPlaceDispatchProps {
+  clearPlace?: typeof clearPlace;
+  fetchPlace?: typeof fetchPlace;
+  deletePlace?: typeof deletePlace;
+  fetchPlaceCheckList?: typeof fetchPlaceCheckList;
 }
 
-interface IProps extends IStateProps, IDispatchProps {
-  match: any;
+interface IPlaceProps extends IPlaceStateProps, IPlaceDispatchProps {
+  match?: any;
 }
 
-class Place extends React.PureComponent<IProps> {
+export class PlaceComponent extends React.PureComponent<IPlaceProps> {
   componentDidMount() {
     const {clearPlace, fetchPlaceCheckList, fetchPlace, match} = this.props;
+
+    if (!match) {
+      return;
+    }
 
     clearPlace();
     fetchPlaceCheckList(match.params.id);
@@ -104,50 +106,37 @@ class Place extends React.PureComponent<IProps> {
               </Row>
               <Row style={{borderTop: '1px solid #c2cfd6', padding: '12px 0'}}>
                 <Col>Помещение:</Col>
-                <Col>{place.name}</Col>
-              </Row>
-              <Row style={{borderTop: '1px solid #c2cfd6', padding: '12px 0'}}>
-                <Col>Чек лист:</Col>
                 <Col>
-                  {placeCheckList?.groupCriterion?.name}
-                  {!placeCheckList?.groupCriterion?.name && (
-                    <Link to={`/services/audits/place/edit/${place.id}`}>
-                      укажите чек лист
-                    </Link>
-                  )}
+                  <Link to={`/services/audits/place/${place.id}`}>
+                    {place.name}
+                  </Link>
                 </Col>
               </Row>
+              {placeCheckList && (
+                <Row
+                  style={{borderTop: '1px solid #c2cfd6', padding: '12px 0'}}
+                >
+                  <Col>Чек лист:</Col>
+                  <Col>
+                    {placeCheckList?.groupCriterion?.name}
+                    {!placeCheckList?.groupCriterion?.name && (
+                      <Link to={`/services/audits/place/edit/${place.id}`}>
+                        укажите чек лист
+                      </Link>
+                    )}
+                  </Col>
+                </Row>
+              )}
             </CardBody>
           </Card>
         </Col>
-        <CheckListsComponent
-          placeId={place.id}
-          placeCheckLists={placeCheckList}
-        />
+        {placeCheckList && (
+          <CheckListsComponent
+            placeId={place.id}
+            placeCheckLists={placeCheckList}
+          />
+        )}
       </Row>
     );
   }
 }
-
-const mapStateToProps = (state: TState) => {
-  return {
-    place: state.places.place,
-    placeCheckList: state.placeCheckLists.placeCheckList,
-    fetched: state.places.fetched,
-    errors: state.places.errors,
-  };
-};
-
-const mapDispatchToProps = (dispatch: any): IDispatchProps => {
-  return {
-    clearPlace: () => dispatch(clearPlace()),
-    fetchPlace: (id: number) => dispatch(fetchPlace(id)),
-    deletePlace: (id: number) => dispatch(deletePlace(id)),
-    fetchPlaceCheckList: (id: number) => dispatch(fetchPlaceCheckList(id)),
-  };
-};
-
-export const PlaceContainer = connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(Place);

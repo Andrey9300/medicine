@@ -96,6 +96,7 @@ class PlaceCheckListController extends Controller
             'placeCheckList' => $placeCheckList
         ]);
     }
+
     public function showCheckList($id)
     {
         $currentUser = Auth::user();
@@ -111,6 +112,8 @@ class PlaceCheckListController extends Controller
     public function criterions($id)
     {
         $placeCheckListCriterions = PlaceCheckListCriterion::where('place_check_lists_id', $id)->get();
+        $placeCheckList = PlaceCheckLists::where('id', '=', $id)->first();
+        $criterionList = CriterionList::where('id', '=', $placeCheckList->id)->first();
 
         foreach ($placeCheckListCriterions as $placeCheckListCriterion) {
             $this->authorize('owner', $placeCheckListCriterion);
@@ -118,7 +121,17 @@ class PlaceCheckListController extends Controller
             $placeCheckListCriterion->criterion = Criterions::find($placeCheckListCriterion->criterions_id);
         }
 
+        $place = Place::find($criterionList->place_id);
+        $location = Location::find($place->location_id);
+        $unit = Units::find($location->unit_id);
+
+        $this->authorize('owner', $unit);
+
+        $place->unit = $unit;
+        $place->location = $location;
+
         return response()->json([
+            'place' => $place,
             'placeCheckListCriterions' => $placeCheckListCriterions
         ]);
     }
@@ -142,6 +155,7 @@ class PlaceCheckListController extends Controller
             $criterion->save();
         }
     }
+
     public function finishAudit(Request $request, $id)
     {
         $currentUser = Auth::user();

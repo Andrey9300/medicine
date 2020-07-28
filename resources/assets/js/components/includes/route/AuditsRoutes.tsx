@@ -8,7 +8,7 @@ import {CriterionsContainer} from '../../audits/criterion/CriterionsContainer';
 import {AddPlaceCheckListContainer} from '../../audits/placeCheckList/AddPlaceCheckList/AddPlaceCheckList';
 import {PlaceCheckListCriterionsContainer} from '../../audits/placeCheckList/PlaceCheckListCriterions';
 import {PlaceCheckListCriterionsEditContainer} from '../../audits/placeCheckList/PlaceCheckListCriterionsEdit';
-import {PlaceContainer} from '../../audits/place/Place';
+import {PlaceContainer} from '../../audits/place/PlaceContainer';
 import {UnitContainer} from '../../audits/unit/Unit';
 import {LocationContainer} from '../../audits/location/Location';
 import {EditUnitContainer} from '../../audits/unit/Edit';

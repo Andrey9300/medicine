@@ -15,7 +15,7 @@ class GroupCriterionListController extends Controller
         $criterions = $request->criterions;
 
         if (!$criterions || !$request->group_criterion_name) {
-            return null;
+            return response()->json(['errors' => 'Выберите критерий'], 500);
         }
 
         $groupCriterion = GroupCriterion::firstOrCreate([

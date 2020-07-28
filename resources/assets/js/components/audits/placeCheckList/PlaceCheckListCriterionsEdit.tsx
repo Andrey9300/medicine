@@ -23,10 +23,13 @@ import {createMarkup} from '../../../utils/errorsHelper';
 import {IPlaceCheckListCriterion} from '../../../interface/audit/IPlaceCheckList';
 import {TState} from '../../../reducers';
 import {ICheckList} from '../../../interface/audit/CheckList';
+import {PlaceComponent} from '../place/Place';
+import {IPlace} from '../../../interface/audit/IPlace';
 
 interface IStateProps {
   checkList: ICheckList;
   placeCheckListCriterions: IPlaceCheckListCriterion[];
+  place: IPlace;
   fetched: boolean;
   errors: any;
 }
@@ -76,7 +79,7 @@ class PlaceCheckListCriterionsEdit extends React.PureComponent<IProps> {
   };
 
   render() {
-    const {placeCheckListCriterions, checkList, errors} = this.props;
+    const {placeCheckListCriterions, checkList, place, errors} = this.props;
     let errorsMessage = null;
 
     if (!placeCheckListCriterions) {
@@ -94,6 +97,7 @@ class PlaceCheckListCriterionsEdit extends React.PureComponent<IProps> {
     return (
       <div className="animated fadeIn">
         {errorsMessage}
+        <PlaceComponent place={place} />
         <Row>
           <Col xs="12" sm="12" md="12" lg="12" xl="12">
             <Card>
@@ -246,6 +250,7 @@ const mapStateToProps = (state: TState) => {
   return {
     checkList: state.placeCheckLists.checkList,
     placeCheckListCriterions: state.placeCheckLists.placeCheckListCriterions,
+    place: state.places.place,
     fetched: state.placeCheckLists.fetched,
     errors: state.placeCheckLists.errors,
   };

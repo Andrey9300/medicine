@@ -1,16 +1,22 @@
 import {Link} from 'react-router-dom';
 import React from 'react';
 import {connect} from 'react-redux';
-import {Row, Col, Card, CardHeader, CardBody, Table} from 'reactstrap';
-import {fetchAuditors} from '../../../actions/audit/auditorActions';
+import {Row, Col, Card, CardHeader, CardBody, Button} from 'reactstrap';
+import {
+  detachAuditor,
+  fetchAuditors,
+} from '../../../actions/audit/auditorActions';
 import {TState} from '../../../reducers';
+import {IUser} from '../../../interface/IUser';
 
 interface IStateProps {
-  auditors: any[];
+  auditors: IUser[];
+  user: any;
 }
 
 interface IDispatchProps {
   fetchAuditors: typeof fetchAuditors;
+  detachAuditor: typeof detachAuditor;
 }
 
 interface IProps extends IStateProps, IDispatchProps {}
@@ -22,8 +28,20 @@ class Auditors extends React.PureComponent<IProps> {
     fetchAuditors();
   }
 
+  private detachAuditor = (id: number) => {
+    const {detachAuditor} = this.props;
+
+    const result = confirm(
+      'Отозвать права у аудитора? Он не сможет смотреть ваши аудиты',
+    );
+
+    if (result) {
+      detachAuditor(id);
+    }
+  };
+
   render() {
-    const {auditors} = this.props;
+    const {auditors, user} = this.props;
 
     if (auditors.length === 0) {
       return (
@@ -60,28 +78,44 @@ class Auditors extends React.PureComponent<IProps> {
                 </Link>
               </CardHeader>
               <CardBody className="card-body">
-                <Table responsive>
-                  <thead>
-                    <tr>
-                      <th>ФИО</th>
-                      <th>E-mail</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {auditors.map((auditor) => {
-                      return (
-                        <tr key={auditor.id}>
-                          <td>
-                            <Link to={`/services/profiles/${auditor.id}`}>
-                              {auditor.fio}
-                            </Link>
-                          </td>
-                          <td>{auditor.email}</td>
-                        </tr>
-                      );
-                    })}
-                  </tbody>
-                </Table>
+                <Row
+                  style={{borderTop: '1px solid #c2cfd6', padding: '12px 0'}}
+                >
+                  <Col>ФИО:</Col>
+                  <Col>E-mail</Col>
+                  <Col>Доступ</Col>
+                </Row>
+                {auditors.map((auditor) => {
+                  const detachAuditor = () => this.detachAuditor(auditor.id);
+
+                  return (
+                    <Row
+                      key={auditor.id}
+                      style={{
+                        borderTop: '1px solid #c2cfd6',
+                        padding: '12px 0',
+                      }}
+                    >
+                      <Col>
+                        <Link to={`/services/profiles/${auditor.id}`}>
+                          {auditor.fio}
+                        </Link>
+                      </Col>
+                      <Col>{auditor.email}</Col>
+                      <Col>
+                        {user.id !== auditor.id && (
+                          <Button
+                            onClick={detachAuditor}
+                            size="sm"
+                            color="danger"
+                          >
+                            Отозвать доступ <i className="fa fa-trash" />
+                          </Button>
+                        )}
+                      </Col>
+                    </Row>
+                  );
+                })}
               </CardBody>
             </Card>
           </Col>
@@ -93,6 +127,7 @@ class Auditors extends React.PureComponent<IProps> {
 
 const mapStateToProps = (state: TState): IStateProps => {
   return {
+    user: state.users.currentUser,
     auditors: state.auditors.auditors,
   };
 };
@@ -100,6 +135,7 @@ const mapStateToProps = (state: TState): IStateProps => {
 const mapDispatchToProps = (dispatch: any): IDispatchProps => {
   return {
     fetchAuditors: () => dispatch(fetchAuditors()),
+    detachAuditor: (id: number) => dispatch(detachAuditor(id)),
   };
 };
 

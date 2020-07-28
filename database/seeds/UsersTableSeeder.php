@@ -39,7 +39,7 @@ class UsersTableSeeder extends Seeder
             'id' => 4,
             'fio' => 'Иванов Иван Иванович',
             'password' => bcrypt('demo'),
-            'email' => 'demo',
+            'email' => 'demo@demo',
             'active' => true,
             'role' => 'admin'
         ]);

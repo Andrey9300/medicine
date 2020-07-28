@@ -17,8 +17,9 @@ Route::middleware(['auth'])->group(function () {
     Route::prefix('users')->group(function () {
         Route::post('/store', 'UsersController@store');
         Route::post('/createAuditor', 'UsersController@createAuditor');
-        Route::post('/current', 'UsersController@currentUser');
+        Route::post('/detachAuditor/{id}', 'UsersController@detachAuditor');
         Route::post('/auditors', 'UsersController@showAuditors');
+        Route::post('/current', 'UsersController@currentUser');
         Route::post('/edit/{id}', 'UsersController@update');
         Route::post('/{id}', 'UsersController@showUser');
     });

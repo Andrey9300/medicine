@@ -19,6 +19,23 @@ export function fetchAuditors() {
   };
 }
 
+export function detachAuditor(id: number) {
+  return (dispatch: any) => {
+    axios
+      .post(`/users/detachAuditor/${id}`)
+      .then(() => {
+        alert('Права отозваны');
+        window.location.reload();
+      })
+      .catch((error) => {
+        dispatch({
+          payload: error,
+          type: 'AUDITORS_REJECTED',
+        });
+      });
+  };
+}
+
 export function clearAuditors() {
   return (dispatch: any) => {
     dispatch({

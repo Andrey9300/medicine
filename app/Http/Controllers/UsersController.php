@@ -65,9 +65,50 @@ class UsersController extends Controller
         foreach ($criterions as $criterion) {
             $newUser->criterions()->attach($criterion);
         }
-        
+
         foreach ($criterionLists as $criterionList) {
             $newUser->criterionLists()->attach($criterionList);
+        }
+    }
+
+    public function detachAuditor(Request $request, $id)
+    {
+        $userAuditor = User::find($id);
+
+        $userUnits = $userAuditor->units;
+        $placeCheckLists = $userAuditor->placeCheckLists;
+        $placeCheckListCriterion = $userAuditor->placeCheckListCriterion;
+        $groupCriterionLists = $userAuditor->groupCriterionLists;
+        $groupCriterions = $userAuditor->groupCriterions;
+        $criterions = $userAuditor->criterions;
+        $criterionLists = $userAuditor->criterionLists;
+
+        foreach ($userUnits as $userUnit) {
+            $userAuditor->units()->detach($userUnit);
+        }
+
+        foreach ($placeCheckLists as $placeCheckList) {
+            $userAuditor->placeCheckLists()->detach($placeCheckList);
+        }
+
+        foreach ($placeCheckListCriterion as $checkListCriterion) {
+            $userAuditor->placeCheckListCriterion()->detach($checkListCriterion);
+        }
+
+        foreach ($groupCriterionLists as $groupCriterionList) {
+            $userAuditor->groupCriterionLists()->detach($groupCriterionList);
+        }
+
+        foreach ($groupCriterions as $groupCriterion) {
+            $userAuditor->groupCriterions()->detach($groupCriterion);
+        }
+
+        foreach ($criterions as $criterion) {
+            $userAuditor->criterions()->detach($criterion);
+        }
+
+        foreach ($criterionLists as $criterionList) {
+            $userAuditor->criterionLists()->detach($criterionList);
         }
     }
 

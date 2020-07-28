@@ -50,5 +50,16 @@ class HospitalsTableSeeder extends Seeder
             'phone' => '8(495)-111-22-33',
             'user_id' => '3',
         ]);
+
+        // for demo user
+        DB::table('hospitals')->insert([
+            'id' => '5',
+            'name' => 'Медикал центр Здоровье',
+            'address' => 'Москва улица Генкова, д. 19',
+            'head_fio' => 'Габренко Петр Васильевич',
+            'shedule' => 'пн.- пт. 9.00-18.00 сб. 9.00-17.00, вс-вых.',
+            'phone' => '8(495)-111-22-33',
+            'user_id' => '4',
+        ]);
     }
 }

@@ -102,6 +102,10 @@ export function fetchPlaceCheckListCriterions(id: number) {
       .then((response) => {
         dispatch({
           payload: response,
+          type: 'PLACE_FULFILLED',
+        });
+        dispatch({
+          payload: response,
           type: 'PLACE_CHECK_LIST_CRITERIONS_FULFILLED',
         });
       })

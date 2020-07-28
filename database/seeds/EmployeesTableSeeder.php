@@ -270,5 +270,126 @@ class EmployeesTableSeeder extends Seeder
             'category_id' => '3'
         ]);
 
+        // for demo user
+        DB::table('employees')->insert([
+            'id' => 22,
+            'fio' => 'Кренко Иван Иванович',
+            'date_birthday' => '1990-10-05',
+            'date_employment' => '2017-10-05',
+            'medical_book' => '10000',
+            'user_id' => 4,
+            'organization_name' => 'ООО Колбасный цех',
+            'position' => 'Шеф повар',
+            'comments' => '',
+            'category_id' => '1'
+        ]);
+        DB::table('employees')->insert([
+            'id' => 23,
+            'fio' => 'Паркин Иван Анатольевич',
+            'date_birthday' => '1988-10-05',
+            'date_employment' => '2015-09-05',
+            'medical_book' => '10001',
+            'user_id' => 4,
+            'organization_name' => 'ООО Колбасный цех',
+            'position' => 'Шеф повар',
+            'comments' => '',
+            'category_id' => '2'
+        ]);
+        DB::table('employees')->insert([
+            'id' => 24,
+            'fio' => 'Бренкин Дмитрий Иванович',
+            'date_birthday' => '1991-10-05',
+            'date_employment' => '2017-01-05',
+            'medical_book' => '10002',
+            'user_id' => 4,
+            'organization_name' => 'ООО Колбасный цех',
+            'position' => 'Шеф повар',
+            'comments' => '',
+            'category_id' => '3'
+        ]);
+        DB::table('employees')->insert([
+            'id' => 25,
+            'fio' => 'Калин Олег Иванович',
+            'date_birthday' => '1990-10-05',
+            'date_employment' => '2016-12-05',
+            'medical_book' => '10003',
+            'user_id' => 4,
+            'organization_name' => 'ООО Колбасный цех',
+            'position' => 'Шеф повар',
+            'comments' => '',
+            'category_id' => '1'
+        ]);
+        DB::table('employees')->insert([
+            'id' => 26,
+            'fio' => 'Бранин Василий Петрович',
+            'date_birthday' => '1980-10-05',
+            'date_employment' => '2015-04-10',
+            'medical_book' => '10004',
+            'user_id' => 4,
+            'organization_name' => 'ООО Колбасный цех',
+            'position' => 'Шеф повар',
+            'comments' => '',
+            'category_id' => '2'
+        ]);
+        DB::table('employees')->insert([
+            'id' => 27,
+            'fio' => 'Бран Петр Васильевич',
+            'date_birthday' => '1993-10-05',
+            'date_employment' => '2013-10-10',
+            'medical_book' => '10005',
+            'user_id' => 4,
+            'organization_name' => 'ООО Колбасный цех',
+            'position' => 'Шеф повар',
+            'comments' => '',
+            'category_id' => '3'
+        ]);
+        DB::table('employees')->insert([
+            'id' => 28,
+            'fio' => 'Василкин Иван Дмитриевич',
+            'date_birthday' => '1990-10-05',
+            'date_employment' => '2016-10-10',
+            'medical_book' => '10006',
+            'user_id' => 4,
+            'organization_name' => 'ООО Колбасный цех',
+            'position' => 'Шеф повар',
+            'comments' => '',
+            'category_id' => '1'
+        ]);
+        DB::table('employees')->insert([
+            'id' => 29,
+            'fio' => 'Прен Анатолий Васильевич',
+            'date_birthday' => '1993-10-05',
+            'date_employment' => '2017-05-01',
+            'medical_book' => '10007',
+            'user_id' => 4,
+            'organization_name' => 'ООО Колбасный цех',
+            'position' => 'Шеф повар',
+            'comments' => '',
+            'category_id' => '2'
+        ]);
+        DB::table('employees')->insert([
+            'id' => 30,
+            'fio' => 'Пелен Василий Иванович',
+            'date_birthday' => '1993-10-05',
+            'date_employment' => '2015-10-10',
+            'medical_book' => '10008',
+            'user_id' => 4,
+            'organization_name' => 'ООО Колбасный цех',
+            'position' => 'Шеф повар',
+            'comments' => '',
+            'category_id' => '3'
+        ]);
+        DB::table('employees')->insert([
+            'id' => 31,
+            'fio' => 'Карикин Петр Васильевич',
+            'date_birthday' => '1993-10-05',
+            'date_employment' => '2017-04-04',
+            'medical_book' => '10009',
+            'user_id' => 4,
+            'organization_name' => 'ООО Колбасный цех',
+            'position' => 'Шеф повар',
+            'comments' => '',
+            'category_id' => '1'
+        ]);
     }
 }
