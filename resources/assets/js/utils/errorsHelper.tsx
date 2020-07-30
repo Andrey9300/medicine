@@ -10,7 +10,7 @@ export function createMarkup(errors: any) {
         errors[err].map((value: any, ind: number) => {
           err.push(<p key={`${index}${ind}`}>{value}</p>);
         });
-      } else {
+      } else if (typeof errors[item] === 'string') {
         err.push(<p key={index}>{errors[item]}</p>);
       }
     });

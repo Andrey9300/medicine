@@ -113,7 +113,7 @@ class PlaceCheckListController extends Controller
     {
         $placeCheckListCriterions = PlaceCheckListCriterion::where('place_check_lists_id', $id)->get();
         $placeCheckList = PlaceCheckLists::where('id', '=', $id)->first();
-        $criterionList = CriterionList::where('id', '=', $placeCheckList->id)->first();
+        $criterionList = CriterionList::where('id', '=', $placeCheckList->criterion_lists_id)->first();
 
         foreach ($placeCheckListCriterions as $placeCheckListCriterion) {
             $this->authorize('owner', $placeCheckListCriterion);

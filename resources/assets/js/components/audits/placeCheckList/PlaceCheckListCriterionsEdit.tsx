@@ -97,7 +97,7 @@ class PlaceCheckListCriterionsEdit extends React.PureComponent<IProps> {
     return (
       <div className="animated fadeIn">
         {errorsMessage}
-        <PlaceComponent place={place} />
+        <PlaceComponent place={place} showCheckList={false} />
         <Row>
           <Col xs="12" sm="12" md="12" lg="12" xl="12">
             <Card>

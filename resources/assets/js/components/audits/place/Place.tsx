@@ -28,9 +28,14 @@ export interface IPlaceDispatchProps {
 
 interface IPlaceProps extends IPlaceStateProps, IPlaceDispatchProps {
   match?: any;
+  showCheckList: boolean;
 }
 
 export class PlaceComponent extends React.PureComponent<IPlaceProps> {
+  public static defaultProps: Pick<IPlaceProps, 'showCheckList'> = {
+    showCheckList: true,
+  }
+
   componentDidMount() {
     const {clearPlace, fetchPlaceCheckList, fetchPlace, match} = this.props;
 
@@ -57,7 +62,7 @@ export class PlaceComponent extends React.PureComponent<IPlaceProps> {
   };
 
   render() {
-    const {place, placeCheckList, errors} = this.props;
+    const {place, placeCheckList, showCheckList, errors} = this.props;
     let errorsMessage = null;
 
     if (!place) {
@@ -112,7 +117,7 @@ export class PlaceComponent extends React.PureComponent<IPlaceProps> {
                   </Link>
                 </Col>
               </Row>
-              {placeCheckList && (
+              {showCheckList && (
                 <Row
                   style={{borderTop: '1px solid #c2cfd6', padding: '12px 0'}}
                 >
