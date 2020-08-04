@@ -1,6 +1,9 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import {clearEmployee, fetchEmployee} from '../../../actions/lmk/employeeActions';
+import {
+  clearEmployee,
+  fetchEmployee,
+} from '../../../actions/lmk/employeeActions';
 import {fetchOrganizations} from '../../../actions/lmk/organizationActions';
 import PropTypes from 'prop-types';
 import {
@@ -161,7 +164,7 @@ class EditEmployee extends React.PureComponent {
                         type="select"
                         name="category_id"
                         id="category_id"
-                        defaultValue={employee.category.id}
+                        value={employee.category.id}
                       >
                         {categories.map((category) => {
                           return (
@@ -182,7 +185,7 @@ class EditEmployee extends React.PureComponent {
                         type="select"
                         name="organization_name"
                         id="organization_name"
-                        defaultValue={employee.organization.name}
+                        value={employee.organization.name}
                       >
                         {organizations.map((organization) => {
                           return (

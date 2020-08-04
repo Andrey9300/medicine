@@ -12,6 +12,8 @@ class Employee extends Model
 
     protected $dates = ['deleted_at'];
 
+    protected $fillable = ['send_to_research'];
+
     public $timestamps = false;
 
     /**

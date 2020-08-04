@@ -40,21 +40,15 @@ export function editEmployee(
   };
 }
 
-export function editEmployeeJson(
-  formElement: any = null,
-  employeeId: number,
-) {
-  return (dispatch: any) => {
+export function sendToResearch(employeeId: number) {
+  return () => {
     axios
-      .post(`/employees/update/${employeeId}`, formElement)
+      .post(`/employees/sendToResearch/${employeeId}`)
       .then(() => {
-        alert('Сотрудник успешно отредактирован');
+        alert('Сотрудник отправлен на МО');
       })
       .catch((errors) => {
-        dispatch({
-          payload: getResponseError(errors),
-          type: 'EMPLOYEE_ADD_REJECTED',
-        });
+        console.error(errors);
       });
   };
 }
@@ -126,7 +120,11 @@ export function deleteEmployee(id: number, organizationId: number) {
       .post(`/employees/softDelete/${id}`)
       .then(() => {
         alert('Сотрудник в архиве');
-        history.pushState(null, null, `/services/lmk/organization/${organizationId}`);
+        history.pushState(
+          null,
+          null,
+          `/services/lmk/organization/${organizationId}`,
+        );
         window.location.reload();
       })
       .catch((error) => {

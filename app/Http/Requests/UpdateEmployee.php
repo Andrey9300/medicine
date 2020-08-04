@@ -24,9 +24,9 @@ class UpdateEmployee extends FormRequest
     public function rules()
     {
         return [
-            'fio' => "required|max:255",
-            'date_birthday' => 'date_format:"d-m-Y"|required',
-            'date_employment' => 'date_format:"d-m-Y"|required',
+            'fio' => "max:255",
+            'date_birthday' => 'date_format:"d-m-Y"',
+            'date_employment' => 'date_format:"d-m-Y"',
             'medical_book' => "max:255",
         ];
     }

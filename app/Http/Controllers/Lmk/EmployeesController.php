@@ -138,6 +138,17 @@ class EmployeesController extends Controller
         $employee->save();
     }
 
+    public function sendToResearch(UpdateEmployee $request, $id)
+    {
+        $employee = Employee::find($id);
+
+        $this->authorize('owner', $employee->organization);
+
+        $dateStartResearch = Carbon::now()->format('Y-m-d');
+        $employee->send_to_research = $dateStartResearch;
+        $employee->save();
+    }
+
     public function softDelete($id)
     {
         $userAdmin = IndexController::findAdmin();

@@ -4,7 +4,7 @@ import {RouteComponentProps} from 'react-router';
 import {
   fetchEmployee,
   fetchEmployeeResearches,
-  editEmployeeJson,
+  sendToResearch,
   clearEmployee,
   clearEmployeeResearches,
 } from '../../../../actions/lmk/employeeActions';
@@ -49,7 +49,7 @@ interface IDispatchProps {
   fetchEmployee: typeof fetchEmployee;
   fetchHospitals: typeof fetchHospitals;
   fetchOrganization: typeof fetchOrganization;
-  editEmployeeJson: typeof editEmployeeJson;
+  sendToResearch: typeof sendToResearch;
 }
 
 interface IProps extends IStateProps, IDispatchProps, RouteComponentProps {}
@@ -102,18 +102,15 @@ class PrintEmployeeComponent extends React.PureComponent<IProps, IState> {
     }
   }
 
-  sendToResearch() {
+  sendToResearch = () => {
     const {employeeId} = this.state;
-    const {employee, editEmployeeJson} = this.props;
+    const {sendToResearch} = this.props;
 
-    employee.send_to_research = DateHelper.getFullDate();
-
-    editEmployeeJson(employee, employeeId);
+    sendToResearch(employeeId);
   }
 
   getButtons() {
     const {employee} = this.props;
-    const sendToResearch = this.sendToResearch.bind(this);
 
     return (
       <div style={{display: 'flex'}}>
@@ -131,7 +128,7 @@ class PrintEmployeeComponent extends React.PureComponent<IProps, IState> {
           type="submit"
           size="sm"
           color="success pull-right"
-          onClick={sendToResearch}
+          onClick={this.sendToResearch}
           style={{marginLeft: '24px'}}
           disabled={employee.send_to_research ? true : false}
         >
@@ -261,8 +258,7 @@ const mapDispatchToProps = (dispatch: any): IDispatchProps => {
     fetchEmployee: (id: number) => dispatch(fetchEmployee(id)),
     fetchHospitals: () => dispatch(fetchHospitals()),
     fetchOrganization: (id: number) => dispatch(fetchOrganization(id)),
-    editEmployeeJson: (formElement: any, id: number) =>
-      dispatch(editEmployeeJson(formElement, id)),
+    sendToResearch: (id: number) => dispatch(sendToResearch(id)),
   };
 };
 

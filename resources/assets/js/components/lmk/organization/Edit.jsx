@@ -104,7 +104,7 @@ class EditOrganization extends React.PureComponent {
                         type="select"
                         name="category_id"
                         id="select"
-                        defaultValue={organization.category.id}
+                        value={organization.category.id}
                       >
                         {categories.map((category) => {
                           return (

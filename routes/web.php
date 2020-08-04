@@ -13,6 +13,12 @@ Route::view('/{path?}', 'layouts.app')
     ->name('react');
 Route::get('/checkResearches', 'CronController@checkResearches');
 
+
+// help
+// php artisan make:model PestLocation -m
+// php artisan make:controller PestLocationController --resource --model=Http/Models/Pest/PestLocation
+// php artisan make:policy PostPolicy --model=Post
+
 Route::middleware(['auth'])->group(function () {
     Route::prefix('users')->group(function () {
         Route::post('/store', 'UsersController@store');
@@ -68,6 +74,7 @@ Route::middleware(['auth'])->group(function () {
         Route::post('/forceDelete/{id}', 'Lmk\EmployeesController@forceDelete');
         Route::post('/restore/{id}', 'Lmk\EmployeesController@restore');
         Route::post('/update/{id}', 'Lmk\EmployeesController@update');
+        Route::post('/sendToResearch/{id}', 'Lmk\EmployeesController@sendToResearch');
         Route::post('/{id}', 'Lmk\EmployeesController@show');
         Route::post('/', 'Lmk\EmployeesController@showAll');
 
