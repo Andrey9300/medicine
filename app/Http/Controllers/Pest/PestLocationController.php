@@ -2,26 +2,31 @@
 
 namespace App\Http\Controllers\Pest;
 
-use App\Http\Models\Audits\Place;
+use App\Http\Models\Pest\PestLocation;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class PestLocationController extends Controller
 {
     public function store(Request $request)
     {
-        $place = new Place;
-        $place->name = $request->name;
-        $place->location_id =  $request->id;
-        $place->save();
+        $currentUser = Auth::user();
+
+        $pestLocation = new PestLocation;
+        $pestLocation->name = $request->name;
+        $pestLocation->save();
+
+        $currentUser->pestLocations()->attach($pestLocation);
     }
 
     public function show($id)
     {
-        $place = Place::find($id);
-        $this->authorize('owner', $place);
+        $pestLocation = PestLocation::find($id);
+
+        $this->authorize('owner', $pestLocation);
 
         return response()->json([
-            'place' => $place
+            'pestLocation' => $pestLocation
         ]);
     }
 
@@ -30,26 +35,26 @@ class PestLocationController extends Controller
         $currentUser = Auth::user();
 
         return response()->json([
-            'places' => $currentUser->places()->get()
+            'pestLocations' => $currentUser->pestLocations()->get()
         ]);
     }
 
     public function update(Request $request, $id)
     {
-        $place = Place::find($id);
+        $pestLocation = PestLocation::find($id);
 
-        $this->authorize('owner', $place);
+        $this->authorize('owner', $pestLocation);
 
-        $place->name = $request->name;
-        $place->save();
+        $pestLocation->name = $request->name;
+        $pestLocation->save();
     }
 
     public function destroy($id)
     {
-        $place = Place::find($id);
+        $pestLocation = PestLocation::find($id);
 
-        $this->authorize('owner', $place);
+        $this->authorize('owner', $pestLocation);
 
-        $place->delete();
+        $pestLocation->delete();
     }
 }

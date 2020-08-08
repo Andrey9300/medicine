@@ -3,7 +3,7 @@ import {connect} from 'react-redux';
 import {
   clearPestLocation,
   fetchPestLocation,
-} from '../../actions/pest/locationActions';
+} from '../../../actions/pest/locationActions';
 import {
   Row,
   Col,
@@ -17,10 +17,10 @@ import {
   Label,
   Input,
 } from 'reactstrap';
-import {editPestLocation} from '../../actions/pest/locationActions';
-import {createMarkup} from '../../utils/errorsHelper';
-import {IPestLocation} from '../../interface/pest/IPestLocation';
-import {TState} from '../../reducers';
+import {editPestLocation} from '../../../actions/pest/locationActions';
+import {createMarkup} from '../../../utils/errorsHelper';
+import {IPestLocation} from '../../../interface/pest/IPestLocation';
+import {TState} from '../../../reducers';
 
 interface IStateProps {
   pestLocation: IPestLocation;
@@ -45,6 +45,7 @@ class EditPestLocation extends React.PureComponent<IProps, IState> {
   public state: IState = {
     pestLocationId: null,
   };
+
   componentDidMount() {
     const {match, clearPestLocation, fetchPestLocation} = this.props;
 
@@ -85,7 +86,7 @@ class EditPestLocation extends React.PureComponent<IProps, IState> {
           <Col xs="12" md="6">
             <Card>
               <Form className="form-horizontal" onSubmit={this.handleSubmit}>
-                <CardHeader>Редактировать помещение</CardHeader>
+                <CardHeader>Редактировать локацию</CardHeader>
                 <CardBody className="card-body">
                   <FormGroup row>
                     <Col md="3">

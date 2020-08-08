@@ -1,10 +1,6 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import {
-  clearPestLocation,
-  fetchPestLocation,
-} from '../../actions/pest/locationActions';
-import {
   Row,
   Col,
   Button,
@@ -17,20 +13,24 @@ import {
   Label,
   Input,
 } from 'reactstrap';
-import {editPestLocation} from '../../actions/pest/locationActions';
-import {createMarkup} from '../../utils/errorsHelper';
-import {IPestLocation} from '../../interface/pest/IPestLocation';
-import {TState} from '../../reducers';
+import {
+  clearPestPlace,
+  fetchPestPlace,
+  editPestPlace,
+} from '../../../actions/pest/placeActions';
+import {createMarkup} from '../../../utils/errorsHelper';
+import {IPestPlace} from '../../../interface/pest/IPestPlace';
+import {TState} from '../../../reducers';
 
 interface IStateProps {
-  pestLocation: IPestLocation;
+  pestPlace: IPestPlace;
   errors: any;
 }
 
 interface IDispatchProps {
-  clearPestLocation: typeof clearPestLocation;
-  fetchPestLocation: typeof fetchPestLocation;
-  editPestLocation: typeof editPestLocation;
+  clearPestPlace: typeof clearPestPlace;
+  fetchPestPlace: typeof fetchPestPlace;
+  editPestPlace: typeof editPestPlace;
 }
 
 interface IProps extends IStateProps, IDispatchProps {
@@ -38,32 +38,33 @@ interface IProps extends IStateProps, IDispatchProps {
 }
 
 interface IState {
-  pestLocationId: number;
+  pestPlaceId: number;
 }
 
-class EditPestLocation extends React.PureComponent<IProps, IState> {
+class EditPestPlace extends React.PureComponent<IProps, IState> {
   public state: IState = {
-    pestLocationId: null,
+    pestPlaceId: null,
   };
+
   componentDidMount() {
-    const {match, clearPestLocation, fetchPestLocation} = this.props;
+    const {match, clearPestPlace, fetchPestPlace} = this.props;
 
-    clearPestLocation();
-    fetchPestLocation(match.params.id);
+    clearPestPlace();
+    fetchPestPlace(match.params.id);
 
-    this.setState({pestLocationId: match.params.id});
+    this.setState({pestPlaceId: match.params.id});
   }
 
   private handleSubmit = (event: any) => {
     event.preventDefault();
-    const {pestLocationId} = this.state;
-    const {editPestLocation} = this.props;
+    const {pestPlaceId} = this.state;
+    const {editPestPlace} = this.props;
 
-    editPestLocation(document.querySelector('form'), pestLocationId);
+    editPestPlace(document.querySelector('form'), pestPlaceId);
   };
 
   render() {
-    const {pestLocation, errors} = this.props;
+    const {pestPlace, errors} = this.props;
     let errorsMessage = null;
 
     if (errors) {
@@ -74,7 +75,7 @@ class EditPestLocation extends React.PureComponent<IProps, IState> {
       );
     }
 
-    if (!pestLocation) {
+    if (!pestPlace) {
       return null;
     }
 
@@ -85,7 +86,7 @@ class EditPestLocation extends React.PureComponent<IProps, IState> {
           <Col xs="12" md="6">
             <Card>
               <Form className="form-horizontal" onSubmit={this.handleSubmit}>
-                <CardHeader>Редактировать помещение</CardHeader>
+                <CardHeader>Редактировать точку контроля</CardHeader>
                 <CardBody className="card-body">
                   <FormGroup row>
                     <Col md="3">
@@ -96,7 +97,7 @@ class EditPestLocation extends React.PureComponent<IProps, IState> {
                         type="text"
                         name="name"
                         id="name"
-                        defaultValue={pestLocation.name}
+                        defaultValue={pestPlace.name}
                       />
                     </Col>
                   </FormGroup>
@@ -117,21 +118,21 @@ class EditPestLocation extends React.PureComponent<IProps, IState> {
 
 const mapStateToProps = (state: TState) => {
   return {
-    errors: state.pestLocation.errors,
-    pestLocation: state.pestLocation.pestLocation,
+    errors: state.pestPlace.errors,
+    pestPlace: state.pestPlace.pestPlace,
   };
 };
 
 const mapDispatchToProps = (dispatch: any): IDispatchProps => {
   return {
-    clearPestLocation: () => dispatch(clearPestLocation()),
-    fetchPestLocation: (id: number) => dispatch(fetchPestLocation(id)),
-    editPestLocation: (form: HTMLFormElement, id: number) =>
-      dispatch(editPestLocation(form, id)),
+    clearPestPlace: () => dispatch(clearPestPlace()),
+    fetchPestPlace: (id: number) => dispatch(fetchPestPlace(id)),
+    editPestPlace: (form: HTMLFormElement, id: number) =>
+      dispatch(editPestPlace(form, id)),
   };
 };
 
-export const EditPestLocationContainer = connect(
+export const EditPestPlaceContainer = connect(
   mapStateToProps,
   mapDispatchToProps,
-)(EditPestLocation);
+)(EditPestPlace);

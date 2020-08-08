@@ -1,9 +1,9 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import {Row, Col, Button, Form, Label, Input} from 'reactstrap';
-import {addPestLocation} from '../../actions/pest/locationActions';
-import {createMarkup} from '../../utils/errorsHelper';
-import {TState} from '../../reducers';
+import {addPestLocation} from '../../../actions/pest/locationActions';
+import {createMarkup} from '../../../utils/errorsHelper';
+import {TState} from '../../../reducers';
 
 interface IStateProps {
   errors: any;
@@ -13,20 +13,18 @@ interface IDispatchProps {
   addPestLocation: typeof addPestLocation;
 }
 
-interface IProps extends IStateProps, IDispatchProps {
-  locationId: number;
-}
+interface IProps extends IStateProps, IDispatchProps {}
 
 class NewPestLocation extends React.PureComponent<IProps> {
   handleSubmit = (event: any) => {
     event.preventDefault();
-    const {locationId, addPestLocation} = this.props;
+    const {addPestLocation} = this.props;
 
-    addPestLocation(document.querySelector(`#pestLocation${locationId}`));
+    addPestLocation(document.querySelector('#pestLocation'));
   };
 
   render() {
-    const {errors, locationId} = this.props;
+    const {errors} = this.props;
     let errorsMessage = null;
 
     if (errors) {
@@ -41,24 +39,15 @@ class NewPestLocation extends React.PureComponent<IProps> {
       <Form
         className="form-horizontal"
         onSubmit={this.handleSubmit}
-        id={`pestLocation${locationId}`}
+        id="pestLocation"
       >
         {errorsMessage}
         <Row>
-          <Col xs="2">
-            <Label>Добавить помещение</Label>
-          </Col>
           <Col xs="4">
             <Input
               type="text"
               name="name"
-              pestLocationholder="Наименование"
-              required
-            />
-            <Input
-              type="hidden"
-              name="locationId"
-              value={locationId}
+              placeholder="Наименование"
               required
             />
           </Col>

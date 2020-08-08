@@ -12,6 +12,7 @@ import {NewUserContainer} from '../../user/New';
 import {CurrentUserContainer} from '../../user/CurrentUser';
 import {LmkRoutes} from './LmkRoutes';
 import {AuditsRoutes} from './AuditsRoutes';
+import {PestRoutes} from "./PestRoutes";
 
 export class Routes extends React.PureComponent {
   render() {
@@ -64,6 +65,7 @@ export class Routes extends React.PureComponent {
         />
         <LmkRoutes />
         <AuditsRoutes />
+        <PestRoutes />
       </>
     );
   }

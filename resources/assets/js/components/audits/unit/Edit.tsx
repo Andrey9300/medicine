@@ -1,6 +1,5 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import {clearUnit, fetchUnit} from '../../../actions/audit/unitActions';
 import {
   Row,
   Col,
@@ -14,7 +13,7 @@ import {
   Label,
   Input,
 } from 'reactstrap';
-import {editUnit} from '../../../actions/audit/unitActions';
+import {editUnit, clearUnit, fetchUnit} from '../../../actions/audit/unitActions';
 import {createMarkup} from '../../../utils/errorsHelper';
 import {TState} from '../../../reducers';
 import {IUnit} from '../../../interface/audit/IUnit';

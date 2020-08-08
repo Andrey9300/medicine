@@ -1,32 +1,32 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import {Row, Col, Button, Form, Label, Input} from 'reactstrap';
-import {addPestLocation} from '../../actions/pest/locationActions';
-import {createMarkup} from '../../utils/errorsHelper';
-import {TState} from '../../reducers';
+import {addPestPlace} from '../../../actions/pest/placeActions';
+import {createMarkup} from '../../../utils/errorsHelper';
+import {TState} from '../../../reducers';
 
 interface IStateProps {
   errors: any;
 }
 
 interface IDispatchProps {
-  addPestLocation: typeof addPestLocation;
+  addPestPlace: typeof addPestPlace;
 }
 
 interface IProps extends IStateProps, IDispatchProps {
   locationId: number;
 }
 
-class NewPestLocation extends React.PureComponent<IProps> {
+class NewPestPlace extends React.PureComponent<IProps> {
   handleSubmit = (event: any) => {
     event.preventDefault();
-    const {locationId, addPestLocation} = this.props;
+    const {addPestPlace} = this.props;
 
-    addPestLocation(document.querySelector(`#pestLocation${locationId}`));
+    addPestPlace(document.querySelector('#pestPlace'));
   };
 
   render() {
-    const {errors, locationId} = this.props;
+    const {locationId, errors} = this.props;
     let errorsMessage = null;
 
     if (errors) {
@@ -41,18 +41,15 @@ class NewPestLocation extends React.PureComponent<IProps> {
       <Form
         className="form-horizontal"
         onSubmit={this.handleSubmit}
-        id={`pestLocation${locationId}`}
+        id="pestPlace"
       >
         {errorsMessage}
         <Row>
-          <Col xs="2">
-            <Label>Добавить помещение</Label>
-          </Col>
           <Col xs="4">
             <Input
               type="text"
               name="name"
-              pestLocationholder="Наименование"
+              placeholder="Наименование"
               required
             />
             <Input
@@ -75,17 +72,17 @@ class NewPestLocation extends React.PureComponent<IProps> {
 
 const mapStateToProps = (state: TState) => {
   return {
-    errors: state.pestLocation.errors,
+    errors: state.pestPlace.errors,
   };
 };
 
 const mapDispatchToProps = (dispatch: any): IDispatchProps => {
   return {
-    addPestLocation: (form: HTMLFormElement) => dispatch(addPestLocation(form)),
+    addPestPlace: (form: HTMLFormElement) => dispatch(addPestPlace(form)),
   };
 };
 
-export const NewPestLocationContainer = connect(
+export const NewPestPlaceContainer = connect(
   mapStateToProps,
   mapDispatchToProps,
-)(NewPestLocation);
+)(NewPestPlace);

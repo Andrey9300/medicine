@@ -7,6 +7,7 @@ import {Nav, NavItem} from 'reactstrap';
 import {TState} from '../../../reducers';
 import {LmkSidebarComponent} from './LmkSidebar';
 import {AuditSidebarComponent} from './AuditSidebar';
+import {PestSidebarComponent} from './PestSidebar';
 
 interface IStateProps {
   currentUser: {
@@ -42,6 +43,7 @@ class SidebarComponent extends React.PureComponent<IProps> {
           </NavItem>
           <LmkSidebarComponent />
           <AuditSidebarComponent />
+          <PestSidebarComponent />
           <NavItem>
             <Link to={'/services/lmk/'} onClick={this.logout}>
               <i className="fa fa-lock" aria-hidden="true" /> Выход

@@ -13,7 +13,6 @@ Route::view('/{path?}', 'layouts.app')
     ->name('react');
 Route::get('/checkResearches', 'CronController@checkResearches');
 
-
 // help
 // php artisan make:model PestLocation -m
 // php artisan make:controller PestLocationController --resource --model=Http/Models/Pest/PestLocation
@@ -149,5 +148,32 @@ Route::middleware(['auth'])->group(function () {
         Route::post('/update/{id}', 'Audits\PlaceCheckListController@update');
         Route::post('/{id}', 'Audits\PlaceCheckListController@show');
         Route::post('/', 'Audits\PlaceCheckListController@showAll');
+    });
+
+
+    Route::prefix('pest')->group(function () {
+        Route::prefix('locations')->group(function () {
+            Route::post('/store', 'Pest\PestLocationController@store');
+            Route::post('/destroy/{id}', 'Pest\PestLocationController@destroy');
+            Route::post('/update/{id}', 'Pest\PestLocationController@update');
+            Route::post('/{id}', 'Pest\PestLocationController@show');
+            Route::post('/', 'Pest\PestLocationController@showAll');
+        });
+
+        Route::prefix('places')->group(function () {
+            Route::post('/store', 'Pest\PestPlaceController@store');
+            Route::post('/destroy/{id}', 'Pest\PestPlaceController@destroy');
+            Route::post('/update/{id}', 'Pest\PestPlaceController@update');
+            Route::post('/{id}', 'Pest\PestPlaceController@show');
+            Route::post('/forLocation/{id}', 'Pest\PestPlaceController@showAllForLocation');
+        });
+        
+        Route::prefix('control')->group(function () {
+            Route::post('/store', 'Pest\PestControlController@store');
+            Route::post('/destroy/{id}', 'Pest\PestControlController@destroy');
+            Route::post('/update/{id}', 'Pest\PestControlController@update');
+            Route::post('/{id}', 'Pest\PestControlController@show');
+            Route::post('/forLocation/{id}', 'Pest\PestControlController@showAllForLocation');
+        });
     });
 });

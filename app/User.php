@@ -122,4 +122,9 @@ class User extends Authenticatable
     {
         return $this->belongsToMany('App\Http\Models\Audits\PlaceCheckListCriterion', 'user_place_check_list_criterion', 'user_id', 'list_id');
     }
+
+    public function pestLocations()
+    {
+        return $this->belongsToMany('App\Http\Models\Pest\PestLocation', 'pest_user_locations', 'user_id', 'location_id');
+    }
 }
