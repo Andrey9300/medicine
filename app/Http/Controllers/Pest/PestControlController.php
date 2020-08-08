@@ -15,18 +15,19 @@ class PestControlController extends Controller
     {
         $pestControl = new PestControl;
         $pestControl->location_id = $request->locationId;
+        $pestControl->comment = $request->comment;
         $pestControl->created_at = Carbon::now()->format('Y-m-d');
         $pestControl->save();
 
         $placeIds = $request->placeId;
         $checks = $request->checked;
         $counts = $request->count;
-        $changes = $request->changed;
+        $changes = is_null($request->changed) ? [] : $request->changed;
 
         foreach ($placeIds as $key => $value) {
             $pestControlCriterion = new PestControlCriterion;
 
-            $pestControlCriterion->checked = array_key_exists($key, $checks) ? true : false;
+            $pestControlCriterion->checked = $checks[$key];
             $pestControlCriterion->count = $counts[$key];
             $pestControlCriterion->changed = array_key_exists($key, $changes) ? true : false;
             $pestControlCriterion->place_id = $placeIds[$key];
@@ -60,7 +61,7 @@ class PestControlController extends Controller
 
         $this->authorize('owner', $pestLocation);
 
-        $pestControls = PestControl::where('id', '=', $id)->get();
+        $pestControls = PestControl::where('location_id', '=', $id)->get();
 
         return response()->json([
             'pestControls' => $pestControls
@@ -70,18 +71,37 @@ class PestControlController extends Controller
     public function update(Request $request, $id)
     {
         $pestControl = PestControl::find($id);
+        $pestLocation = PestLocation::find($pestControl->location_id);
 
-        $this->authorize('owner', $pestControl);
+        $this->authorize('owner', $pestLocation);
 
-        $pestControl->name = $request->name;
+        $pestControl->comment = $request->comment;
         $pestControl->save();
+
+        $pestControlCriterionIds = $request->pestControlCriterionId;
+        $placeIds = $request->placeId;
+        $checks = $request->checked;
+        $counts = $request->count;
+        $changes = is_null($request->changed) ? [] : $request->changed;
+
+        foreach ($pestControlCriterionIds as $key => $value) {
+            $pestControlCriterion = PestControlCriterion::find($value);
+
+            $pestControlCriterion->checked = $checks[$key];
+            $pestControlCriterion->count = $counts[$key];
+            $pestControlCriterion->changed = array_key_exists($key, $changes) ? true : false;
+            $pestControlCriterion->place_id = $placeIds[$key];
+            $pestControlCriterion->pest_control_id = $pestControl->id;
+            $pestControlCriterion->save();
+        }
     }
 
     public function destroy($id)
     {
         $pestControl = PestControl::find($id);
+        $pestLocation = PestLocation::find($pestControl->location_id);
 
-        $this->authorize('owner', $pestControl);
+        $this->authorize('owner', $pestLocation);
 
         $pestControl->delete();
     }

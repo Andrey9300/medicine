@@ -4,8 +4,11 @@ import {Card, CardHeader, CardBody, Row, Col} from 'reactstrap';
 import {NewPestLocationContainer} from './New';
 import {IPestLocation} from '../../../interface/pest/IPestLocation';
 import {fetchPestLocations} from '../../../actions/pest/locationActions';
+import {IPestUnit} from '../../../interface/pest/IPestUnit';
+import {PestUnitContainer} from '../pestUnit/PestUnitContainer';
 
 interface IPestLocationsStateProps {
+  pestUnit: IPestUnit;
   pestLocations: IPestLocation[];
   fetched?: boolean;
   errors?: any;
@@ -31,7 +34,7 @@ export class PestLocationsComponent extends React.PureComponent<
   }
 
   render() {
-    const {pestLocations} = this.props;
+    const {pestLocations, pestUnit} = this.props;
 
     if (!pestLocations || pestLocations.length === 0) {
       return (
@@ -55,8 +58,18 @@ export class PestLocationsComponent extends React.PureComponent<
 
     return (
       <div className="animated fadeIn">
+        <PestUnitContainer />
         <Row>
           <Col xs="12" lg="8">
+            {!pestUnit && (
+              <Card>
+                <CardBody>
+                  <Link to={`/services/pest/units/create`}>
+                    Добавить информацию об объекте
+                  </Link>
+                </CardBody>
+              </Card>
+            )}
             <Card>
               <CardHeader>
                 <i className="fa fa-plus" aria-hidden="true" />

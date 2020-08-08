@@ -16,6 +16,7 @@ class PestPlaceController extends Controller
 
         $pestPlace = new PestPlace;
         $pestPlace->name = $request->name;
+        $pestPlace->type = $request->type;
         $pestPlace->location_id = $pestLocation->id;
         $pestPlace->save();
     }

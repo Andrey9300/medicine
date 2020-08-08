@@ -32,5 +32,9 @@ class DatabaseSeeder extends Seeder
         $this->call(UserCriterionsTableSeeder::class);
 
         $this->call(UserUnitsTableSeeder::class);
+
+        $this->call(PestLocationTableSeeder::class);
+        $this->call(PestUserLocationTableSeeder::class);
+        $this->call(PestPlaceTableSeeder::class);
     }
 }

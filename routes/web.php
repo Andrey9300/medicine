@@ -174,6 +174,13 @@ Route::middleware(['auth'])->group(function () {
             Route::post('/update/{id}', 'Pest\PestControlController@update');
             Route::post('/{id}', 'Pest\PestControlController@show');
             Route::post('/forLocation/{id}', 'Pest\PestControlController@showAllForLocation');
+        }); 
+        
+        Route::prefix('units')->group(function () {
+            Route::post('/store', 'Pest\PestUnitController@store');
+            Route::post('/current', 'Pest\PestUnitController@current');
+            Route::post('/destroy/{id}', 'Pest\PestUnitController@destroy');
+            Route::post('/update/current', 'Pest\PestUnitController@update');
         });
     });
 });

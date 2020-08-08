@@ -15,7 +15,7 @@ class CreatePestControlCriteriaTable extends Migration
     {
         Schema::create('pest_control_criteria', function (Blueprint $table) {
             $table->increments('id');
-            $table->boolean('checked')->nullable();
+            $table->string('checked')->nullable();
             $table->integer('count')->nullable();
             $table->boolean('changed')->nullable();
             $table->integer('place_id')->unsigned();

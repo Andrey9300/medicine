@@ -4,6 +4,7 @@ import {Row, Col, Button, Form, Label, Input} from 'reactstrap';
 import {addPestPlace} from '../../../actions/pest/placeActions';
 import {createMarkup} from '../../../utils/errorsHelper';
 import {TState} from '../../../reducers';
+import {TPestPlaceType} from '../../../interface/pest/IPestPlace';
 
 interface IStateProps {
   errors: any;
@@ -58,6 +59,13 @@ class NewPestPlace extends React.PureComponent<IProps> {
               value={locationId}
               required
             />
+          </Col>
+          <Col xs="4">
+            <Input type="select" name="type">
+              <option value="1">Насекомые</option>
+              <option value="2">Летучие</option>
+              <option value="3">Грызуны</option>
+            </Input>
           </Col>
           <Col xs="2">
             <Button type="submit" size="sm" color="success">

@@ -2,11 +2,15 @@ import {IPestPlace} from './IPestPlace';
 
 export interface IPestControl {
   id: number;
+  comment: string;
   created_at: string;
 }
 
+export type TChecked = '1' | '2' | '3';
+
 export interface IPestControlCriterion {
-  checked: boolean;
+  id: number;
+  checked: TChecked;
   count: number;
   changed: boolean;
   place_id: number;

@@ -5,7 +5,7 @@ import {Card, CardHeader, CardBody, Row, Col, Collapse} from 'reactstrap';
 import {IPestControl} from '../../../interface/pest/IPestControl';
 import {fetchPestControlsForLocation} from '../../../actions/pest/controlActions';
 import {NewPestControlContainer} from './New';
-import {ExpandComponent} from "../../audits/objects/HeaderObject";
+import {ExpandComponent} from '../../audits/objects/HeaderObject';
 
 interface IPestControlsStateProps {
   pestControls: IPestControl[];
@@ -31,7 +31,7 @@ export class PestControlsComponent extends React.PureComponent<
   IPestControlsProps
 > {
   public state: IState = {
-    collapse: false,
+    collapse: true,
   };
 
   private toggle = () => {
@@ -55,7 +55,6 @@ export class PestControlsComponent extends React.PureComponent<
 
     return (
       <>
-        <NewPestControlContainer locationId={locationId} />
         <Card>
           <CardHeader>
             <i className="fa fa-list" aria-hidden="true" />
@@ -63,34 +62,35 @@ export class PestControlsComponent extends React.PureComponent<
             <ExpandComponent collapse={collapse} toggle={this.toggle} />
           </CardHeader>
           <Collapse isOpen={collapse}>
-          <CardBody className="card-body">
-            <Row
-              style={{
-                borderBottom: '1px solid #c2cfd6',
-                marginBottom: '8px',
-                paddingBottom: '8px',
-              }}
-            >
-              <Col xs="2">Дата</Col>
-            </Row>
-            {pestControls.map((pestControl, index) => (
+            <CardBody className="card-body">
               <Row
-                key={`${pestControl.id}${index}`}
                 style={{
                   borderBottom: '1px solid #c2cfd6',
                   marginBottom: '8px',
                   paddingBottom: '8px',
                 }}
               >
-                <Col xs="2">
-                  <Link to={`/services/pest/control/${pestControl.id}`}>
-                    {pestControl.created_at}
-                  </Link>
-                </Col>
+                <Col xs="2">Дата</Col>
               </Row>
-            ))}
-          </CardBody>
+              {pestControls.map((pestControl, index) => (
+                <Row
+                  key={`${pestControl.id}${index}`}
+                  style={{
+                    borderBottom: '1px solid #c2cfd6',
+                    marginBottom: '8px',
+                    paddingBottom: '8px',
+                  }}
+                >
+                  <Col xs="2">
+                    <Link to={`/services/pest/control/${pestControl.id}`}>
+                      {pestControl.created_at}
+                    </Link>
+                  </Col>
+                </Row>
+              ))}
+            </CardBody>
           </Collapse>
+          <NewPestControlContainer locationId={locationId} />
         </Card>
       </>
     );

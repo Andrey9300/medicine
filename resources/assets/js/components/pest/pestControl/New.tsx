@@ -6,7 +6,6 @@ import {
   Button,
   Form,
   CardHeader,
-  Card,
   CardBody,
   CardFooter,
   Input,
@@ -18,7 +17,7 @@ import {TState} from '../../../reducers';
 import {IPestPlace} from '../../../interface/pest/IPestPlace';
 import {addPestControl} from '../../../actions/pest/controlActions';
 import {ExpandComponent} from '../../audits/objects/HeaderObject';
-import {CriteriaList} from './CriteriaList';
+import {CriteriaListNew} from './CriteriaListNew';
 
 interface IStateProps {
   pestPlaces: IPestPlace[];
@@ -40,7 +39,7 @@ interface IState {
 
 class NewPestControl extends React.PureComponent<IProps> {
   public state: IState = {
-    collapse: true,
+    collapse: false,
   };
 
   private toggle = () => {
@@ -85,51 +84,56 @@ class NewPestControl extends React.PureComponent<IProps> {
         id="pestControl"
       >
         {errorsMessage}
-        <Card>
-          <CardHeader>
-            <i className="fa fa-plus" aria-hidden="true" />
-            Провести контроль локации
-            <ExpandComponent collapse={collapse} toggle={this.toggle} />
-          </CardHeader>
-          <Collapse isOpen={collapse}>
-            <CardBody className="card-body">
-              <Row
-                style={{
-                  borderBottom: '1px solid #c2cfd6',
-                  marginBottom: '8px',
-                  paddingBottom: '8px',
-                }}
-              >
-                <Col xs="2" className="text-center">
-                  Точка контроля
-                </Col>
-                <Col xs="3" className="text-center">
-                  Состояние точки контроля
-                </Col>
-                <Col xs="4" className="text-center">
-                  Учет численности насекомых
-                </Col>
-                <Col xs="3" className="text-center">
-                  Замена ловушки
-                </Col>
-              </Row>
-              <Input
-                type="hidden"
-                name="locationId"
-                value={locationId}
-                required
+        <CardHeader>
+          <i className="fa fa-plus" aria-hidden="true" />
+          Провести контроль локации
+          <ExpandComponent collapse={collapse} toggle={this.toggle} />
+        </CardHeader>
+        <Collapse isOpen={collapse}>
+          <CardBody className="card-body">
+            <Row style={{borderTop: '1px solid #c2cfd6', padding: '12px 0'}}>
+              <Col xs="2" className="text-center">
+                Точка контроля
+              </Col>
+              <Col xs="3" className="text-center">
+                Состояние точки контроля
+              </Col>
+              <Col xs="4" className="text-center">
+                Учет численности
+              </Col>
+              <Col xs="3" className="text-center">
+                Замена ловушки
+              </Col>
+            </Row>
+            <Input
+              type="hidden"
+              name="locationId"
+              value={locationId}
+              required
+            />
+            {pestPlaces.map((pestPlace, index) => (
+              <CriteriaListNew
+                key={index}
+                pestPlace={pestPlace}
+                index={index}
               />
-              {pestPlaces.map((pestPlace, index) => (
-                <CriteriaList pestPlace={pestPlace} index={index} />
-              ))}
-            </CardBody>
-            <CardFooter>
-              <Button type="submit" size="sm" color="success">
-                <i className="fa fa-dot-circle-o" /> Сохранить
-              </Button>
-            </CardFooter>
-          </Collapse>
-        </Card>
+            ))}
+            <Row style={{borderTop: '1px solid #c2cfd6', padding: '12px 0'}}>
+              <Col>
+                <Input
+                  type="text"
+                  name="comment"
+                  placeholder="Введите комментарий"
+                />
+              </Col>
+            </Row>
+          </CardBody>
+          <CardFooter>
+            <Button type="submit" size="sm" color="success">
+              <i className="fa fa-dot-circle-o" /> Сохранить
+            </Button>
+          </CardFooter>
+        </Collapse>
       </Form>
     );
   }

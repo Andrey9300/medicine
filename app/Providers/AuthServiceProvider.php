@@ -11,12 +11,14 @@ use App\Http\Models\Lmk\Employee;
 use App\Http\Models\Lmk\Hospital;
 use App\Http\Models\Lmk\Organization;
 use App\Http\Models\Pest\PestLocation;
+use App\Http\Models\Pest\PestUnit;
 use App\Policies\CriterionListsPolicy;
 use App\Policies\EmployeePolicy;
 use App\Policies\GroupCriterionPolicy;
 use App\Policies\HospitalPolicy;
 use App\Policies\OrganizationPolicy;
 use App\Policies\PestLocationPolicy;
+use App\Policies\PestUnitPolicy;
 use App\Policies\PlaceCheckListCriterionPolicy;
 use App\Policies\PlaceCheckListsPolicy;
 use App\Policies\UnitsPolicy;
@@ -44,6 +46,7 @@ class AuthServiceProvider extends ServiceProvider
         GroupCriterion::class => GroupCriterionPolicy::class,
         PlaceCheckListCriterion::class => PlaceCheckListCriterionPolicy::class,
         PestLocation::class => PestLocationPolicy::class,
+        PestUnit::class => PestUnitPolicy::class,
     ];
 
     /**

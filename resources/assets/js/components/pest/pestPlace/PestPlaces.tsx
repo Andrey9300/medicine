@@ -2,7 +2,7 @@ import React from 'react';
 import {Link} from 'react-router-dom';
 import {Card, CardHeader, CardBody, Row, Col, Collapse} from 'reactstrap';
 
-import {IPestPlace} from '../../../interface/pest/IPestPlace';
+import {IPestPlace, TPestPlaceType} from '../../../interface/pest/IPestPlace';
 import {fetchPestPlacesForLocation} from '../../../actions/pest/placeActions';
 import {NewPestPlaceContainer} from './New';
 import {ExpandComponent} from '../../audits/objects/HeaderObject';
@@ -35,6 +35,28 @@ export class PestPlacesComponent extends React.PureComponent<IPestPlacesProps> {
   private toggle = () => {
     const {collapse} = this.state;
     this.setState({collapse: !collapse});
+  };
+
+  private getData = (type: TPestPlaceType) => {
+    let textType;
+    let img;
+
+    switch (type) {
+      case '1':
+        textType = 'Насекомые';
+        img = '/img/mosquito.png';
+        break;
+      case '2':
+        textType = 'Летучие';
+        img = '/img/macaw.png';
+        break;
+      case '3':
+        textType = 'Грызуны';
+        img = '/img/mouse.png';
+        break;
+    }
+
+    return {textType, img};
   };
 
   componentDidMount() {
@@ -85,6 +107,7 @@ export class PestPlacesComponent extends React.PureComponent<IPestPlacesProps> {
               }}
             >
               <Col xs="2">Наименование</Col>
+              <Col xs="2">Тип</Col>
             </Row>
             {pestPlaces.map((pestPlace, index) => (
               <Row
@@ -96,10 +119,12 @@ export class PestPlacesComponent extends React.PureComponent<IPestPlacesProps> {
                 }}
               >
                 <Col xs="2">
+                  <img src={this.getData(pestPlace.type).img} />{' '}
                   <Link to={`/services/pest/places/${pestPlace.id}`}>
                     {pestPlace.name}
                   </Link>
                 </Col>
+                <Col xs="2">{this.getData(pestPlace.type).textType}</Col>
               </Row>
             ))}
           </CardBody>

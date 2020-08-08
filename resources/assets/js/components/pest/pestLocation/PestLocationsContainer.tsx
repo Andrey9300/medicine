@@ -9,6 +9,7 @@ import {
 
 const mapStateToProps = (state: TState) => {
   return {
+    pestUnit: state.pestUnit.pestUnit,
     pestLocations: state.pestLocation.pestLocations,
     fetched: state.pestLocation.fetched,
     errors: state.pestLocation.errors,

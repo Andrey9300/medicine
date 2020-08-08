@@ -1,10 +1,7 @@
 import React from 'react';
 import {Row, Col, Input} from 'reactstrap';
 
-import {
-  IPestControlCriterion,
-  TChecked,
-} from '../../../interface/pest/IPestControl';
+import {IPestControlCriterion} from '../../../interface/pest/IPestControl';
 import {getData} from './CriteriaListNew';
 
 interface IProps {
@@ -12,28 +9,7 @@ interface IProps {
   index: number;
 }
 
-const getChecked = (checked: TChecked) => {
-  let text;
-
-  switch (checked) {
-    case '1':
-      text = 'Проверен';
-      break;
-    case '2':
-      text = 'Не проверен';
-      break;
-    case '3':
-      text = 'Не доступен';
-      break;
-    default:
-      text = 'Не доступен';
-      break;
-  }
-
-  return text;
-};
-
-export const CriteriaList: React.FC<IProps> = ({
+export const CriteriaListEdit: React.FC<IProps> = ({
   pestControlCriterion,
   index,
 }) => {
@@ -51,23 +27,47 @@ export const CriteriaList: React.FC<IProps> = ({
     >
       <Col xs="2" className="text-center">
         <img src={img} /> {pestControlCriterion.place.name}
+        <Input
+          type="hidden"
+          name={`pestControlCriterionId[${index}]`}
+          value={pestControlCriterion.id}
+        />
+        <Input
+          type="hidden"
+          name={`placeId[${index}]`}
+          value={pestControlCriterion.place.id}
+        />
       </Col>
       <Col xs="3" className="text-center">
-        {getChecked(pestControlCriterion.checked)}
+        <Input
+          type="select"
+          name={`checked[${index}]`}
+          style={{
+            height: '40px',
+          }}
+          defaultValue={pestControlCriterion.checked}
+        >
+          <option value="1">Проверен</option>
+          <option value="2">Не проверен</option>
+          <option value="3">Не доступен</option>
+        </Input>
       </Col>
       <Col xs="4" className="text-center">
         <Input
           type="select"
           name={`count[${index}]`}
           style={{height: '40px'}}
-          disabled
           defaultValue={pestControlCriterion.count}
         >
           {select}
         </Input>
       </Col>
       <Col xs="3" className="text-center">
-        {pestControlCriterion.changed ? 'Замена' : 'Не меняли'}
+        <Input
+          type="checkbox"
+          name={`changed[${index}]`}
+          defaultChecked={pestControlCriterion.changed}
+        />
       </Col>
     </Row>
   );

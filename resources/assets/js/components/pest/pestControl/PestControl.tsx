@@ -51,7 +51,7 @@ export class PestControlComponent extends React.PureComponent<
     const {deletePestControl} = this.props;
 
     const result = confirm(
-      'Удаление приведет к потере данных аудита по этой точке и потере самой точки. Удалить?',
+      'Удаление приведет к потере данных контроля по этой точке. Удалить?',
     );
 
     if (result) {
@@ -102,14 +102,34 @@ export class PestControlComponent extends React.PureComponent<
               <Row style={{borderTop: '1px solid #c2cfd6', padding: '12px 0'}}>
                 <Col>Дата:</Col>
                 <Col>{pestControl.created_at}</Col>
+              </Row>{' '}
+              <Row style={{borderTop: '1px solid #c2cfd6', padding: '12px 0'}}>
+                <Col>Комментарий:</Col>
+                <Col>{pestControl.comment ? pestControl.comment : '-'}</Col>
               </Row>
             </CardBody>
           </Card>
           <Card>
             <CardHeader>Результат</CardHeader>
             <CardBody>
+              <Row
+                style={{
+                  borderTop: '1px solid #c2cfd6',
+                  padding: '12px 0',
+                  textAlign: 'center',
+                }}
+              >
+                <Col xs="2">Точка контроля</Col>
+                <Col xs="3">Состояние точки контроля</Col>
+                <Col xs="4">Учет численности</Col>
+                <Col xs="3">Замена ловушки</Col>
+              </Row>
               {pestControlCriteria.map((pestControlCriterion, index) => (
-                <CriteriaList pestControlCriterion={pestControlCriterion} index={index}/>
+                <CriteriaList
+                  key={index}
+                  pestControlCriterion={pestControlCriterion}
+                  index={index}
+                />
               ))}
             </CardBody>
           </Card>

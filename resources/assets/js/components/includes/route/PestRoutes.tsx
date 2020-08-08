@@ -10,7 +10,9 @@ import {NewPestPlaceContainer} from '../../pest/pestPlace/New';
 import {PestPlacesContainer} from '../../pest/pestPlace/PestPlacesContainer';
 import {EditPestPlaceContainer} from '../../pest/pestPlace/Edit';
 import {PestControlContainer} from '../../pest/pestControl/PestControlContainer';
-import {EditPestControlContainer} from "../../pest/pestControl/Edit";
+import {EditPestControlContainer} from '../../pest/pestControl/Edit';
+import {NewPestUnitContainer} from '../../pest/pestUnit/New';
+import {EditPestUnitContainer} from "../../pest/pestUnit/Edit";
 
 export class PestRoutes extends React.PureComponent {
   render() {
@@ -60,11 +62,22 @@ export class PestRoutes extends React.PureComponent {
           exact
           path="/services/pest/control/:id"
           component={(props: any) => <PestControlContainer {...props} />}
-        />{' '}
+        />
         <Route
           exact
           path="/services/pest/control/edit/:id"
           component={(props: any) => <EditPestControlContainer {...props} />}
+        />
+
+        <Route
+          exact
+          path="/services/pest/units/create"
+          component={(props: any) => <NewPestUnitContainer {...props} />}
+        />
+        <Route
+          exact
+          path="/services/pest/units/edit"
+          component={(props: any) => <EditPestUnitContainer {...props} />}
         />
       </>
     );

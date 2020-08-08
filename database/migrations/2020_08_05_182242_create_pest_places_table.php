@@ -16,6 +16,7 @@ class CreatePestPlacesTable extends Migration
         Schema::create('pest_places', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
+            $table->string('type')->nullable();
             $table->integer('location_id')->unsigned();
             $table->foreign('location_id')->references('id')->on('pest_locations')->onDelete('cascade');
         });

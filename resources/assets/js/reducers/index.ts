@@ -17,6 +17,7 @@ import placeCheckLists from './audit/PlaceCheckListsReducer';
 import {pestLocation} from './pest/PestLocation';
 import {pestPlace} from './pest/PestPlace';
 import {pestControl} from './pest/PestControl';
+import {pestUnit} from './pest/PestUnit';
 
 export const reducer = combineReducers({
   hospitals,
@@ -37,6 +38,7 @@ export const reducer = combineReducers({
   pestLocation,
   pestPlace,
   pestControl,
+  pestUnit,
 });
 
 export type TState = ReturnType<typeof reducer>;

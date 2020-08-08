@@ -19,10 +19,15 @@ import {
   editPestControl,
 } from '../../../actions/pest/controlActions';
 import {createMarkup} from '../../../utils/errorsHelper';
-import {IPestControl} from '../../../interface/pest/IPestControl';
+import {
+  IPestControl,
+  IPestControlCriterion,
+} from '../../../interface/pest/IPestControl';
 import {TState} from '../../../reducers';
+import {CriteriaListEdit} from './CriteriaListEdit';
 
 interface IStateProps {
+  pestControlCriteria: IPestControlCriterion[];
   pestControl: IPestControl;
   errors: any;
 }
@@ -64,7 +69,7 @@ class EditPestControl extends React.PureComponent<IProps, IState> {
   };
 
   render() {
-    const {pestControl, errors} = this.props;
+    const {pestControl, pestControlCriteria, errors} = this.props;
     let errorsMessage = null;
 
     if (errors) {
@@ -83,21 +88,29 @@ class EditPestControl extends React.PureComponent<IProps, IState> {
       <div className="animated fadeIn">
         {errorsMessage}
         <Row>
-          <Col xs="12" md="6">
-            <Card>
-              <Form className="form-horizontal" onSubmit={this.handleSubmit}>
+          <Col xs="12" md="8">
+            <Form className="form-horizontal" onSubmit={this.handleSubmit}>
+              <Card>
                 <CardHeader>Редактировать точку контроля</CardHeader>
                 <CardBody className="card-body">
                   <FormGroup row>
                     <Col md="3">
-                      <Label htmlFor="text-input">Наименование</Label>
+                      <Label htmlFor="text-input">Дата</Label>
+                    </Col>
+                    <Col xs="12" md="9">
+                      {pestControl.created_at}
+                    </Col>
+                  </FormGroup>
+                  <FormGroup row>
+                    <Col md="3">
+                      <Label htmlFor="text-input">Комментарий</Label>
                     </Col>
                     <Col xs="12" md="9">
                       <Input
                         type="text"
-                        name="name"
-                        id="name"
-                        defaultValue={pestControl.created_at}
+                        name="comment"
+                        placeholder="Введите комментарий"
+                        defaultValue={pestControl.comment}
                       />
                     </Col>
                   </FormGroup>
@@ -107,8 +120,32 @@ class EditPestControl extends React.PureComponent<IProps, IState> {
                     <i className="fa fa-dot-circle-o" /> Сохранить
                   </Button>
                 </CardFooter>
-              </Form>
-            </Card>
+              </Card>
+              <Card>
+                <CardHeader>Редактировать результат</CardHeader>
+                <CardBody>
+                  <Row
+                    style={{
+                      borderTop: '1px solid #c2cfd6',
+                      padding: '12px 0',
+                      textAlign: 'center',
+                    }}
+                  >
+                    <Col xs="2">Точка контроля</Col>
+                    <Col xs="3">Состояние точки контроля</Col>
+                    <Col xs="4">Учет численности</Col>
+                    <Col xs="3">Замена ловушки</Col>
+                  </Row>
+                  {pestControlCriteria.map((pestControlCriterion, index) => (
+                    <CriteriaListEdit
+                      key={index}
+                      pestControlCriterion={pestControlCriterion}
+                      index={index}
+                    />
+                  ))}
+                </CardBody>
+              </Card>
+            </Form>
           </Col>
         </Row>
       </div>
@@ -119,6 +156,7 @@ class EditPestControl extends React.PureComponent<IProps, IState> {
 const mapStateToProps = (state: TState) => {
   return {
     errors: state.pestControl.errors,
+    pestControlCriteria: state.pestControl.pestControlCriteria,
     pestControl: state.pestControl.pestControl,
   };
 };
