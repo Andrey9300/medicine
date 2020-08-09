@@ -18,6 +18,7 @@ class CreatePestUnitsTable extends Migration
             $table->string('name');
             $table->string('manager')->nullable();
             $table->string('check_organization')->nullable();
+            $table->string('files', 5000)->nullable();
             $table->integer('user_id')->unsigned();
             $table->foreign('user_id')->references('id')->on('users');
         });

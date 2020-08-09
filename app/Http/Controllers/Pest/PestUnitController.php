@@ -17,6 +17,19 @@ class PestUnitController extends Controller
         $pestUnit->manager = $request->manager;
         $pestUnit->check_organization = $request->checkOrganization;
         $pestUnit->user_id = $currentUser->id;
+        $files = $request['files'];
+        $fileNames = $request['fileNames'];
+        $filesArr = [];
+
+        foreach ($files as $key => $value) {
+            $filesArr[$key]['name'] = $fileNames[$key];
+            $filesArr[$key]['link'] = $value;
+        }
+
+        try {
+            $pestUnit->files = json_encode($filesArr);
+        }catch (\Exception $e){}
+
         $pestUnit->save();
     }
 
@@ -24,6 +37,8 @@ class PestUnitController extends Controller
     {
         $currentUser = Auth::user();
         $pestUnit = PestUnit::where('user_id', '=', $currentUser->id)->first();
+
+        $pestUnit->files = json_decode($pestUnit->files);
 
         return response()->json([
             'pestUnit' => $pestUnit

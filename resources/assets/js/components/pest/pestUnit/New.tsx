@@ -27,8 +27,42 @@ interface IDispatchProps {
 
 interface IProps extends IStateProps, IDispatchProps {}
 
-class NewPestUnit extends React.PureComponent<IProps> {
-  handleSubmit = (event: any) => {
+interface IState {
+  files: React.ReactNode[];
+}
+
+class NewPestUnit extends React.PureComponent<IProps, IState> {
+  public state: IState = {
+    files: [],
+  };
+
+  private addFile = () => {
+    const {files} = this.state;
+
+    this.setState({
+      files: [
+        ...files,
+        <React.Fragment key={files.length}>
+          <Input
+            type="text"
+            name={`fileNames[${files.length}]`}
+            style={{marginBottom: '8px'}}
+            placeholder="Имя файла"
+            required
+          />
+          <Input
+            type="text"
+            name={`files[${files.length}]`}
+            style={{marginBottom: '8px'}}
+            placeholder="Ссылка на файл"
+            required
+          />
+        </React.Fragment>,
+      ],
+    });
+  };
+
+  private handleSubmit = (event: any) => {
     event.preventDefault();
     const {addPestUnit} = this.props;
 
@@ -36,6 +70,7 @@ class NewPestUnit extends React.PureComponent<IProps> {
   };
 
   render() {
+    const {files} = this.state;
     const {errors} = this.props;
     let errorsMessage = null;
 
@@ -87,6 +122,24 @@ class NewPestUnit extends React.PureComponent<IProps> {
                     </Col>
                     <Col xs="12" md="9">
                       <Input type="text" name="checkOrganization" />
+                    </Col>
+                  </FormGroup>
+                  <FormGroup row>
+                    <Col md="3">
+                      {files.length > 0 && <Label htmlFor="text-input">Файл</Label>}
+                    </Col>
+                    <Col xs="12" md="9">
+                      {files}
+
+                      <Button
+                        type="button"
+                        size="sm"
+                        color="primary"
+                        style={{marginTop: '8px'}}
+                        onClick={this.addFile}
+                      >
+                        <i className="fa fa-dot-circle-o" /> Добавить файл
+                      </Button>
                     </Col>
                   </FormGroup>
                 </CardBody>

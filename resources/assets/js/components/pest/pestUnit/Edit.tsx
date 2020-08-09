@@ -117,6 +117,21 @@ class EditPestUnit extends React.PureComponent<IProps, IState> {
                       />
                     </Col>
                   </FormGroup>
+                  <FormGroup row>
+                    <Col md="3">
+                      <Label htmlFor="text-input">Файлы</Label>
+                    </Col>
+                    <Col xs="12" md="9">
+                      {pestUnit.files.map((file, index) => (
+                        <>
+                          <a href={file.link} key={index} target="_blank">
+                            {file.name}
+                          </a>
+                          <br />
+                        </>
+                      ))}
+                    </Col>
+                  </FormGroup>
                 </CardBody>
                 <CardFooter>
                   <Button type="submit" size="sm" color="success">

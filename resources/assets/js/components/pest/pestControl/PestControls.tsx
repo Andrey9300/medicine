@@ -50,7 +50,11 @@ export class PestControlsComponent extends React.PureComponent<
     const {pestControls, locationId} = this.props;
 
     if (!pestControls || pestControls.length === 0) {
-      return <NewPestControlContainer locationId={locationId} />;
+      return (
+        <Card>
+          <NewPestControlContainer locationId={locationId} />
+        </Card>
+      );
     }
 
     return (

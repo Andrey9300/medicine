@@ -1,10 +1,9 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import {Row, Col, Button, Form, Label, Input} from 'reactstrap';
+import {Row, Col, Button, Form, Input} from 'reactstrap';
 import {addPestPlace} from '../../../actions/pest/placeActions';
 import {createMarkup} from '../../../utils/errorsHelper';
 import {TState} from '../../../reducers';
-import {TPestPlaceType} from '../../../interface/pest/IPestPlace';
 
 interface IStateProps {
   errors: any;

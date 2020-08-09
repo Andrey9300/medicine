@@ -96,6 +96,23 @@ export class PestUnitComponent extends React.PureComponent<IPestUnitProps> {
                 <Col>Проверяющая организация:</Col>
                 <Col>{pestUnit.check_organization}</Col>
               </Row>
+              {pestUnit.files.length > 0 && (
+                <Row
+                  style={{borderTop: '1px solid #c2cfd6', padding: '12px 0'}}
+                >
+                  <Col>Файлы</Col>
+                  <Col>
+                    {pestUnit.files.map((file, index) => (
+                      <>
+                        <a href={file.link} key={index} target="_blank">
+                          {file.name}
+                        </a>
+                        <br />
+                      </>
+                    ))}
+                  </Col>
+                </Row>
+              )}
             </CardBody>
           </Card>
         </Col>

@@ -3,5 +3,9 @@ export interface IPestUnit {
   name: string;
   manager: string;
   check_organization: string;
+  files: {
+    name: string;
+    link: string;
+  }[];
   user_id: number;
 }

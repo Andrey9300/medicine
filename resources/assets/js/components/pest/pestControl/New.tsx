@@ -91,7 +91,7 @@ class NewPestControl extends React.PureComponent<IProps> {
         </CardHeader>
         <Collapse isOpen={collapse}>
           <CardBody className="card-body">
-            <Row style={{borderTop: '1px solid #c2cfd6', padding: '12px 0'}}>
+            <Row style={{borderTop: '1px solid #c2cfd6', padding: '12px 0', backgroundColor: '#fff'}}>
               <Col xs="2" className="text-center">
                 Точка контроля
               </Col>
