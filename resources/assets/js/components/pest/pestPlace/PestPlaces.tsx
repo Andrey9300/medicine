@@ -6,6 +6,7 @@ import {IPestPlace, TPestPlaceType} from '../../../interface/pest/IPestPlace';
 import {fetchPestPlacesForLocation} from '../../../actions/pest/placeActions';
 import {NewPestPlaceContainer} from './New';
 import {ExpandComponent} from '../../audits/objects/HeaderObject';
+import {PestPlaceComponent} from './PestPlace';
 
 interface IPestPlacesStateProps {
   pestPlaces: IPestPlace[];
@@ -37,28 +38,6 @@ export class PestPlacesComponent extends React.PureComponent<IPestPlacesProps> {
     this.setState({collapse: !collapse});
   };
 
-  private getData = (type: TPestPlaceType) => {
-    let textType;
-    let img;
-
-    switch (type) {
-      case '1':
-        textType = 'Насекомые';
-        img = '/img/mosquito.png';
-        break;
-      case '2':
-        textType = 'Летучие';
-        img = '/img/macaw.png';
-        break;
-      case '3':
-        textType = 'Грызуны';
-        img = '/img/mouse.png';
-        break;
-    }
-
-    return {textType, img};
-  };
-
   componentDidMount() {
     const {fetchPestPlacesForLocation, locationId} = this.props;
 
@@ -74,7 +53,7 @@ export class PestPlacesComponent extends React.PureComponent<IPestPlacesProps> {
         <Card>
           <CardHeader>
             <i className="fa fa-building-o" aria-hidden="true" />
-            Добавить
+            Добавить точку PEST контроля
           </CardHeader>
           <CardBody className="card-body">
             <NewPestPlaceContainer locationId={locationId} />
@@ -87,14 +66,14 @@ export class PestPlacesComponent extends React.PureComponent<IPestPlacesProps> {
       <Card>
         <CardHeader>
           <i className="fa fa-plus" aria-hidden="true" />
-          Добавить точку контроля
+          Добавить точку PEST контроля
         </CardHeader>
         <CardBody className="card-body">
           <NewPestPlaceContainer locationId={locationId} />
         </CardBody>
         <CardHeader>
           <i className="fa fa-map-marker" aria-hidden="true" />
-          Точки контроля ({pestPlaces.length})
+          Точки pest контроля ({pestPlaces.length})
           <ExpandComponent collapse={collapse} toggle={this.toggle} />
         </CardHeader>
         <Collapse isOpen={collapse}>
@@ -109,7 +88,7 @@ export class PestPlacesComponent extends React.PureComponent<IPestPlacesProps> {
               <Col xs="2">Наименование</Col>
               <Col xs="2">Тип</Col>
             </Row>
-            {pestPlaces.map((pestPlace, index) => (
+            {pestPlaces.map((pestPlace, index, arr) => (
               <Row
                 key={`${pestPlace.id}${index}`}
                 style={{
@@ -119,12 +98,37 @@ export class PestPlacesComponent extends React.PureComponent<IPestPlacesProps> {
                 }}
               >
                 <Col xs="2">
-                  <img src={this.getData(pestPlace.type).img} />{' '}
-                  <Link to={`/services/pest/places/${pestPlace.id}`}>
+                  <img
+                    src={PestPlaceComponent.getData(arr[index].type).img}
+                    width="24px"
+                    height="24px"
+                  />{' '}
+                  <Link to={`/services/pest/places/${arr[index].id}`}>
                     {pestPlace.name}
                   </Link>
                 </Col>
-                <Col xs="2">{this.getData(pestPlace.type).textType}</Col>
+                <Col xs="2">
+                  {PestPlaceComponent.getData(arr[index].type).textType}
+                </Col>
+                {arr[index + 1] && (
+                  <>
+                    <Col xs="2">
+                      <img
+                        src={
+                          PestPlaceComponent.getData(arr[index + 1].type).img
+                        }
+                        width="24px"
+                        height="24px"
+                      />{' '}
+                      <Link to={`/services/pest/places/${arr[index + 1].id}`}>
+                        {pestPlace.name}
+                      </Link>
+                    </Col>
+                    <Col xs="2">
+                      {PestPlaceComponent.getData(arr[index + 1].type).textType}
+                    </Col>
+                  </>
+                )}
               </Row>
             ))}
           </CardBody>

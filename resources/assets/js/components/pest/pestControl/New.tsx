@@ -96,7 +96,7 @@ class NewPestControl extends React.PureComponent<IProps> {
                 Точка контроля
               </Col>
               <Col xs="3" className="text-center">
-                Состояние точки контроля
+                Состояние Точки pest контроля
               </Col>
               <Col xs="4" className="text-center">
                 Учет численности

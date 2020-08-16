@@ -132,7 +132,7 @@ class EditPestControl extends React.PureComponent<IProps, IState> {
                     }}
                   >
                     <Col xs="2">Точка контроля</Col>
-                    <Col xs="3">Состояние точки контроля</Col>
+                    <Col xs="3">Состояние Точки pest контроля</Col>
                     <Col xs="4">Учет численности</Col>
                     <Col xs="3">Замена ловушки</Col>
                   </Row>

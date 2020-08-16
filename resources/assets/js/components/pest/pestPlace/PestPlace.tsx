@@ -7,7 +7,11 @@ import {
 import {Link} from 'react-router-dom';
 import {Row, Col, Card, CardHeader, CardBody} from 'reactstrap';
 import {createMarkup} from '../../../utils/errorsHelper';
-import {IPestPlace, TPestPlaceType} from '../../../interface/pest/IPestPlace';
+import {
+  EIconsPestPlace,
+  IPestPlace,
+  TPestPlaceType,
+} from '../../../interface/pest/IPestPlace';
 
 interface IPestPlaceStateProps {
   pestPlace: IPestPlace;
@@ -52,22 +56,22 @@ export class PestPlaceComponent extends React.PureComponent<IPestPlaceProps> {
     }
   };
 
-  private getData = (type: TPestPlaceType) => {
+  public static getData = (type: TPestPlaceType) => {
     let textType;
     let img;
 
     switch (type) {
       case '1':
-        textType = 'Насекомые';
-        img = '/img/mosquito.png';
+        textType = 'Ползающие насекомые';
+        img = EIconsPestPlace.INSECT;
         break;
       case '2':
-        textType = 'Летучие';
-        img = '/img/macaw.png';
+        textType = 'Летающие насекомые';
+        img = EIconsPestPlace.FLY;
         break;
       case '3':
         textType = 'Грызуны';
-        img = '/img/mouse.png';
+        img = EIconsPestPlace.MOUSE;
         break;
     }
 
@@ -117,13 +121,17 @@ export class PestPlaceComponent extends React.PureComponent<IPestPlaceProps> {
               <Row style={{borderTop: '1px solid #c2cfd6', padding: '12px 0'}}>
                 <Col>Наименование:</Col>
                 <Col>
-                  <img src={this.getData(pestPlace.type).img} />{' '}
+                  <img
+                    src={PestPlaceComponent.getData(pestPlace.type).img}
+                    width="24px"
+                    height="24px"
+                  />{' '}
                   {pestPlace.name}
                 </Col>
               </Row>
               <Row style={{borderTop: '1px solid #c2cfd6', padding: '12px 0'}}>
                 <Col>Тип:</Col>
-                <Col>{this.getData(pestPlace.type).textType}</Col>
+                <Col>{PestPlaceComponent.getData(pestPlace.type).textType}</Col>
               </Row>
             </CardBody>
           </Card>

@@ -1,7 +1,7 @@
 import React from 'react';
 import {Row, Col, Input} from 'reactstrap';
 
-import {IPestPlace} from '../../../interface/pest/IPestPlace';
+import {EIconsPestPlace, IPestPlace} from '../../../interface/pest/IPestPlace';
 
 interface IProps {
   pestPlace?: IPestPlace;
@@ -24,22 +24,10 @@ export const getData = (type: any) => {
           <option value="3">"3" - более 10 экз</option>
         </>
       );
-      img = '/img/mosquito.png';
+      img = EIconsPestPlace.INSECT;
       break;
     case '2':
       color = 'rgba(142, 142, 142, 0.3)';
-      select = (
-        <>
-          <option value="4">"0" - погрызов</option>
-          <option value="5">"1" - 1-3 погрыза</option>
-          <option value="6">"2" - 3-10 погрызов</option>
-          <option value="7">"3" - более 10 погрыов</option>
-        </>
-      );
-      img = '/img/mouse.png';
-      break;
-    case '3':
-      color = 'rgba(83, 108, 121, 0.3)';
       select = (
         <>
           <option value="8">"0" - летучих нет</option>
@@ -48,7 +36,19 @@ export const getData = (type: any) => {
           <option value="11">"3" - более 10 летучих</option>
         </>
       );
-      img = '/img/macaw.png';
+      img = EIconsPestPlace.FLY;
+      break;
+    case '3':
+      color = 'rgba(83, 108, 121, 0.3)';
+      select = (
+        <>
+          <option value="4">"0" - погрызов</option>
+          <option value="5">"1" - 1-3 погрыза</option>
+          <option value="6">"2" - 3-10 погрызов</option>
+          <option value="7">"3" - более 10 погрыов</option>
+        </>
+      );
+      img = EIconsPestPlace.MOUSE;
       break;
     default: {
       color = 'black';
@@ -73,7 +73,7 @@ export const CriteriaListNew: React.FC<IProps> = ({pestPlace, index}) => {
       }}
     >
       <Col xs="2" className="text-center">
-        <img src={img} /> {pestPlace.name}
+        <img src={img} width="24px" height="24px" /> {pestPlace.name}
         <Input type="hidden" name={`placeId[${index}]`} value={pestPlace.id} />
       </Col>
       <Col xs="3" className="text-center">

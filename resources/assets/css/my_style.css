@@ -1,33 +1,40 @@
-table.table, div.card-body.card-block{
-    margin-bottom: 4px;
-    padding-bottom: 0;
+table.table,
+div.card-body.card-block {
+  margin-bottom: 4px;
+  padding-bottom: 0;
 }
-table#printResearches td{
-    border: none;
-    padding: .15rem;
+table#printResearches td {
+  border: none;
+  padding: 0.15rem;
 }
-ul#main_nav{
-    padding-left: 10px;
+ul#main_nav {
+  padding-left: 10px;
 }
-ul#main_nav li{
-    list-style-type: none;
+ul#main_nav li {
+  list-style-type: none;
 }
-.pull-right{
-    cursor: pointer;
+.pull-right {
+  cursor: pointer;
 }
 .sidebar .nav-item {
-    margin: 10px 20px;
+  margin: 10px 20px;
 }
 .sidebar .nav-item a {
-    color: #fff;
-    text-decoration: none;
+  color: #fff;
+  text-decoration: none;
+}
+select {
+  padding: 0rem 0.75rem !important;
 }
 @media print {
-    @page { margin: 0; }
-    textarea, input {
+  @page {
+    margin: 0;
+  }
+  textarea,
+  input {
     border: 0px;
-}
-    .not-print {
+  }
+  .not-print {
     display: none;
-}
+  }
 }

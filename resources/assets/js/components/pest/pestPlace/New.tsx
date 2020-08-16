@@ -61,8 +61,8 @@ class NewPestPlace extends React.PureComponent<IProps> {
           </Col>
           <Col xs="4">
             <Input type="select" name="type">
-              <option value="1">Насекомые</option>
-              <option value="2">Летучие</option>
+              <option value="1">Ползающие насекомые</option>
+              <option value="2">Летающие насекомые</option>
               <option value="3">Грызуны</option>
             </Input>
           </Col>
