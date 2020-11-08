@@ -39,8 +39,9 @@ class ResearchesComponent extends React.PureComponent<IProps> {
     fetchUserResearches();
   }
 
-  private handleClick = () => {
+  private handleSubmit = (event: any) => {
     const {addUserResearches} = this.props;
+    event.preventDefault();
 
     addUserResearches(document.querySelector('form'));
   };
@@ -48,7 +49,7 @@ class ResearchesComponent extends React.PureComponent<IProps> {
   render() {
     const {errors, userResearches} = this.props;
     let errorsMessage = null;
-    console.log(userResearches);
+
     if (!userResearches || !userResearches.length) {
       return (
         <div className="animated fadeIn">
@@ -86,21 +87,16 @@ class ResearchesComponent extends React.PureComponent<IProps> {
         <Row>
           <Col xs="12" md="12" lg="8">
             <Card>
-              <CardHeader>
-                <i className="fa fa-heartbeat" aria-hidden="true" />
-                Исследования ({userResearches.length}) Выберите нужные
-                исследования.
-                <Button
-                  type="submit"
-                  size="sm"
-                  color="success pull-right"
-                  onClick={this.handleClick}
-                >
-                  <i className="fa fa-dot-circle-o" /> Сохранить
-                </Button>
-              </CardHeader>
-              <CardBody className="card-body">
-                <Form>
+              <Form onSubmit={this.handleSubmit}>
+                <CardHeader>
+                  <i className="fa fa-heartbeat" aria-hidden="true" />
+                  Исследования ({userResearches.length}) Выберите нужные
+                  исследования.
+                  <Button type="submit" size="sm" color="success pull-right">
+                    <i className="fa fa-dot-circle-o" /> Сохранить
+                  </Button>
+                </CardHeader>
+                <CardBody className="card-body">
                   <Table responsive>
                     <thead>
                       <tr>
@@ -126,18 +122,13 @@ class ResearchesComponent extends React.PureComponent<IProps> {
                       ))}
                     </tbody>
                   </Table>
-                </Form>
-              </CardBody>
-              <CardFooter>
-                <Button
-                  type="submit"
-                  size="sm"
-                  color="success pull-right"
-                  onClick={this.handleClick}
-                >
-                  <i className="fa fa-dot-circle-o" /> Сохранить
-                </Button>
-              </CardFooter>
+                </CardBody>
+                <CardFooter>
+                  <Button type="submit" size="sm" color="success pull-right">
+                    <i className="fa fa-dot-circle-o" /> Сохранить
+                  </Button>
+                </CardFooter>
+              </Form>
             </Card>
           </Col>
         </Row>
@@ -156,7 +147,8 @@ const mapStateToProps = (state: TState) => {
 const mapDispatchToProps = (dispatch: any): IDispatchProps => {
   return {
     fetchUserResearches: () => dispatch(fetchUserResearches()),
-    addUserResearches: () => dispatch(addUserResearches()),
+    addUserResearches: (formElement: HTMLFormElement) =>
+      dispatch(addUserResearches(formElement)),
   };
 };
 

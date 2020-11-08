@@ -113,7 +113,7 @@ class EditResearch extends React.PureComponent {
                         type="select"
                         name="period_id"
                         id="select"
-                        value={research.research_period.id}
+                        defaultValue={research.research_period.id}
                       >
                         {this.props.periods.map((period) => {
                           return (

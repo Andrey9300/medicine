@@ -164,7 +164,7 @@ class EditEmployee extends React.PureComponent {
                         type="select"
                         name="category_id"
                         id="category_id"
-                        value={employee.category.id}
+                        defaultValue={employee.category.id}
                       >
                         {categories.map((category) => {
                           return (
@@ -185,7 +185,7 @@ class EditEmployee extends React.PureComponent {
                         type="select"
                         name="organization_name"
                         id="organization_name"
-                        value={employee.organization.name}
+                        defaultValue={employee.organization.name}
                       >
                         {organizations.map((organization) => {
                           return (
