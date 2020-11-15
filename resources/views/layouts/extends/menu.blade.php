@@ -3,7 +3,7 @@
         <div class="navbar-header">
             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
                     data-target="#bs-example-navbar-collapse-1">
-                <span class="sr-only">Toggle navigation</span> <img src="./vendor/img/menu-light.svg" alt=""></i>
+                <span class="sr-only">Toggle navigation</span> <img src="./vendor/img/menu-light.svg" alt="меню"></i>
             </button>
             <a class="navbar-brand page-scroll navbar-brand-custom" href="/">
 

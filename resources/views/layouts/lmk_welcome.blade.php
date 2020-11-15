@@ -1,5 +1,9 @@
 @extends('layouts.base')
 
+@section('headLink')
+    <link rel="canonical" href="https://3quality.ru/lmk_welcome"/>
+@endsection
+
 @section('content')
     <header class="video-on-right">
         <div class="container">
@@ -17,7 +21,7 @@
                     </div>
                 </div>
                 <div class="col-sm-6 wow fadeIn">
-                    <div class="video-container"><img src="/img/medbook.png" width="100%" height="100%" loading="lazy"/>
+                    <div class="video-container"><img src="/img/medbook.png" alt="медицинская книжка" width="100%" height="100%" loading="lazy"/>
                     </div>
                 </div>
             </div>
@@ -27,14 +31,14 @@
         <div class="drop-margins">
             <div class="row same-height-row">
                 <div class="col-sm-6 image-section wow fadeInLeft">
-                    <img src="/img/lmk/lmk1.png" alt="" loading="lazy" style="padding: 50px">
+                    <img src="/img/lmk/lmk1.png" alt="все под рукой" loading="lazy" style="padding: 50px">
                 </div>
                 <div class="col-sm-6 content-section fadeInRight">
                     <div class="row">
                         <div class="col-sm-12">
                             <div class="text-center">
                                 <div class="title-box-icon title-about">
-                                    <img src="./vendor/img/icons/summer/Sun.svg" alt="" loading="lazy">
+                                    <img src="./vendor/img/icons/summer/Sun.svg" alt="иконка" loading="lazy">
                                     <h3 class="title">Все под рукой</h3>
                                 </div>
                             </div>
@@ -58,14 +62,14 @@
 
             <div class="row same-height-row">
                 <div class="col-md-push-6 col-sm-6 image-section fadeInLeft">
-                    <img src="/img/lmk/lmk5.png" alt="" loading="lazy" style="padding: 50px">
+                    <img src="/img/lmk/lmk5.png" alt="помощь в организации МО" loading="lazy" style="padding: 50px">
                 </div>
                 <div class="col-md-pull-6 col-sm-6 content-section fadeInRight">
                     <div class="row">
                         <div class="col-sm-12">
                             <div class="text-center">
                                 <div class="title-box-icon title-about">
-                                    <img src="./vendor/img/icons/summer/Watermelon.svg" alt="" loading="lazy">
+                                    <img src="./vendor/img/icons/summer/Watermelon.svg" alt="иконка" loading="lazy">
                                     <h3 class="title">Помощь в организации МО</h3>
                                 </div>
                             </div>
@@ -89,14 +93,14 @@
 
             <div class="row same-height-row">
                 <div class="col-sm-6 image-section wow fadeInLeft">
-                    <img src="/img/lmk/lmk6.png" alt="" loading="lazy" style="padding: 50px">
+                    <img src="/img/lmk/lmk6.png" alt="быстрое оформление" loading="lazy" style="padding: 50px">
                 </div>
                 <div class="col-sm-6 content-section fadeInRight">
                     <div class="row">
                         <div class="col-sm-12">
                             <div class="text-center">
                                 <div class="title-box-icon title-about">
-                                    <img src="./vendor/img/icons/summer/Palm.svg" alt="" loading="lazy">
+                                    <img src="./vendor/img/icons/summer/Palm.svg" alt="иконка" loading="lazy">
                                     <h3 class="title">Быстрое оформление</h3>
                                 </div>
                             </div>

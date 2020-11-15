@@ -20,7 +20,6 @@
     <meta name="twitter:card" content="summary_large_image"/>
     <meta name="yandex-verification" content="9d1bfa4c0ebfb9cb"/>
     <meta name="theme-color" content="#FF4F4F">
-    <link rel="manifest" href="/blog/pwa.webmanifest">
 
     <script type="application/ld+json" class="yoast-schema-graph">{
         "@context": "https://schema.org",
@@ -93,13 +92,16 @@
 
     <title>Управление качеством, онлайн сервисы</title>
 
-    <link rel="canonical" href="https://3quality.ru/"/>
+    <link rel="manifest" href="/blog/pwa.webmanifest">
     <link rel="profile" href="https://gmpg.org/xfn/11">
     <link href="./vendor/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <link href="./vendor/css/style.min.css" rel="stylesheet">
     <link rel="shortcut icon" href="/blog/wp-content/uploads/2020/05/icon-192x192-1.png">
     <link rel="icon" sizes="192x192" href="/blog/wp-content/uploads/2020/05/icon-192x192-1.png">
     <link rel="apple-touch-icon" href="/blog/wp-content/uploads/2020/05/icon-192x192-1.png">
+
+    @yield('headLink')
+
     <script>
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
