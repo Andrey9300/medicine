@@ -13,6 +13,8 @@ Route::view('/{path?}', 'layouts.app')
     ->name('react');
 Route::get('/checkResearches', 'CronController@checkResearches');
 
+Route::post('/sendForm', 'SendFormController@sendForm');
+
 // help
 // php artisan make:model PestLocation -m
 // php artisan make:controller PestLocationController --resource --model=Http/Models/Pest/PestLocation

@@ -96,10 +96,6 @@
     <link rel="canonical" href="https://3quality.ru/"/>
     <link rel="profile" href="https://gmpg.org/xfn/11">
     <link href="./vendor/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-    <link href="./vendor/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet">
-    <link href="./vendor/vendor/magnific-popup/magnific-popup.css" rel="stylesheet">
-    <link href="./vendor/vendor/animate.css/animate.min.css" rel="stylesheet">
-    <link href="./vendor/vendor/device-mockups/device-mockups.min.css" rel="stylesheet">
     <link href="./vendor/css/style.min.css" rel="stylesheet">
     <link rel="shortcut icon" href="/blog/wp-content/uploads/2020/05/icon-192x192-1.png">
     <link rel="icon" sizes="192x192" href="/blog/wp-content/uploads/2020/05/icon-192x192-1.png">
@@ -107,32 +103,42 @@
     <script>
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
-                navigator.serviceWorker.register('/blog/service-worker.js');
+                navigator.serviceWorker.register('/service-worker.js');
             });
         }
     </script>
+    <style>
+        body {
+            cursor: default !important;
+        }
+    </style>
+    <!-- Yandex.Metrika counter --> <script type="text/javascript" > (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)}; m[i].l=1*new Date();k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)}) (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym"); ym(62528239, "init", { clickmap:true, trackLinks:true, accurateTrackBounce:true, webvisor:true }); </script> <noscript><div><img src="https://mc.yandex.ru/watch/62528239" style="position:absolute; left:-9999px;" alt="" /></div></noscript> <!-- /Yandex.Metrika counter -->
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-164572985-2"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
 
-    {{--    <link rel="preload" href="https://3quality.ru/blog/wp-content/plugins/" as="font" type="font/woff2" crossorigin>--}}
-    {{--    <link rel='dns-prefetch' href='//yastatic.net'/>--}}
-    {{--    <link href='https://www.googletagmanager.com' rel='preconnect'/>--}}
-
+        gtag('config', 'UA-164572985-2');
+    </script>
 </head>
 <body id="page-top" data-scroll-animation="true">
-@include('layouts.extends.spinner')
+
 @include('layouts.extends.menu')
 
 @yield('content')
 
-@include('layouts.extends.contact')
-@include('layouts.extends.register')
+@include('layouts.extends.form')
+@include('layouts.extends.connect')
 @include('layouts.extends.footer')
 
 <script src="./vendor/vendor/jquery/jquery.min.js"></script>
 <script src="./vendor/vendor/bootstrap/js/bootstrap.min.js"></script>
 <script src="./vendor/vendor/scrollreveal/scrollreveal.min.js"></script>
-<script src="./vendor/vendor/magnific-popup/jquery.magnific-popup.min.js"></script>
-<script src="./vendor/vendor/svg-injector/svg-injector.min.js"></script>
-<script src="./vendor/vendor/wowjs/wow.min.js"></script>
 <script src="./vendor/js/index.min.js"></script>
+
+@yield('footerSource')
+
 </body>
 </html>
