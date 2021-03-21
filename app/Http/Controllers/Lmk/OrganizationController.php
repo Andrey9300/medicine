@@ -20,6 +20,9 @@ class OrganizationController extends Controller
         $organization->head_position = $request->head_position;
         $organization->head_phone = $request->head_phone;
         $organization->head_email = $currentUser->email;
+        $organization->address_fact = $request->address_fact;
+        $organization->address_legal = $request->address_legal;
+        $organization->okved = $request->okved;
         $organization->save();
 
         $currentUser->organizations()->attach($organization);
@@ -217,6 +220,9 @@ class OrganizationController extends Controller
         $organization->category_id = $organization_new['category_id'];
         $organization->head_position = $organization_new['head_position'];
         $organization->head_phone = $organization_new['head_phone'];
+        $organization->address_fact = $organization_new['address_fact'];
+        $organization->address_legal = $organization_new['address_legal'];
+        $organization->okved = $organization_new['okved'];
 
         // админов может быть несколько
         // менеджер 1 или 0

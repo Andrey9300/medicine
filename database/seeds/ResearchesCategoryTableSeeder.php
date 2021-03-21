@@ -4,11 +4,6 @@ use Illuminate\Database\Seeder;
 
 class ResearchesCategoryTableSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     *
-     * @return void
-     */
     public function run()
     {
         DB::table('research_categories')->insert([
@@ -42,35 +37,26 @@ class ResearchesCategoryTableSeeder extends Seeder
             'research_id' => 6,
         ]);
         DB::table('research_categories')->insert([
-            'id' => 7,
+            'id' => 49,
             'category_id' => 1,
-            'research_id' => 7,
+            'research_id' => 22,
         ]);
         DB::table('research_categories')->insert([
-            'id' => 9,
+            'id' => 50,
             'category_id' => 1,
-            'research_id' => 15,
+            'research_id' => 21,
         ]);
         DB::table('research_categories')->insert([
-            'id' => 10,
+            'id' => 51,
             'category_id' => 1,
-            'research_id' => 16,
+            'research_id' => 9,
         ]);
         DB::table('research_categories')->insert([
-            'id' => 11,
+            'id' => 52,
             'category_id' => 1,
-            'research_id' => 17,
+            'research_id' => 10,
         ]);
-        DB::table('research_categories')->insert([
-            'id' => 12,
-            'category_id' => 1,
-            'research_id' => 18,
-        ]);
-        DB::table('research_categories')->insert([
-            'id' => 13,
-            'category_id' => 1,
-            'research_id' => 19,
-        ]);
+        
         DB::table('research_categories')->insert([
             'id' => 14,
             'category_id' => 2,
@@ -102,11 +88,6 @@ class ResearchesCategoryTableSeeder extends Seeder
             'research_id' => 6,
         ]);
         DB::table('research_categories')->insert([
-            'id' => 20,
-            'category_id' => 2,
-            'research_id' => 7,
-        ]);
-        DB::table('research_categories')->insert([
             'id' => 21,
             'category_id' => 2,
             'research_id' => 8,
@@ -127,40 +108,11 @@ class ResearchesCategoryTableSeeder extends Seeder
             'research_id' => 11,
         ]);
         DB::table('research_categories')->insert([
-            'id' => 25,
+            'id' => 53,
             'category_id' => 2,
-            'research_id' => 13,
+            'research_id' => 22,
         ]);
-        DB::table('research_categories')->insert([
-            'id' => 26,
-            'category_id' => 2,
-            'research_id' => 14,
-        ]);
-        DB::table('research_categories')->insert([
-            'id' => 27,
-            'category_id' => 2,
-            'research_id' => 15,
-        ]);
-        DB::table('research_categories')->insert([
-            'id' => 28,
-            'category_id' => 2,
-            'research_id' => 16,
-        ]);
-        DB::table('research_categories')->insert([
-            'id' => 29,
-            'category_id' => 2,
-            'research_id' => 17,
-        ]);
-        DB::table('research_categories')->insert([
-            'id' => 30,
-            'category_id' => 2,
-            'research_id' => 18,
-        ]);
-        DB::table('research_categories')->insert([
-            'id' => 31,
-            'category_id' => 2,
-            'research_id' => 19,
-        ]);
+
         DB::table('research_categories')->insert([
             'id' => 32,
             'category_id' => 3,
@@ -192,11 +144,6 @@ class ResearchesCategoryTableSeeder extends Seeder
             'research_id' => 6,
         ]);
         DB::table('research_categories')->insert([
-            'id' => 38,
-            'category_id' => 3,
-            'research_id' => 7,
-        ]);
-        DB::table('research_categories')->insert([
             'id' => 39,
             'category_id' => 3,
             'research_id' => 8,
@@ -212,38 +159,125 @@ class ResearchesCategoryTableSeeder extends Seeder
             'research_id' => 10,
         ]);
         DB::table('research_categories')->insert([
-            'id' => 42,
+            'id' => 54,
             'category_id' => 3,
-            'research_id' => 11,
+            'research_id' => 22,
         ]);
         DB::table('research_categories')->insert([
-            'id' => 43,
+            'id' => 55,
             'category_id' => 3,
-            'research_id' => 15,
+            'research_id' => 21,
+        ]);
+
+        // гигиеническое обучение и аттестация
+        DB::table('research_categories')->insert([
+            'id' => 56,
+            'category_id' => 2,
+            'research_id' => 17,
         ]);
         DB::table('research_categories')->insert([
-            'id' => 44,
-            'category_id' => 3,
-            'research_id' => 16,
+            'id' => 57,
+            'category_id' => 2,
+            'research_id' => 23,
         ]);
         DB::table('research_categories')->insert([
-            'id' => 45,
+            'id' => 58,
             'category_id' => 3,
             'research_id' => 17,
         ]);
         DB::table('research_categories')->insert([
-            'id' => 46,
+            'id' => 59,
             'category_id' => 3,
-            'research_id' => 18,
+            'research_id' => 23,
         ]);
         DB::table('research_categories')->insert([
-            'id' => 47,
-            'category_id' => 3,
-            'research_id' => 19,
+            'id' => 60,
+            'category_id' => 1,
+            'research_id' => 17,
+        ]);
+
+        // корь
+        DB::table('research_categories')->insert([
+            'id' => 61,
+            'category_id' => 1,
+            'research_id' => 15,
         ]);
         DB::table('research_categories')->insert([
-            'id' => 48,
+            'id' => 62,
             'category_id' => 2,
+            'research_id' => 15,
+        ]);
+        DB::table('research_categories')->insert([
+            'id' => 63,
+            'category_id' => 3,
+            'research_id' => 15,
+        ]);
+
+        // дифтерия
+        DB::table('research_categories')->insert([
+            'id' => 64,
+            'category_id' => 1,
+            'research_id' => 16,
+        ]);
+        DB::table('research_categories')->insert([
+            'id' => 65,
+            'category_id' => 2,
+            'research_id' => 16,
+        ]);
+        DB::table('research_categories')->insert([
+            'id' => 66,
+            'category_id' => 3,
+            'research_id' => 16,
+        ]);
+
+        // зонне
+        DB::table('research_categories')->insert([
+            'id' => 67,
+            'category_id' => 1,
+            'research_id' => 13,
+        ]);
+        DB::table('research_categories')->insert([
+            'id' => 68,
+            'category_id' => 2,
+            'research_id' => 13,
+        ]);
+        DB::table('research_categories')->insert([
+            'id' => 69,
+            'category_id' => 3,
+            'research_id' => 13,
+        ]);
+
+        // гепатит 1
+        DB::table('research_categories')->insert([
+            'id' => 70,
+            'category_id' => 1,
+            'research_id' => 14,
+        ]);
+        DB::table('research_categories')->insert([
+            'id' => 71,
+            'category_id' => 2,
+            'research_id' => 14,
+        ]);
+        DB::table('research_categories')->insert([
+            'id' => 72,
+            'category_id' => 3,
+            'research_id' => 14,
+        ]);
+
+        // гепатит 2
+        DB::table('research_categories')->insert([
+            'id' => 73,
+            'category_id' => 1,
+            'research_id' => 20,
+        ]);
+        DB::table('research_categories')->insert([
+            'id' => 74,
+            'category_id' => 2,
+            'research_id' => 20,
+        ]);
+        DB::table('research_categories')->insert([
+            'id' => 75,
+            'category_id' => 3,
             'research_id' => 20,
         ]);
     }

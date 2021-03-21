@@ -27,9 +27,8 @@ import {IEmployee} from '../../../../interface/lmk/IEmployee';
 import {IHospital} from '../../../../interface/lmk/IHospital';
 import {IOrganization} from '../../../../interface/lmk/IOrganization';
 import {IEmployeeResearch} from '../../../../interface/lmk/IEmployeeResearch';
-import {DateHelper} from '../../../../utils/dateHelper';
 import {HospitalInfo} from './HospitalInfo';
-import {EmployeeInfo, EmployeeInfoAdditional, HeadInfo} from './EmployeeInfo';
+import {EmployeeInfo, HeadInfo} from './EmployeeInfo';
 import {LmkInfo, MedCheck, PassedTo, PsychiatricCheck} from './CustomFields';
 import {SendFrom} from './OrganizationInfo';
 import {ResearchesPrint} from './ResearchesPrint';
@@ -107,7 +106,7 @@ class PrintEmployeeComponent extends React.PureComponent<IProps, IState> {
     const {sendToResearch} = this.props;
 
     sendToResearch(employeeId);
-  }
+  };
 
   getButtons() {
     const {employee} = this.props;
@@ -198,34 +197,57 @@ class PrintEmployeeComponent extends React.PureComponent<IProps, IState> {
                   {this.getButtons()}
                 </CardHeader>
                 <CardBody className="card-body">
-                  <Table
-                    responsive
-                    id="printResearches"
-                    style={{fontSize: '12px'}}
+                  <div
+                    style={{
+                      borderTop: '1px solid',
+                      borderBottom: '1px solid',
+                      textAlign: 'center',
+                      fontWeight: 600,
+                    }}
                   >
-                    <tbody>
-                      <HeadInfo
-                        employee={employee}
-                        photoMap={hospitalOrg.photo_map}
-                      />
-                      <EmployeeInfo employee={employee} />
-                      <HospitalInfo hospital={hospitalOrg} />
-                      <LmkInfo />
-                      <tr>
-                        <td colSpan={2}>Категория: {employee.category.name}</td>
-                      </tr>
-                      <ResearchesPrint
-                        employee={employee}
-                        needForResearch={needForResearch}
-                        employeeResearches={employeeResearches}
-                      />
-                      <MedCheck />
-                      <EmployeeInfoAdditional employee={employee} />
-                      <PsychiatricCheck />
-                      <PassedTo />
-                      <SendFrom organization={organization} />
-                    </tbody>
-                  </Table>
+                    Направление на медицинский осмотр
+                  </div>
+                  <div style={{display: 'flex'}}>
+                    <EmployeeInfo employee={employee} />
+                    <HeadInfo organization={organization} />
+                  </div>
+                  <div
+                    style={{
+                      display: 'flex',
+                      borderBottom: '1px solid',
+                      padding: '8px 0px',
+                    }}
+                  >
+                    <div
+                      style={{
+                        width: '60%',
+                        fontWeight: 'bold',
+                      }}
+                    >
+                      При посещении медицинской организации, с собой нужно
+                      взять:
+                      <ul>
+                        <li>направление на МО</li>
+                        <li>паспорт</li>
+                        <li>СНИЛС</li>
+                        <li>Полис ОМС или ДМС</li>
+                        <li>фотографию (для новой ЛМК)</li>
+                      </ul>
+                    </div>
+                    <HospitalInfo hospital={hospitalOrg} />
+                  </div>
+                  <LmkInfo />
+                  <ResearchesPrint
+                    employee={employee}
+                    needForResearch={needForResearch}
+                    employeeResearches={employeeResearches}
+                  />
+                  <MedCheck />
+                  <PsychiatricCheck />
+                  <div style={{display: 'flex', paddingTop: '12px'}}>
+                    <PassedTo />
+                    <SendFrom organization={organization} />
+                  </div>
                 </CardBody>
                 <CardFooter className="not-print">
                   {this.getButtons()}

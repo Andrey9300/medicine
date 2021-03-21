@@ -10,6 +10,9 @@ export interface IOrganization {
   head_email: string;
   head_fio: string;
   head_phone: string;
+  address_fact: string;
+  address_legal: string;
+  okved: string;
   head_position: string;
   id: number;
   name: string;

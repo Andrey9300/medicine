@@ -1,37 +1,47 @@
-import React from 'react';
+import React, {PureComponent} from 'react';
 import {connect} from 'react-redux';
 import {
   fetchHospital,
   deleteHospital,
 } from '../../../actions/lmk/hospitalActions';
 import {Link} from 'react-router-dom';
-import PropTypes from 'prop-types';
 import {Row, Col, Card, CardHeader, CardBody, Table} from 'reactstrap';
 import {createMarkup} from '../../../utils/errorsHelper';
+import {IHospital} from '../../../interface/lmk/IHospital';
+import {TState} from "../../../reducers";
 
-class Hospital extends React.PureComponent {
-  constructor(props) {
-    super(props);
-    this.state = {
-      errors: null,
-      hospitalId: props.match.params.id,
-    };
-    this.handleBtnDelete = this.handleBtnDelete.bind(this);
-  }
+interface IProps {
+  dispatch: any;
+  match: any;
+  errors: any;
+  hospital: IHospital;
+}
+
+interface IState {
+  hospitalId: number;
+}
+
+class Hospital extends PureComponent<IProps, IState> {
+  state: IState = {
+    hospitalId: null,
+  };
 
   componentDidMount() {
-    this.props.dispatch(fetchHospital(this.state.hospitalId));
+    const {match} = this.props;
+    const hospitalId = match.params.id;
+
+    this.setState({hospitalId});
+    this.props.dispatch(fetchHospital(hospitalId));
   }
 
-  handleBtnDelete(hospitalId, event) {
+  handleBtnDelete = (hospitalId: number, event: any) => {
     event.preventDefault();
     this.props.dispatch(deleteHospital(hospitalId));
-  }
+  };
 
   render() {
-    const {hospital} = this.props;
-    const {errors} = this.state;
-    let errorsMessage = '';
+    const {hospital, errors} = this.props;
+    let errorsMessage = null;
 
     if (!hospital) {
       return null;
@@ -88,8 +98,20 @@ class Hospital extends React.PureComponent {
                         <td>{hospital.phone}</td>
                       </tr>
                       <tr>
-                        <td>Контактное лицо:</td>
+                        <td>Email:</td>
+                        <td>{hospital.email}</td>
+                      </tr>
+                      <tr>
+                        <td>ФИО куратора:</td>
                         <td>{hospital.head_fio}</td>
+                      </tr>
+                      <tr>
+                        <td>Телефон куратора:</td>
+                        <td>{hospital.head_phone}</td>
+                      </tr>
+                      <tr>
+                        <td>ОГРН:</td>
+                        <td>{hospital.ogrn}</td>
                       </tr>
                       <tr>
                         <td>
@@ -118,15 +140,13 @@ class Hospital extends React.PureComponent {
   }
 }
 
-Hospital.propTypes = {
-  dispatch: PropTypes.func.isRequired,
-  match: PropTypes.object.isRequired,
-};
-
-const mapStateToProps = (state) => {
+const mapStateToProps = (state: TState) => {
   return {
+    errors: state.hospitals.error,
     hospital: state.hospitals.hospital,
   };
 };
 
-export default connect(mapStateToProps)(Hospital);
+export const HospitalContainer = connect(mapStateToProps)(
+    Hospital,
+);

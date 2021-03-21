@@ -4,11 +4,6 @@ use Illuminate\Database\Seeder;
 
 class ResearchesTableSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     *
-     * @return void
-     */
     public function run()
     {
         DB::table('researches')->insert([
@@ -69,29 +64,29 @@ class ResearchesTableSeeder extends Seeder
         ]);
         DB::table('researches')->insert([
             'id' => 13,
-            'name' => 'Вакцинация от дизентерии Зонне',
+            'name' => 'Вакцинация против шигеллезов (дизентерия Зонне)',
             'period_id' => 3
         ]);
         DB::table('researches')->insert([
             'id' => 14,
-            'name' => 'Вакцинация Вирусный Гепатит А (Дата №1)',
+            'name' => 'Вакцинация против вирусного гепатита А (ВГА V1)',
             'description' => 'Между Дата №1 и дата №2 должно быть не больше 12 месяцев',
             'period_id' => 1
         ]);
         DB::table('researches')->insert([
             'id' => 15,
-            'name' => 'Исследование крови / Вакцинация против Кори',
+            'name' => 'Вакцинация против кори',
             'description' => 'Для лиц до 55 лет',
             'period_id' => 1
         ]);
         DB::table('researches')->insert([
             'id' => 16,
-            'name' => 'Исследование крови / Вакцинация против Дифтерии',
+            'name' => 'Вакцинация против дифтерии',
             'period_id' => 6
         ]);
         DB::table('researches')->insert([
             'id' => 17,
-            'name' => 'Гигиеническое обучение и аттестация',
+            'name' => 'Гигиеническое обучение и аттестация (1 раз в 2 года)',
             'period_id' => 4
         ]);
         DB::table('researches')->insert([
@@ -106,9 +101,24 @@ class ResearchesTableSeeder extends Seeder
         ]);
         DB::table('researches')->insert([
             'id' => 20,
-            'name' => 'Вакцинация Вирусный Гепатит А (Дата №2)',
+            'name' => 'Вакцинация против вирусного гепатита А (ВГА V2)',
             'description' => 'Между Дата №1 и дата №2 должно быть не больше 12 месяцев',
             'period_id' => 1
+        ]);
+        DB::table('researches')->insert([
+            'id' => 21,
+            'name' => 'Мазок на гонорею',
+            'period_id' => 3
+        ]);
+        DB::table('researches')->insert([
+            'id' => 22,
+            'name' => 'Невролог',
+            'period_id' => 3
+        ]);
+        DB::table('researches')->insert([
+            'id' => 23,
+            'name' => 'Гигиеническое обучение и аттестация (1 раз в год)',
+            'period_id' => 3
         ]);
     }
 }

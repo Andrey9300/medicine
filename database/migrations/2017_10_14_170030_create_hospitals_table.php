@@ -16,11 +16,14 @@ class CreateHospitalsTable extends Migration
         Schema::create('hospitals', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
-            $table->string('address');
+            $table->string('address')->nullable();
+            $table->string('ogrn')->nullable();
+            $table->string('email')->nullable();
+            $table->string('phone')->nullable();
             $table->string('shedule')->nullable();
             $table->string('photo_map')->nullable();
-            $table->string('phone')->nullable();
             $table->string('head_fio')->nullable();
+            $table->string('head_phone')->nullable();
             $table->integer('user_id')->unsigned();
             $table->foreign('user_id')->references('id')->on('users');
             $table->unique(array('name', 'user_id'));

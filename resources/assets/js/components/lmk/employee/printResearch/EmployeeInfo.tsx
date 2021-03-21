@@ -1,87 +1,65 @@
 import React from 'react';
 import {IEmployee} from '../../../../interface/lmk/IEmployee';
+import {IOrganization} from '../../../../interface/lmk/IOrganization';
 
 interface IProps {
   employee: IEmployee;
 }
 
-interface IPropsAdd extends IProps {
-  photoMap: string;
+interface IPropsAdd {
+  organization: IOrganization;
 }
 
 export const EmployeeInfo: React.FC<IProps> = ({employee}) => (
-  <>
-    <tr>
-      <td>
-        <span style={{fontWeight: 600}}>Сотрудник:</span>
-      </td>
-    </tr>
-    <tr>
-      <td colSpan={1} style={{width: '50%'}}>
-        ФИО: {employee.fio}
-      </td>
-    </tr>
-    <tr>
-      <td colSpan={1} style={{width: '50%'}}>
-        Дата рождения: {employee.date_birthday}
-      </td>
-    </tr>
-    <tr>
-      <td colSpan={1} style={{width: '50%'}}>
-        Отдел: {employee.department}
-      </td>
-    </tr>
-    <tr>
-      <td>Должность: {employee.position}</td>
-    </tr>
-  </>
+  <div style={{width: '60%'}}>
+    <div style={{marginBottom: '8px'}}>
+      <span style={{fontWeight: 800}}>Сотрудник</span>
+    </div>
+    <div>ФИО: {employee.fio}</div>
+    {employee.date_birthday && (
+      <div>Дата рождения: {employee.date_birthday}</div>
+    )}
+    <div>
+      Пол:&nbsp;
+      <select>
+        <option />
+        <option>Мужской</option>
+        <option>Женский</option>
+      </select>
+    </div>
+    {employee.department && <div>Отдел: {employee.department}</div>}
+    {employee.position && <div>Должность: {employee.position}</div>}
+    {employee.category && (
+      <div>Категория организации: {employee.category?.name}</div>
+    )}
+    <div>
+      Номер полиса ОМС / ДМС: <input type="text" />
+    </div>
+  </div>
 );
 
-export const EmployeeInfoAdditional: React.FC<IProps> = ({employee}) => (
-  <>
-    <tr>
-      <td colSpan={2}>
-        <span style={{marginRight: '12px'}}>
-          <span style={{fontWeight: 600}}>1. Отдел:</span> {employee.department}
-          <br />
-        </span>
-        <span style={{marginRight: '12px'}}>
-          <span style={{fontWeight: 600}}>2. Должность:</span>{' '}
-          {employee.position}
-          <br />
-        </span>
-      </td>
-    </tr>
-  </>
-);
-
-export const HeadInfo: React.FC<IPropsAdd> = ({employee, photoMap}) => (
-  <>
-    <tr
-      style={{
-        borderTop: '1px solid',
-        borderBottom: '1px solid',
-      }}
-    >
-      <td
-        style={{
-          textAlign: 'center',
-          fontWeight: 600,
-        }}
-        colSpan={2}
-      >
-        Направление на медицинский осмотр
-      </td>
-    </tr>
-    <tr>
-      <td colSpan={1} style={{width: '50%'}}>
-        <span style={{fontWeight: 600}}>Наименование объекта:</span>
-        &nbsp;
-        {employee.organization_name}
-      </td>
-      <td colSpan={1} rowSpan={10}>
-        <img width="400" height="240" src={`/storage/${photoMap}`} />
-      </td>
-    </tr>
-  </>
+export const HeadInfo: React.FC<IPropsAdd> = ({organization}) => (
+  <div style={{width: '40%'}}>
+    <div style={{marginBottom: '8px'}}>
+      <span style={{fontWeight: 800}}>Организация</span>
+    </div>
+    <div>
+      <span>Наименование:</span>&nbsp; {organization.name}
+    </div>
+    {organization.head_email && (
+      <div>
+        <span>Email:</span>&nbsp;{organization.head_email}
+      </div>
+    )}
+    {organization.head_phone && (
+      <div>
+        <span>Телефон:</span>&nbsp;{organization.head_phone}
+      </div>
+    )}
+    {organization.okved && (
+      <div>
+        <span>ОКВЭД:</span>&nbsp;{organization.okved}
+      </div>
+    )}
+  </div>
 );

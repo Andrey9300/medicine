@@ -24,7 +24,10 @@ class HospitalController extends Controller
         $hospital = new Hospital;
         $hospital->name = $request->name;
         $hospital->address = $request->address;
+        $hospital->ogrn = $request->ogrn;
+        $hospital->email = $request->email;
         $hospital->head_fio = $request->head_fio;
+        $hospital->head_phone = $request->head_phone;
         $hospital->shedule = $request->shedule;
         $hospital->photo_map = $photo_map;
         $hospital->phone = $request->phone;
@@ -76,7 +79,10 @@ class HospitalController extends Controller
 
         $hospital->name = $hospital_new['name'];
         $hospital->address = $hospital_new['address'];
+        $hospital->ogrn = $hospital_new['ogrn'];
+        $hospital->email = $hospital_new['email'];
         $hospital->head_fio = $hospital_new['head_fio'];
+        $hospital->head_phone = $hospital_new['head_phone'];
         $hospital->shedule = $hospital_new['shedule'];
         $hospital->photo_map = $path;
         $hospital->phone = $hospital_new['phone'];

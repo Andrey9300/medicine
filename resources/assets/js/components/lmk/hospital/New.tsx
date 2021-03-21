@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {PureComponent} from 'react';
 import {connect} from 'react-redux';
 import {
   Row,
@@ -16,22 +16,25 @@ import {
 } from 'reactstrap';
 import {addHospital} from '../../../actions/lmk/hospitalActions';
 import {createMarkup} from '../../../utils/errorsHelper';
+import {IHospital} from '../../../interface/lmk/IHospital';
+import {TState} from "../../../reducers";
 
-class NewHospital extends React.PureComponent {
-  constructor(props) {
-    super(props);
+interface IProps {
+  dispatch: any;
+  match: any;
+  errors: any;
+  hospital: IHospital;
+}
 
-    this.handleSubmit = this.handleSubmit.bind(this);
-  }
-
-  handleSubmit(event) {
+class NewHospital extends PureComponent<IProps> {
+  handleSubmit = (event: any) => {
     event.preventDefault();
     this.props.dispatch(addHospital(document.querySelector('form')));
-  }
+  };
 
   render() {
     const {errors} = this.props;
-    let errorsMessage = '';
+    let errorsMessage = null;
 
     if (errors) {
       errorsMessage = (
@@ -68,15 +71,18 @@ class NewHospital extends React.PureComponent {
                   </FormGroup>
                   <FormGroup row>
                     <Col md="3">
-                      <Label htmlFor="text-input">Контактное лицо</Label>
+                      <Label htmlFor="text-input">ФИО куратора</Label>
                     </Col>
                     <Col xs="12" md="9">
-                      <Input
-                        type="text"
-                        id="head_fio"
-                        name="head_fio"
-                        required
-                      />
+                      <Input type="text" name="head_fio" required />
+                    </Col>
+                  </FormGroup>
+                  <FormGroup row>
+                    <Col md="3">
+                      <Label htmlFor="text-input">Телефон куратора</Label>
+                    </Col>
+                    <Col xs="12" md="9">
+                      <Input type="text" name="head_phone" />
                     </Col>
                   </FormGroup>
                   <FormGroup row>
@@ -105,14 +111,26 @@ class NewHospital extends React.PureComponent {
                   </FormGroup>
                   <FormGroup row>
                     <Col md="3">
+                      <Label htmlFor="text-input">Email</Label>
+                    </Col>
+                    <Col xs="12" md="9">
+                      <Input type="text" name="email" />
+                    </Col>
+                  </FormGroup>
+                  <FormGroup row>
+                    <Col md="3">
+                      <Label htmlFor="text-input">ОГРН</Label>
+                    </Col>
+                    <Col xs="12" md="9">
+                      <Input type="text" name="ogrn" />
+                    </Col>
+                  </FormGroup>
+                  <FormGroup row>
+                    <Col md="3">
                       <Label htmlFor="text-input">Фото карты</Label>
                     </Col>
                     <Col xs="12" md="9">
-                      <Input
-                        type="file"
-                        id="photo_map"
-                        name="photo_map"
-                      />
+                      <Input type="file" id="photo_map" name="photo_map" />
                       <FormText color="muted">Загрузите фото карты</FormText>
                     </Col>
                   </FormGroup>
@@ -131,8 +149,9 @@ class NewHospital extends React.PureComponent {
   }
 }
 
-const mapStateToProps = (state) => {
+
+const mapStateToProps = (state: TState) => {
   return {};
 };
 
-export default connect(mapStateToProps)(NewHospital);
+export const NewHospitalContainer = connect(mapStateToProps)(NewHospital);

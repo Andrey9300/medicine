@@ -1,105 +1,105 @@
 import React from 'react';
 
 export const MedCheck: React.FC = () => (
-  <>
-    <tr
+  <div
+    style={{
+      display: 'flex',
+      marginTop: '12px',
+      paddingBottom: '12px',
+      borderBottom: '1px solid',
+    }}
+  >
+    <div
       style={{
-        borderTop: '1px solid',
+        marginRight: '16px',
       }}
     >
-      <td>
-        <select>
-          <option />
-          <option>Нет</option>
-          <option>Предварительный</option>
-          <option>Периодический</option>
-        </select>{' '}
-        медицинский осмотр
-      </td>
-      <td>
-        Форма оплаты:{' '}
-        <select>
-          <option />
-          <option>За счет сотрудника</option>
-          <option>За счет организации</option>
-        </select>
-      </td>
-    </tr>
-  </>
+      Медицинский осмотр{' '}
+      <select>
+        <option />
+        <option>Нет</option>
+        <option>Предварительный</option>
+        <option>Периодический</option>
+      </select>
+    </div>
+    <div>
+      Форма оплаты:{' '}
+      <select>
+        <option />
+        <option>За счет сотрудника</option>
+        <option>За счет организации</option>
+      </select>
+    </div>
+  </div>
 );
 
 export const PsychiatricCheck: React.FC = () => (
-  <>
-    <tr
+  <div
+    style={{
+      display: 'flex',
+      padding: '12px 0px',
+      borderBottom: '1px solid',
+    }}
+  >
+    <div
       style={{
-        borderTop: '1px solid',
+        marginRight: '16px',
       }}
     >
-      <td>
-        Психиатрическое освидетельствование{' '}
-        <select>
-          <option />
-          <option>Да</option>
-          <option>Нет</option>
-        </select>
-      </td>
-      <td>
-        Форма оплаты:{' '}
-        <select>
-          <option />
-          <option>За счет сотрудника</option>
-          <option>За счет организации</option>
-        </select>
-      </td>
-    </tr>
-  </>
+      Психиатрическое освидетельствование{' '}
+      <select>
+        <option />
+        <option>Да</option>
+        <option>Нет</option>
+      </select>
+    </div>
+    <div>
+      Форма оплаты:{' '}
+      <select>
+        <option />
+        <option>За счет сотрудника</option>
+        <option>За счет организации</option>
+      </select>
+    </div>
+  </div>
 );
 
 export const PassedTo: React.FC = () => (
-  <>
-    <tr
-      style={{
-        borderTop: '1px solid',
-      }}
-    >
-      <td rowSpan={7}>
-        <span style={{fontWeight: 600}}>Пройти медицинский осмотр до: </span>
-        <input type="text" />
-        <textarea
-          style={{width: '100%'}}
-          rows={7}
-          defaultValue="Дополнительная информация"
-        />
-      </td>
-      <td />
-    </tr>
-  </>
+  <div style={{width: '60%'}}>
+    <div style={{marginBottom: '4px'}}>
+      <span style={{fontWeight: 600}}>Пройти медицинский осмотр до: </span>
+      <input type="text" />
+    </div>
+    <textarea
+      style={{width: '90%'}}
+      rows={7}
+      defaultValue="Дополнительная информация"
+    />
+  </div>
 );
 
 export const LmkInfo: React.FC = () => (
-  <>
-    <tr
+  <div style={{display: 'flex', marginTop: '12px'}}>
+    <div
       style={{
-        borderTop: '1px solid',
+        marginRight: '16px',
       }}
     >
-      <td colSpan={1}>
-        <select>
-          <option />
-          <option>Нет</option>
-          <option>Новая</option>
-          <option>Продление</option>
-        </select>{' '}
-        ЛМК
-      </td>
-      <td colSpan={1}>
-        Форма оплаты:{' '}
-        <select>
-          <option />
-          <option>За счет сотрудника</option>
-          <option>За счет организации</option>
-        </select>
-      </td>
-    </tr>
-  </>
+      ЛМК{' '}
+      <select>
+        <option />
+        <option>Нет</option>
+        <option>Новая</option>
+        <option>Продление</option>
+      </select>
+    </div>
+    <div>
+      Форма оплаты:{' '}
+      <select>
+        <option />
+        <option>За счет сотрудника</option>
+        <option>За счет организации</option>
+      </select>
+    </div>
+  </div>
 );

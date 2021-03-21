@@ -1,7 +1,9 @@
-import React from 'react';
+import React, {PureComponent} from 'react';
 import {connect} from 'react-redux';
-import PropTypes from 'prop-types';
-import {clearOrganization, fetchOrganization} from '../../../actions/lmk/organizationActions';
+import {
+  clearOrganization,
+  fetchOrganization,
+} from '../../../actions/lmk/organizationActions';
 import {fetchCategories} from '../../../actions/lmk/categoryActions';
 import {
   Row,
@@ -18,35 +20,52 @@ import {
 } from 'reactstrap';
 import {editOrganization} from '../../../actions/lmk/organizationActions';
 import {createMarkup} from '../../../utils/errorsHelper';
+import {IOrganization} from '../../../interface/lmk/IOrganization';
+import {ICategory} from '../../../interface/lmk/ICategory';
+import {TState} from '../../../reducers';
 
-class EditOrganization extends React.PureComponent {
-  constructor(props) {
-    super(props);
-    this.state = {
-      organizationId: props.match.params.id,
-    };
-    this.handleSubmit = this.handleSubmit.bind(this);
+interface IProps {
+  dispatch: any;
+  match: any;
+  errors: any;
+  categories: ICategory[];
+  organization: IOrganization;
+}
+
+interface IState {
+  organizationId: number;
+}
+
+class EditOrganization extends PureComponent<IProps, IState> {
+  state: IState = {
+    organizationId: null,
+  };
+
+  componentDidMount() {
+    const {match} = this.props;
+    const organizationId = match.params.id;
+
+    this.props.dispatch(clearOrganization());
+    this.props.dispatch(fetchCategories());
+    this.props.dispatch(fetchOrganization(organizationId));
+
+    this.setState({organizationId});
   }
 
-  handleSubmit(event) {
+  handleSubmit = (event: any) => {
     event.preventDefault();
+
     this.props.dispatch(
       editOrganization(
         document.querySelector('form'),
         this.state.organizationId,
       ),
     );
-  }
-
-  componentDidMount() {
-    this.props.dispatch(clearOrganization());
-    this.props.dispatch(fetchCategories());
-    this.props.dispatch(fetchOrganization(this.state.organizationId));
-  }
+  };
 
   render() {
     const {organization, categories, errors} = this.props;
-    let errorsMessage = '';
+    let errorsMessage = null;
 
     if (errors) {
       errorsMessage = (
@@ -75,7 +94,6 @@ class EditOrganization extends React.PureComponent {
                     </Col>
                     <Col xs="12" md="9">
                       <Input
-                        type="input"
                         name="head_position"
                         id="head_position"
                         defaultValue={organization.head_position}
@@ -88,11 +106,40 @@ class EditOrganization extends React.PureComponent {
                     </Col>
                     <Col xs="12" md="9">
                       <Input
-                        type="input"
                         name="head_phone"
                         id="head_phone"
                         defaultValue={organization.head_phone}
                       />
+                    </Col>
+                  </FormGroup>
+                  <FormGroup row>
+                    <Col md="3">
+                      <Label htmlFor="text-input">Адрес фактический</Label>
+                    </Col>
+                    <Col xs="12" md="9">
+                      <Input
+                        name="address_fact"
+                        defaultValue={organization.address_fact}
+                      />
+                    </Col>
+                  </FormGroup>
+                  <FormGroup row>
+                    <Col md="3">
+                      <Label htmlFor="text-input">Адрес юридический</Label>
+                    </Col>
+                    <Col xs="12" md="9">
+                      <Input
+                        name="address_legal"
+                        defaultValue={organization.address_legal}
+                      />
+                    </Col>
+                  </FormGroup>
+                  <FormGroup row>
+                    <Col md="3">
+                      <Label htmlFor="text-input">ОКВЭД</Label>
+                    </Col>
+                    <Col xs="12" md="9">
+                      <Input name="okved" defaultValue={organization.okved} />
                     </Col>
                   </FormGroup>
                   <FormGroup row>
@@ -104,7 +151,7 @@ class EditOrganization extends React.PureComponent {
                         type="select"
                         name="category_id"
                         id="select"
-                        defaultValue={organization.category.id}
+                        defaultValue={organization.category?.id}
                       >
                         {categories.map((category) => {
                           return (
@@ -131,15 +178,7 @@ class EditOrganization extends React.PureComponent {
   }
 }
 
-EditOrganization.propTypes = {
-  dispatch: PropTypes.func.isRequired,
-  match: PropTypes.object.isRequired,
-  errors: PropTypes.array,
-  categories: PropTypes.array,
-  organization: PropTypes.object,
-};
-
-const mapStateToProps = (state) => {
+const mapStateToProps = (state: TState) => {
   return {
     errors: state.organizations.errors,
     categories: state.categories.categories,
@@ -147,4 +186,6 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps)(EditOrganization);
+export const EditOrganizationContainer = connect(mapStateToProps)(
+  EditOrganization,
+);

@@ -11,29 +11,32 @@ interface IProps {
 
 export class ResearchesPrint extends React.PureComponent<IProps> {
   getVaccines = (researches: IResearch[]) => {
-    const {employee} = this.props;
-    if (employee.category.id !== 2) {
-      return null;
+    // в отдельный раздел вакцины
+    let vaccines = researches.filter(
+      (research) =>
+        research.id === 13 || research.id === 15 || research.id === 16,
+    );
+    const vaccinesVgaV1 = researches.find((research) => research.id === 14);
+    const vaccinesVgaV2 = researches.find((research) => research.id === 20);
+
+    if (vaccinesVgaV1) {
+      vaccines.push(vaccinesVgaV1);
     }
 
-    // в отдельный раздел Гепатит и Зонне
-    let vaccines = researches.filter((research) => {
-      return research.id === 13 || research.id === 14 || research.id === 20;
-    });
-    const vaccinesVga = researches.filter((research) => {
-      return research.id === 14 || research.id === 20;
-    });
-
-    // берем только ВГА1
-    if (vaccinesVga.length > 1) {
-      vaccines = researches.filter((research) => {
-        return research.id === 13 || research.id === 14;
-      });
+    if (vaccinesVgaV2 && !vaccinesVgaV1) {
+      vaccines.push(vaccinesVgaV2);
     }
 
     const vaccinesBlock = vaccines.map((vaccine, index) => {
       return (
-        <div key={index}>
+        <div
+          key={index}
+          style={{
+            boxSizing: 'border-box',
+            flexGrow: 1,
+            width: '50%',
+          }}
+        >
           {vaccine.name} -{' '}
           <select>
             <option>Да</option>
@@ -44,35 +47,15 @@ export class ResearchesPrint extends React.PureComponent<IProps> {
 
     return (
       <React.Fragment key={9999999}>
-        <tr
-          style={{
-            borderTop: '1px solid',
-          }}
-        >
-          <td>{vaccinesBlock}</td>
-          <td>
-            Форма оплаты:{' '}
-            <select>
-              <option />
-              <option>За счет сотрудника</option>
-              <option>За счет организации</option>
-            </select>
-          </td>
-        </tr>
-        <tr>
-          <td colSpan={2}>
-            <span style={{fontWeight: 600}}>
-              Важно: вы можете провести вакцинацию БЕСПЛАТНО по месту жительства
-              по полису ОМС, с предоставлением справки или прививочного
-              сертификата.
-            </span>
-            <br />
-            Вакцинация от Вирусного гепатита А проводится двукратно с интервалом
-            6-18 мес.
-            <br />
-            Вакцинация от дизентерии Зонне проводится ежегодно
-          </td>
-        </tr>
+        <div style={{display: 'flex', flexWrap: 'wrap'}}>{vaccinesBlock}</div>
+        <div>
+          Форма оплаты:{' '}
+          <select>
+            <option />
+            <option>За счет сотрудника</option>
+            <option>За счет организации</option>
+          </select>
+        </div>
       </React.Fragment>
     );
   };
@@ -98,8 +81,7 @@ export class ResearchesPrint extends React.PureComponent<IProps> {
 
   researches = () => {
     const {employee} = this.props;
-    const bufferTr: any[] = [];
-    let bufferTd: any[] = [];
+    const researchesDiv: any[] = [];
     const researches: IResearch[] = employee.researches_expired.concat(
       employee.researches_ends,
     );
@@ -113,48 +95,73 @@ export class ResearchesPrint extends React.PureComponent<IProps> {
         research.id !== 18 &&
         research.id !== 13 &&
         research.id !== 14 &&
+        research.id !== 15 &&
+        research.id !== 16 &&
         research.id !== 20
       );
     });
 
     filterResearches.forEach((research, index) => {
-      if (index % 2 === 1) {
-        bufferTr.push(
-          <tr key={index}>
-            {bufferTd}
-            <td>{research.name}</td>
-          </tr>,
-        );
-        bufferTd = [];
-      } else {
-        bufferTd.push(<td key={index}>{research.name}</td>);
-      }
+      researchesDiv.push(
+        <div
+          key={index}
+          style={{
+            boxSizing: 'border-box',
+            flexGrow: 1,
+            width: '50%',
+          }}
+        >
+          {research.name}
+        </div>,
+      );
     });
 
-    if (bufferTd.length) {
-      bufferTr.push(<tr key={999}>{bufferTd}</tr>);
-    }
-
-    bufferTr.push(this.getVaccines(researches));
-
-    return bufferTr;
+    return {researchesDiv, vaccinesDiv: this.getVaccines(researches)};
   };
 
   render() {
+    const {researchesDiv, vaccinesDiv} = this.researches();
+
     return (
       <>
-        <tr>
-          <td
+        <div style={{paddingTop: '12px'}}>
+          <div
             style={{
               textAlign: 'center',
               fontWeight: 600,
+              borderTop: '1px solid',
             }}
-            colSpan={2}
           >
-            Провести медицинское обследования в объеме:
-          </td>
-        </tr>
-        {this.researches()}
+            Провести медицинское обследования в объеме
+          </div>
+          <div
+            style={{
+              display: 'flex',
+              flexWrap: 'wrap',
+            }}
+          >
+            {researchesDiv}
+          </div>
+        </div>
+        <div style={{borderBottom: '1px solid', padding: '12px 0px'}}>
+          <div
+            style={{
+              textAlign: 'center',
+              fontWeight: 600,
+              borderTop: '1px solid',
+            }}
+          >
+            Вакцинация
+          </div>
+          <div
+            style={{
+              display: 'flex',
+              flexWrap: 'wrap',
+            }}
+          >
+            {vaccinesDiv}
+          </div>
+        </div>
       </>
     );
   }

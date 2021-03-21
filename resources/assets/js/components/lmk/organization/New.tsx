@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {PureComponent} from 'react';
 import {fetchCategories} from '../../../actions/lmk/categoryActions';
 import {connect} from 'react-redux';
 import {
@@ -16,26 +16,36 @@ import {
 } from 'reactstrap';
 import {addOrganization} from '../../../actions/lmk/organizationActions';
 import {createMarkup} from '../../../utils/errorsHelper';
+import {IEmployee} from '../../../interface/lmk/IEmployee';
+import {ICategory} from '../../../interface/lmk/ICategory';
+import {TState} from '../../../reducers';
 
-class NewOrganization extends React.PureComponent {
-  constructor(props) {
-    super(props);
+interface IProps {
+  dispatch: any;
+  errors: any;
+  categories: ICategory[];
+}
 
-    this.handleSubmit = this.handleSubmit.bind(this);
-  }
+interface IState {
+  organizationId: number;
+  employeesAttention: IEmployee[];
+  researchesEnds: number;
+  researchesExpired: number;
+}
 
+class NewOrganization extends PureComponent<IProps, IState> {
   componentDidMount() {
     this.props.dispatch(fetchCategories());
   }
 
-  handleSubmit(event) {
+  handleSubmit = (event: any) => {
     event.preventDefault();
     this.props.dispatch(addOrganization(document.querySelector('form')));
-  }
+  };
 
   render() {
     const {categories, errors} = this.props;
-    let errorsMessage = '';
+    let errorsMessage = null;
 
     if (errors) {
       errorsMessage = (
@@ -67,7 +77,12 @@ class NewOrganization extends React.PureComponent {
                       <Label htmlFor="text-input">Должность менеджера</Label>
                     </Col>
                     <Col xs="12" md="9">
-                      <Input type="text" id="head_position" name="head_position" required />
+                      <Input
+                        type="text"
+                        id="head_position"
+                        name="head_position"
+                        required
+                      />
                     </Col>
                   </FormGroup>
                   <FormGroup row>
@@ -75,7 +90,36 @@ class NewOrganization extends React.PureComponent {
                       <Label htmlFor="text-input">Телефон менеджера</Label>
                     </Col>
                     <Col xs="12" md="9">
-                      <Input type="text" id="head_phone" name="head_phone" required />
+                      <Input
+                        type="text"
+                        id="head_phone"
+                        name="head_phone"
+                        required
+                      />
+                    </Col>
+                  </FormGroup>
+                  <FormGroup row>
+                    <Col md="3">
+                      <Label htmlFor="text-input">Адрес фактический</Label>
+                    </Col>
+                    <Col xs="12" md="9">
+                      <Input name="address_fact" />
+                    </Col>
+                  </FormGroup>
+                  <FormGroup row>
+                    <Col md="3">
+                      <Label htmlFor="text-input">Адрес юридический</Label>
+                    </Col>
+                    <Col xs="12" md="9">
+                      <Input name="address_legal" />
+                    </Col>
+                  </FormGroup>
+                  <FormGroup row>
+                    <Col md="3">
+                      <Label htmlFor="text-input">ОКВЭД</Label>
+                    </Col>
+                    <Col xs="12" md="9">
+                      <Input name="okved" />
                     </Col>
                   </FormGroup>
                   <FormGroup row>
@@ -109,7 +153,7 @@ class NewOrganization extends React.PureComponent {
   }
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = (state: TState) => {
   return {
     errors: state.organizations.errors,
     categories: state.categories.categories,

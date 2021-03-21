@@ -1,12 +1,12 @@
 import React from 'react';
 import {Route} from 'react-router-dom';
 
-import EditHospital from '../../lmk/hospital/Edit';
-import Hospital from '../../lmk/hospital/Hospital';
-import Hospitals from '../../lmk/hospital/Hospitals';
-import NewHospital from '../../lmk/hospital/New';
+import {EditHospitalContainer} from '../../lmk/hospital/Edit';
+import {HospitalContainer} from '../../lmk/hospital/Hospital';
+import {HospitalsContainer} from '../../lmk/hospital/Hospitals';
+import {NewHospitalContainer} from '../../lmk/hospital/New';
 import HospitalResearches from '../../lmk/hospital/research/HospitalResearches';
-import EditOrganization from '../../lmk/organization/Edit';
+import {EditOrganizationContainer} from '../../lmk/organization/Edit';
 import {OrganizationContainer} from '../../lmk/organization/Organization';
 import {OrganizationsContainer} from '../../lmk/organization/Organizations';
 import {NewOrganizationContainer} from '../../lmk/organization/New';
@@ -31,22 +31,22 @@ export class LmkRoutes extends React.PureComponent {
         <Route
           exact
           path="/services/lmk/hospital/:id"
-          component={(props: any) => <Hospital {...props} />}
+          component={(props: any) => <HospitalContainer {...props} />}
         />
         <Route
           exact
           path="/services/lmk/hospitals"
-          component={(props: any) => <Hospitals {...props} />}
+          component={(props: any) => <HospitalsContainer {...props} />}
         />
         <Route
           exact
           path="/services/lmk/hospitals/create"
-          component={(props: any) => <NewHospital {...props} />}
+          component={(props: any) => <NewHospitalContainer {...props} />}
         />
         <Route
           exact
           path="/services/lmk/hospitals/edit/:id"
-          component={(props: any) => <EditHospital {...props} />}
+          component={(props: any) => <EditHospitalContainer {...props} />}
         />
         <Route
           exact
@@ -72,7 +72,7 @@ export class LmkRoutes extends React.PureComponent {
         <Route
           exact
           path="/services/lmk/organizations/edit/:id"
-          component={(props: any) => <EditOrganization {...props} />}
+          component={(props: any) => <EditOrganizationContainer {...props} />}
         />
         <Route
           exact

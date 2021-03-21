@@ -1,21 +1,24 @@
+import React, {PureComponent} from 'react';
 import {deleteHospital, fetchHospitals} from '../../../actions/lmk/hospitalActions';
 import {Link} from 'react-router-dom';
-import React from 'react';
 import {connect} from 'react-redux';
 import {Row, Col, Card, CardHeader, CardBody, Table} from 'reactstrap';
+import {IHospital} from "../../../interface/lmk/IHospital";
+import {TState} from "../../../reducers";
 
-class Hospitals extends React.PureComponent {
-  constructor(props) {
-    super(props);
+interface IProps {
+  dispatch: any;
+  match: any;
+  errors: any;
+  hospitals: IHospital[];
+}
 
-    this.handleBtnDelete = this.handleBtnDelete.bind(this);
-  }
-
+class Hospitals extends PureComponent<IProps> {
   componentDidMount() {
     this.props.dispatch(fetchHospitals());
   }
 
-  handleBtnDelete(hospitalId, event) {
+  handleBtnDelete = (hospitalId: number, event: any) => {
     event.preventDefault();
     this.props.dispatch(deleteHospital(hospitalId));
   }
@@ -87,10 +90,10 @@ class Hospitals extends React.PureComponent {
   }
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = (state: TState) => {
   return {
     hospitals: state.hospitals.hospitals,
   };
 };
 
-export default connect(mapStateToProps)(Hospitals);
+export const HospitalsContainer = connect(mapStateToProps)(Hospitals);

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {PureComponent} from 'react';
 import {connect} from 'react-redux';
 import {
   fetchOrganization,
@@ -9,34 +9,51 @@ import {
 import {fetchHospitals} from '../../../actions/lmk/hospitalActions';
 import {EmployeesList} from '../employee/EmployeesList';
 import {Link} from 'react-router-dom';
-import PropTypes from 'prop-types';
 import {Row, Col, Card, CardHeader, CardBody, Table} from 'reactstrap';
+import {IOrganization} from '../../../interface/lmk/IOrganization';
+import {IEmployee} from '../../../interface/lmk/IEmployee';
+import {IHospital} from '../../../interface/lmk/IHospital';
+import {TState} from '../../../reducers';
 
-class Organization extends React.PureComponent {
-  constructor(props) {
-    super(props);
+interface IProps {
+  dispatch: any;
+  match: any;
+  errors: any;
+  fetchedEmployees: boolean;
+  organization: IOrganization;
+  hospitals: IHospital[];
+  fetched: boolean;
+}
 
-    this.state = {
-      organizationId: props.match.params.id,
-      employeesAttention: [],
-      researchesEnds: 0,
-      researchesExpired: 0,
-    };
-  }
+interface IState {
+  organizationId: number;
+  employeesAttention: IEmployee[];
+  researchesEnds: number;
+  researchesExpired: number;
+}
+
+class Organization extends PureComponent<IProps, IState> {
+  state: IState = {
+    organizationId: null,
+    employeesAttention: null,
+    researchesEnds: null,
+    researchesExpired: null,
+  };
 
   componentDidMount() {
-    const {organizationId} = this.state;
-    const {dispatch} = this.props;
+    const {dispatch, match} = this.props;
+    const organizationId = match.params.id;
 
     dispatch(clearOrganization());
     dispatch(fetchOrganization(organizationId));
     dispatch(fetchOrganizationEmployeesWithCheck(organizationId));
     dispatch(fetchHospitals());
 
+    this.setState({organizationId});
     this.setResearches();
   }
 
-  componentDidUpdate(prevProps) {
+  componentDidUpdate(prevProps: IProps) {
     const {organization, fetchedEmployees} = this.props;
 
     if (
@@ -83,12 +100,12 @@ class Organization extends React.PureComponent {
     });
   }
 
-  handleBtnDelete(id, event) {
+  handleBtnDelete = (id: number, event: any) => {
     event.preventDefault();
     this.props.dispatch(deleteOrganization(id));
-  }
+  };
 
-  getMessage(message) {
+  getMessage(message: string) {
     return (
       <Card>
         <CardHeader>
@@ -157,6 +174,24 @@ class Organization extends React.PureComponent {
                       <td>Телефон менеджера:</td>
                       <td>{organization.head_phone}</td>
                     </tr>
+                    {organization.address_fact && (
+                      <tr>
+                        <td>Адрес фактичекий:</td>
+                        <td>{organization.address_fact}</td>
+                      </tr>
+                    )}
+                    {organization.address_legal && (
+                      <tr>
+                        <td>Адрес юридический:</td>
+                        <td>{organization.address_legal}</td>
+                      </tr>
+                    )}
+                    {organization.okved && (
+                      <tr>
+                        <td>ОКВЭД:</td>
+                        <td>{organization.okved}</td>
+                      </tr>
+                    )}
                     <tr>
                       <td>
                         <div>E-mail менеджера:</div>
@@ -165,7 +200,7 @@ class Organization extends React.PureComponent {
                             fontSize: '12px',
                             fontStyle: 'italic',
                             lineHeight: '24px',
-                            fontWeight: '300',
+                            fontWeight: 'normal',
                           }}
                         >
                           на данный адрес будут приходить уведомления
@@ -176,7 +211,7 @@ class Organization extends React.PureComponent {
                     <tr>
                       <td>Категория:</td>
                       <td style={{maxWidth: '300px'}}>
-                        {organization.category && organization.category.name}
+                        {organization?.category?.name}
                       </td>
                     </tr>
                   </tbody>
@@ -348,15 +383,7 @@ class Organization extends React.PureComponent {
   }
 }
 
-Organization.propTypes = {
-  dispatch: PropTypes.func.isRequired,
-  match: PropTypes.object.isRequired,
-  fetched: PropTypes.bool,
-  fetchedEmployees: PropTypes.bool,
-  errors: PropTypes.object,
-};
-
-const mapStateToProps = (state) => {
+const mapStateToProps = (state: TState) => {
   return {
     organization: state.organizations.organization,
     fetched: state.organizations.fetched,
