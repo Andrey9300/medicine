@@ -15,7 +15,7 @@
     "@types/reactstrap": "^8.4.3",
     "@types/redux-logger": "^3.0.8",
     "@types/redux-promise": "^0.5.29",
-    "axios": "^0.19.2",
+    "axios": "^0.21.1",
     "babel-plugin-react-html-attrs": "^2.1.0",
     "bootstrap": "^4.4.1",
     "cross-env": "^7.0.0",
