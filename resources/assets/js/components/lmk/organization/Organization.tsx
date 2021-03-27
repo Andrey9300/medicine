@@ -174,37 +174,21 @@ class Organization extends PureComponent<IProps, IState> {
                       <td>Телефон менеджера:</td>
                       <td>{organization.head_phone}</td>
                     </tr>
-                    {organization.address_fact && (
-                      <tr>
-                        <td>Адрес фактичекий:</td>
-                        <td>{organization.address_fact}</td>
-                      </tr>
-                    )}
-                    {organization.address_legal && (
-                      <tr>
-                        <td>Адрес юридический:</td>
-                        <td>{organization.address_legal}</td>
-                      </tr>
-                    )}
-                    {organization.okved && (
-                      <tr>
-                        <td>ОКВЭД:</td>
-                        <td>{organization.okved}</td>
-                      </tr>
-                    )}
+                    <tr>
+                      <td>Адрес фактичекий:</td>
+                      <td>{organization.address_fact}</td>
+                    </tr>
+                    <tr>
+                      <td>Адрес юридический:</td>
+                      <td>{organization.address_legal}</td>
+                    </tr>
+                    <tr>
+                      <td>ОКВЭД:</td>
+                      <td>{organization.okved}</td>
+                    </tr>
                     <tr>
                       <td>
                         <div>E-mail менеджера:</div>
-                        <div
-                          style={{
-                            fontSize: '12px',
-                            fontStyle: 'italic',
-                            lineHeight: '24px',
-                            fontWeight: 'normal',
-                          }}
-                        >
-                          на данный адрес будут приходить уведомления
-                        </div>
                       </td>
                       <td>{organization.head_email}</td>
                     </tr>

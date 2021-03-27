@@ -12,7 +12,7 @@ interface IPropsAdd {
 
 export const EmployeeInfo: React.FC<IProps> = ({employee}) => (
   <div style={{width: '60%'}}>
-    <div style={{marginBottom: '8px'}}>
+    <div>
       <span style={{fontWeight: 800}}>Сотрудник</span>
     </div>
     <div>ФИО: {employee.fio}</div>
@@ -40,7 +40,7 @@ export const EmployeeInfo: React.FC<IProps> = ({employee}) => (
 
 export const HeadInfo: React.FC<IPropsAdd> = ({organization}) => (
   <div style={{width: '40%'}}>
-    <div style={{marginBottom: '8px'}}>
+    <div>
       <span style={{fontWeight: 800}}>Организация</span>
     </div>
     <div>
@@ -56,10 +56,14 @@ export const HeadInfo: React.FC<IPropsAdd> = ({organization}) => (
         <span>Телефон:</span>&nbsp;{organization.head_phone}
       </div>
     )}
-    {organization.okved && (
-      <div>
-        <span>ОКВЭД:</span>&nbsp;{organization.okved}
-      </div>
-    )}
+    <div>
+      <span>ОКВЭД:</span>&nbsp;{organization.okved}
+    </div>
+    <div>
+      <span>Адрес факт:</span>&nbsp;{organization.address_fact}
+    </div>
+    <div>
+      <span>Адрес юр:</span>&nbsp;{organization.address_legal}
+    </div>
   </div>
 );

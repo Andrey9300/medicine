@@ -7,7 +7,7 @@ interface IProps {
 
 export const HospitalInfo: React.FC<IProps> = ({hospital}) => (
   <div style={{width: '40%'}}>
-    <div style={{marginBottom: '8px'}}>
+    <div>
       <span style={{fontWeight: 800}}>
         Информация о медицинской организации
       </span>

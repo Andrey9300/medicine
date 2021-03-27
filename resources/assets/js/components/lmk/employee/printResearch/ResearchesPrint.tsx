@@ -37,10 +37,7 @@ export class ResearchesPrint extends React.PureComponent<IProps> {
             width: '50%',
           }}
         >
-          {vaccine.name} -{' '}
-          <select>
-            <option>Да</option>
-          </select>
+          {vaccine.name}
         </div>
       );
     });

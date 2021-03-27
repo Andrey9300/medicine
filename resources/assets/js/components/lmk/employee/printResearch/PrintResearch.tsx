@@ -205,7 +205,13 @@ class PrintEmployeeComponent extends React.PureComponent<IProps, IState> {
                       fontWeight: 600,
                     }}
                   >
-                    Направление на медицинский осмотр
+                    <span style={{marginLeft: '80px'}}>
+                      Направление на медицинский осмотр
+                    </span>
+                    <span style={{float: 'right'}}>
+                      3quality.ru
+                      <img src="/img/logo.png" width="18px" />
+                    </span>
                   </div>
                   <div style={{display: 'flex'}}>
                     <EmployeeInfo employee={employee} />

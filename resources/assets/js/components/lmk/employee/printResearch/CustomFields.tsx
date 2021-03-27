@@ -72,7 +72,7 @@ export const PassedTo: React.FC = () => (
     </div>
     <textarea
       style={{width: '90%'}}
-      rows={7}
+      rows={4}
       defaultValue="Дополнительная информация"
     />
   </div>
