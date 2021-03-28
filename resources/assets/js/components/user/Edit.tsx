@@ -1,7 +1,6 @@
 import React from 'react';
 import {connect} from 'react-redux';
 
-import PropTypes from 'prop-types';
 import {
   Row,
   Col,
@@ -17,30 +16,51 @@ import {
 } from 'reactstrap';
 import {editUser, fetchUser} from '../../actions/userActions';
 import {createMarkup} from '../../utils/errorsHelper';
+import {TState} from '../../reducers';
 
-class EditUser extends React.PureComponent {
-  constructor(props) {
-    super(props);
-    this.state = {
-      userId: props.match.params.id,
-    };
-    this.handleSubmit = this.handleSubmit.bind(this);
-  }
+interface IState {
+  userId: number;
+}
 
-  handleSubmit(event) {
+interface IStateProps {
+  user: any;
+}
+
+interface IDispatchProps {
+  editUser: typeof editUser;
+  fetchUser: typeof fetchUser;
+}
+
+interface IProps extends IStateProps, IDispatchProps {
+  errors: any;
+  match: any;
+}
+
+class EditUser extends React.PureComponent<IProps, IState> {
+  state: IState = {
+    userId: null,
+  };
+
+  handleSubmit = (event: any) => {
     event.preventDefault();
-    this.props.dispatch(
-      editUser(document.querySelector('form'), this.state.userId),
-    );
-  }
+    const {editUser} = this.props;
+    const {userId} = this.state;
+
+    editUser(document.querySelector('form'), userId);
+  };
 
   componentDidMount() {
-    this.props.dispatch(fetchUser(this.state.userId));
+    const {fetchUser, match} = this.props;
+    const userId = match.params.id;
+
+    this.setState({userId});
+
+    fetchUser(userId);
   }
 
   render() {
     const {user, errors} = this.props;
-    let errorsMessage = '';
+    let errorsMessage;
 
     if (errors) {
       errorsMessage = (
@@ -68,12 +88,7 @@ class EditUser extends React.PureComponent {
                       <Label htmlFor="text-input">ФИО</Label>
                     </Col>
                     <Col xs="12" md="9">
-                      <Input
-                        type="input"
-                        name="fio"
-                        id="fio"
-                        defaultValue={user.fio}
-                      />
+                      <Input name="fio" id="fio" defaultValue={user.fio} />
                     </Col>
                   </FormGroup>
                   <FormGroup row>
@@ -82,7 +97,6 @@ class EditUser extends React.PureComponent {
                     </Col>
                     <Col xs="12" md="9">
                       <Input
-                        type="input"
                         name="email"
                         id="email"
                         defaultValue={user.email}
@@ -104,15 +118,20 @@ class EditUser extends React.PureComponent {
   }
 }
 
-EditUser.propTypes = {
-  dispatch: PropTypes.func.isRequired,
-  errors: PropTypes.object,
-};
-
-const mapStateToProps = (state) => {
+const mapStateToProps = (state: TState) => {
   return {
     user: state.users.user,
   };
 };
 
-export const EditUserContainer = connect(mapStateToProps)(EditUser);
+const mapDispatchToProps = (dispatch: any): IDispatchProps => {
+  return {
+    editUser: (form: any, userId: number) => dispatch(editUser(form, userId)),
+    fetchUser: (userId: number) => dispatch(fetchUser(userId)),
+  };
+};
+
+export const EditUserContainer = connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(EditUser);

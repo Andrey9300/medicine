@@ -15,22 +15,29 @@ import {
 } from 'reactstrap';
 import {registrationAuditorUser} from '../../actions/userActions';
 import {createMarkup} from '../../utils/errorsHelper';
+import {TState} from '../../reducers';
 
-class NewUser extends React.PureComponent {
-  constructor(props) {
-    super(props);
+interface IStateProps {}
 
-    this.handleSubmit = this.handleSubmit.bind(this);
-  }
+interface IDispatchProps {
+  registrationAuditorUser: typeof registrationAuditorUser;
+}
 
-  handleSubmit(event) {
+interface IProps extends IStateProps, IDispatchProps {
+  errors: any;
+}
+
+class NewUser extends React.PureComponent<IProps> {
+  handleSubmit = (event: any) => {
+    const {registrationAuditorUser} = this.props;
     event.preventDefault();
-    this.props.dispatch(registrationAuditorUser(document.querySelector('form')));
-  }
+
+    registrationAuditorUser(document.querySelector('form'));
+  };
 
   render() {
     const {errors} = this.props;
-    let errorsMessage = '';
+    let errorsMessage;
 
     if (errors) {
       errorsMessage = (
@@ -62,12 +69,7 @@ class NewUser extends React.PureComponent {
                       <Label htmlFor="text-input">Email</Label>
                     </Col>
                     <Col xs="12" md="9">
-                      <Input
-                        type="text"
-                        id="email"
-                        name="email"
-                        required
-                      />
+                      <Input type="text" id="email" name="email" required />
                     </Col>
                   </FormGroup>
                   <FormGroup row>
@@ -98,10 +100,20 @@ class NewUser extends React.PureComponent {
   }
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = (state: TState) => {
   return {
     errors: state.users.errors,
   };
 };
 
-export const NewUserContainer = connect(mapStateToProps)(NewUser);
+const mapDispatchToProps = (dispatch: any): IDispatchProps => {
+  return {
+    registrationAuditorUser: (form: any) =>
+      dispatch(registrationAuditorUser(form)),
+  };
+};
+
+export const NewUserContainer = connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(NewUser);

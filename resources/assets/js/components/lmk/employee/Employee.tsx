@@ -1,56 +1,68 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import {fetchEmployee, deleteEmployee, restoreEmployee, clearEmployee} from '../../../actions/lmk/employeeActions';
+import {
+  fetchEmployee,
+  deleteEmployee,
+  restoreEmployee,
+  clearEmployee,
+} from '../../../actions/lmk/employeeActions';
 import {EmployeeResearches} from './research/EmployeeResearches';
 import {Link} from 'react-router-dom';
-import PropTypes from 'prop-types';
 import {Row, Col, Card, CardHeader, CardBody, Table, Button} from 'reactstrap';
-import {createMarkup} from '../../../utils/errorsHelper';
+import {IEmployee} from '../../../interface/lmk/IEmployee';
+import {TState} from '../../../reducers';
+import {IUser} from '../../../interface/IUser';
 
-class Employee extends React.PureComponent {
-  constructor(props) {
-    super(props);
+interface IStateProps {
+  user: IUser;
+  employee: IEmployee;
+}
 
-    this.state = {
-      employeeId: props.match.params.id,
-      errors: null,
-    };
-    this.handleBtnDelete = this.handleBtnDelete.bind(this);
-  }
+interface IDispatchProps {
+  clearEmployee: typeof clearEmployee;
+  fetchEmployee: typeof fetchEmployee;
+  restoreEmployee: typeof restoreEmployee;
+  deleteEmployee: typeof deleteEmployee;
+}
+
+interface IProps extends IStateProps, IDispatchProps {
+  match: any;
+}
+
+interface IState {
+  employeeId: number;
+}
+
+class Employee extends React.PureComponent<IProps, IState> {
+  state: IState = {
+    employeeId: null,
+  };
 
   componentDidMount() {
-    const {dispatch} = this.props;
+    const {match, clearEmployee, fetchEmployee} = this.props;
+    const employeeId = match.params.id;
 
-    dispatch(clearEmployee());
-    dispatch(fetchEmployee(this.state.employeeId));
+    clearEmployee();
+    fetchEmployee(employeeId);
   }
 
-  handleBtnDelete(id, event) {
+  handleBtnDelete = (id: number, event: any) => {
+    const {deleteEmployee, employee} = this.props;
     event.preventDefault();
-    this.props.dispatch(
-      deleteEmployee(id, this.props.employee.organization.id),
-    );
-  }
 
-  restoreEmployee(id, event) {
+    deleteEmployee(id, employee.organization.id);
+  };
+
+  restoreEmployee(id: number, event: any) {
+    const {restoreEmployee} = this.props;
     event.preventDefault();
-    this.props.dispatch(
-      restoreEmployee(id),
-    );
+    restoreEmployee(id);
   }
 
   render() {
     const {employee} = this.props;
-    const {errors, employeeId} = this.state;
+    const {employeeId} = this.state;
     let errorsMessage = '';
-
-    if (errors) {
-      errorsMessage = (
-        <div className="alert alert-danger" role="alert">
-          {createMarkup(errors)}
-        </div>
-      );
-    }
 
     if (!employee) {
       return null;
@@ -66,7 +78,7 @@ class Employee extends React.PureComponent {
                 <CardHeader>
                   <i className="fa fa-users" aria-hidden="true" />
                   {employee.fio}
-                  {employee.deleted_at &&
+                  {employee.deleted_at && (
                     <Button
                       className="pull-right"
                       type="submit"
@@ -78,7 +90,7 @@ class Employee extends React.PureComponent {
                     >
                       Восстановить
                     </Button>
-                  }
+                  )}
                   {!employee.deleted_at && (
                     <>
                       <Link
@@ -151,7 +163,11 @@ class Employee extends React.PureComponent {
                       </tr>
                       <tr>
                         <td>Отправлен на МО:</td>
-                        <td>{employee.send_to_research ? employee.send_to_research : 'Не отправлен'}</td>
+                        <td>
+                          {employee.send_to_research
+                            ? employee.send_to_research
+                            : 'Не отправлен'}
+                        </td>
                       </tr>
                     </tbody>
                   </Table>
@@ -166,18 +182,21 @@ class Employee extends React.PureComponent {
   }
 }
 
-Employee.propTypes = {
-  dispatch: PropTypes.func.isRequired,
-  match: PropTypes.object.isRequired,
-  user: PropTypes.object,
-  employee: PropTypes.object,
-};
-
-const mapStateToProps = (state) => {
+const mapStateToProps = (state: TState) => {
   return {
     employee: state.employees.employee,
     user: state.users.user,
   };
 };
 
-export default connect(mapStateToProps)(Employee);
+const mapDispatchToProps = (dispatch: any): IDispatchProps => {
+  return {
+    clearEmployee: () => dispatch(clearEmployee()),
+    fetchEmployee: (id: number) => dispatch(fetchEmployee(id)),
+    restoreEmployee: (id: number) => dispatch(restoreEmployee(id)),
+    deleteEmployee: (id: number, organizationId: number) =>
+      dispatch(deleteEmployee(id, organizationId)),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Employee);

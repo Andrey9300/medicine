@@ -5,42 +5,41 @@ import {
   deleteOrganization,
 } from '../../../../actions/lmk/organizationActions';
 import {Link} from 'react-router-dom';
-import PropTypes from 'prop-types';
 import {fetchHospitals} from '../../../../actions/lmk/hospitalActions';
 import {Row, Col, Card, CardHeader, CardBody, Table} from 'reactstrap';
-import {createMarkup} from '../../../../utils/errorsHelper';
+import {TState} from '../../../../reducers';
+import {IOrganization} from '../../../../interface/lmk/IOrganization';
 
-class Budget extends React.PureComponent {
-  constructor(props) {
-    super(props);
-    this.state = {
-      errors: null,
-      organizationId: props.match.params.id,
-    };
-  }
+interface IStateProps {
+  organization: IOrganization;
+}
 
+interface IDispatchProps {
+  fetchOrganization: typeof fetchOrganization;
+  fetchHospitals: typeof fetchHospitals;
+  deleteOrganization: typeof deleteOrganization;
+}
+
+interface IProps extends IStateProps, IDispatchProps {
+  match: any;
+}
+
+class Budget extends React.PureComponent<IProps> {
   componentDidMount() {
-    this.props.dispatch(fetchOrganization(this.state.organizationId));
-    this.props.dispatch(fetchHospitals());
+    const {match, fetchOrganization, fetchHospitals} = this.props;
+    fetchOrganization(match.params.id);
+    fetchHospitals();
   }
 
-  handleBtnDelete(id, event) {
+  handleBtnDelete(id: number, event: any) {
+    const {deleteOrganization} = this.props;
     event.preventDefault();
-    this.props.dispatch(deleteOrganization(id));
+    deleteOrganization(id);
   }
 
   render() {
     const {organization} = this.props;
-    const {errors} = this.state;
     let errorsMessage = '';
-
-    if (errors) {
-      errorsMessage = (
-        <div className="alert alert-danger" role="alert">
-          {createMarkup(errors)}
-        </div>
-      );
-    }
 
     if (!organization) {
       return null;
@@ -98,7 +97,7 @@ class Budget extends React.PureComponent {
                                 this.handleBtnDelete(organization.id, event)
                               }
                               href="#"
-                              id={organization.id}
+                              id={`${organization.id}`}
                             >
                               Удалить
                             </a>
@@ -117,17 +116,18 @@ class Budget extends React.PureComponent {
   }
 }
 
-Budget.propTypes = {
-  dispatch: PropTypes.func.isRequired,
-  match: PropTypes.object.isRequired,
-  router: PropTypes.object.isRequired,
-};
-
-const mapStateToProps = (state) => {
+const mapStateToProps = (state: TState) => {
   return {
     organization: state.organizations.organization,
-    hospitals: state.hospitals.hospitals,
   };
 };
 
-export default connect(mapStateToProps)(Budget);
+const mapDispatchToProps = (dispatch: any): IDispatchProps => {
+  return {
+    fetchOrganization: (id: number) => dispatch(fetchOrganization(id)),
+    fetchHospitals: () => dispatch(fetchHospitals()),
+    deleteOrganization: (id: number) => dispatch(deleteOrganization(id)),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Budget);

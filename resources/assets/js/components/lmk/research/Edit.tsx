@@ -2,7 +2,6 @@ import React from 'react';
 import axios from 'axios';
 import {connect} from 'react-redux';
 import {fetchResearch} from '../../../actions/lmk/researchActions';
-import PropTypes from 'prop-types';
 import {
   Row,
   Col,
@@ -13,23 +12,46 @@ import {
   CardBody,
   Form,
   FormGroup,
-  FormText,
   Label,
   Input,
 } from 'reactstrap';
 import {createMarkup} from '../../../utils/errorsHelper';
+import {IResearchPeriod} from '../../../interface/lmk/IResearch';
+import {TState} from '../../../reducers';
 
-class EditResearch extends React.PureComponent {
-  constructor(props) {
-    super(props);
-    this.state = {
-      errors: null,
-      researchId: props.match.params.id,
-    };
-    this.handleSubmit = this.handleSubmit.bind(this);
+interface IStateProps {
+  research: any;
+  periods: IResearchPeriod[];
+}
+
+interface IDispatchProps {
+  fetchResearch: typeof fetchResearch;
+}
+
+interface IProps extends IStateProps, IDispatchProps {
+  match: any;
+}
+
+interface IState {
+  errors: any;
+  researchId: number;
+}
+
+class EditResearch extends React.PureComponent<IProps, IState> {
+  state: IState = {
+    errors: null,
+    researchId: null,
+  };
+
+  componentDidMount() {
+    const {match, fetchResearch} = this.props;
+    const researchId = match.params.id;
+
+    this.setState({researchId});
+    fetchResearch(researchId);
   }
 
-  handleSubmit(event) {
+  handleSubmit = (event: any) => {
     event.preventDefault();
     const formElement = document.querySelector('form');
 
@@ -49,13 +71,9 @@ class EditResearch extends React.PureComponent {
           errors: errors,
         });
       });
-  }
+  };
 
-  componentDidMount() {
-    this.props.dispatch(fetchResearch(this.state.researchId));
-  }
-
-  componentWillReceiveProps(nextProps) {
+  componentWillReceiveProps(nextProps: IProps) {
     if (
       this.props.research &&
       nextProps.research &&
@@ -68,7 +86,7 @@ class EditResearch extends React.PureComponent {
   render() {
     const {research} = this.props;
     const {errors} = this.state;
-    let errorsMessage = '';
+    let errorsMessage;
 
     if (errors) {
       errorsMessage = (
@@ -145,17 +163,17 @@ class EditResearch extends React.PureComponent {
   }
 }
 
-EditResearch.propTypes = {
-  dispatch: PropTypes.func.isRequired,
-  match: PropTypes.object.isRequired,
-  periods: PropTypes.array.isRequired,
-};
-
-const mapStateToProps = (state) => {
+const mapStateToProps = (state: TState) => {
   return {
     research: state.researches.research,
     periods: state.researches.periods,
   };
 };
 
-export default connect(mapStateToProps)(EditResearch);
+const mapDispatchToProps = (dispatch: any): IDispatchProps => {
+  return {
+    fetchResearch: (researchId: number) => dispatch(fetchResearch(researchId)),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(EditResearch);

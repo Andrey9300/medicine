@@ -2,13 +2,13 @@ import {Link} from 'react-router-dom';
 import React from 'react';
 import {Card, CardHeader, CardBody, CardFooter, Table} from 'reactstrap';
 import {TableSearch} from '../../includes/elements/tableSearch/TableSearch';
-import {IEmployee} from "../../../interface/lmk/IEmployee";
+import {IEmployee} from '../../../interface/lmk/IEmployee';
 
 interface IProps {
   employees: IEmployee[];
   status: {
     fetched: boolean;
-    fetchedWithCheck: boolean;
+    fetchedWithCheck?: boolean;
     errors?: any;
   };
   title: string;

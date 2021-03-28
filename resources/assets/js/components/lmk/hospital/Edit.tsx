@@ -41,6 +41,7 @@ class EditHospital extends PureComponent<IProps, IState> {
     const hospitalId = match.params.id;
 
     this.setState({hospitalId});
+    console.log('test', hospitalId);
     this.props.dispatch(fetchHospital(hospitalId));
   }
 

@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import {fetchOrganizations} from '../../../actions/lmk/organizationActions';
 import {addEmployee} from '../../../actions/lmk/employeeActions';
@@ -18,27 +17,40 @@ import {
 } from 'reactstrap';
 import {fetchCategories} from '../../../actions/lmk/categoryActions';
 import {createMarkup} from '../../../utils/errorsHelper';
+import {IOrganization} from '../../../interface/lmk/IOrganization';
+import {ICategory} from '../../../interface/lmk/ICategory';
+import {TState} from '../../../reducers';
 
-class NewEmployee extends React.PureComponent {
-  constructor(props) {
-    super(props);
+interface IStateProps {
+  errors: any;
+  organizations: IOrganization[];
+  categories: ICategory[];
+}
 
-    this.handleSubmit = this.handleSubmit.bind(this);
-  }
+interface IDispatchProps {
+  addEmployee: typeof addEmployee;
+  fetchCategories: typeof fetchCategories;
+  fetchOrganizations: typeof fetchOrganizations;
+}
 
+interface IProps extends IStateProps, IDispatchProps {}
+
+class NewEmployee extends React.PureComponent<IProps> {
   componentDidMount() {
-    this.props.dispatch(fetchCategories());
-    this.props.dispatch(fetchOrganizations());
+    const {fetchCategories, fetchOrganizations} = this.props;
+    fetchCategories();
+    fetchOrganizations();
   }
 
-  handleSubmit(event) {
+  handleSubmit = (event: any) => {
+    const {addEmployee} = this.props;
     event.preventDefault();
-    this.props.dispatch(addEmployee(document.querySelector('form')));
-  }
+    addEmployee(document.querySelector('form'));
+  };
 
   render() {
     const {organizations, categories, errors} = this.props;
-    let errorsMessage = '';
+    let errorsMessage;
 
     if (errors) {
       errorsMessage = (
@@ -193,12 +205,7 @@ class NewEmployee extends React.PureComponent {
   }
 }
 
-NewEmployee.propTypes = {
-  router: PropTypes.object,
-  categories: PropTypes.array,
-};
-
-const mapStateToProps = (state) => {
+const mapStateToProps = (state: TState) => {
   return {
     errors: state.employees.errors,
     organizations: state.organizations.organizations,
@@ -206,4 +213,12 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps)(NewEmployee);
+const mapDispatchToProps = (dispatch: any): IDispatchProps => {
+  return {
+    addEmployee: (form: any) => dispatch(addEmployee(form)),
+    fetchOrganizations: () => dispatch(fetchOrganizations()),
+    fetchCategories: () => dispatch(fetchCategories()),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(NewEmployee);

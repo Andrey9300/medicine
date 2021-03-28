@@ -1,6 +1,5 @@
 import React from 'react';
 import axios from 'axios';
-import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import {fetchPeriods} from '../../../actions/lmk/researchPeriodActions';
 import {
@@ -18,22 +17,34 @@ import {
   Input,
 } from 'reactstrap';
 import {createMarkup, getResponseError} from '../../../utils/errorsHelper';
+import {IResearchPeriod} from '../../../interface/lmk/IResearch';
+import {TState} from '../../../reducers';
 
-class NewResearch extends React.PureComponent {
-  constructor(props) {
-    super(props);
+interface IStateProps {
+  researchPeriods: IResearchPeriod[];
+}
 
-    this.state = {
-      errors: null,
-    };
-    this.handleSubmit = this.handleSubmit.bind(this);
-  }
+interface IDispatchProps {
+  fetchPeriods: typeof fetchPeriods;
+}
+
+interface IProps extends IStateProps, IDispatchProps {}
+
+interface IState {
+  errors: any;
+}
+
+class NewResearch extends React.PureComponent<IProps, IState> {
+  state: IState = {
+    errors: null,
+  };
 
   componentDidMount() {
-    this.props.dispatch(fetchPeriods());
+    const {fetchPeriods} = this.props;
+    fetchPeriods();
   }
 
-  handleSubmit(event) {
+  handleSubmit = (event: any) => {
     event.preventDefault();
     const formElement = document.querySelector('form');
     const formData = new FormData(formElement);
@@ -49,12 +60,12 @@ class NewResearch extends React.PureComponent {
           errors: getResponseError(errors),
         });
       });
-  }
+  };
 
   render() {
     const {researchPeriods} = this.props;
     const {errors} = this.state;
-    let errorsMessage = '';
+    let errorsMessage;
 
     if (errors) {
       errorsMessage = (
@@ -118,14 +129,16 @@ class NewResearch extends React.PureComponent {
   }
 }
 
-NewResearch.propTypes = {
-  router: PropTypes.object.isRequired,
-};
-
-const mapStateToProps = (state) => {
+const mapStateToProps = (state: TState) => {
   return {
     researchPeriods: state.researchPeriods.researchPeriods,
   };
 };
 
-export default connect(mapStateToProps)(NewResearch);
+const mapDispatchToProps = (dispatch: any): IDispatchProps => {
+  return {
+    fetchPeriods: () => dispatch(fetchPeriods()),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(NewResearch);

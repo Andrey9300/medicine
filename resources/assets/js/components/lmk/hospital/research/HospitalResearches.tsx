@@ -4,7 +4,6 @@ import {
 } from '../../../../actions/lmk/hospitalActions';
 import React from 'react';
 import {connect} from 'react-redux';
-import PropTypes from 'prop-types';
 import {
   Row,
   Col,
@@ -17,28 +16,46 @@ import {
   Button,
   Input,
 } from 'reactstrap';
+import {TState} from '../../../../reducers';
 
-class HospitalResearches extends React.PureComponent {
-  constructor(props) {
-    super(props);
-    this.state = {
-      hospitalId: props.idHospital,
-    };
-    this.handleClick = this.handleClick.bind(this);
-  }
+interface IState {
+  hospitalId: number;
+}
+
+interface IStateProps {
+  hospitalResearches: any;
+}
+
+interface IDispatchProps {
+  fetchHospitalResearches: typeof fetchHospitalResearches;
+  addHospitalResearches: typeof addHospitalResearches;
+}
+
+interface IProps extends IStateProps, IDispatchProps {
+  match: any;
+}
+
+class HospitalResearches extends React.PureComponent<IProps, IState> {
+  state: IState = {
+    hospitalId: null,
+  };
 
   componentDidMount() {
-    this.props.dispatch(fetchHospitalResearches(this.state.hospitalId));
+    const {match} = this.props;
+    const hospitalId = match.params.idHospital;
+
+    this.setState({hospitalId});
+    fetchHospitalResearches(hospitalId);
   }
 
-  handleClick() {
-    this.props.dispatch(
-      addHospitalResearches(
-        document.querySelector('form'),
-        this.state.hospitalId,
-      ),
+  handleClick = () => {
+    const {addHospitalResearches} = this.props;
+
+    addHospitalResearches(
+      document.querySelector('form'),
+      this.state.hospitalId,
     );
-  }
+  };
 
   render() {
     const {hospitalResearches} = this.props;
@@ -70,7 +87,7 @@ class HospitalResearches extends React.PureComponent {
                       </tr>
                     </thead>
                     <tbody>
-                      {hospitalResearches.map((research) => {
+                      {hospitalResearches.map((research: any) => {
                         return (
                           <tr key={research.id}>
                             <td>{research.research.name}</td>
@@ -106,14 +123,19 @@ class HospitalResearches extends React.PureComponent {
   }
 }
 
-HospitalResearches.propTypes = {
-  dispatch: PropTypes.func.isRequired,
-};
-
-const mapStateToProps = (state) => {
+const mapStateToProps = (state: TState) => {
   return {
     hospitalResearches: state.hospitals.hospitalResearches,
   };
 };
 
-export default connect(mapStateToProps)(HospitalResearches);
+const mapDispatchToProps = (dispatch: any): IDispatchProps => {
+  return {
+    fetchHospitalResearches: (id: number) =>
+      dispatch(fetchHospitalResearches(id)),
+    addHospitalResearches: (form: any, id: number) =>
+      dispatch(addHospitalResearches(form, id)),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(HospitalResearches);

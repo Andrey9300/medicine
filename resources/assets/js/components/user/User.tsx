@@ -2,19 +2,33 @@ import React from 'react';
 import {connect} from 'react-redux';
 
 import {Link} from 'react-router-dom';
-import PropTypes from 'prop-types';
 import {Row, Col, Card, CardHeader, CardBody, Table} from 'reactstrap';
-import {fetchCurrentUser} from '../../actions/userActions';
+import {fetchUser} from '../../actions/userActions';
 import {createMarkup} from '../../utils/errorsHelper';
+import {TState} from '../../reducers';
 
-class CurrentUser extends React.PureComponent {
+interface IStateProps {
+  user: any;
+}
+
+interface IDispatchProps {
+  fetchUser: typeof fetchUser;
+}
+
+interface IProps extends IStateProps, IDispatchProps {
+  errors: any;
+  match: any;
+}
+
+class User extends React.PureComponent<IProps> {
   componentDidMount() {
-    this.props.dispatch(fetchCurrentUser());
+    const {match, fetchUser} = this.props;
+    fetchUser(match.params.id);
   }
 
   render() {
     const {user, errors} = this.props;
-    let errorsMessage = '';
+    let errorsMessage;
 
     if (errors) {
       errorsMessage = (
@@ -35,7 +49,8 @@ class CurrentUser extends React.PureComponent {
           <Col xs="12" sm="12" md="8" lg="8" xl="8">
             <Card>
               <CardHeader>
-                <i className="fa fa-building-o" aria-hidden="true" />Пользователь
+                <i className="fa fa-building-o" aria-hidden="true" />
+                Пользователь
                 <Link
                   to={`/services/profiles/edit/${user.id}`}
                   style={{
@@ -48,14 +63,14 @@ class CurrentUser extends React.PureComponent {
               <CardBody className="card-body">
                 <Table responsive>
                   <tbody>
-                  <tr>
-                    <td>ФИО:</td>
-                    <td>{user.fio}</td>
-                  </tr>
-                  <tr>
-                    <td>E-mail:</td>
-                    <td>{user.email}</td>
-                  </tr>
+                    <tr>
+                      <td>ФИО:</td>
+                      <td>{user.fio}</td>
+                    </tr>
+                    <tr>
+                      <td>E-mail:</td>
+                      <td>{user.email}</td>
+                    </tr>
                   </tbody>
                 </Table>
               </CardBody>
@@ -67,15 +82,16 @@ class CurrentUser extends React.PureComponent {
   }
 }
 
-CurrentUser.propTypes = {
-  dispatch: PropTypes.func.isRequired,
-  errors: PropTypes.object,
-};
-
-const mapStateToProps = (state) => {
+const mapStateToProps = (state: TState) => {
   return {
-    user: state.users.currentUser,
+    user: state.users.user,
   };
 };
 
-export const CurrentUserContainer = connect(mapStateToProps)(CurrentUser);
+const mapDispatchToProps = (dispatch: any): IDispatchProps => {
+  return {
+    fetchUser: (userId: number) => dispatch(fetchUser(userId)),
+  };
+};
+
+export const UserContainer = connect(mapStateToProps, mapDispatchToProps)(User);

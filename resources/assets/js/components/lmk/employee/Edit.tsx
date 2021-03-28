@@ -5,7 +5,6 @@ import {
   fetchEmployee,
 } from '../../../actions/lmk/employeeActions';
 import {fetchOrganizations} from '../../../actions/lmk/organizationActions';
-import PropTypes from 'prop-types';
 import {
   Row,
   Col,
@@ -22,28 +21,62 @@ import {
 import {editEmployee} from '../../../actions/lmk/employeeActions';
 import {fetchCategories} from '../../../actions/lmk/categoryActions';
 import {createMarkup} from '../../../utils/errorsHelper';
+import {IOrganization} from '../../../interface/lmk/IOrganization';
+import {ICategory} from '../../../interface/lmk/ICategory';
+import {IEmployee} from '../../../interface/lmk/IEmployee';
+import {TState} from '../../../reducers';
 
-class EditEmployee extends React.PureComponent {
-  constructor(props) {
-    super(props);
-    this.state = {
-      employeeId: props.match.params.id,
-    };
-    this.handleSubmit = this.handleSubmit.bind(this);
-  }
+interface IStateProps {
+  errors: any;
+  organizations: IOrganization[];
+  categories: ICategory[];
+  employee: IEmployee;
+}
 
-  handleSubmit(event) {
+interface IDispatchProps {
+  clearEmployee: typeof clearEmployee;
+  editEmployee: typeof editEmployee;
+  fetchOrganizations: typeof fetchOrganizations;
+  fetchEmployee: typeof fetchEmployee;
+  fetchCategories: typeof fetchCategories;
+}
+
+interface IProps extends IStateProps, IDispatchProps {
+  match: any;
+}
+
+interface IState {
+  employeeId: number;
+}
+
+class EditEmployee extends React.PureComponent<IProps, IState> {
+  state: IState = {
+    employeeId: null,
+  };
+
+  handleSubmit = (event: any) => {
+    const {editEmployee} = this.props;
+    const {employeeId} = this.state;
     event.preventDefault();
-    this.props.dispatch(
-      editEmployee(document.querySelector('form'), this.state.employeeId),
-    );
-  }
+
+    editEmployee(document.querySelector('form'), employeeId);
+  };
 
   componentDidMount() {
-    this.props.dispatch(clearEmployee());
-    this.props.dispatch(fetchCategories());
-    this.props.dispatch(fetchEmployee(this.state.employeeId));
-    this.props.dispatch(fetchOrganizations());
+    const {
+      match,
+      clearEmployee,
+      fetchCategories,
+      fetchEmployee,
+      fetchOrganizations,
+    } = this.props;
+    const employeeId = match.params.id;
+    this.setState({employeeId});
+
+    clearEmployee();
+    fetchCategories();
+    fetchEmployee(employeeId);
+    fetchOrganizations();
   }
 
   render() {
@@ -228,13 +261,7 @@ class EditEmployee extends React.PureComponent {
   }
 }
 
-EditEmployee.propTypes = {
-  dispatch: PropTypes.func.isRequired,
-  match: PropTypes.object.isRequired,
-  categories: PropTypes.array,
-};
-
-const mapStateToProps = (state) => {
+const mapStateToProps = (state: TState) => {
   return {
     errors: state.employees.errors,
     employee: state.employees.employee,
@@ -243,4 +270,14 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps)(EditEmployee);
+const mapDispatchToProps = (dispatch: any): IDispatchProps => {
+  return {
+    clearEmployee: () => dispatch(clearEmployee()),
+    editEmployee: (form: any, id: number) => dispatch(editEmployee(form, id)),
+    fetchOrganizations: () => dispatch(fetchOrganizations()),
+    fetchEmployee: (id: number) => dispatch(fetchEmployee(id)),
+    fetchCategories: () => dispatch(fetchCategories()),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(EditEmployee);

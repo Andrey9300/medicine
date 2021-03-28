@@ -6,22 +6,45 @@ import {
 import {EmployeesList} from '../employee/EmployeesList';
 import React from 'react';
 import {connect} from 'react-redux';
-import PropTypes from 'prop-types';
 import {Row, Col, Card, CardHeader, CardBody} from 'reactstrap';
+import {TState} from '../../../reducers';
+import {IOrganization} from '../../../interface/lmk/IOrganization';
+import {IEmployee} from '../../../interface/lmk/IEmployee';
 
-class OrganizationEmployee extends React.PureComponent {
-  constructor(props) {
-    super(props);
+interface IStateProps {
+  fetched: boolean;
+  fetchedEmployees: boolean;
+  organization: IOrganization;
+  errors: any;
+}
 
-    this.state = {
-      organizationId: props.match.params.idOrganization,
-      employeesShow: [],
-      title: '',
-    };
-  }
+interface IDispatchProps {
+  clearOrganizationEmployees: typeof clearOrganizationEmployees;
+  fetchOrganization: typeof fetchOrganization;
+  fetchOrganizationEmployeesWithCheck: typeof fetchOrganizationEmployeesWithCheck;
+}
 
-  getMessage(message) {
-    const {title} = this.props;
+interface IProps extends IStateProps, IDispatchProps {
+  match: any;
+  type: any;
+  title: string;
+}
+
+interface IState {
+  organizationId: number;
+  employeesShow: IEmployee[];
+  title: string;
+}
+
+class OrganizationEmployee extends React.PureComponent<IProps, IState> {
+  state: IState = {
+    organizationId: null,
+    employeesShow: null,
+    title: '',
+  };
+
+  getMessage(message: string) {
+    const {title} = this.state;
 
     return (
       <Card>
@@ -35,15 +58,22 @@ class OrganizationEmployee extends React.PureComponent {
   }
 
   componentDidMount() {
-    const {organizationId} = this.state;
-    const {dispatch} = this.props;
+    const {
+      match,
+      clearOrganizationEmployees,
+      fetchOrganization,
+      fetchOrganizationEmployeesWithCheck,
+    } = this.props;
+    const organizationId = match.params.idOrganization;
 
-    dispatch(clearOrganizationEmployees());
-    dispatch(fetchOrganization(organizationId));
-    dispatch(fetchOrganizationEmployeesWithCheck(organizationId));
+    this.setState({organizationId});
+
+    clearOrganizationEmployees();
+    fetchOrganization(organizationId);
+    fetchOrganizationEmployeesWithCheck(organizationId);
   }
 
-  componentDidUpdate(prevProps) {
+  componentDidUpdate(prevProps: IProps) {
     const {
       organization: {employees},
       fetchedEmployees,
@@ -97,11 +127,7 @@ class OrganizationEmployee extends React.PureComponent {
 
   render() {
     const {employeesShow, title} = this.state;
-    const {
-      fetched,
-      fetchedEmployees,
-      organization: {errors},
-    } = this.props;
+    const {fetched, fetchedEmployees, errors} = this.props;
 
     if (!fetched) {
       return this.getMessage('Загрузка');
@@ -127,18 +153,26 @@ class OrganizationEmployee extends React.PureComponent {
   }
 }
 
-OrganizationEmployee.propTypes = {
-  dispatch: PropTypes.func,
-  match: PropTypes.object,
-  router: PropTypes.object,
-};
-
-const mapStateToProps = (state) => {
+const mapStateToProps = (state: TState) => {
   return {
     fetched: state.organizations.fetched,
     fetchedEmployees: state.organizations.fetchedEmployees,
     organization: state.organizations.organization,
+    errors: state.organizations.errors,
   };
 };
 
-export default connect(mapStateToProps)(OrganizationEmployee);
+const mapDispatchToProps = (dispatch: any): IDispatchProps => {
+  return {
+    clearOrganizationEmployees: () => dispatch(clearOrganizationEmployees()),
+    fetchOrganization: (organizationId: number) =>
+      dispatch(fetchOrganization(organizationId)),
+    fetchOrganizationEmployeesWithCheck: (organizationId: number) =>
+      dispatch(fetchOrganizationEmployeesWithCheck(organizationId)),
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(OrganizationEmployee);

@@ -2,12 +2,25 @@ import {fetchOrganizations} from '../../../actions/lmk/organizationActions';
 import {Link} from 'react-router-dom';
 import React from 'react';
 import {connect} from 'react-redux';
-import PropTypes from 'prop-types';
 import {Row, Col, Card, CardHeader, CardBody, Table} from 'reactstrap';
+import {IOrganization} from '../../../interface/lmk/IOrganization';
+import {TState} from '../../../reducers';
 
-class Organizations extends React.PureComponent {
+interface IStateProps {
+  organizations: IOrganization[];
+}
+
+interface IDispatchProps {
+  fetchOrganizations: typeof fetchOrganizations;
+}
+
+interface IProps extends IStateProps, IDispatchProps {}
+
+class Organizations extends React.PureComponent<IProps> {
   componentDidMount() {
-    this.props.dispatch(fetchOrganizations());
+    const {fetchOrganizations} = this.props;
+
+    fetchOrganizations();
   }
 
   render() {
@@ -21,7 +34,9 @@ class Organizations extends React.PureComponent {
               <Card className="text-center">
                 <CardHeader>Организаций нет</CardHeader>
                 <CardBody>
-                  <Link to={'/services/lmk/organizations/create'}>Добавить организацию</Link>
+                  <Link to={'/services/lmk/organizations/create'}>
+                    Добавить организацию
+                  </Link>
                 </CardBody>
               </Card>
             </Col>
@@ -60,7 +75,9 @@ class Organizations extends React.PureComponent {
                       return (
                         <tr key={organization.id}>
                           <td>
-                            <Link to={`/services/lmk/organization/${organization.id}`}>
+                            <Link
+                              to={`/services/lmk/organization/${organization.id}`}
+                            >
                               {organization.name}
                             </Link>
                           </td>
@@ -89,15 +106,19 @@ class Organizations extends React.PureComponent {
   }
 }
 
-Organizations.propTypes = {
-  dispatch: PropTypes.func.isRequired,
-  organizations: PropTypes.array.isRequired,
-};
-
-const mapStateToProps = (state) => {
+const mapStateToProps = (state: TState) => {
   return {
     organizations: state.organizations.organizations,
   };
 };
 
-export const OrganizationsContainer = connect(mapStateToProps)(Organizations);
+const mapDispatchToProps = (dispatch: any): IDispatchProps => {
+  return {
+    fetchOrganizations: () => dispatch(fetchOrganizations()),
+  };
+};
+
+export const OrganizationsContainer = connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(Organizations);
